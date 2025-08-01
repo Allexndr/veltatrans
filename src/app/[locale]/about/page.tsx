@@ -83,7 +83,7 @@ export default function AboutPage() {
       <Header />
       <main>
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white py-16">
+        <section className="bg-gradient-to-br from-custom-blue-900 via-custom-blue-800 to-custom-blue-700 text-white py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
               <h1 className="text-4xl md:text-5xl font-bold mb-6">
@@ -113,19 +113,19 @@ export default function AboutPage() {
                   качества и способствуя развитию международного бизнеса наших клиентов.
                 </p>
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="text-center p-4 bg-blue-50 rounded-lg">
+                  <div className="text-center p-4 bg-custom-blue-50 rounded-lg">
                     <div className="text-2xl font-bold text-custom-blue-600">10+</div>
                     <div className="text-sm text-gray-600">лет опыта</div>
                   </div>
-                  <div className="text-center p-4 bg-blue-50 rounded-lg">
+                  <div className="text-center p-4 bg-custom-blue-50 rounded-lg">
                     <div className="text-2xl font-bold text-custom-blue-600">5000+</div>
                     <div className="text-sm text-gray-600">довольных клиентов</div>
                   </div>
-                  <div className="text-center p-4 bg-blue-50 rounded-lg">
+                  <div className="text-center p-4 bg-custom-blue-50 rounded-lg">
                     <div className="text-2xl font-bold text-custom-blue-600">20+</div>
                     <div className="text-sm text-gray-600">стран доставки</div>
                   </div>
-                  <div className="text-center p-4 bg-blue-50 rounded-lg">
+                  <div className="text-center p-4 bg-custom-blue-50 rounded-lg">
                     <div className="text-2xl font-bold text-custom-blue-600">98%</div>
                     <div className="text-sm text-gray-600">успешных доставок</div>
                   </div>
@@ -186,7 +186,7 @@ export default function AboutPage() {
 
             <div className="relative">
               {/* Timeline line */}
-              <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-blue-200"></div>
+              <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-custom-blue-200"></div>
 
               <div className="space-y-12">
                 {timeline.map((event, index) => (

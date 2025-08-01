@@ -182,7 +182,7 @@ export default function DocumentsPage() {
       <Header />
       <main>
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white py-16">
+        <section className="bg-gradient-to-br from-custom-blue-900 via-custom-blue-800 to-custom-blue-700 text-white py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
               <h1 className="text-4xl md:text-5xl font-bold mb-6">
