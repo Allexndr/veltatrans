@@ -125,7 +125,7 @@ export default function RatesPage() {
               <h1 className="text-4xl md:text-5xl font-bold mb-6">
                 {t('rates.title')}
               </h1>
-              <p className="text-xl text-blue-100 max-w-3xl mx-auto">
+              <p className="text-xl text-custom-blue-100 max-w-3xl mx-auto">
                 {t('rates.description')}
               </p>
             </div>
@@ -168,7 +168,7 @@ export default function RatesPage() {
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {rate.weight}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-blue-600">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-custom-blue-600">
                           {rate.price}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -206,12 +206,12 @@ export default function RatesPage() {
                 <div
                   key={index}
                   className={`bg-white rounded-lg shadow-lg p-8 ${
-                    service.premium ? 'ring-2 ring-blue-600 relative' : ''
+                    service.premium ? 'ring-2 ring-custom-blue-600 relative' : ''
                   }`}
                 >
                   {service.premium && (
                     <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                      <span className="bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-medium">
+                      <span className="bg-custom-blue-600 text-white px-4 py-1 rounded-full text-sm font-medium">
                         Популярный
                       </span>
                     </div>
@@ -240,7 +240,7 @@ export default function RatesPage() {
                   <button
                     className={`w-full py-3 px-6 rounded-lg font-semibold transition-colors ${
                       service.premium
-                        ? 'bg-blue-600 text-white hover:bg-blue-700'
+                        ? 'bg-custom-blue-600 text-white hover:bg-custom-blue-700'
                         : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
                     }`}
                   >
@@ -262,7 +262,7 @@ export default function RatesPage() {
                 </h2>
                 <div className="space-y-4">
                   <div className="flex items-start space-x-3">
-                    <svg className="w-6 h-6 text-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-6 h-6 text-custom-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <div>
@@ -271,7 +271,7 @@ export default function RatesPage() {
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
-                    <svg className="w-6 h-6 text-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-6 h-6 text-custom-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
@@ -281,7 +281,7 @@ export default function RatesPage() {
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
-                    <svg className="w-6 h-6 text-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-6 h-6 text-custom-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                     </svg>
                     <div>
@@ -290,7 +290,7 @@ export default function RatesPage() {
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
-                    <svg className="w-6 h-6 text-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-6 h-6 text-custom-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <div>

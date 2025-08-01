@@ -75,7 +75,7 @@ export default function CalculatorPage() {
               <h1 className="text-4xl md:text-5xl font-bold mb-6">
                 {t('calculator.title')}
               </h1>
-              <p className="text-xl text-blue-100 max-w-3xl mx-auto">
+              <p className="text-xl text-custom-blue-100 max-w-3xl mx-auto">
                 {t('calculator.description')}
               </p>
             </div>
@@ -96,7 +96,7 @@ export default function CalculatorPage() {
                       {...register('from')}
                       type="text"
                       id="from"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-transparent"
                       placeholder="Город отправления"
                     />
                     {errors.from && (
@@ -112,7 +112,7 @@ export default function CalculatorPage() {
                       {...register('to')}
                       type="text"
                       id="to"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-transparent"
                       placeholder="Город назначения"
                     />
                     {errors.to && (
@@ -128,7 +128,7 @@ export default function CalculatorPage() {
                       {...register('weight', { valueAsNumber: true })}
                       type="number"
                       id="weight"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-transparent"
                       placeholder="Вес в килограммах"
                     />
                     {errors.weight && (
@@ -145,7 +145,7 @@ export default function CalculatorPage() {
                       type="number"
                       step="0.01"
                       id="volume"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-transparent"
                       placeholder="Объем в кубических метрах"
                     />
                     {errors.volume && (
@@ -160,7 +160,7 @@ export default function CalculatorPage() {
                     <select
                       {...register('cargoType')}
                       id="cargoType"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-transparent"
                     >
                       <option value="">Выберите тип груза</option>
                       <option value="general">Генеральный груз</option>
@@ -178,7 +178,7 @@ export default function CalculatorPage() {
                 <button
                   type="submit"
                   disabled={isCalculating}
-                  className="w-full bg-blue-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-custom-blue-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:bg-custom-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isCalculating ? (
                     <div className="flex items-center justify-center">
@@ -234,7 +234,7 @@ export default function CalculatorPage() {
               {popularRoutes.map((route, index) => (
                 <div key={index} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
                   <div className="flex items-center justify-between mb-4">
-                    <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-8 h-8 text-custom-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>

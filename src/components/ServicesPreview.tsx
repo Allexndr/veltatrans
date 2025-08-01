@@ -50,14 +50,14 @@ export default async function ServicesPreview({locale}: {locale: string}) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {services.map((service, index) => (
             <div key={index} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
-              <div className="w-16 h-16 bg-blue-600 rounded-lg flex items-center justify-center mb-4 text-white">
+              <div className="w-16 h-16 bg-custom-blue-600 rounded-lg flex items-center justify-center mb-4 text-white">
                 {service.icon}
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3">{service.title}</h3>
               <p className="text-gray-600 mb-4">{service.description}</p>
               <Link
                 href={service.href}
-                className="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center"
+                className="text-custom-blue-600 hover:text-custom-blue-800 font-medium inline-flex items-center"
               >
                 {t('more')}
                 <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -71,7 +71,7 @@ export default async function ServicesPreview({locale}: {locale: string}) {
         <div className="text-center mt-12">
           <Link
             href="/services"
-            className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+            className="bg-custom-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-custom-blue-700 transition-colors"
           >
             {tNav('services')}
           </Link>

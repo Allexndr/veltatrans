@@ -26,7 +26,7 @@ export default function Header() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex-shrink-0">
-              <span className="text-2xl font-bold text-blue-900">
+              <span className="text-2xl font-bold text-custom-blue-900">
                 {t('company.name')}
               </span>
             </Link>
@@ -35,11 +35,11 @@ export default function Header() {
           {/* Desktop navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navigation.map((item) => (
-              <Link
+                            <Link
                 key={item.href}
                 href={item.href}
-                className={`text-gray-600 hover:text-blue-900 px-3 py-2 text-sm font-medium transition-colors ${ 
-                  pathname === item.href ? 'text-blue-900 border-b-2 border-blue-900' : ''
+                className={`text-gray-600 hover:text-custom-blue-900 px-3 py-2 text-sm font-medium transition-colors ${
+                  pathname === item.href ? 'text-custom-blue-900 border-b-2 border-custom-blue-900' : ''
                 }`}
               >
                 {item.name}
@@ -53,7 +53,7 @@ export default function Header() {
             <LanguageSwitcher />
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="ml-2 text-gray-600 hover:text-blue-900 focus:outline-none focus:text-blue-900"
+              className="ml-2 text-gray-600 hover:text-custom-blue-900 focus:outline-none focus:text-custom-blue-900"
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
@@ -77,8 +77,8 @@ export default function Header() {
                   href={item.href}
                   className={`block px-3 py-2 text-base font-medium transition-colors ${
                     pathname === item.href 
-                      ? 'text-blue-900 bg-blue-50' 
-                      : 'text-gray-600 hover:text-blue-900 hover:bg-gray-50'
+                      ? 'text-custom-blue-900 bg-custom-blue-50' 
+                      : 'text-gray-600 hover:text-custom-blue-900 hover:bg-gray-50'
                   }`}
                   onClick={() => setIsMenuOpen(false)}
                 >

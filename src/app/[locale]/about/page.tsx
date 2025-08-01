@@ -89,7 +89,7 @@ export default function AboutPage() {
               <h1 className="text-4xl md:text-5xl font-bold mb-6">
                 {t('about.title')}
               </h1>
-              <p className="text-xl text-blue-100 max-w-3xl mx-auto">
+              <p className="text-xl text-custom-blue-100 max-w-3xl mx-auto">
                 {t('about.description')}
               </p>
             </div>
@@ -114,26 +114,26 @@ export default function AboutPage() {
                 </p>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="text-center p-4 bg-blue-50 rounded-lg">
-                    <div className="text-2xl font-bold text-blue-600">10+</div>
+                    <div className="text-2xl font-bold text-custom-blue-600">10+</div>
                     <div className="text-sm text-gray-600">лет опыта</div>
                   </div>
                   <div className="text-center p-4 bg-blue-50 rounded-lg">
-                    <div className="text-2xl font-bold text-blue-600">5000+</div>
+                    <div className="text-2xl font-bold text-custom-blue-600">5000+</div>
                     <div className="text-sm text-gray-600">довольных клиентов</div>
                   </div>
                   <div className="text-center p-4 bg-blue-50 rounded-lg">
-                    <div className="text-2xl font-bold text-blue-600">20+</div>
+                    <div className="text-2xl font-bold text-custom-blue-600">20+</div>
                     <div className="text-sm text-gray-600">стран доставки</div>
                   </div>
                   <div className="text-center p-4 bg-blue-50 rounded-lg">
-                    <div className="text-2xl font-bold text-blue-600">98%</div>
+                    <div className="text-2xl font-bold text-custom-blue-600">98%</div>
                     <div className="text-sm text-gray-600">успешных доставок</div>
                   </div>
                 </div>
               </div>
               <div className="relative">
                 <div className="w-full h-96 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center">
-                  <svg className="w-32 h-32 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-32 h-32 text-custom-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
@@ -157,7 +157,7 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {values.map((value, index) => (
                 <div key={index} className="bg-white rounded-lg shadow-md p-6 text-center">
-                  <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white">
+                  <div className="w-16 h-16 bg-custom-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white">
                     {value.icon}
                   </div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-3">
@@ -193,13 +193,13 @@ export default function AboutPage() {
                   <div key={index} className={`flex items-center ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}>
                     <div className={`w-1/2 ${index % 2 === 0 ? 'pr-8 text-right' : 'pl-8'}`}>
                       <div className="bg-white rounded-lg shadow-md p-6">
-                        <div className="text-sm font-semibold text-blue-600 mb-1">{event.year}</div>
+                        <div className="text-sm font-semibold text-custom-blue-600 mb-1">{event.year}</div>
                         <h3 className="text-xl font-bold text-gray-900 mb-2">{event.title}</h3>
                         <p className="text-gray-600">{event.description}</p>
                       </div>
                     </div>
                     <div className="relative">
-                      <div className="w-6 h-6 bg-blue-600 rounded-full border-4 border-white shadow-lg"></div>
+                      <div className="w-6 h-6 bg-custom-blue-600 rounded-full border-4 border-white shadow-lg"></div>
                     </div>
                     <div className="w-1/2"></div>
                   </div>
@@ -228,7 +228,7 @@ export default function AboutPage() {
                 <p className="text-gray-600 mb-4">
                   Наша команда логистов обеспечивает оптимальные маршруты и своевременную доставку
                 </p>
-                <div className="text-sm text-blue-600">15+ специалистов</div>
+                <div className="text-sm text-custom-blue-600">15+ специалистов</div>
               </div>
 
               <div className="bg-white rounded-lg shadow-md p-6 text-center">
@@ -237,7 +237,7 @@ export default function AboutPage() {
                 <p className="text-gray-600 mb-4">
                   Эксперты по таможенному оформлению решают любые вопросы документооборота
                 </p>
-                <div className="text-sm text-blue-600">8+ специалистов</div>
+                <div className="text-sm text-custom-blue-600">8+ специалистов</div>
               </div>
 
               <div className="bg-white rounded-lg shadow-md p-6 text-center">
@@ -246,7 +246,7 @@ export default function AboutPage() {
                 <p className="text-gray-600 mb-4">
                   Клиентский сервис работает 24/7 для решения любых вопросов
                 </p>
-                <div className="text-sm text-blue-600">12+ специалистов</div>
+                <div className="text-sm text-custom-blue-600">12+ специалистов</div>
               </div>
             </div>
           </div>

@@ -157,7 +157,7 @@ export default function DocumentsPage() {
       case 'DOCX':
       case 'DOC':
         return (
-          <svg className="w-8 h-8 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+          <svg className="w-8 h-8 text-custom-blue-500" fill="currentColor" viewBox="0 0 24 24">
             <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
           </svg>
         );
@@ -188,7 +188,7 @@ export default function DocumentsPage() {
               <h1 className="text-4xl md:text-5xl font-bold mb-6">
                 {t('documents.title')}
               </h1>
-              <p className="text-xl text-blue-100 max-w-3xl mx-auto">
+              <p className="text-xl text-custom-blue-100 max-w-3xl mx-auto">
                 {t('documents.description')}
               </p>
             </div>
@@ -228,7 +228,7 @@ export default function DocumentsPage() {
                               <span>{document.size}</span>
                               <span>{document.language}</span>
                             </div>
-                            <button className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center">
+                            <button className="w-full bg-custom-blue-600 text-white px-4 py-2 rounded-lg hover:bg-custom-blue-700 transition-colors flex items-center justify-center">
                               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                               </svg>
@@ -255,7 +255,7 @@ export default function DocumentsPage() {
                 </h2>
                 <div className="space-y-6">
                   <div className="flex items-start space-x-3">
-                    <svg className="w-6 h-6 text-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-6 h-6 text-custom-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <div>
@@ -264,7 +264,7 @@ export default function DocumentsPage() {
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
-                    <svg className="w-6 h-6 text-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-6 h-6 text-custom-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <div>
@@ -273,7 +273,7 @@ export default function DocumentsPage() {
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
-                    <svg className="w-6 h-6 text-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-6 h-6 text-custom-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <div>
@@ -282,7 +282,7 @@ export default function DocumentsPage() {
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
-                    <svg className="w-6 h-6 text-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-6 h-6 text-custom-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <div>
@@ -330,7 +330,7 @@ export default function DocumentsPage() {
                     </div>
                   </div>
 
-                  <button className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                  <button className="w-full bg-custom-blue-600 text-white px-6 py-3 rounded-lg hover:bg-custom-blue-700 transition-colors">
                     Получить консультацию
                   </button>
                 </div>
@@ -351,7 +351,7 @@ export default function DocumentsPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href="tel:+77011234567"
-                className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center justify-center"
+                className="bg-custom-blue-600 text-white px-8 py-3 rounded-lg hover:bg-custom-blue-700 transition-colors inline-flex items-center justify-center"
               >
                 <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -360,7 +360,7 @@ export default function DocumentsPage() {
               </a>
               <a
                 href="mailto:docs@veltatrans.com"
-                className="border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-lg hover:bg-blue-600 hover:text-white transition-colors inline-flex items-center justify-center"
+                className="border-2 border-custom-blue-600 text-custom-blue-600 px-8 py-3 rounded-lg hover:bg-custom-blue-600 hover:text-white transition-colors inline-flex items-center justify-center"
               >
                 <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
