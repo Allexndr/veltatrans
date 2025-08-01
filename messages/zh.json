@@ -1,0 +1,112 @@
+{
+  "navigation": {
+    "home": "首页",
+    "services": "服务",
+    "documents": "文档",
+    "rates": "价格",
+    "calculator": "计算器",
+    "directions": "路线",
+    "about": "关于",
+    "contacts": "联系"
+  },
+  "company": {
+    "name": "Velta Trans",
+    "tagline": "国际物流解决方案"
+  },
+  "home": {
+    "title": "Velta Trans - 国际物流公司",
+    "subtitle": "独联体、中国和欧洲的B2B货运",
+    "description": "为您的业务提供可靠的物流服务，包括全面服务和海关清关",
+    "cta": "获取报价"
+  },
+  "hero": {
+    "title": "独联体、中国和欧洲的国际货运",
+    "subtitle": "为您的业务提供可靠的物流服务，包括全面服务和海关清关",
+    "cta": "计算成本",
+    "secondary_cta": "提交申请"
+  },
+  "documents": {
+    "title": "文档",
+    "description": "国际货运所需的所有表格和文件模板",
+    "download": "下载"
+  },
+  "about": {
+    "title": "关于我们",
+    "description": "拥有15年经验的国际物流可靠合作伙伴",
+    "mission": "我们的使命",
+    "values": "我们的价值观",
+    "team": "我们的团队"
+  },
+  "services": {
+    "title": "我们的服务",
+    "logistics": {
+      "title": "物流服务",
+      "description": "任何复杂程度的运输组织"
+    },
+    "customs": {
+      "title": "海关清关",
+      "description": "通过海关的全程货物支持"
+    },
+    "warehousing": {
+      "title": "仓储服务",
+      "description": "临时储存和货物合并"
+    },
+    "insurance": {
+      "title": "货物保险",
+      "description": "在整个运输过程中保护您的货物"
+    },
+    "consultation": {
+      "title": "咨询",
+      "description": "专业物流咨询"
+    }
+  },
+  "directions": {
+    "title": "路线",
+    "description": "我们的运输地理区域",
+    "cis": "独联体",
+    "china": "中国",
+    "europe": "欧洲"
+  },
+  "calculator": {
+    "title": "成本计算器",
+    "description": "计算您货物的运输成本",
+    "from": "从",
+    "to": "到",
+    "weight": "重量 (公斤)",
+    "volume": "体积 (立方米)",
+    "calculate": "计算",
+    "result": "运输成本"
+  },
+  "contact": {
+    "title": "联系方式",
+    "description": "联系我们获取个性化报价",
+    "phone": "电话",
+    "email": "邮箱",
+    "address": "地址",
+    "form": {
+      "name": "姓名",
+      "email": "邮箱",
+      "phone": "电话",
+      "message": "信息",
+      "send": "发送"
+    }
+  },
+  "contact_form": {
+    "title": "联系我们",
+    "name": "姓名",
+    "company": "公司",
+    "phone": "电话",
+    "email": "邮箱",
+    "message": "信息",
+    "submit": "提交申请",
+    "success": "申请已发送！我们将很快与您联系。",
+    "error": "发送错误。请重试。"
+  },
+  "footer": {
+    "description": "提供全方位货运服务的国际物流公司",
+    "address": "办公地址",
+    "phone": "电话",
+    "email": "邮箱",
+    "social": "关注我们"
+  }
+}

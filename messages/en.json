@@ -1,0 +1,119 @@
+{
+  "navigation": {
+    "home": "Home",
+    "services": "Services",
+    "documents": "Documents",
+    "rates": "Rates",
+    "calculator": "Calculator",
+    "directions": "Directions", 
+    "about": "About",
+    "contacts": "Contacts"
+  },
+  "company": {
+    "name": "Velta Trans",
+    "tagline": "International logistics solutions"
+  },
+  "hero": {
+    "title": "International freight transportation across CIS, China and Europe",
+    "subtitle": "Reliable logistics for your business with full service and customs clearance",
+    "cta": "Calculate cost",
+    "secondary_cta": "Request quote"
+  },
+  "home": {
+    "title": "Velta Trans - International logistics company",
+    "subtitle": "B2B freight transportation across CIS, China and Europe", 
+    "description": "Reliable logistics for your business with full service and customs clearance",
+    "cta": "Get quote",
+    "features": {
+      "experience": "15+ years of experience",
+      "geography": "Wide geography",
+      "support": "24/7 support"
+    }
+  },
+  "documents": {
+    "title": "Documents",
+    "description": "All necessary forms and templates for international shipping documentation",
+    "download": "Download"
+  },
+  "about": {
+    "title": "About Us",
+    "description": "Reliable partner in international logistics with 15 years of experience",
+    "mission": "Our Mission",
+    "values": "Our Values",
+    "team": "Our Team"
+  },
+  "services": {
+    "title": "Our services",
+    "description": "Full range of logistics services for your business",
+    "logistics": {
+      "title": "Logistics services",
+      "description": "Transportation organization of any complexity"
+    },
+    "customs": {
+      "title": "Customs clearance",
+      "description": "Full cargo support through customs"
+    },
+    "warehousing": {
+      "title": "Warehousing services", 
+      "description": "Temporary storage and cargo consolidation"
+    },
+    "insurance": {
+      "title": "Cargo insurance",
+      "description": "Protection of your cargo throughout the journey"
+    },
+    "consultation": {
+      "title": "Consultation",
+      "description": "Professional logistics consultation"
+    },
+    "more": "Learn more"
+  },
+  "directions": {
+    "title": "Directions",
+    "description": "Our transportation geography",
+    "cis": "CIS",
+    "china": "China",
+    "europe": "Europe"
+  },
+  "calculator": {
+    "title": "Cost calculator",
+    "description": "Calculate the cost of delivering your cargo",
+    "from": "From",
+    "to": "To", 
+    "weight": "Weight (kg)",
+    "volume": "Volume (m³)",
+    "calculate": "Calculate",
+    "result": "Delivery cost"
+  },
+  "contact": {
+    "title": "Contacts",
+    "description": "Contact us for a personalized quote",
+    "phone": "Phone",
+    "email": "Email",
+    "address": "Address",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "message": "Message",
+      "send": "Send"
+    }
+  },
+  "contact_form": {
+    "title": "Contact us",
+    "name": "Name",
+    "company": "Company",
+    "phone": "Phone",
+    "email": "Email",
+    "message": "Message",
+    "submit": "Submit request",
+    "success": "Request sent! We will contact you soon.",
+    "error": "Sending error. Please try again."
+  },
+  "footer": {
+    "description": "International logistics company with full freight services",
+    "address": "Office address",
+    "phone": "Phone",
+    "email": "Email",
+    "social": "Follow us"
+  }
+}
