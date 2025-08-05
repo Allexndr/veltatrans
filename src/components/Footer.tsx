@@ -1,17 +1,12 @@
 'use client';
 
 import {useTranslations} from 'next-intl';
-import {Link} from '@/i18n/routing';
 import SmoothLink from './SmoothLink';
-import {useState, useEffect} from 'react';
 
 export default function Footer() {
   const t = useTranslations();
-  const [isVisible, setIsVisible] = useState(false);
 
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
+
 
   return (
     <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white relative overflow-hidden">
@@ -60,7 +55,7 @@ export default function Footer() {
                 {href: '/calculator', name: t('navigation.calculator'), icon: '��'},
                 {href: '/rates', name: t('navigation.rates'), icon: '💰'},
                 {href: '/documents', name: t('navigation.documents'), icon: '📄'}
-              ].map((link, index) => (
+              ].map((link) => (
                 <li key={link.href} className="group">
                   <SmoothLink 
                     href={link.href} 

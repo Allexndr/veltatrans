@@ -1,12 +1,11 @@
 'use client';
 
-import {Link} from '@/i18n/routing';
 import SmoothLink from './SmoothLink';
 import {useEffect, useState} from 'react';
 
 export default function Hero({locale}: {locale: string}) {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [messages, setMessages] = useState<any>(null);
+  const [messages, setMessages] = useState<Record<string, unknown> | null>(null);
 
   useEffect(() => {
     const loadMessages = async () => {
@@ -21,8 +20,8 @@ export default function Hero({locale}: {locale: string}) {
     return <div className="h-96 bg-gradient-to-br from-custom-blue-900 to-custom-blue-700 animate-pulse"></div>;
   }
 
-  const t = (key: string) => messages.home?.[key] || key;
-  const tNav = (key: string) => messages.navigation?.[key] || key;
+  const t = (key: string) => (messages?.home as Record<string, string>)?.[key] || key;
+  const tNav = (key: string) => (messages?.navigation as Record<string, string>)?.[key] || key;
 
   return (
     <section className="relative bg-gradient-to-br from-custom-blue-900 via-custom-blue-800 to-custom-blue-700 text-white py-20 overflow-hidden">

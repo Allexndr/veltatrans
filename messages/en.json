@@ -14,6 +14,9 @@
     "name": "Velta Trans",
     "tagline": "International logistics solutions"
   },
+  "common": {
+    "loading": "Loading..."
+  },
   "hero": {
     "title": "International freight transportation across CIS, China and Europe",
     "subtitle": "Reliable logistics for your business with full service and customs clearance",
@@ -184,10 +187,13 @@
       "fromCity": "Sender city",
       "toCity": "Recipient city",
       "cityPlaceholder": "Enter city name",
+      "weight": "Weight",
+      "volume": "Volume",
       "length": "Length",
       "width": "Width",
       "height": "Height",
       "isOversized": "Oversized cargo",
+      "calculate": "Calculate cost",
       "calculating": "Calculating..."
     },
     "result": {
@@ -323,7 +329,19 @@
   },
   "contact": {
     "title": "Contacts",
-    "description": "Contact us for consultation"
+    "description": "Contact us for consultation",
+    "phone": "Phone",
+    "email": "Email",
+    "address": "Address",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "message": "Message",
+      "send": "Send",
+      "success": "Message sent successfully!",
+      "error": "Error sending message"
+    }
   },
   "contact_form": {
     "title": "Contact Us",

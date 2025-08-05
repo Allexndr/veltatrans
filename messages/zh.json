@@ -10,6 +10,13 @@
     "documents": "文件",
     "contacts": "联系我们"
   },
+  "company": {
+    "name": "Velta Trans",
+    "tagline": "国际物流解决方案"
+  },
+  "common": {
+    "loading": "加载中..."
+  },
   "home": {
     "title": "Velta Trans - 国际物流公司",
     "subtitle": "独联体、中国和欧洲的B2B货运",
@@ -44,7 +51,19 @@
   },
   "contact": {
     "title": "联系我们",
-    "description": "联系我们获取咨询"
+    "description": "联系我们获取咨询",
+    "phone": "电话",
+    "email": "邮箱",
+    "address": "地址",
+    "form": {
+      "name": "姓名",
+      "email": "邮箱",
+      "phone": "电话",
+      "message": "消息",
+      "send": "发送",
+      "success": "消息发送成功！",
+      "error": "发送消息时出错"
+    }
   },
   "cases": {
     "title": "案例",
@@ -178,10 +197,13 @@
       "fromCity": "发货城市",
       "toCity": "收货城市",
       "cityPlaceholder": "输入城市名称",
+      "weight": "重量",
+      "volume": "体积",
       "length": "长度",
       "width": "宽度",
       "height": "高度",
       "isOversized": "超限货物",
+      "calculate": "计算成本",
       "calculating": "计算中..."
     },
     "result": {
