@@ -1,12 +1,13 @@
 {
   "navigation": {
     "home": "Home",
-    "services": "Services",
-    "documents": "Documents",
-    "rates": "Rates",
-    "calculator": "Calculator",
-    "directions": "Directions", 
     "about": "About",
+    "services": "Services",
+    "cases": "Cases",
+    "calculator": "Calculator",
+    "rates": "Rates",
+    "directions": "Directions",
+    "documents": "Documents",
     "contacts": "Contacts"
   },
   "company": {
@@ -21,7 +22,7 @@
   },
   "home": {
     "title": "Velta Trans - International logistics company",
-    "subtitle": "B2B freight transportation across CIS, China and Europe", 
+    "subtitle": "B2B freight transportation across CIS, China and Europe",
     "description": "Reliable logistics for your business with full service and customs clearance",
     "cta": "Get quote",
     "features": {
@@ -30,17 +31,9 @@
       "support": "24/7 support"
     }
   },
-  "documents": {
-    "title": "Documents",
-    "description": "All necessary forms and templates for international shipping documentation",
-    "download": "Download"
-  },
-  "about": {
-    "title": "About Us",
-    "description": "Reliable partner in international logistics with 15 years of experience",
-    "mission": "Our Mission",
-    "values": "Our Values",
-    "team": "Our Team"
+  "tools": {
+    "title": "Useful Tools",
+    "description": "Calculate delivery cost and track your cargo"
   },
   "services": {
     "title": "Our services",
@@ -51,15 +44,7 @@
     },
     "customs": {
       "title": "Customs clearance",
-      "description": "Full cargo support through customs"
-    },
-    "warehousing": {
-      "title": "Warehousing services", 
-      "description": "Temporary storage and cargo consolidation"
-    },
-    "insurance": {
-      "title": "Cargo insurance",
-      "description": "Protection of your cargo throughout the journey"
+      "description": "Complete customs support for cargo"
     },
     "consultation": {
       "title": "Consultation",
@@ -67,29 +52,282 @@
     },
     "more": "Learn more"
   },
-  "directions": {
-    "title": "Directions",
-    "description": "Our transportation geography",
-    "cis": "CIS",
-    "china": "China",
-    "europe": "Europe"
+  "cases": {
+    "title": "Cases",
+    "description": "Examples of our successful projects",
+    "categories": {
+      "all": "All",
+      "general": "General cargo",
+      "container": "Container shipping",
+      "oversized": "Oversized",
+      "dangerous": "Dangerous goods",
+      "consolidated": "Consolidated cargo",
+      "project": "Project cargo"
+    },
+    "case1": {
+      "title": "Multimodal equipment delivery",
+      "description": "Delivery of industrial equipment from China to Russia"
+    },
+    "case2": {
+      "title": "Container shipping",
+      "description": "Regular container shipments"
+    },
+    "case3": {
+      "title": "Oversized transportation",
+      "description": "Transportation of large equipment"
+    },
+    "case4": {
+      "title": "Dangerous goods",
+      "description": "Safe transportation of dangerous materials"
+    },
+    "case5": {
+      "title": "Consolidated cargo",
+      "description": "Economical delivery of small batches"
+    },
+    "case6": {
+      "title": "Project cargo",
+      "description": "Complex logistics solutions"
+    },
+    "viewDetails": "View details",
+    "viewAll": "All cases"
+  },
+  "writeToManagement": {
+    "title": "Write to Management",
+    "description": "Contact company management directly",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "company": "Company",
+      "subject": "Subject",
+      "selectSubject": "Select subject",
+      "options": {
+        "problem": "Report a problem",
+        "review": "Leave a review",
+        "suggestion": "Send a suggestion",
+        "cooperation": "Cooperation proposal",
+        "other": "Other"
+      },
+      "message": "Message",
+      "messagePlaceholder": "Describe your situation...",
+      "send": "Send",
+      "sending": "Sending..."
+    },
+    "success": {
+      "title": "Message sent!",
+      "message": "We will contact you soon",
+      "sendAnother": "Send another"
+    },
+    "note": "We will respond within 24 hours"
+  },
+  "recommendations": {
+    "title": "Recommendations",
+    "description": "Leading companies trust us",
+    "banner": {
+      "title": "THEY TRUST US, AND WE MEET EXPECTATIONS",
+      "subtitle": "Over 500 satisfied clients"
+    },
+    "rec1": {
+      "company": "LLC \"Trading House \"Ideal Spets\"",
+      "position": "Director",
+      "name": "Moleva A.V.",
+      "text": "Long-term and fruitful cooperation, innovative approach, first-class professional skills"
+    },
+    "rec2": {
+      "company": "LLC \"Ellada\"",
+      "position": "Logistics Manager",
+      "name": "Petrov I.S.",
+      "text": "Individual approach and serious attitude to business. We recommend to all partners"
+    },
+    "rec3": {
+      "company": "LLC \"Unitex\"",
+      "position": "Manager",
+      "name": "Sidorova E.A.",
+      "text": "Excellent work, timely delivery, professional approach to each client"
+    },
+    "rec4": {
+      "company": "LLC \"Barrier-DV\"",
+      "position": "Director",
+      "name": "Kozlov D.M.",
+      "text": "Reliable partner in logistics. Always fulfill obligations on time"
+    },
+    "certificates": {
+      "title": "Certificates and Awards",
+      "cert1": {
+        "title": "Certificate of Honor",
+        "description": "For high quality services"
+      },
+      "cert2": {
+        "title": "Quality Certificate",
+        "description": "ISO 9001:2015"
+      },
+      "cert3": {
+        "title": "License",
+        "description": "Customs representative"
+      },
+      "cert4": {
+        "title": "Award",
+        "description": "Best logistics operator"
+      }
+    }
   },
   "calculator": {
-    "title": "Cost calculator",
-    "description": "Calculate the cost of delivering your cargo",
+    "title": "Cost Calculator",
+    "description": "Calculate the cost of your cargo delivery",
     "from": "From",
-    "to": "To", 
-    "weight": "Weight (kg)",
-    "volume": "Volume (m³)",
-    "calculate": "Calculate",
-    "result": "Delivery cost"
+    "to": "To",
+    "weight": "Weight",
+    "volume": "Volume",
+    "calculate": "Calculate cost",
+    "result": "Calculation result",
+    "form": {
+      "fromCity": "Sender city",
+      "toCity": "Recipient city",
+      "cityPlaceholder": "Enter city name",
+      "length": "Length",
+      "width": "Width",
+      "height": "Height",
+      "isOversized": "Oversized cargo",
+      "calculating": "Calculating..."
+    },
+    "result": {
+      "title": "Calculation result",
+      "cost": "Cost",
+      "deliveryTime": "Delivery time",
+      "service": "Service",
+      "calculateAgain": "Calculate again"
+    },
+    "note": "Calculation is preliminary. For exact cost contact manager"
+  },
+  "cargoTracking": {
+    "title": "Cargo Tracking",
+    "description": "Check your shipment status",
+    "form": {
+      "trackingNumber": "Tracking number",
+      "placeholder": "Enter tracking number",
+      "track": "Track",
+      "tracking": "Tracking..."
+    },
+    "errors": {
+      "emptyNumber": "Enter tracking number"
+    },
+    "result": {
+      "trackingNumber": "Tracking number",
+      "status": "Status",
+      "estimatedDelivery": "Estimated delivery",
+      "history": "Movement history"
+    },
+    "note": "For current information contact manager"
+  },
+  "documents": {
+    "title": "Documents for Download",
+    "description": "All necessary documents for working with us",
+    "categories": {
+      "all": "All documents",
+      "contracts": "Contract forms",
+      "powers": "Powers of attorney",
+      "requisites": "Requisites",
+      "changes": "Change letters",
+      "additional": "Additional"
+    },
+    "doc1": {
+      "title": "Transportation contract (standard)",
+      "description": "Standard contract for cargo transportation"
+    },
+    "doc2": {
+      "title": "Transportation contract (consolidated)",
+      "description": "Contract for consolidated cargo transportation"
+    },
+    "doc3": {
+      "title": "Power of attorney for cargo receipt (IE)",
+      "description": "For individual entrepreneurs"
+    },
+    "doc4": {
+      "title": "Power of attorney for cargo receipt (legal entities)",
+      "description": "For legal entities"
+    },
+    "doc5": {
+      "title": "Power of attorney for cargo receipt (individuals)",
+      "description": "For individuals"
+    },
+    "doc6": {
+      "title": "Company requisites",
+      "description": "Current requisites of LLC \"Velta Trans\""
+    },
+    "download": "Download",
+    "info1": {
+      "title": "List of goods not accepted for transportation",
+      "description": "There is a certain list of goods, transportation of which may be associated with special conditions"
+    },
+    "info2": {
+      "title": "Complete list of necessary documents",
+      "description": "For sending cargo, the sender must provide information about themselves, recipient and payer"
+    },
+    "info3": {
+      "title": "Accompanying documents for cargo",
+      "description": "These include commercial invoice, invoice, indicating country of origin"
+    },
+    "note": "All documents are current and comply with current legislation"
+  },
+  "rates": {
+    "title": "Rates and Terms",
+    "description": "Current rates for transportation"
+  },
+  "directions": {
+    "title": "Transportation Directions",
+    "description": "Geography of our transportation"
+  },
+  "about": {
+    "title": "About Company",
+    "description": "Reliable partner in international logistics",
+    "mission": "Our Mission",
+    "values": "Our Values",
+    "team": "Our Team"
+  },
+  "cases": {
+    "title": "Our Cases",
+    "description": "Examples of successful projects and transportation",
+    "categories": {
+      "all": "All Cases",
+      "general": "General Cargo",
+      "container": "Container Transportation",
+      "oversized": "Oversized Cargo",
+      "dangerous": "Dangerous Goods",
+      "consolidated": "Consolidated Cargo",
+      "project": "Project Cargo"
+    },
+    "case1": {
+      "title": "Equipment Transportation from China",
+      "description": "Multimodal delivery of industrial equipment from Shanghai to Moscow"
+    },
+    "case2": {
+      "title": "Container Transportation",
+      "description": "Regular container transportation between Russian and Chinese ports"
+    },
+    "case3": {
+      "title": "Oversized Cargo",
+      "description": "Transportation of large equipment for oil and gas industry"
+    },
+    "case4": {
+      "title": "Dangerous Goods",
+      "description": "Safe transportation of chemicals with compliance to all standards"
+    },
+    "case5": {
+      "title": "Consolidated Cargo",
+      "description": "Consolidation and delivery of small cargo batches from different senders"
+    },
+    "case6": {
+      "title": "Project Cargo",
+      "description": "Complex logistics for large infrastructure projects"
+    }
   },
   "contact": {
     "title": "Contacts",
-    "description": "Contact us for a personalized quote",
-    "phone": "Phone",
-    "email": "Email",
-    "address": "Address",
+    "description": "Contact us for consultation"
+  },
+  "contact_form": {
+    "title": "Contact Us",
+    "description": "Leave a request and we will contact you",
     "form": {
       "name": "Name",
       "email": "Email",
@@ -98,22 +336,11 @@
       "send": "Send"
     }
   },
-  "contact_form": {
-    "title": "Contact us",
-    "name": "Name",
-    "company": "Company",
-    "phone": "Phone",
-    "email": "Email",
-    "message": "Message",
-    "submit": "Submit request",
-    "success": "Request sent! We will contact you soon.",
-    "error": "Sending error. Please try again."
-  },
   "footer": {
-    "description": "International logistics company with full freight services",
-    "address": "Office address",
+    "title": "Velta Trans",
+    "description": "International logistics company",
     "phone": "Phone",
     "email": "Email",
-    "social": "Follow us"
+    "social": "We are on social media"
   }
 }

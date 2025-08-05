@@ -1,112 +1,336 @@
 {
   "navigation": {
     "home": "首页",
+    "about": "关于我们",
     "services": "服务",
-    "documents": "文档",
-    "rates": "价格",
+    "cases": "案例",
     "calculator": "计算器",
+    "rates": "价格",
     "directions": "路线",
-    "about": "关于",
-    "contacts": "联系"
-  },
-  "company": {
-    "name": "Velta Trans",
-    "tagline": "国际物流解决方案"
+    "documents": "文件",
+    "contacts": "联系我们"
   },
   "home": {
     "title": "Velta Trans - 国际物流公司",
     "subtitle": "独联体、中国和欧洲的B2B货运",
-    "description": "为您的业务提供可靠的物流服务，包括全面服务和海关清关",
-    "cta": "获取报价"
+    "description": "为您的企业提供可靠物流，包括完整服务和清关",
+    "cta": "获取报价",
+    "features": {
+      "experience": "15年以上经验",
+      "geography": "广泛地理覆盖",
+      "support": "24/7支持"
+    }
   },
-  "hero": {
-    "title": "独联体、中国和欧洲的国际货运",
-    "subtitle": "为您的业务提供可靠的物流服务，包括全面服务和海关清关",
-    "cta": "计算成本",
-    "secondary_cta": "提交申请"
-  },
-  "documents": {
-    "title": "文档",
-    "description": "国际货运所需的所有表格和文件模板",
-    "download": "下载"
-  },
-  "about": {
-    "title": "关于我们",
-    "description": "拥有15年经验的国际物流可靠合作伙伴",
-    "mission": "我们的使命",
-    "values": "我们的价值观",
-    "team": "我们的团队"
+  "tools": {
+    "title": "实用工具",
+    "description": "计算运输成本并跟踪您的货物"
   },
   "services": {
     "title": "我们的服务",
+    "description": "为您的企业提供全方位的物流服务",
     "logistics": {
       "title": "物流服务",
-      "description": "任何复杂程度的运输组织"
+      "description": "组织任何复杂度的运输"
     },
     "customs": {
-      "title": "海关清关",
-      "description": "通过海关的全程货物支持"
-    },
-    "warehousing": {
-      "title": "仓储服务",
-      "description": "临时储存和货物合并"
-    },
-    "insurance": {
-      "title": "货物保险",
-      "description": "在整个运输过程中保护您的货物"
+      "title": "清关服务",
+      "description": "货物的完整海关支持"
     },
     "consultation": {
-      "title": "咨询",
+      "title": "咨询服务",
       "description": "专业物流咨询"
-    }
-  },
-  "directions": {
-    "title": "路线",
-    "description": "我们的运输地理区域",
-    "cis": "独联体",
-    "china": "中国",
-    "europe": "欧洲"
-  },
-  "calculator": {
-    "title": "成本计算器",
-    "description": "计算您货物的运输成本",
-    "from": "从",
-    "to": "到",
-    "weight": "重量 (公斤)",
-    "volume": "体积 (立方米)",
-    "calculate": "计算",
-    "result": "运输成本"
+    },
+    "more": "了解更多"
   },
   "contact": {
-    "title": "联系方式",
-    "description": "联系我们获取个性化报价",
-    "phone": "电话",
-    "email": "邮箱",
-    "address": "地址",
+    "title": "联系我们",
+    "description": "联系我们获取咨询"
+  },
+  "cases": {
+    "title": "案例",
+    "description": "我们成功项目的例子",
+    "categories": {
+      "all": "全部",
+      "general": "普通货物",
+      "container": "集装箱运输",
+      "oversized": "超限货物",
+      "dangerous": "危险货物",
+      "consolidated": "拼箱货物",
+      "project": "项目货物"
+    },
+    "case1": {
+      "title": "多式联运设备交付",
+      "description": "从中国到俄罗斯的工业设备交付"
+    },
+    "case2": {
+      "title": "集装箱运输",
+      "description": "定期集装箱货物运输"
+    },
+    "case3": {
+      "title": "超限运输",
+      "description": "大型设备运输"
+    },
+    "case4": {
+      "title": "危险货物",
+      "description": "危险材料的安全运输"
+    },
+    "case5": {
+      "title": "拼箱货物",
+      "description": "小批量货物的经济交付"
+    },
+    "case6": {
+      "title": "项目货物",
+      "description": "复杂的物流解决方案"
+    },
+    "viewDetails": "查看详情",
+    "viewAll": "所有案例"
+  },
+  "writeToManagement": {
+    "title": "致信管理层",
+    "description": "直接联系公司管理层",
     "form": {
       "name": "姓名",
       "email": "邮箱",
       "phone": "电话",
-      "message": "信息",
-      "send": "发送"
+      "company": "公司",
+      "subject": "主题",
+      "selectSubject": "选择主题",
+      "options": {
+        "problem": "报告问题",
+        "review": "留下评价",
+        "suggestion": "发送建议",
+        "cooperation": "合作建议",
+        "other": "其他"
+      },
+      "message": "消息",
+      "messagePlaceholder": "描述您的情况...",
+      "send": "发送",
+      "sending": "发送中..."
+    },
+    "success": {
+      "title": "消息已发送！",
+      "message": "我们会尽快联系您",
+      "sendAnother": "发送另一条"
+    },
+    "note": "我们将在24小时内回复"
+  },
+  "recommendations": {
+    "title": "推荐",
+    "description": "领先公司信任我们",
+    "banner": {
+      "title": "他们信任我们，我们不负期望",
+      "subtitle": "超过500个满意客户"
+    },
+    "rec1": {
+      "company": "有限责任公司\"贸易之家\"理想专业\"",
+      "position": "董事",
+      "name": "莫列娃 A.V.",
+      "text": "长期富有成效的合作，创新方法，一流的专业技能"
+    },
+    "rec2": {
+      "company": "有限责任公司\"埃拉达\"",
+      "position": "物流经理",
+      "name": "彼得罗夫 I.S.",
+      "text": "个性化方法和认真的商业态度。我们推荐给所有合作伙伴"
+    },
+    "rec3": {
+      "company": "有限责任公司\"尤尼特克斯\"",
+      "position": "经理",
+      "name": "西多罗娃 E.A.",
+      "text": "出色的工作，及时交付，对每个客户的专业方法"
+    },
+    "rec4": {
+      "company": "有限责任公司\"屏障-远东\"",
+      "position": "董事",
+      "name": "科兹洛夫 D.M.",
+      "text": "物流领域的可靠合作伙伴。始终按时履行义务"
+    },
+    "certificates": {
+      "title": "证书和奖项",
+      "cert1": {
+        "title": "荣誉证书",
+        "description": "高质量服务"
+      },
+      "cert2": {
+        "title": "质量证书",
+        "description": "ISO 9001:2015"
+      },
+      "cert3": {
+        "title": "许可证",
+        "description": "海关代表"
+      },
+      "cert4": {
+        "title": "奖项",
+        "description": "最佳物流运营商"
+      }
+    }
+  },
+  "calculator": {
+    "title": "成本计算器",
+    "description": "计算您的货物交付成本",
+    "from": "从",
+    "to": "到",
+    "weight": "重量",
+    "volume": "体积",
+    "calculate": "计算成本",
+    "result": "计算结果",
+    "form": {
+      "fromCity": "发货城市",
+      "toCity": "收货城市",
+      "cityPlaceholder": "输入城市名称",
+      "length": "长度",
+      "width": "宽度",
+      "height": "高度",
+      "isOversized": "超限货物",
+      "calculating": "计算中..."
+    },
+    "result": {
+      "title": "计算结果",
+      "cost": "成本",
+      "deliveryTime": "交付时间",
+      "service": "服务",
+      "calculateAgain": "重新计算"
+    },
+    "note": "计算是初步的。如需准确成本请联系经理"
+  },
+  "cargoTracking": {
+    "title": "货物跟踪",
+    "description": "查看您的货物状态",
+    "form": {
+      "trackingNumber": "跟踪号",
+      "placeholder": "输入跟踪号",
+      "track": "跟踪",
+      "tracking": "跟踪中..."
+    },
+    "errors": {
+      "emptyNumber": "请输入跟踪号"
+    },
+    "result": {
+      "trackingNumber": "跟踪号",
+      "status": "状态",
+      "estimatedDelivery": "预计交付",
+      "history": "移动历史"
+    },
+    "note": "如需最新信息请联系经理"
+  },
+  "documents": {
+    "title": "文件下载",
+    "description": "与我们合作所需的所有文件",
+    "categories": {
+      "all": "所有文件",
+      "contracts": "合同表格",
+      "powers": "授权书",
+      "requisites": "详细信息",
+      "changes": "变更信函",
+      "additional": "附加"
+    },
+    "doc1": {
+      "title": "运输合同（标准）",
+      "description": "货物运输标准合同"
+    },
+    "doc2": {
+      "title": "运输合同（拼箱）",
+      "description": "拼箱货物运输合同"
+    },
+    "doc3": {
+      "title": "货物接收授权书（个体户）",
+      "description": "适用于个体企业家"
+    },
+    "doc4": {
+      "title": "货物接收授权书（法人）",
+      "description": "适用于法人实体"
+    },
+    "doc5": {
+      "title": "货物接收授权书（个人）",
+      "description": "适用于个人"
+    },
+    "doc6": {
+      "title": "公司详细信息",
+      "description": "有限责任公司\"Velta Trans\"的最新详细信息"
+    },
+    "download": "下载",
+    "info1": {
+      "title": "不接受运输的货物清单",
+      "description": "存在某些货物清单，其运输可能与特殊条件相关"
+    },
+    "info2": {
+      "title": "必要文件的完整清单",
+      "description": "发送货物时，发货人必须提供有关自己、收货人和付款人的信息"
+    },
+    "info3": {
+      "title": "货物随附文件",
+      "description": "这些包括商业发票、发票，注明原产国"
+    },
+    "note": "所有文件都是最新的并符合现行法律"
+  },
+  "rates": {
+    "title": "价格和条款",
+    "description": "当前运输价格"
+  },
+  "directions": {
+    "title": "运输路线",
+    "description": "我们运输的地理范围"
+  },
+  "about": {
+    "title": "关于公司",
+    "description": "国际物流领域的可靠合作伙伴",
+    "mission": "我们的使命",
+    "values": "我们的价值观",
+    "team": "我们的团队"
+  },
+  "cases": {
+    "title": "我们的案例",
+    "description": "成功项目和运输的示例",
+    "categories": {
+      "all": "所有案例",
+      "general": "普通货物",
+      "container": "集装箱运输",
+      "oversized": "超限货物",
+      "dangerous": "危险货物",
+      "consolidated": "拼箱货物",
+      "project": "项目货物"
+    },
+    "case1": {
+      "title": "从中国运输设备",
+      "description": "从上海到莫斯科的工业设备多式联运"
+    },
+    "case2": {
+      "title": "集装箱运输",
+      "description": "俄罗斯和中国港口之间的定期集装箱运输"
+    },
+    "case3": {
+      "title": "超限货物",
+      "description": "石油和天然气行业大型设备的运输"
+    },
+    "case4": {
+      "title": "危险货物",
+      "description": "符合所有标准的化学品安全运输"
+    },
+    "case5": {
+      "title": "拼箱货物",
+      "description": "来自不同发货人的小批量货物整合和交付"
+    },
+    "case6": {
+      "title": "项目货物",
+      "description": "大型基础设施项目的综合物流"
     }
   },
   "contact_form": {
     "title": "联系我们",
-    "name": "姓名",
-    "company": "公司",
-    "phone": "电话",
-    "email": "邮箱",
-    "message": "信息",
-    "submit": "提交申请",
-    "success": "申请已发送！我们将很快与您联系。",
-    "error": "发送错误。请重试。"
+    "description": "留下请求，我们会联系您",
+    "form": {
+      "name": "姓名",
+      "email": "邮箱",
+      "phone": "电话",
+      "message": "消息",
+      "send": "发送"
+    }
   },
   "footer": {
-    "description": "提供全方位货运服务的国际物流公司",
-    "address": "办公地址",
+    "title": "Velta Trans",
+    "description": "国际物流公司",
     "phone": "电话",
     "email": "邮箱",
-    "social": "关注我们"
+    "social": "我们在社交媒体上"
   }
 }

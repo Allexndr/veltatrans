@@ -1,17 +1,17 @@
 import Header from '@/components/Header';
-import DocumentsSection from '@/components/DocumentsSection';
+import CasesSection from '@/components/CasesSection';
 import Footer from '@/components/Footer';
 
-export default async function DocumentsPage({params}: {params: Promise<{locale: string}>}) {
+export default async function CasesPage({params}: {params: Promise<{locale: string}>}) {
   const {locale} = await params;
 
   return (
     <div className="min-h-screen bg-white">
       <Header />
       <main>
-        <DocumentsSection locale={locale} />
+        <CasesSection locale={locale} />
       </main>
       <Footer />
     </div>
   );
-}
+} 
