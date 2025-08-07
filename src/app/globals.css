@@ -20,6 +20,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  overflow: hidden;
 }
 
 /* Velta Trans Custom Styles */
@@ -108,22 +109,19 @@ option {
   background-color: #ffffff !important;
 }
 
-/* Custom scrollbar */
+/* Hide scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  display: none;
 }
 
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
+/* For Firefox */
+* {
+  scrollbar-width: none;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
+/* For IE and Edge */
+* {
+  -ms-overflow-style: none;
 }
 
 /* Smooth page transitions */
