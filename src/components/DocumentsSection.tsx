@@ -12,17 +12,14 @@ interface DocumentsSectionProps {
   locale: string;
 }
 
-export default async function DocumentsSection({locale}: DocumentsSectionProps) {
-  // Import messages directly based on locale
-  const messages = (await import(`../../messages/${locale}.json`)).default;
-  const t = (key: string) => {
-    const keys = key.split('.');
-    let value = messages;
-    for (const k of keys) {
-      value = value?.[k];
-    }
-    return value || key;
-  };
+'use client';
+
+import {useTranslations} from 'next-intl';
+import {useState} from 'react';
+
+export default function DocumentsSection({locale}: DocumentsSectionProps) {
+  const t = useTranslations('documents');
+  const [activeCategory, setActiveCategory] = useState('all');
 
   const documents: Document[] = [
     {
@@ -90,6 +87,11 @@ export default async function DocumentsSection({locale}: DocumentsSectionProps) 
     {id: 'additional', name: t('categories.additional')}
   ];
 
+  // Filter documents based on active category
+  const filteredDocuments = activeCategory === 'all' 
+    ? documents 
+    : documents.filter(doc => doc.category === activeCategory);
+
   const getFileIcon = (fileType: string) => {
     switch (fileType) {
       case 'PDF':
@@ -130,7 +132,12 @@ export default async function DocumentsSection({locale}: DocumentsSectionProps) 
           {categories.map((category) => (
             <button
               key={category.id}
-              className="px-6 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-custom-blue-50 hover:border-custom-blue-300 hover:text-custom-blue-700 transition-colors"
+              onClick={() => setActiveCategory(category.id)}
+              className={`px-6 py-2 rounded-lg border transition-colors ${
+                activeCategory === category.id
+                  ? 'bg-custom-blue-600 border-custom-blue-600 text-white'
+                  : 'bg-white border-gray-300 text-gray-700 hover:bg-custom-blue-50 hover:border-custom-blue-300 hover:text-custom-blue-700'
+              }`}
             >
               {category.name}
             </button>
@@ -139,7 +146,7 @@ export default async function DocumentsSection({locale}: DocumentsSectionProps) 
 
         {/* Documents Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {documents.map((doc) => (
+          {filteredDocuments.map((doc) => (
             <div key={doc.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-6">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center space-x-3">

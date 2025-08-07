@@ -12,10 +12,12 @@ interface RecommendationsSectionProps {
   locale: string;
 }
 
-export default async function RecommendationsSection({locale}: RecommendationsSectionProps) {
-  // Import messages directly based on locale
-  const messages = (await import(`../../messages/${locale}.json`)).default;
-  const t = (key: string) => messages.recommendations?.[key] || key;
+'use client';
+
+import {useTranslations} from 'next-intl';
+
+export default function RecommendationsSection({locale}: RecommendationsSectionProps) {
+  const t = useTranslations('recommendations');
 
   const recommendations: Recommendation[] = [
     {
@@ -146,7 +148,7 @@ export default async function RecommendationsSection({locale}: RecommendationsSe
         {/* Certificates Section */}
         <div className="mt-16">
           <h3 className="text-2xl font-bold text-gray-900 text-center mb-8">
-            {t('certificates.title')}
+            Сертификаты и награды
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {[1, 2, 3, 4].map((i) => (
@@ -157,10 +159,10 @@ export default async function RecommendationsSection({locale}: RecommendationsSe
                   </svg>
                 </div>
                 <h4 className="font-semibold text-gray-900 mb-2">
-                  {t(`certificates.cert${i}.title`)}
+                  {i === 1 ? 'Почетная грамота' : i === 2 ? 'Сертификат качества' : i === 3 ? 'Диплом участника' : 'Благодарность'}
                 </h4>
                 <p className="text-sm text-gray-600">
-                  {t(`certificates.cert${i}.description`)}
+                  {i === 1 ? 'За высокое качество услуг' : i === 2 ? 'Сертификат соответствия стандартам' : i === 3 ? 'Участие в выставке' : 'За плодотворное сотрудничество'}
                 </p>
               </div>
             ))}

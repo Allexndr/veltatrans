@@ -16,15 +16,19 @@ interface CasesSectionProps {
 }
 
 export default function CasesSection({locale}: CasesSectionProps) {
-  const [messages, setMessages] = useState<Record<string, unknown> | null>(null);
+  const [messages, setMessages] = useState<any>(null);
   const [activeCategory, setActiveCategory] = useState('all');
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const loadMessages = async () => {
-      const msg = (await import(`../../messages/${locale}.json`)).default;
-      setMessages(msg);
-      setIsVisible(true);
+      try {
+        const msg = (await import(`../../messages/${locale}.json`)).default;
+        setMessages(msg);
+        setIsVisible(true);
+      } catch (error) {
+        console.error('Failed to load messages:', error);
+      }
     };
     loadMessages();
   }, [locale]);
@@ -37,7 +41,14 @@ export default function CasesSection({locale}: CasesSectionProps) {
     </div>;
   }
 
-  const t = (key: string) => (messages?.cases as Record<string, string>)?.[key] || key;
+  const t = (key: string) => {
+    const keys = key.split('.');
+    let value = messages;
+    for (const k of keys) {
+      value = value?.[k];
+    }
+    return value || key;
+  };
 
   const cases: Case[] = [
     {

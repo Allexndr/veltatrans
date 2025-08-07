@@ -138,6 +138,7 @@ export default function ContactForm() {
                   {...register('email')}
                   type="email"
                   id="email"
+                  suppressHydrationWarning
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-transparent"
                   placeholder={t('contact.form.email')}
                 />
@@ -154,6 +155,7 @@ export default function ContactForm() {
                   {...register('phone')}
                   type="tel"
                   id="phone"
+                  suppressHydrationWarning
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-transparent"
                   placeholder={t('contact.form.phone')}
                 />

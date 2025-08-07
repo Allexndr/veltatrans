@@ -1,80 +1,163 @@
-import {Link} from '@/i18n/routing';
+'use client';
 
-export default async function ServicesPreview({locale}: {locale: string}) {
-  // Import messages directly based on locale
-  const messages = (await import(`../../messages/${locale}.json`)).default;
-  const t = (key: string) => messages.services[key] || key;
-  const tNav = (key: string) => messages.navigation[key] || key;
+import {useTranslations} from 'next-intl';
+import SmoothLink from './SmoothLink';
+import {motion, useInView} from 'framer-motion';
+import {useRef} from 'react';
+
+export default function ServicesPreview({locale}: {locale: string}) {
+  const t = useTranslations('services');
+  const ref = useRef(null);
+  const isInView = useInView(ref, {once: true, margin: "-100px"});
 
   const services = [
     {
+      id: 1,
+      title: t('air.title'),
+      description: t('air.description'),
       icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+        <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
         </svg>
       ),
-      title: t('logistics.title'),
-      description: t('logistics.description'),
-      href: "/services"
+      href: '/services/air',
+      gradient: 'from-blue-500 to-cyan-500'
     },
     {
+      id: 2,
+      title: t('sea.title'),
+      description: t('sea.description'),
       icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
         </svg>
       ),
-      title: t('customs.title'),
-      description: t('customs.description'),
-      href: "/services"
+      href: '/services/sea',
+      gradient: 'from-indigo-500 to-purple-500'
     },
     {
+      id: 3,
+      title: t('land.title'),
+      description: t('land.description'),
       icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+        <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>
       ),
-      title: t('consultation.title'),
-      description: t('consultation.description'),
-      href: "/services"
+      href: '/services/land',
+      gradient: 'from-green-500 to-emerald-500'
+    },
+    {
+      id: 4,
+      title: t('multimodal.title'),
+      description: t('multimodal.description'),
+      icon: (
+        <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+      ),
+      href: '/services/multimodal',
+      gradient: 'from-orange-500 to-red-500'
     }
   ];
 
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">{t('title')}</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">{t('description')}</p>
+    <section className="py-24 bg-white relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute top-20 left-10 w-32 h-32 bg-custom-blue-50 rounded-full blur-2xl animate-pulse" />
+      <div className="absolute bottom-20 right-10 w-40 h-40 bg-custom-blue-50 rounded-full blur-2xl animate-pulse" style={{animationDelay: '2s'}} />
+      
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Enhanced header */}
+        <div className="text-center mb-20">
+          <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-custom-blue-50 to-custom-blue-100 rounded-full text-custom-blue-700 text-sm font-medium mb-6">
+            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+            Наши услуги
+          </div>
+          
+          <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-8 leading-tight">
+            <span className="bg-gradient-to-r from-custom-blue-900 to-custom-blue-700 bg-clip-text text-transparent">
+              {t('title')}
+            </span>
+          </h2>
+          
+          <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+            {t('description')}
+          </p>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {services.map((service, index) => (
-            <div key={index} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
-              <div className="w-16 h-16 bg-custom-blue-600 rounded-lg flex items-center justify-center mb-4 text-white">
-                {service.icon}
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">{service.title}</h3>
-              <p className="text-gray-600 mb-4">{service.description}</p>
-              <Link
-                href={service.href}
-                className="text-custom-blue-600 hover:text-custom-blue-800 font-medium inline-flex items-center"
+
+        {/* Services grid */}
+        <motion.div 
+          ref={ref}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16"
+          initial={{ opacity: 0, y: 50 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+          transition={{ duration: 0.8, staggerChildren: 0.2 }}
+        >
+                      {services.map((service, index) => (
+              <motion.div 
+                key={service.id} 
+                className="group relative"
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-                {t('more')}
-                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </Link>
-            </div>
-          ))}
-        </div>
-        
-        <div className="text-center mt-12">
-          <Link
+              <div className="relative bg-white rounded-3xl p-8 shadow-lg transition-all duration-500 transform border border-gray-100 overflow-hidden hover:shadow-2xl hover:shadow-custom-blue-100/50 hover:-translate-y-2">
+                {/* Background gradient on hover */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
+                
+                {/* Content */}
+                <div className="relative z-10">
+                  {/* Icon */}
+                  <div className={`w-20 h-20 bg-gradient-to-br ${service.gradient} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                    <div className="text-white group-hover:rotate-12 transition-transform duration-300">
+                      {service.icon}
+                    </div>
+                  </div>
+                  
+                  {/* Title */}
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-custom-blue-600 transition-colors duration-300">
+                    {service.title}
+                  </h3>
+                  
+                  {/* Description */}
+                  <p className="text-gray-600 leading-relaxed mb-6">
+                    {service.description}
+                  </p>
+                  
+                  {/* Link */}
+                  <SmoothLink
+                    href={service.href}
+                    className="inline-flex items-center text-custom-blue-600 font-semibold hover:text-custom-blue-700 transition-colors duration-300 group/link"
+                  >
+                    Подробнее
+                    <svg className="w-5 h-5 ml-2 transition-transform duration-300 group-hover/link:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </SmoothLink>
+                </div>
+                
+                {/* Decorative elements */}
+                <div className="absolute top-4 right-4 w-2 h-2 bg-custom-blue-200 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute bottom-4 left-4 w-1 h-1 bg-custom-blue-300 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                              </div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+        {/* CTA */}
+        <div className="text-center">
+          <SmoothLink
             href="/services"
-            className="bg-custom-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-custom-blue-700 transition-colors"
+            className="inline-flex items-center px-10 py-5 bg-gradient-to-r from-custom-blue-600 to-custom-blue-700 text-white rounded-full font-semibold text-xl hover:from-custom-blue-700 hover:to-custom-blue-800 transition-all duration-300 hover:scale-105 hover:shadow-xl"
           >
-            {tNav('services')}
-          </Link>
+            <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            Все услуги
+          </SmoothLink>
         </div>
       </div>
     </section>

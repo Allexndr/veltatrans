@@ -1,175 +1,158 @@
 'use client';
 
+import {useTranslations} from 'next-intl';
 import SmoothLink from './SmoothLink';
 import {useEffect, useState} from 'react';
+import {motion, AnimatePresence} from 'framer-motion';
 
 export default function Hero({locale}: {locale: string}) {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [messages, setMessages] = useState<Record<string, unknown> | null>(null);
+  const t = useTranslations('home');
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const loadMessages = async () => {
-      const msg = (await import(`../../messages/${locale}.json`)).default;
-      setMessages(msg);
-      setIsLoaded(true);
-    };
-    loadMessages();
-  }, [locale]);
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
 
-  if (!isLoaded || !messages) {
-    return <div className="h-96 bg-gradient-to-br from-custom-blue-900 to-custom-blue-700 animate-pulse"></div>;
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="h-screen bg-gradient-to-br from-custom-blue-900 via-custom-blue-800 to-custom-blue-700 animate-pulse">
+        <div className="flex items-center justify-center h-full">
+          <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin" />
+        </div>
+      </div>
+    );
   }
 
-  const t = (key: string) => (messages?.home as Record<string, string>)?.[key] || key;
-  const tNav = (key: string) => (messages?.navigation as Record<string, string>)?.[key] || key;
-
   return (
-    <section className="relative bg-gradient-to-br from-custom-blue-900 via-custom-blue-800 to-custom-blue-700 text-white py-20 overflow-hidden">
-      {/* Animated background elements */}
+    <section className="relative min-h-screen bg-gradient-to-br from-custom-blue-900 via-custom-blue-800 to-custom-blue-700 overflow-hidden">
+      {/* Background Elements */}
       <div className="absolute inset-0">
-        {/* Floating containers */}
-        <div className="absolute top-10 left-10 animate-bounce" style={{animationDelay: '0s', animationDuration: '3s'}}>
-          <div className="w-16 h-12 bg-white/10 rounded-lg transform rotate-12"></div>
-        </div>
-        <div className="absolute top-20 right-20 animate-bounce" style={{animationDelay: '1s', animationDuration: '4s'}}>
-          <div className="w-20 h-14 bg-white/10 rounded-lg transform -rotate-12"></div>
-        </div>
-        <div className="absolute bottom-20 left-1/4 animate-bounce" style={{animationDelay: '2s', animationDuration: '3.5s'}}>
-          <div className="w-12 h-8 bg-white/10 rounded-lg transform rotate-45"></div>
-        </div>
-        
-        {/* Moving trucks */}
-        <div className="absolute top-1/3 left-0 animate-pulse" style={{animationDuration: '2s'}}>
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-6 bg-white/20 rounded-lg"></div>
-            <div className="w-4 h-4 bg-white/20 rounded-full"></div>
-            <div className="w-4 h-4 bg-white/20 rounded-full"></div>
-          </div>
-        </div>
-        
-        <div className="absolute bottom-1/3 right-0 animate-pulse" style={{animationDuration: '2.5s', animationDelay: '1s'}}>
-          <div className="flex items-center space-x-2">
-            <div className="w-4 h-4 bg-white/20 rounded-full"></div>
-            <div className="w-4 h-4 bg-white/20 rounded-full"></div>
-            <div className="w-8 h-6 bg-white/20 rounded-lg"></div>
-          </div>
+        {/* Floating geometric shapes */}
+        <div className="absolute top-20 left-10 w-40 h-40 bg-white/5 rounded-full blur-2xl animate-pulse" />
+        <div className="absolute top-40 right-20 w-32 h-32 bg-white/5 rounded-full blur-2xl animate-pulse" style={{animationDelay: '2s'}} />
+        <div className="absolute bottom-40 left-1/4 w-24 h-24 bg-white/5 rounded-full blur-2xl animate-pulse" style={{animationDelay: '4s'}} />
+        <div className="absolute top-1/2 right-1/3 w-20 h-20 bg-white/5 rounded-full blur-xl animate-pulse" style={{animationDelay: '6s'}} />
+
+        {/* Grid pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `radial-gradient(circle at 25% 25%, white 1px, transparent 1px)`,
+              backgroundSize: '80px 80px',
+            }}
+          />
         </div>
 
-        {/* Animated grid pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 25% 25%, white 1px, transparent 1px)`,
-            backgroundSize: '50px 50px',
-            animation: 'moveGrid 20s linear infinite'
-          }}></div>
+        {/* Moving lines */}
+        <div className="absolute inset-0">
+          <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/30 to-transparent animate-pulse" />
+          <div className="absolute top-3/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/30 to-transparent animate-pulse" style={{animationDelay: '3s'}} />
+          <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse" style={{animationDelay: '6s'}} />
         </div>
       </div>
 
-      <div className="absolute inset-0 bg-black/20"></div>
-      
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          {/* Animated title */}
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in-up" style={{animationDelay: '0.3s'}}>
-            <span className="inline-block animate-slide-in-left" style={{animationDelay: '0.5s'}}>
+      {/* Content */}
+      <div className="relative z-10 flex items-center justify-center min-h-screen">
+        <motion.div 
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+        >
+          {/* Enhanced main title */}
+          <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold mb-12 leading-tight">
+            <span className="block bg-gradient-to-r from-white via-custom-blue-200 to-white bg-clip-text text-transparent">
               {t('title').split(' ').slice(0, 2).join(' ')}
             </span>
-            <br />
-            <span className="inline-block animate-slide-in-right" style={{animationDelay: '0.8s'}}>
+            <span className="block bg-gradient-to-r from-custom-blue-200 via-white to-custom-blue-200 bg-clip-text text-transparent">
               {t('title').split(' ').slice(2).join(' ')}
             </span>
           </h1>
           
-          {/* Animated subtitle */}
-          <p className="text-xl md:text-2xl mb-8 text-custom-blue-100 animate-fade-in-up" style={{animationDelay: '1s'}}>
+          {/* Enhanced subtitle */}
+          <p className="text-2xl md:text-3xl text-white/90 mb-16 max-w-4xl mx-auto leading-relaxed">
             {t('subtitle')}
           </p>
-          
-          {/* Animated description */}
-          <p className="text-lg mb-10 text-custom-blue-100 max-w-3xl mx-auto animate-fade-in-up" style={{animationDelay: '1.2s'}}>
-            {t('description')}
-          </p>
-          
-          {/* Animated buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up" style={{animationDelay: '1.5s'}}>
-            <SmoothLink
-              href="/calculator"
-              className="group bg-white text-custom-blue-900 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-all duration-300 inline-flex items-center justify-center transform hover:scale-105 hover:shadow-xl"
-            >
-              <svg className="w-5 h-5 mr-2 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-              </svg>
-              {t('cta')}
-            </SmoothLink>
+
+          {/* Enhanced CTA buttons */}
+          <div className="flex flex-col sm:flex-row gap-8 justify-center mb-20">
             <SmoothLink
               href="/services"
-              className="group border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-custom-blue-900 transition-all duration-300 inline-flex items-center justify-center transform hover:scale-105 hover:shadow-xl"
+              className="group relative px-10 py-5 bg-white text-custom-blue-900 rounded-full font-semibold text-xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl"
             >
-              <svg className="w-5 h-5 mr-2 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              {tNav('services')}
+              <span className="relative z-10 flex items-center">
+                <svg className="w-6 h-6 mr-4 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                {t('cta')}
+              </span>
+            </SmoothLink>
+            
+            <SmoothLink
+              href="/contacts"
+              className="group relative px-10 py-5 border-2 border-white text-white rounded-full font-semibold text-xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+            >
+              <span className="relative z-10 flex items-center">
+                <svg className="w-6 h-6 mr-4 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+                {t('contact.title')}
+              </span>
             </SmoothLink>
           </div>
+
+          {/* Enhanced stats */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-4xl mx-auto">
+            <div className="text-center">
+              <div className="text-4xl md:text-5xl font-bold text-white mb-4">
+                <span className="bg-gradient-to-r from-custom-blue-200 to-white bg-clip-text text-transparent">
+                  15+
+                </span>
+              </div>
+              <p className="text-white/80 text-lg">
+                {t('stats.years')}
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="text-4xl md:text-5xl font-bold text-white mb-4">
+                <span className="bg-gradient-to-r from-custom-blue-200 to-white bg-clip-text text-transparent">
+                  1000+
+                </span>
+              </div>
+              <p className="text-white/80 text-lg">
+                {t('stats.clients')}
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="text-4xl md:text-5xl font-bold text-white mb-4">
+                <span className="bg-gradient-to-r from-custom-blue-200 to-white bg-clip-text text-transparent">
+                  50+
+                </span>
+              </div>
+              <p className="text-white/80 text-lg">
+                {t('stats.countries')}
+              </p>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+        <div className="flex flex-col items-center text-white/60 animate-bounce">
+          <span className="text-sm mb-2">Scroll</span>
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
         </div>
       </div>
-
-      {/* Animated wave */}
-      <div className="absolute bottom-0 left-0 w-full">
-        <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-16">
-          <path 
-            d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" 
-            fill="white"
-            className="animate-wave"
-          ></path>
-        </svg>
-      </div>
-
-
-
-      <style jsx>{`
-        @keyframes moveGrid {
-          0% { transform: translate(0, 0); }
-          100% { transform: translate(50px, 50px); }
-        }
-        
-        @keyframes wave {
-          0%, 100% { transform: translateX(0); }
-          50% { transform: translateX(-10px); }
-        }
-        
-        @keyframes slide-in-left {
-          from { transform: translateX(-100px); opacity: 0; }
-          to { transform: translateX(0); opacity: 1; }
-        }
-        
-        @keyframes slide-in-right {
-          from { transform: translateX(100px); opacity: 0; }
-          to { transform: translateX(0); opacity: 1; }
-        }
-        
-        @keyframes fade-in-up {
-          from { transform: translateY(30px); opacity: 0; }
-          to { transform: translateY(0); opacity: 1; }
-        }
-        
-        .animate-wave {
-          animation: wave 3s ease-in-out infinite;
-        }
-        
-        .animate-slide-in-left {
-          animation: slide-in-left 1s ease-out forwards;
-        }
-        
-        .animate-slide-in-right {
-          animation: slide-in-right 1s ease-out forwards;
-        }
-        
-        .animate-fade-in-up {
-          animation: fade-in-up 1s ease-out forwards;
-          opacity: 0;
-        }
-      `}</style>
     </section>
   );
 }

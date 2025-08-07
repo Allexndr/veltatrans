@@ -96,7 +96,7 @@ export default function CalculatorPage() {
                       {...register('from')}
                       type="text"
                       id="from"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-transparent text-gray-900 bg-white"
                       placeholder="Город отправления"
                     />
                     {errors.from && (
@@ -112,7 +112,7 @@ export default function CalculatorPage() {
                       {...register('to')}
                       type="text"
                       id="to"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-transparent text-gray-900 bg-white"
                       placeholder="Город назначения"
                     />
                     {errors.to && (
@@ -128,7 +128,7 @@ export default function CalculatorPage() {
                       {...register('weight', { valueAsNumber: true })}
                       type="number"
                       id="weight"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-transparent text-gray-900 bg-white"
                       placeholder="Вес в килограммах"
                     />
                     {errors.weight && (
@@ -145,7 +145,7 @@ export default function CalculatorPage() {
                       type="number"
                       step="0.01"
                       id="volume"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-transparent text-gray-900 bg-white"
                       placeholder="Объем в кубических метрах"
                     />
                     {errors.volume && (
@@ -160,14 +160,14 @@ export default function CalculatorPage() {
                     <select
                       {...register('cargoType')}
                       id="cargoType"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-transparent text-gray-900 bg-white"
                     >
-                      <option value="">Выберите тип груза</option>
-                      <option value="general">Генеральный груз</option>
-                      <option value="fragile">Хрупкий груз</option>
-                      <option value="liquid">Жидкий груз</option>
-                      <option value="bulk">Насыпной груз</option>
-                      <option value="dangerous">Опасный груз</option>
+                      <option value="" className="text-gray-900">Выберите тип груза</option>
+                      <option value="general" className="text-gray-900">Генеральный груз</option>
+                      <option value="fragile" className="text-gray-900">Хрупкий груз</option>
+                      <option value="liquid" className="text-gray-900">Жидкий груз</option>
+                      <option value="bulk" className="text-gray-900">Насыпной груз</option>
+                      <option value="dangerous" className="text-gray-900">Опасный груз</option>
                     </select>
                     {errors.cargoType && (
                       <p className="mt-1 text-sm text-red-600">{errors.cargoType.message}</p>
