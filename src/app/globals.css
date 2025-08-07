@@ -123,6 +123,27 @@ html {
   }
 }
 
+/* Extra small mobile improvements */
+@media (max-width: 480px) {
+  /* Smaller text for very small screens */
+  .text-2xl.sm\:text-3xl {
+    font-size: 1.5rem !important;
+  }
+  
+  .text-sm.sm\:text-lg {
+    font-size: 0.875rem !important;
+  }
+  
+  /* Reduce margins for very small screens */
+  .mb-6.sm\:mb-8 {
+    margin-bottom: 1.5rem !important;
+  }
+  
+  .mb-12.sm\:mb-16 {
+    margin-bottom: 2rem !important;
+  }
+}
+
 /* Fix for mobile viewport issues */
 @media (max-width: 480px) {
   /* Ensure content doesn't overflow horizontally */

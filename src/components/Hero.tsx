@@ -65,8 +65,8 @@ export default function Hero({locale}: {locale: string}) {
           transition={{ duration: 1, ease: "easeOut" }}
         >
           {/* Enhanced main title */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl xl:text-9xl font-bold mb-8 sm:mb-12 leading-tight">
-            <span className="block bg-gradient-to-r from-white via-custom-blue-200 to-white bg-clip-text text-transparent">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl xl:text-8xl font-bold mb-6 sm:mb-8 md:mb-12 leading-tight">
+            <span className="block bg-gradient-to-r from-white via-custom-blue-200 to-white bg-clip-text text-transparent mb-2 sm:mb-4">
               {t('title').split(' ').slice(0, 2).join(' ')}
             </span>
             <span className="block bg-gradient-to-r from-custom-blue-200 via-white to-custom-blue-200 bg-clip-text text-transparent">
@@ -75,12 +75,12 @@ export default function Hero({locale}: {locale: string}) {
           </h1>
           
           {/* Enhanced subtitle */}
-          <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/90 mb-12 sm:mb-16 max-w-4xl mx-auto leading-relaxed px-4">
+          <p className="text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-white/90 mb-8 sm:mb-12 md:mb-16 max-w-4xl mx-auto leading-relaxed px-4">
             {t('subtitle')}
           </p>
 
           {/* Enhanced CTA buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 justify-center mb-16 sm:mb-20 px-4">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 justify-center mb-12 sm:mb-16 md:mb-20 px-4">
             <SmoothLink
               href="/services"
               className="group relative px-6 sm:px-8 md:px-10 py-4 sm:py-5 bg-white text-custom-blue-900 rounded-full font-semibold text-lg sm:text-xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl w-full sm:w-auto"
