@@ -28,7 +28,7 @@ export default function Hero({locale}: {locale: string}) {
   }
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-custom-blue-900 via-custom-blue-800 to-custom-blue-700 overflow-hidden">
+    <section className="relative min-h-screen bg-gradient-to-br from-custom-blue-900 via-custom-blue-800 to-custom-blue-700">
       {/* Background Elements */}
       <div className="absolute inset-0">
         {/* Floating geometric shapes */}
