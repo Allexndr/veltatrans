@@ -88,6 +88,55 @@ body {
   }
 }
 
+/* Mobile-specific improvements */
+@media (max-width: 640px) {
+  /* Ensure buttons don't overflow on mobile */
+  .w-full.sm\:w-auto {
+    width: 100% !important;
+  }
+  
+  /* Better text sizing for mobile */
+  .text-4xl.sm\:text-5xl {
+    font-size: 2rem !important;
+  }
+  
+  /* Improve spacing on mobile */
+  .mb-8.sm\:mb-12 {
+    margin-bottom: 2rem !important;
+  }
+  
+  /* Better padding for mobile */
+  .px-6.sm\:px-8 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  /* Ensure proper button sizing */
+  .py-4.sm\:py-5 {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+}
+
+/* Fix for mobile viewport issues */
+@media (max-width: 480px) {
+  /* Ensure content doesn't overflow horizontally */
+  body {
+    overflow-x: hidden;
+  }
+  
+  /* Better text wrapping */
+  .leading-tight {
+    line-height: 1.2;
+  }
+  
+  /* Improve button touch targets */
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
 /* Focus styles for accessibility */
 .focus-visible:focus {
   outline: 2px solid #3b82f6;

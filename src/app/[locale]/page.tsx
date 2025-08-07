@@ -26,59 +26,59 @@ export default async function HomePage({params}: {params: Promise<{locale: strin
         <ServicesPreview locale={locale} />
         
         {/* Enhanced Calculator and Tracking Section */}
-        <section className="py-24 bg-gradient-to-br from-gray-50 via-white to-gray-50 relative overflow-hidden">
+        <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-br from-gray-50 via-white to-gray-50 relative overflow-hidden">
           {/* <AnimatedBackground variant="section" /> */}
           
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-20">
-              <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-custom-blue-50 to-custom-blue-100 rounded-full text-custom-blue-700 text-sm font-medium mb-6">
-                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="text-center mb-12 sm:mb-16 md:mb-20">
+              <div className="inline-flex items-center px-3 sm:px-4 py-2 bg-gradient-to-r from-custom-blue-50 to-custom-blue-100 rounded-full text-custom-blue-700 text-xs sm:text-sm font-medium mb-4 sm:mb-6">
+                <svg className="w-3 h-3 sm:w-4 sm:h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                 </svg>
                 Полезные инструменты
               </div>
               
-              <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-8 leading-tight">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 sm:mb-8 leading-tight">
                 <span className="bg-gradient-to-r from-custom-blue-900 to-custom-blue-700 bg-clip-text text-transparent">
                   {t('tools.title')}
                 </span>
               </h2>
               
-              <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed px-4">
                 {t('tools.description')}
               </p>
             </div>
             
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12">
               <div>
                 <Calculator />
               </div>
-                              <div>
-                  <CargoTracking />
-                </div>
+              <div>
+                <CargoTracking />
               </div>
             </div>
+          </div>
         </section>
 
         <CasesSection locale={locale} />
         <RecommendationsSection locale={locale} />
         
         {/* Enhanced CTA Section */}
-        <section className="py-24 bg-gradient-to-br from-custom-blue-900 via-custom-blue-800 to-custom-blue-700 relative overflow-hidden">
+        <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-br from-custom-blue-900 via-custom-blue-800 to-custom-blue-700 relative overflow-hidden">
           {/* <AnimatedBackground variant="hero" className="opacity-20" /> */}
           
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-5xl md:text-6xl font-bold text-white mb-12 leading-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 sm:mb-12 leading-tight px-4">
               {t('home.description')}
             </h2>
             
-            <div className="flex flex-col sm:flex-row gap-8 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 justify-center px-4">
               <Link
                 href="/calculator"
-                className="group relative px-10 py-5 bg-white text-custom-blue-900 rounded-full font-semibold text-xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+                className="group relative px-6 sm:px-8 md:px-10 py-4 sm:py-5 bg-white text-custom-blue-900 rounded-full font-semibold text-lg sm:text-xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl w-full sm:w-auto"
               >
-                <span className="relative z-10 flex items-center">
-                  <svg className="w-6 h-6 mr-4 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <span className="relative z-10 flex items-center justify-center sm:justify-start">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-4 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                   </svg>
                   {t('home.cta')}
@@ -87,10 +87,10 @@ export default async function HomePage({params}: {params: Promise<{locale: strin
               
               <Link
                 href="/contacts"
-                className="group relative px-10 py-5 border-2 border-white text-white rounded-full font-semibold text-xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+                className="group relative px-6 sm:px-8 md:px-10 py-4 sm:py-5 border-2 border-white text-white rounded-full font-semibold text-lg sm:text-xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl w-full sm:w-auto"
               >
-                <span className="relative z-10 flex items-center">
-                  <svg className="w-6 h-6 mr-4 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <span className="relative z-10 flex items-center justify-center sm:justify-start">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-4 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
                   {t('contact.title')}

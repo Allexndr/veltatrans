@@ -57,15 +57,15 @@ export default function Hero({locale}: {locale: string}) {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 flex items-center justify-center min-h-screen">
+      <div className="relative z-10 flex items-center justify-center min-h-screen px-4">
         <motion.div 
-          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center w-full"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
         >
           {/* Enhanced main title */}
-          <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold mb-12 leading-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl xl:text-9xl font-bold mb-8 sm:mb-12 leading-tight">
             <span className="block bg-gradient-to-r from-white via-custom-blue-200 to-white bg-clip-text text-transparent">
               {t('title').split(' ').slice(0, 2).join(' ')}
             </span>
@@ -75,18 +75,18 @@ export default function Hero({locale}: {locale: string}) {
           </h1>
           
           {/* Enhanced subtitle */}
-          <p className="text-2xl md:text-3xl text-white/90 mb-16 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/90 mb-12 sm:mb-16 max-w-4xl mx-auto leading-relaxed px-4">
             {t('subtitle')}
           </p>
 
           {/* Enhanced CTA buttons */}
-          <div className="flex flex-col sm:flex-row gap-8 justify-center mb-20">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 justify-center mb-16 sm:mb-20 px-4">
             <SmoothLink
               href="/services"
-              className="group relative px-10 py-5 bg-white text-custom-blue-900 rounded-full font-semibold text-xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+              className="group relative px-6 sm:px-8 md:px-10 py-4 sm:py-5 bg-white text-custom-blue-900 rounded-full font-semibold text-lg sm:text-xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl w-full sm:w-auto"
             >
-              <span className="relative z-10 flex items-center">
-                <svg className="w-6 h-6 mr-4 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <span className="relative z-10 flex items-center justify-center sm:justify-start">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-4 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
                 {t('cta')}
@@ -95,10 +95,10 @@ export default function Hero({locale}: {locale: string}) {
             
             <SmoothLink
               href="/contacts"
-              className="group relative px-10 py-5 border-2 border-white text-white rounded-full font-semibold text-xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+              className="group relative px-6 sm:px-8 md:px-10 py-4 sm:py-5 border-2 border-white text-white rounded-full font-semibold text-lg sm:text-xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl w-full sm:w-auto"
             >
-              <span className="relative z-10 flex items-center">
-                <svg className="w-6 h-6 mr-4 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <span className="relative z-10 flex items-center justify-center sm:justify-start">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-4 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
                 {t('contact.title')}
@@ -107,36 +107,36 @@ export default function Hero({locale}: {locale: string}) {
           </div>
 
           {/* Enhanced stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-4xl mx-auto">
+          <div className="grid grid-cols-3 gap-4 sm:gap-8 md:gap-12 max-w-4xl mx-auto px-4">
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-white mb-4">
+              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2 sm:mb-4">
                 <span className="bg-gradient-to-r from-custom-blue-200 to-white bg-clip-text text-transparent">
                   15+
                 </span>
               </div>
-              <p className="text-white/80 text-lg">
+              <p className="text-white/80 text-sm sm:text-base md:text-lg">
                 {t('stats.years')}
               </p>
             </div>
             
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-white mb-4">
+              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2 sm:mb-4">
                 <span className="bg-gradient-to-r from-custom-blue-200 to-white bg-clip-text text-transparent">
                   1000+
                 </span>
               </div>
-              <p className="text-white/80 text-lg">
+              <p className="text-white/80 text-sm sm:text-base md:text-lg">
                 {t('stats.clients')}
               </p>
             </div>
             
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-white mb-4">
+              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2 sm:mb-4">
                 <span className="bg-gradient-to-r from-custom-blue-200 to-white bg-clip-text text-transparent">
                   50+
                 </span>
               </div>
-              <p className="text-white/80 text-lg">
+              <p className="text-white/80 text-sm sm:text-base md:text-lg">
                 {t('stats.countries')}
               </p>
             </div>
