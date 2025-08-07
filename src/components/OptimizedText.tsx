@@ -72,7 +72,8 @@ export default function OptimizedText({
       primary: 'text-custom-blue-600',
       secondary: 'text-gray-600',
       muted: 'text-gray-500',
-      white: 'text-white'
+      white: 'text-white',
+      gradient: 'text-gray-900' // fallback for gradient
     };
     return colorMap[color] || 'text-gray-900';
   };
@@ -137,7 +138,7 @@ export default function OptimizedText({
       transition: {
         duration,
         delay,
-        ease: "easeOut"
+        ease: "easeOut" as const
       }
     }
   };
@@ -146,7 +147,7 @@ export default function OptimizedText({
   const colorClasses = color === 'gradient' ? getGradientClasses() : getColorClasses();
   const finalClasses = `${baseClasses} ${colorClasses}`;
 
-  const Component = variant as keyof JSX.IntrinsicElements;
+  const Component = variant as keyof React.JSX.IntrinsicElements;
 
   if (!animate) {
     return <Component className={finalClasses}>{children}</Component>;

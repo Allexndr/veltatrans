@@ -49,7 +49,7 @@ export async function generateMetadata({params}: {params: Promise<{locale: strin
         'en': '/en',
         'kz': '/kz',
         'zh': '/zh',
-      },
+      } as Record<string, string>,
     },
     openGraph: {
       title: t('home.title'),

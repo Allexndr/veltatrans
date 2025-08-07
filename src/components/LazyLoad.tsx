@@ -26,8 +26,7 @@ export default function LazyLoad({
 }: LazyLoadProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { 
-    once, 
-    margin: `-${threshold * 100}px` 
+    once
   });
 
   const getInitialPosition = () => {
@@ -69,7 +68,7 @@ export default function LazyLoad({
       transition: {
         duration,
         delay,
-        ease: "easeOut"
+        ease: "easeOut" as const
       }
     }
   };

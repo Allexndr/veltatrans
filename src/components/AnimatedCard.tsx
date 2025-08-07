@@ -32,7 +32,7 @@ export default function AnimatedCard({
       rotateX: 0,
       transition: {
         duration: 0.8,
-        ease: "easeOut",
+        ease: "easeOut" as const,
         delay
       }
     },
@@ -42,7 +42,7 @@ export default function AnimatedCard({
       rotateY: 2,
       transition: {
         duration: 0.3,
-        ease: "easeOut"
+        ease: "easeOut" as const
       }
     }
   };

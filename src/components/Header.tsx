@@ -37,7 +37,7 @@ export default function Header() {
     animate: { 
       y: 0, 
       opacity: 1,
-      transition: { duration: 0.6, ease: "easeOut" }
+      transition: { duration: 0.6, ease: "easeOut" as const }
     },
     scrolled: {
       backgroundColor: "rgba(255, 255, 255, 0.95)",
@@ -59,12 +59,12 @@ export default function Header() {
     closed: {
       opacity: 0,
       height: 0,
-      transition: { duration: 0.3, ease: "easeInOut" }
+      transition: { duration: 0.3, ease: "easeInOut" as const }
     },
     open: {
       opacity: 1,
       height: "auto",
-      transition: { duration: 0.3, ease: "easeInOut" }
+      transition: { duration: 0.3, ease: "easeInOut" as const }
     }
   };
 

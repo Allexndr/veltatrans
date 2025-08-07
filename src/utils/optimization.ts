@@ -1,7 +1,7 @@
 import {PERFORMANCE} from './constants';
 
 // Debounce function for performance optimization
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
   delay: number = PERFORMANCE.DEBOUNCE_DELAY
 ): (...args: Parameters<T>) => void {
@@ -14,7 +14,7 @@ export function debounce<T extends (...args: any[]) => any>(
 }
 
 // Throttle function for performance optimization
-export function throttle<T extends (...args: any[]) => any>(
+export function throttle<T extends (...args: unknown[]) => unknown>(
   func: T,
   delay: number = PERFORMANCE.THROTTLE_DELAY
 ): (...args: Parameters<T>) => void {
@@ -86,7 +86,7 @@ export function prefetchResource(href: string): void {
 // Cache management
 export class CacheManager {
   private static instance: CacheManager;
-  private cache = new Map<string, {data: any; timestamp: number; ttl: number}>();
+  private cache = new Map<string, {data: unknown; timestamp: number; ttl: number}>();
 
   static getInstance(): CacheManager {
     if (!CacheManager.instance) {
@@ -95,7 +95,7 @@ export class CacheManager {
     return CacheManager.instance;
   }
 
-  set(key: string, data: any, ttl: number = 5 * 60 * 1000): void {
+  set(key: string, data: unknown, ttl: number = 5 * 60 * 1000): void {
     this.cache.set(key, {
       data,
       timestamp: Date.now(),
@@ -103,7 +103,7 @@ export class CacheManager {
     });
   }
 
-  get(key: string): any | null {
+  get(key: string): unknown | null {
     const item = this.cache.get(key);
     if (!item) return null;
 
@@ -213,7 +213,7 @@ export function getBundleSize(): number {
   const resources = performance.getEntriesByType('resource');
   return resources.reduce((total, resource) => {
     if (resource.name.includes('.js') || resource.name.includes('.css')) {
-      return total + (resource.transferSize || 0);
+      return total + ((resource as PerformanceResourceTiming).transferSize || 0);
     }
     return total;
   }, 0);

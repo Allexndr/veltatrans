@@ -17,7 +17,7 @@ interface CasesSectionProps {
 }
 
 export default function CasesSection({locale}: CasesSectionProps) {
-  const [messages, setMessages] = useState<any>(null);
+  const [messages, setMessages] = useState<Record<string, unknown> | null>(null);
   const [activeCategory, setActiveCategory] = useState('all');
   const [isVisible, setIsVisible] = useState(false);
 
@@ -49,11 +49,11 @@ export default function CasesSection({locale}: CasesSectionProps) {
 
   const t = (key: string) => {
     const keys = key.split('.');
-    let value = messages;
+    let value: unknown = messages;
     for (const k of keys) {
-      value = value?.[k];
+      value = (value as Record<string, unknown>)?.[k];
     }
-    return value || key;
+    return (value as string) || key;
   };
 
   const cases: Case[] = [

@@ -34,7 +34,7 @@ export default function AnimatedBackground({variant = 'section', className = ''}
       transition: {
         duration: variant === 'hero' ? 10 : 8,
         repeat: Infinity,
-        ease: "easeInOut"
+        ease: "easeInOut" as const
       }
     }
   };
@@ -46,7 +46,7 @@ export default function AnimatedBackground({variant = 'section', className = ''}
       transition: {
         duration: 4,
         repeat: Infinity,
-        ease: "linear"
+        ease: "linear" as const
       }
     }
   };
@@ -57,7 +57,7 @@ export default function AnimatedBackground({variant = 'section', className = ''}
       transition: {
         duration: variant === 'hero' ? 15 : 12,
         repeat: Infinity,
-        ease: "linear"
+        ease: "linear" as const
       }
     }
   };
@@ -68,7 +68,7 @@ export default function AnimatedBackground({variant = 'section', className = ''}
       transition: {
         duration: variant === 'hero' ? 18 : 15,
         repeat: Infinity,
-        ease: "linear"
+        ease: "linear" as const
       }
     }
   };
