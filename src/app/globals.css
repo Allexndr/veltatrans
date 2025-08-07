@@ -22,6 +22,11 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   overflow-x: hidden;
   overflow-y: auto;
+  min-height: 100vh;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 /* Velta Trans Custom Styles */
@@ -134,6 +139,24 @@ body {
   button, a {
     min-height: 44px;
     min-width: 44px;
+  }
+  
+  /* Ensure proper scrolling on mobile */
+  .min-h-screen {
+    min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport height for mobile */
+  }
+}
+
+/* Ensure proper scrolling behavior */
+* {
+  box-sizing: border-box;
+}
+
+/* Fix for iOS Safari viewport issues */
+@supports (-webkit-touch-callout: none) {
+  .min-h-screen {
+    min-height: -webkit-fill-available;
   }
 }
 

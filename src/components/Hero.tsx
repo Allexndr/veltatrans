@@ -28,7 +28,7 @@ export default function Hero({locale}: {locale: string}) {
   }
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-custom-blue-900 via-custom-blue-800 to-custom-blue-700">
+    <section className="relative min-h-screen bg-gradient-to-br from-custom-blue-900 via-custom-blue-800 to-custom-blue-700 flex flex-col">
       {/* Background Elements */}
       <div className="absolute inset-0">
         {/* Floating geometric shapes */}
@@ -57,7 +57,7 @@ export default function Hero({locale}: {locale: string}) {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 flex items-center justify-center min-h-screen px-4">
+      <div className="relative z-10 flex items-center justify-center flex-1 px-4">
         <motion.div 
           className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center w-full"
           initial={{ opacity: 0, y: 50 }}
