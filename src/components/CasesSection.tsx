@@ -2,6 +2,7 @@
 
 import {Link} from '@/i18n/routing';
 import {useState, useEffect} from 'react';
+import LoadingScreen from './LoadingScreen';
 
 interface Case {
   id: number;
@@ -34,9 +35,14 @@ export default function CasesSection({locale}: CasesSectionProps) {
   }, [locale]);
 
   if (!messages) {
-    return <div className="py-16 bg-gray-50 animate-pulse">
+    return <div className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="h-96 bg-gray-200 rounded-lg"></div>
+        <LoadingScreen 
+          message="Загружаем кейсы..." 
+          size="lg" 
+          speed="normal"
+          className="h-96"
+        />
       </div>
     </div>;
   }
