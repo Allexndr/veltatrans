@@ -7,6 +7,7 @@ import type { Metadata } from "next";
 import PerformanceOptimizer from '@/components/PerformanceOptimizer';
 import {SEO} from '@/utils/constants';
 import '../globals.css';
+import FloatingContacts from '@/components/FloatingContacts';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -162,6 +163,13 @@ export default async function LocaleLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <NextIntlClientProvider messages={messages} locale={locale}>
           {children}
+          {/* Floating contacts: update with real contacts */}
+          <FloatingContacts
+            phone={'+77001234567'}
+            email={'info@velta-logistics.com'}
+            whatsapp={'77001234567'}
+            telegram={'veltatrans'}
+          />
         </NextIntlClientProvider>
         
         {/* Service Worker Registration - Only in production */}
