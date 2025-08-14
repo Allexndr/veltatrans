@@ -13,13 +13,20 @@ interface CalculationResult {
 export default function Calculator() {
   const t = useTranslations('calculator');
   const [formData, setFormData] = useState({
+    senderName: '',
     fromCity: '',
+    fromCountry: '',
     toCity: '',
+    toCountry: '',
+    shipmentType: 'auto',
+    cargoType: '',
     weight: '',
     volume: '',
     length: '',
     width: '',
     height: '',
+    features: '',
+    phone: '',
     isOversized: false
   });
   const [result, setResult] = useState<CalculationResult | null>(null);
@@ -54,13 +61,20 @@ export default function Calculator() {
 
   const resetForm = () => {
     setFormData({
+      senderName: '',
       fromCity: '',
+      fromCountry: '',
       toCity: '',
+      toCountry: '',
+      shipmentType: 'auto',
+      cargoType: '',
       weight: '',
       volume: '',
       length: '',
       width: '',
       height: '',
+      features: '',
+      phone: '',
       isOversized: false
     });
     setResult(null);
@@ -80,7 +94,37 @@ export default function Calculator() {
 
         <div className="bg-white rounded-lg shadow-lg p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Cities */}
+            {/* Sender and phone */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label htmlFor="senderName" className="block text-sm font-medium text-gray-700 mb-2">
+                  {t('form.senderName')}
+                </label>
+                <input
+                  type="text"
+                  id="senderName"
+                  name="senderName"
+                  value={formData.senderName}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500"
+                />
+              </div>
+              <div>
+                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                  {t('form.phone')}
+                </label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  placeholder="+7 700 000 00 00"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500"
+                />
+              </div>
+            </div>
+            {/* Cities and countries */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label htmlFor="fromCity" className="block text-sm font-medium text-gray-700 mb-2">
@@ -110,6 +154,73 @@ export default function Calculator() {
                   value={formData.toCity}
                   onChange={handleChange}
                   placeholder={t('form.cityPlaceholder')}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label htmlFor="fromCountry" className="block text-sm font-medium text-gray-700 mb-2">
+                  {t('form.fromCountry')}
+                </label>
+                <input
+                  type="text"
+                  id="fromCountry"
+                  name="fromCountry"
+                  value={formData.fromCountry}
+                  onChange={handleChange}
+                  placeholder={t('form.countryPlaceholder')}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500"
+                />
+              </div>
+              <div>
+                <label htmlFor="toCountry" className="block text-sm font-medium text-gray-700 mb-2">
+                  {t('form.toCountry')}
+                </label>
+                <input
+                  type="text"
+                  id="toCountry"
+                  name="toCountry"
+                  value={formData.toCountry}
+                  onChange={handleChange}
+                  placeholder={t('form.countryPlaceholder')}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500"
+                />
+              </div>
+            </div>
+
+            {/* Shipment type and cargo */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label htmlFor="shipmentType" className="block text-sm font-medium text-gray-700 mb-2">
+                  {t('form.shipmentType')}
+                </label>
+                <select
+                  id="shipmentType"
+                  name="shipmentType"
+                  value={formData.shipmentType}
+                  onChange={handleChange as any}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500 bg-white"
+                >
+                  <option value="auto">{t('form.types.auto')}</option>
+                  <option value="rail">{t('form.types.rail')}</option>
+                  <option value="air">{t('form.types.air')}</option>
+                  <option value="sea">{t('form.types.sea')}</option>
+                  <option value="multimodal">{t('form.types.multimodal')}</option>
+                </select>
+              </div>
+              <div>
+                <label htmlFor="cargoType" className="block text-sm font-medium text-gray-700 mb-2">
+                  {t('form.cargoType')}
+                </label>
+                <input
+                  type="text"
+                  id="cargoType"
+                  name="cargoType"
+                  value={formData.cargoType}
+                  onChange={handleChange}
+                  placeholder={t('form.cargoPlaceholder')}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500"
                 />
               </div>
@@ -203,8 +314,9 @@ export default function Calculator() {
               </div>
             </div>
 
-            {/* Oversized Cargo */}
-            <div className="flex items-center">
+            {/* Oversized and features */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+              <div className="flex items-center">
               <input
                 type="checkbox"
                 id="isOversized"
@@ -219,6 +331,21 @@ export default function Calculator() {
               <svg className="w-5 h-5 text-gray-400 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
+              </div>
+              <div>
+                <label htmlFor="features" className="block text-sm font-medium text-gray-700 mb-2">
+                  {t('form.features')}
+                </label>
+                <input
+                  type="text"
+                  id="features"
+                  name="features"
+                  value={formData.features}
+                  onChange={handleChange}
+                  placeholder={t('form.featuresPlaceholder')}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500"
+                />
+              </div>
             </div>
 
             {/* Submit Button */}
@@ -226,7 +353,7 @@ export default function Calculator() {
               <button
                 type="submit"
                 disabled={isCalculating}
-                className="bg-custom-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-custom-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="btn-primary w-full"
               >
                 {isCalculating ? t('form.calculating') : t('form.calculate')}
               </button>

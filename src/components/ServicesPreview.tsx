@@ -73,7 +73,7 @@ export default function ServicesPreview({locale}: {locale: string}) {
         {/* Services grid */}
         <motion.div 
           ref={ref}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 items-stretch"
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.8, staggerChildren: 0.2 }}
@@ -86,7 +86,7 @@ export default function ServicesPreview({locale}: {locale: string}) {
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-              <div className="relative bg-white rounded-3xl p-8 shadow-lg transition-all duration-500 transform border border-gray-100 overflow-hidden hover:shadow-2xl hover:shadow-custom-blue-100/50 hover:-translate-y-2">
+              <div className="relative bg-white rounded-3xl p-8 shadow-lg transition-all duration-500 transform border border-gray-100 overflow-hidden hover:shadow-2xl hover:shadow-custom-blue-100/50 hover:-translate-y-2 flex flex-col h-full">
                 {/* Background gradient on hover */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
                 
@@ -100,21 +100,21 @@ export default function ServicesPreview({locale}: {locale: string}) {
                   </div>
                   
                   {/* Title */}
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-custom-blue-600 transition-colors duration-300">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-custom-blue-600 transition-colors duration-300 min-h-[64px]">
                     {service.title}
                   </h3>
                   
                   {/* Description */}
-                  <p className="text-gray-600 leading-relaxed mb-6">
+                  <p className="text-gray-600 leading-relaxed mb-6 min-h-[84px]">
                     {service.description}
                   </p>
                   
                   {/* Link */}
-                  <SmoothLink
+                   <SmoothLink
                     href={service.href}
-                    className="inline-flex items-center text-custom-blue-600 font-semibold hover:text-custom-blue-700 transition-colors duration-300 group/link"
+                    className="mt-auto inline-flex items-center text-custom-blue-600 font-semibold hover:text-custom-blue-700 transition-colors duration-300 group/link text-base md:text-lg"
                   >
-                    Подробнее
+                    {t('more')}
                     <svg className="w-5 h-5 ml-2 transition-transform duration-300 group-hover/link:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>

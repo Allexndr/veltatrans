@@ -86,8 +86,8 @@ export async function generateMetadata({params}: {params: Promise<{locale: strin
       },
     },
     verification: {
-      google: 'your-google-verification-code',
-      yandex: 'your-yandex-verification-code',
+      google: process.env.NEXT_PUBLIC_SEO_GOOGLE || undefined,
+      yandex: process.env.NEXT_PUBLIC_SEO_YANDEX || undefined,
     },
   };
 }

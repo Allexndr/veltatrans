@@ -168,7 +168,7 @@ export default function CargoTracking() {
               <button
                 type="submit"
                 disabled={isTracking}
-                className="w-full bg-custom-blue-600 text-white py-4 px-6 rounded-lg font-semibold text-lg hover:bg-custom-blue-700 focus:outline-none focus:ring-2 focus:ring-custom-blue-500 focus:ring-offset-2 transition-all duration-300 transform hover:scale-105 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                className="btn-primary w-full"
               >
                 {isTracking ? (
                   <div className="flex items-center justify-center space-x-2">
@@ -247,9 +247,14 @@ export default function CargoTracking() {
                 </div>
               </div>
 
-                             <p className="mt-6 text-sm text-gray-600 text-center animate-fade-in-up" style={{animationDelay: '1.5s'}}>
-                 {t('note')}
-               </p>
+              {/* Map placeholder for future integration */}
+              <div className="mt-6 bg-gray-100 border border-gray-200 rounded-lg h-64 flex items-center justify-center text-gray-500">
+                Карта будет подключена после выдачи ключа (Яндекс / Google / 2ГИС)
+              </div>
+
+              <p className="mt-6 text-sm text-gray-600 text-center animate-fade-in-up" style={{animationDelay: '1.5s'}}>
+                {t('note')}
+              </p>
             </div>
           )}
         </div>

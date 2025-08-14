@@ -29,7 +29,7 @@ export default function DocumentsSection({locale}: DocumentsSectionProps) {
       category: 'contracts',
       fileType: 'PDF',
       fileSize: '245 KB',
-      downloadUrl: '#'
+      downloadUrl: '/api/materials/КП%20VT%20rus.pdf'
     },
     {
       id: 2,
@@ -38,7 +38,7 @@ export default function DocumentsSection({locale}: DocumentsSectionProps) {
       category: 'contracts',
       fileType: 'PDF',
       fileSize: '189 KB',
-      downloadUrl: '#'
+      downloadUrl: '/api/materials/Презентация_Velta_%20(3).pptx'
     },
     {
       id: 3,
@@ -47,7 +47,7 @@ export default function DocumentsSection({locale}: DocumentsSectionProps) {
       category: 'powers',
       fileType: 'PDF',
       fileSize: '156 KB',
-      downloadUrl: '#'
+      downloadUrl: '/api/materials/Презентация_Velta_English.pptx'
     },
     {
       id: 4,
@@ -56,7 +56,7 @@ export default function DocumentsSection({locale}: DocumentsSectionProps) {
       category: 'powers',
       fileType: 'PDF',
       fileSize: '178 KB',
-      downloadUrl: '#'
+      downloadUrl: '/api/materials/Презентация_Velta_Китайский.pptx'
     },
     {
       id: 5,
@@ -65,7 +65,7 @@ export default function DocumentsSection({locale}: DocumentsSectionProps) {
       category: 'powers',
       fileType: 'PDF',
       fileSize: '134 KB',
-      downloadUrl: '#'
+      downloadUrl: '/api/materials/New%20Logo%20VELTA%20TRANS%20(4).pdf'
     },
     {
       id: 6,
@@ -74,7 +74,7 @@ export default function DocumentsSection({locale}: DocumentsSectionProps) {
       category: 'requisites',
       fileType: 'PDF',
       fileSize: '89 KB',
-      downloadUrl: '#'
+      downloadUrl: '/api/materials/V%20Logo%20VELTA%20TRANS%20копия.pdf'
     }
   ];
 

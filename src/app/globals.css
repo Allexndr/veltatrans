@@ -25,6 +25,38 @@ body {
   min-height: 100vh;
 }
 
+/* Unified button styles */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #2563eb; /* custom-blue-600 analog */
+  color: #ffffff;
+  padding: 1rem 1.5rem; /* py-4 px-6 */
+  border-radius: 0.5rem; /* rounded-lg */
+  font-weight: 600; /* font-semibold */
+  font-size: 1.125rem; /* text-lg */
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #1d4ed8; /* custom-blue-700 */
+  transform: scale(1.05);
+  box-shadow: 0 20px 25px -5px rgba(59,130,246,0.2), 0 10px 10px -5px rgba(59,130,246,0.1);
+}
+
+.btn-primary:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -203,19 +235,34 @@ option {
   background-color: #ffffff !important;
 }
 
-/* Hide scrollbar */
+/* Show scrollbar for long pages (was hidden) */
 ::-webkit-scrollbar {
-  display: none;
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9; /* slate-100 */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1; /* slate-300 */
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8; /* slate-400 */
 }
 
 /* For Firefox */
 * {
-  scrollbar-width: none;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
 }
 
 /* For IE and Edge */
 * {
-  -ms-overflow-style: none;
+  -ms-overflow-style: auto;
 }
 
 /* Smooth page transitions */

@@ -64,13 +64,10 @@ export default function Hero({locale}: {locale: string}) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
         >
-          {/* Enhanced main title */}
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl xl:text-8xl font-bold mb-6 sm:mb-8 md:mb-12 leading-tight">
-            <span className="block bg-gradient-to-r from-white via-custom-blue-200 to-white bg-clip-text text-transparent mb-2 sm:mb-4">
-              {t('title').split(' ').slice(0, 2).join(' ')}
-            </span>
-            <span className="block bg-gradient-to-r from-custom-blue-200 via-white to-custom-blue-200 bg-clip-text text-transparent">
-              {t('title').split(' ').slice(2).join(' ')}
+          {/* Main title: smaller size and without stray hyphen */}
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 md:mb-8 leading-tight">
+            <span className="block bg-gradient-to-r from-white via-custom-blue-200 to-white bg-clip-text text-transparent">
+              {t('title')}
             </span>
           </h1>
           
@@ -144,8 +141,8 @@ export default function Hero({locale}: {locale: string}) {
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+          {/* Scroll indicator moved lower under stats */}
+          <div className="absolute bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2">
         <div className="flex flex-col items-center text-white/60 animate-bounce">
           <span className="text-sm mb-2">Scroll</span>
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

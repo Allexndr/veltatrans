@@ -39,7 +39,7 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Quick Links */}
+          {/* Quick Links: one line list */}
           <div className="animate-fade-in-up" style={{animationDelay: '0.4s'}}>
                          <h4 className="text-lg font-semibold mb-4 flex items-center">
                <span className="mr-2">
@@ -49,19 +49,19 @@ export default function Footer() {
                </span>
                Быстрые ссылки
              </h4>
-            <ul className="space-y-3">
+            <ul className="flex flex-wrap gap-x-6 gap-y-2">
               {[
+                {href: '/calculator', name: t('navigation.calculator'), icon: '🧮'},
                 {href: '/services', name: t('navigation.services'), icon: '🚛'},
-                {href: '/calculator', name: t('navigation.calculator'), icon: '��'},
                 {href: '/rates', name: t('navigation.rates'), icon: '💰'},
                 {href: '/documents', name: t('navigation.documents'), icon: '📄'}
               ].map((link) => (
                 <li key={link.href} className="group">
                   <SmoothLink 
                     href={link.href} 
-                    className="text-gray-300 hover:text-white transition-all duration-300 flex items-center transform hover:translate-x-2"
+                    className="text-gray-300 hover:text-white transition-all duration-300 inline-flex items-center transform hover:translate-x-1"
                   >
-                    <span className="mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:scale-110">
+                    <span className="mr-2 opacity-80 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:scale-110">
                       {link.icon === '🚛' && (
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />

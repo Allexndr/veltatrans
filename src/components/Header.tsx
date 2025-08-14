@@ -2,6 +2,7 @@
 
 import {useTranslations} from 'next-intl';
 import {Link} from '@/i18n/routing';
+import Logo from './Logo';
 import LanguageSwitcher from './LanguageSwitcher';
 import {useState, useEffect} from 'react';
 import {motion, AnimatePresence} from 'framer-motion';
@@ -83,24 +84,8 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 lg:h-20">
           {/* Logo */}
-          <motion.div 
-            className="flex-shrink-0"
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.2 }}
-          >
-            <Link href="/" className="flex items-center group">
-              <motion.div 
-                className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-custom-blue-600 to-custom-blue-700 rounded-xl flex items-center justify-center mr-2 sm:mr-3 shadow-lg group-hover:shadow-xl transition-all duration-300"
-                whileHover={{ rotate: 5, scale: 1.1 }}
-              >
-                <svg className="w-4 h-4 sm:w-6 sm:h-6 lg:w-7 lg:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                </svg>
-              </motion.div>
-              <span className="text-lg sm:text-xl lg:text-2xl font-bold bg-gradient-to-r from-custom-blue-900 to-custom-blue-700 bg-clip-text text-transparent group-hover:from-custom-blue-700 group-hover:to-custom-blue-900 transition-all duration-300">
-                Velta Trans
-              </span>
-            </Link>
+          <motion.div className="flex-shrink-0" whileHover={{ scale: 1.03 }} transition={{ duration: 0.2 }}>
+            <Logo />
           </motion.div>
 
           {/* Desktop Navigation */}
