@@ -75,234 +75,245 @@ export default function SEOAdminPage() {
 
   if (!isAuthenticated) {
     return (
-      <html>
-        <body style={{ margin: 0, fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif' }}>
+      <>
+        <style jsx global>{`
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+          
+          body {
+            margin: 0 !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+          }
+        `}</style>
+        <div style={{
+          minHeight: '100vh',
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '20px',
+          position: 'relative',
+          overflow: 'hidden'
+        }}>
+          {/* Background decoration */}
           <div style={{
-            minHeight: '100vh',
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '20px',
-            position: 'relative',
-            overflow: 'hidden'
+            position: 'absolute',
+            top: '10%',
+            left: '10%',
+            width: '200px',
+            height: '200px',
+            background: 'rgba(255, 255, 255, 0.1)',
+            borderRadius: '50%',
+            filter: 'blur(40px)'
+          }}></div>
+          <div style={{
+            position: 'absolute',
+            bottom: '20%',
+            right: '15%',
+            width: '150px',
+            height: '150px',
+            background: 'rgba(255, 255, 255, 0.08)',
+            borderRadius: '50%',
+            filter: 'blur(30px)'
+          }}></div>
+          
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.95)',
+            backdropFilter: 'blur(20px)',
+            padding: '48px 40px',
+            borderRadius: '24px',
+            boxShadow: '0 20px 40px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.2)',
+            width: '100%',
+            maxWidth: '420px',
+            border: '1px solid rgba(255, 255, 255, 0.3)',
+            position: 'relative'
           }}>
-            {/* Background decoration */}
-            <div style={{
-              position: 'absolute',
-              top: '10%',
-              left: '10%',
-              width: '200px',
-              height: '200px',
-              background: 'rgba(255, 255, 255, 0.1)',
-              borderRadius: '50%',
-              filter: 'blur(40px)'
-            }}></div>
-            <div style={{
-              position: 'absolute',
-              bottom: '20%',
-              right: '15%',
-              width: '150px',
-              height: '150px',
-              background: 'rgba(255, 255, 255, 0.08)',
-              borderRadius: '50%',
-              filter: 'blur(30px)'
-            }}></div>
-            
-            <div style={{
-              background: 'rgba(255, 255, 255, 0.95)',
-              backdropFilter: 'blur(20px)',
-              padding: '48px 40px',
-              borderRadius: '24px',
-              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.2)',
-              width: '100%',
-              maxWidth: '420px',
-              border: '1px solid rgba(255, 255, 255, 0.3)',
-              position: 'relative'
-            }}>
-              <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-                <div style={{
-                  width: '80px', 
-                  height: '80px',
-                  background: 'linear-gradient(135deg, #667eea, #764ba2)',
-                  borderRadius: '20px',
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center',
-                  margin: '0 auto 24px',
-                  boxShadow: '0 8px 32px rgba(102, 126, 234, 0.3)',
-                  position: 'relative'
-                }}>
-                  <div style={{
-                    position: 'absolute',
-                    inset: '2px',
-                    background: 'linear-gradient(135deg, #667eea, #764ba2)',
-                    borderRadius: '18px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}>
-                    <svg style={{ width: '40px', height: '40px', color: 'white' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                    </svg>
-                  </div>
-                </div>
-                <h1 style={{
-                  fontSize: '32px',
-                  fontWeight: '700',
-                  background: 'linear-gradient(135deg, #667eea, #764ba2)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  marginBottom: '8px',
-                  letterSpacing: '-1px'
-                }}>
-                  SEO Админ-панель
-                </h1>
-                <p style={{ 
-                  color: '#64748b', 
-                  fontSize: '16px',
-                  fontWeight: '500',
-                  margin: 0
-                }}>
-                  Velta Trans
-                </p>
-              </div>
-              
-              <div style={{ marginBottom: '24px' }}>
-                <div style={{ position: 'relative', marginBottom: '24px' }}>
-                  <input
-                    type="password"
-                    placeholder="Введите пароль"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    style={{
-                      width: '100%', 
-                      padding: '18px 24px 18px 60px',
-                      backgroundColor: '#f8fafc',
-                      border: '2px solid #e2e8f0',
-                      borderRadius: '16px',
-                      outline: 'none',
-                      fontSize: '16px',
-                      fontWeight: '500',
-                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
-                    }}
-                    onFocus={(e) => {
-                      e.target.style.borderColor = '#667eea';
-                      e.target.style.backgroundColor = '#ffffff';
-                      e.target.style.boxShadow = '0 0 0 4px rgba(102, 126, 234, 0.1)';
-                    }}
-                    onBlur={(e) => {
-                      e.target.style.borderColor = '#e2e8f0';
-                      e.target.style.backgroundColor = '#f8fafc';
-                      e.target.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.1)';
-                    }}
-                    onKeyPress={(e) => e.key === 'Enter' && handleAuth()}
-                  />
-                  <div style={{
-                    position: 'absolute',
-                    left: '24px',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    width: '20px',
-                    height: '20px',
-                    color: '#94a3b8'
-                  }}>
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
-                    </svg>
-                  </div>
-                </div>
-
-                <button
-                  onClick={handleAuth}
-                  style={{
-                    width: '100%',
-                    background: 'linear-gradient(135deg, #667eea, #764ba2)',
-                    color: 'white',
-                    padding: '18px 24px',
-                    borderRadius: '16px',
-                    border: 'none',
-                    fontSize: '16px',
-                    fontWeight: '600',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    boxShadow: '0 4px 14px rgba(102, 126, 234, 0.3)',
-                    letterSpacing: '0.5px',
-                    position: 'relative',
-                    overflow: 'hidden'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.target.style.transform = 'translateY(-2px)';
-                    e.target.style.boxShadow = '0 8px 25px rgba(102, 126, 234, 0.4)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.transform = 'translateY(0)';
-                    e.target.style.boxShadow = '0 4px 14px rgba(102, 126, 234, 0.3)';
-                  }}
-                >
-                  <span style={{ position: 'relative', zIndex: 1 }}>Войти в панель</span>
-                </button>
-
-                {message && (
-                  <div style={{
-                    backgroundColor: '#fef2f2',
-                    border: '2px solid #fecaca',
-                    borderRadius: '16px',
-                    padding: '16px 20px',
-                    marginTop: '20px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '12px'
-                  }}>
-                    <div style={{ color: '#dc2626', fontSize: '20px' }}>⚠️</div>
-                    <p style={{ 
-                      color: '#dc2626', 
-                      fontSize: '14px', 
-                      fontWeight: '500',
-                      margin: 0
-                    }}>
-                      {message}
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              <div style={{ 
-                marginTop: '32px', 
-                paddingTop: '24px', 
-                borderTop: '1px solid #e2e8f0', 
-                textAlign: 'center' 
+            <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+              <div style={{
+                width: '80px', 
+                height: '80px',
+                background: 'linear-gradient(135deg, #667eea, #764ba2)',
+                borderRadius: '20px',
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                margin: '0 auto 24px',
+                boxShadow: '0 8px 32px rgba(102, 126, 234, 0.3)',
+                position: 'relative'
               }}>
-                <p style={{ 
-                  fontSize: '13px', 
-                  color: '#94a3b8',
-                  fontWeight: '500',
-                  margin: 0
+                <div style={{
+                  position: 'absolute',
+                  inset: '2px',
+                  background: 'linear-gradient(135deg, #667eea, #764ba2)',
+                  borderRadius: '18px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
                 }}>
-                  © 2024 Velta Trans • Международные грузоперевозки
-                </p>
+                  <svg style={{ width: '40px', height: '40px', color: 'white' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                </div>
               </div>
+              <h1 style={{
+                fontSize: '32px',
+                fontWeight: '700',
+                background: 'linear-gradient(135deg, #667eea, #764ba2)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                marginBottom: '8px',
+                letterSpacing: '-1px'
+              }}>
+                SEO Админ-панель
+              </h1>
+              <p style={{ 
+                color: '#64748b', 
+                fontSize: '16px',
+                fontWeight: '500',
+                margin: 0
+              }}>
+                Velta Trans
+              </p>
+            </div>
+            
+            <div style={{ marginBottom: '24px' }}>
+              <div style={{ position: 'relative', marginBottom: '24px' }}>
+                <input
+                  type="password"
+                  placeholder="Введите пароль"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  style={{
+                    width: '100%', 
+                    padding: '18px 24px 18px 60px',
+                    backgroundColor: '#f8fafc',
+                    border: '2px solid #e2e8f0',
+                    borderRadius: '16px',
+                    outline: 'none',
+                    fontSize: '16px',
+                    fontWeight: '500',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
+                  }}
+                  onFocus={(e) => {
+                    e.target.style.borderColor = '#667eea';
+                    e.target.style.backgroundColor = '#ffffff';
+                    e.target.style.boxShadow = '0 0 0 4px rgba(102, 126, 234, 0.1)';
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.borderColor = '#e2e8f0';
+                    e.target.style.backgroundColor = '#f8fafc';
+                    e.target.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.1)';
+                  }}
+                  onKeyPress={(e) => e.key === 'Enter' && handleAuth()}
+                />
+                <div style={{
+                  position: 'absolute',
+                  left: '24px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  width: '20px',
+                  height: '20px',
+                  color: '#94a3b8'
+                }}>
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1721 9z" />
+                  </svg>
+                </div>
+              </div>
+
+              <button
+                onClick={handleAuth}
+                style={{
+                  width: '100%',
+                  background: 'linear-gradient(135deg, #667eea, #764ba2)',
+                  color: 'white',
+                  padding: '18px 24px',
+                  borderRadius: '16px',
+                  border: 'none',
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  boxShadow: '0 4px 14px rgba(102, 126, 234, 0.3)',
+                  letterSpacing: '0.5px',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}
+                onMouseEnter={(e) => {
+                  const target = e.target as HTMLButtonElement;
+                  target.style.transform = 'translateY(-2px)';
+                  target.style.boxShadow = '0 8px 25px rgba(102, 126, 234, 0.4)';
+                }}
+                onMouseLeave={(e) => {
+                  const target = e.target as HTMLButtonElement;
+                  target.style.transform = 'translateY(0)';
+                  target.style.boxShadow = '0 4px 14px rgba(102, 126, 234, 0.3)';
+                }}
+              >
+                <span style={{ position: 'relative', zIndex: 1 }}>Войти в панель</span>
+              </button>
+
+              {message && (
+                <div style={{
+                  backgroundColor: '#fef2f2',
+                  border: '2px solid #fecaca',
+                  borderRadius: '16px',
+                  padding: '16px 20px',
+                  marginTop: '20px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px'
+                }}>
+                  <div style={{ color: '#dc2626', fontSize: '20px' }}>⚠️</div>
+                  <p style={{ 
+                    color: '#dc2626', 
+                    fontSize: '14px', 
+                    fontWeight: '500',
+                    margin: 0
+                  }}>
+                    {message}
+                  </p>
+                </div>
+              )}
+            </div>
+
+            <div style={{ 
+              marginTop: '32px', 
+              paddingTop: '24px', 
+              borderTop: '1px solid #e2e8f0', 
+              textAlign: 'center' 
+            }}>
+              <p style={{ 
+                fontSize: '13px', 
+                color: '#94a3b8',
+                fontWeight: '500',
+                margin: 0
+              }}>
+                © 2024 Velta Trans • Международные грузоперевозки
+              </p>
             </div>
           </div>
-        </body>
-      </html>
+        </div>
+      </>
     );
   }
 
   return (
-    <html>
-      <head>
-        <style>
-          {`
-            @keyframes spin {
-              0% { transform: rotate(0deg); }
-              100% { transform: rotate(360deg); }
-            }
-          `}
-        </style>
-      </head>
-      <body style={{ margin: 0, fontFamily: 'system-ui, sans-serif' }}>
+    <>
+      <style jsx global>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        
+        body {
+          margin: 0 !important;
+          font-family: system-ui, sans-serif !important;
+        }
+      `}</style>
         <div style={{
           minHeight: '100vh',
           background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)'
@@ -367,12 +378,14 @@ export default function SEOAdminPage() {
                   letterSpacing: '0.5px'
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.background = 'rgba(255, 255, 255, 0.2)';
-                  e.target.style.transform = 'translateY(-1px)';
+                  const target = e.target as HTMLButtonElement;
+                  target.style.background = 'rgba(255, 255, 255, 0.2)';
+                  target.style.transform = 'translateY(-1px)';
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.background = 'rgba(255, 255, 255, 0.1)';
-                  e.target.style.transform = 'translateY(0)';
+                  const target = e.target as HTMLButtonElement;
+                  target.style.background = 'rgba(255, 255, 255, 0.1)';
+                  target.style.transform = 'translateY(0)';
                 }}
               >
                 Выйти
@@ -869,14 +882,16 @@ export default function SEOAdminPage() {
                     }}
                     onMouseEnter={(e) => {
                       if (!isLoading) {
-                        e.target.style.transform = 'translateY(-3px)';
-                        e.target.style.boxShadow = '0 12px 40px rgba(102, 126, 234, 0.4)';
+                        const target = e.target as HTMLButtonElement;
+                        target.style.transform = 'translateY(-3px)';
+                        target.style.boxShadow = '0 12px 40px rgba(102, 126, 234, 0.4)';
                       }
                     }}
                     onMouseLeave={(e) => {
                       if (!isLoading) {
-                        e.target.style.transform = 'translateY(0)';
-                        e.target.style.boxShadow = '0 8px 32px rgba(102, 126, 234, 0.3)';
+                        const target = e.target as HTMLButtonElement;
+                        target.style.transform = 'translateY(0)';
+                        target.style.boxShadow = '0 8px 32px rgba(102, 126, 234, 0.3)';
                       }
                     }}
                   >
@@ -1086,7 +1101,6 @@ export default function SEOAdminPage() {
             </div>
           </div>
         </div>
-      </body>
-    </html>
+    </>
   );
 }
