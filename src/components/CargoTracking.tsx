@@ -34,6 +34,8 @@ interface MapPoint {
   title: string;
   description: string;
   status: string;
+  address?: string;
+  speed?: string;
 }
 
 export default function CargoTracking() {
