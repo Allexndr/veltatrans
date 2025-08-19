@@ -29,7 +29,7 @@ export default function DocumentsSection({}: DocumentsSectionProps) {
       category: 'contracts',
       fileType: 'PDF',
       fileSize: '245 KB',
-      downloadUrl: '/api/materials/КП%20VT%20rus.pdf'
+      downloadUrl: '/api/materials/КП VT rus.pdf'
     },
     {
       id: 2,
@@ -38,7 +38,7 @@ export default function DocumentsSection({}: DocumentsSectionProps) {
       category: 'contracts',
       fileType: 'PDF',
       fileSize: '189 KB',
-      downloadUrl: '/api/materials/Презентация_Velta_%20(3).pptx'
+      downloadUrl: '/api/materials/Презентация_Velta_ (3).pptx'
     },
     {
       id: 3,
@@ -65,7 +65,7 @@ export default function DocumentsSection({}: DocumentsSectionProps) {
       category: 'powers',
       fileType: 'PDF',
       fileSize: '134 KB',
-      downloadUrl: '/api/materials/New%20Logo%20VELTA%20TRANS%20(4).pdf'
+      downloadUrl: '/api/materials/New Logo VELTA TRANS (4).pdf'
     },
     {
       id: 6,
@@ -74,7 +74,7 @@ export default function DocumentsSection({}: DocumentsSectionProps) {
       category: 'requisites',
       fileType: 'PDF',
       fileSize: '89 KB',
-      downloadUrl: '/api/materials/V%20Logo%20VELTA%20TRANS%20копия.pdf'
+      downloadUrl: '/api/materials/реквизиты_Velta_Trans.txt'
     }
   ];
 
@@ -91,6 +91,16 @@ export default function DocumentsSection({}: DocumentsSectionProps) {
   const filteredDocuments = activeCategory === 'all' 
     ? documents 
     : documents.filter(doc => doc.category === activeCategory);
+
+  const handleDownload = (downloadUrl: string, filename: string) => {
+    const link = document.createElement('a');
+    link.href = downloadUrl;
+    link.download = filename;
+    link.target = '_blank';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const getFileIcon = (fileType: string) => {
     switch (fileType) {
@@ -147,7 +157,7 @@ export default function DocumentsSection({}: DocumentsSectionProps) {
         {/* Documents Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredDocuments.map((doc) => (
-            <div key={doc.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-6">
+            <div key={doc.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 flex flex-col h-full">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center space-x-3">
                   {getFileIcon(doc.fileType)}
@@ -162,12 +172,13 @@ export default function DocumentsSection({}: DocumentsSectionProps) {
                 </div>
               </div>
               
-              <p className="text-gray-600 mb-4">
+              <p className="text-gray-600 mb-6 flex-grow">
                 {doc.description}
               </p>
               
               <button
-                className="w-full bg-custom-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-custom-blue-700 transition-colors inline-flex items-center justify-center"
+                onClick={() => handleDownload(doc.downloadUrl, doc.title)}
+                className="w-full bg-custom-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-custom-blue-700 transition-colors inline-flex items-center justify-center mt-auto"
               >
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
