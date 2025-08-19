@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
+import type { DivIcon } from 'leaflet';
 
 // Динамически импортируем компоненты Leaflet только на клиенте
 const MapContainer = dynamic(() => import('react-leaflet').then(mod => mod.MapContainer), { ssr: false });
@@ -36,9 +37,39 @@ export default function LeafletMap({
   className = ''
 }: LeafletMapProps) {
   const [isClient, setIsClient] = useState(false);
+  const [leafletIcons, setLeafletIcons] = useState<Record<string, DivIcon>>({});
 
   useEffect(() => {
     setIsClient(true);
+    
+    // Предзагружаем иконки для всех статусов
+    const loadIcons = async () => {
+      if (typeof window === 'undefined') return;
+      
+      const L = await import('leaflet');
+      const icons: Record<string, DivIcon> = {};
+      
+      const statuses = ['pending', 'in_transit', 'delivered', 'warehouse'];
+      statuses.forEach(status => {
+        icons[status] = L.divIcon({
+          className: 'custom-div-icon',
+          html: `<div style="
+            background-color: ${getStatusColor(status)};
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+          "></div>`,
+          iconSize: [20, 20],
+          iconAnchor: [10, 10]
+        });
+      });
+      
+      setLeafletIcons(icons);
+    };
+    
+    loadIcons();
   }, []);
 
   const getStatusColor = (status: string) => {
@@ -61,26 +92,7 @@ export default function LeafletMap({
     }
   };
 
-  const createCustomIcon = (status: string) => {
-    if (typeof window === 'undefined') return null;
-    
-    // Импортируем L только на клиенте
-    const L = require('leaflet');
-    
-    return L.divIcon({
-      className: 'custom-div-icon',
-      html: `<div style="
-        background-color: ${getStatusColor(status)};
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        border: 3px solid white;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-      "></div>`,
-      iconSize: [20, 20],
-      iconAnchor: [10, 10]
-    });
-  };
+
 
   // Calculate route line coordinates
   const routeCoordinates: [number, number][] = points.map(point => [point.lat, point.lng]);
@@ -130,7 +142,7 @@ export default function LeafletMap({
         
         {/* Markers */}
         {points.map((point, index) => {
-          const customIcon = createCustomIcon(point.status);
+          const customIcon = leafletIcons[point.status];
           return customIcon ? (
             <Marker
               key={index}

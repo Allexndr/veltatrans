@@ -1,6 +1,6 @@
 import {getTranslations} from 'next-intl/server';
 import type {Metadata} from 'next';
-import {routing} from '@/i18n/routing';
+import {routing, Link} from '@/i18n/routing';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
@@ -141,7 +141,7 @@ export default async function ServiceDetailPage({params}: {params: Promise<{loca
               <div className="mt-6 bg-gradient-to-br from-custom-blue-600 to-custom-blue-700 text-white rounded-2xl p-6">
                 <h4 className="text-lg font-semibold mb-2">{t('contact_form.title')}</h4>
                 <p className="text-white/90 mb-4">{t('contact_form.description')}</p>
-                <a href="/contacts" className="inline-block bg-white text-custom-blue-700 font-semibold px-5 py-3 rounded-lg hover:opacity-90 transition">{t('home.cta')}</a>
+                <Link href="/contacts" className="inline-block bg-white text-custom-blue-700 font-semibold px-5 py-3 rounded-lg hover:opacity-90 transition">{t('home.cta')}</Link>
               </div>
             </aside>
           </div>

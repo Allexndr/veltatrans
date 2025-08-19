@@ -88,8 +88,9 @@ export default function Calculator() {
       };
 
       setResult(result);
-    } catch (err: any) {
-      setError(err.message || 'Произошла ошибка при расчете');
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Произошла ошибка при расчете';
+      setError(errorMessage);
       console.error('Calculation error:', err);
     } finally {
       setIsCalculating(false);

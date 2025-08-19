@@ -41,6 +41,70 @@
   "services": {
     "title": "Our services",
     "description": "Full range of logistics services for your business",
+    "air": {
+      "title": "Air Transportation",
+      "description": "Fast delivery of cargo by air transport",
+      "features": {
+        "speed": "High delivery speed",
+        "reliability": "Reliable transportation",
+        "tracking": "Full tracking",
+        "documentation": "Full documentation support"
+      },
+      "benefits": {
+        "fast": "Fastest delivery method",
+        "safe": "Safe cargo handling",
+        "global": "Worldwide delivery",
+        "urgent": "Perfect for urgent cargo"
+      }
+    },
+    "sea": {
+      "title": "Sea Transportation", 
+      "description": "Cost-effective cargo delivery by sea transport",
+      "features": {
+        "economy": "Low transportation cost",
+        "volume": "Large cargo volumes",
+        "containers": "Container shipping",
+        "routes": "Optimal routes"
+      },
+      "benefits": {
+        "cost": "Most economical method",
+        "capacity": "Large cargo capacity",
+        "eco": "Environmentally friendly",
+        "reliable": "Proven reliability"
+      }
+    },
+    "land": {
+      "title": "Land Transportation",
+      "description": "Flexible cargo delivery by road and rail transport",
+      "features": {
+        "flexibility": "Flexible routes",
+        "speed": "Optimal delivery time",
+        "accessibility": "Door-to-door delivery", 
+        "control": "Full control"
+      },
+      "benefits": {
+        "direct": "Direct delivery",
+        "fast": "Fast transportation",
+        "accessible": "Wide accessibility",
+        "monitoring": "Real-time monitoring"
+      }
+    },
+    "multimodal": {
+      "title": "Multimodal Transportation",
+      "description": "Combined transportation using multiple transport modes",
+      "features": {
+        "optimization": "Route optimization",
+        "efficiency": "Maximum efficiency",
+        "integration": "Seamless integration",
+        "management": "Single management"
+      },
+      "benefits": {
+        "optimal": "Optimal cost and time",
+        "reliable": "High reliability",
+        "flexible": "Maximum flexibility",
+        "comprehensive": "Complete service"
+      }
+    },
     "logistics": {
       "title": "Logistics services",
       "description": "Transportation organization of any complexity"

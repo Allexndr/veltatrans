@@ -19,6 +19,23 @@ interface TrackingResult {
   history: TrackingStatus[];
 }
 
+interface RoutePoint {
+  status: string;
+  location: string;
+  description: string;
+  timestamp: string;
+  lat: number;
+  lng: number;
+}
+
+interface MapPoint {
+  lat: number;
+  lng: number;
+  title: string;
+  description: string;
+  status: string;
+}
+
 export default function CargoTracking() {
   const t = useTranslations('cargoTracking');
   const [trackingNumber, setTrackingNumber] = useState('');
@@ -26,9 +43,9 @@ export default function CargoTracking() {
   const [isTracking, setIsTracking] = useState(false);
   const [error, setError] = useState('');
   const [isVisible, setIsVisible] = useState(false);
-  const [mapPoints, setMapPoints] = useState<any[]>([]);
+  const [mapPoints, setMapPoints] = useState<MapPoint[]>([]);
   const [isLiveTracking, setIsLiveTracking] = useState(false);
-  const [livePosition, setLivePosition] = useState<any>(null);
+  const [livePosition, setLivePosition] = useState<MapPoint | null>(null);
 
   useEffect(() => {
     setIsVisible(true);
@@ -69,7 +86,7 @@ export default function CargoTracking() {
         trackingNumber: trackingData.trackingNumber,
         status: trackingData.statusText,
         estimatedDelivery: trackingData.estimatedDelivery,
-        history: trackingData.route.map((point: any) => ({
+        history: trackingData.route.map((point: RoutePoint) => ({
           status: getStatusText(point.status),
           location: point.location,
           date: new Date(point.timestamp).toLocaleDateString('ru-RU'),
@@ -82,7 +99,7 @@ export default function CargoTracking() {
       };
       
       setResult(mockResult);
-      setMapPoints(trackingData.route.map((point: any) => ({
+      setMapPoints(trackingData.route.map((point: RoutePoint) => ({
         lat: point.lat,
         lng: point.lng,
         title: point.location,
