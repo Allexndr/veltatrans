@@ -1,3 +1,7 @@
+'use client';
+
+import {useTranslations} from 'next-intl';
+
 interface Recommendation {
   id: number;
   company: string;
@@ -12,11 +16,7 @@ interface RecommendationsSectionProps {
   locale: string;
 }
 
-'use client';
-
-import {useTranslations} from 'next-intl';
-
-export default function RecommendationsSection({locale}: RecommendationsSectionProps) {
+export default function RecommendationsSection({}: RecommendationsSectionProps) {
   const t = useTranslations('recommendations');
 
   const recommendations: Recommendation[] = [

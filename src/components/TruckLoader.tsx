@@ -78,7 +78,7 @@ export default function TruckLoader({size = 'md', className = '', speed = 'norma
       clearInterval(bounceInterval);
       clearInterval(dotsInterval);
     };
-  }, [truckPosition, speed]);
+  }, [truckPosition, speed, speedConfig]);
 
   const sizeClasses = {
     sm: 'w-20 h-10',

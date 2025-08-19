@@ -5,7 +5,7 @@ import SmoothLink from './SmoothLink';
 import {motion, useInView} from 'framer-motion';
 import {useRef} from 'react';
 
-export default function ServicesPreview({locale}: {locale: string}) {
+export default function ServicesPreview({}: {locale: string}) {
   const t = useTranslations('services');
   const ref = useRef(null);
   const isInView = useInView(ref, {once: true, margin: "-100px"});

@@ -1,7 +1,7 @@
 'use client';
 
 import {useEffect, useRef} from 'react';
-import {prefersReducedMotion, addResourceHints, inlineCriticalCSS, optimizeNetworkRequests} from '@/utils/optimization';
+import {prefersReducedMotion, addResourceHints} from '@/utils/optimization';
 import {PERFORMANCE} from '@/utils/constants';
 
 interface PerformanceOptimizerProps {
