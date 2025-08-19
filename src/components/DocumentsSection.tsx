@@ -1,3 +1,8 @@
+'use client';
+
+import {useTranslations} from 'next-intl';
+import {useState} from 'react';
+
 interface Document {
   id: number;
   title: string;
@@ -12,12 +17,7 @@ interface DocumentsSectionProps {
   locale: string;
 }
 
-'use client';
-
-import {useTranslations} from 'next-intl';
-import {useState} from 'react';
-
-export default function DocumentsSection({locale}: DocumentsSectionProps) {
+export default function DocumentsSection({}: DocumentsSectionProps) {
   const t = useTranslations('documents');
   const [activeCategory, setActiveCategory] = useState('all');
 
