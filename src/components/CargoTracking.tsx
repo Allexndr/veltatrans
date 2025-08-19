@@ -20,7 +20,7 @@ interface TrackingResult {
 }
 
 interface RoutePoint {
-  status: string;
+  status: 'pending' | 'in_transit' | 'delivered' | 'warehouse';
   location: string;
   description: string;
   timestamp: string;
@@ -32,8 +32,9 @@ interface MapPoint {
   lat: number;
   lng: number;
   title: string;
-  description: string;
-  status: string;
+  status: 'pending' | 'in_transit' | 'delivered' | 'warehouse';
+  timestamp?: string;
+  description?: string;
   address?: string;
   speed?: string;
 }
