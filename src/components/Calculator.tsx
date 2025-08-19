@@ -48,6 +48,14 @@ export default function Calculator() {
     });
   };
 
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const {name, value} = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsCalculating(true);
@@ -238,7 +246,7 @@ export default function Calculator() {
                   id="shipmentType"
                   name="shipmentType"
                   value={formData.shipmentType}
-                  onChange={handleChange as any}
+                  onChange={handleSelectChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500 bg-white"
                 >
                   <option value="auto">{t('form.types.auto')}</option>
