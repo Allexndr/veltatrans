@@ -3,8 +3,9 @@ import fs from 'fs';
 import path from 'path';
 
 // Serve files from the repository "materials" folder via API for download/view
-export async function GET(req: NextRequest, {params}: {params: {path: string[]}}) {
-  const segments = params.path || [];
+export async function GET(req: NextRequest, {params}: {params: Promise<{path: string[]}>}) {
+  const resolvedParams = await params;
+  const segments = resolvedParams.path || [];
   const requested = segments.join('/');
 
   // Prevent path traversal
