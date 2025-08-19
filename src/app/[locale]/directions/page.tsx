@@ -5,51 +5,34 @@ import Footer from '@/components/Footer';
 export default function DirectionsPage() {
   const t = useTranslations();
 
-  const regions = [
+  const directions = [
     {
-      name: t('directions.cis'),
-      description: 'Страны СНГ - наш основной регион работы',
-      countries: [
-        'Россия', 'Казахстан', 'Узбекистан', 'Кыргызстан', 
-        'Таджикистан', 'Туркменистан', 'Азербайджан', 'Армения', 'Беларусь'
-      ],
-      features: [
-        'Упрощенное таможенное оформление',
-        'Единое экономическое пространство',
-        'Знание местных особенностей',
-        'Развитая партнерская сеть'
-      ],
+      name: t('directions.china_cis.title'),
+      description: t('directions.china_cis.description'),
+      routes: ['Пекин - Алматы', 'Шанхай - Москва', 'Гуанчжоу - Ташкент', 'Урумчи - Бишкек'],
+      features: t.raw('directions.china_cis.features') as string[],
       color: 'blue'
     },
     {
-      name: t('directions.china'),
-      description: 'Китай - ключевой торговый партнер',
-      countries: [
-        'Пекин', 'Шанхай', 'Гуанчжоу', 'Шэньчжэнь', 
-        'Тяньцзинь', 'Урумчи', 'Харбин', 'Далянь'
-      ],
-      features: [
-        'Прямые маршруты через КПП',
-        'Работа с китайскими производителями',
-        'Консолидация грузов',
-        'Мультимодальные перевозки'
-      ],
-      color: 'red'
+      name: t('directions.russia_kazakhstan.title'),
+      description: t('directions.russia_kazakhstan.description'),
+      routes: ['Москва - Алматы', 'Новосибирск - Нур-Султан', 'Екатеринбург - Шымкент', 'Омск - Караганда'],
+      features: t.raw('directions.russia_kazakhstan.features') as string[],
+      color: 'green'
     },
     {
-      name: t('directions.europe'),
-      description: 'Европа - расширяющееся направление',
-      countries: [
-        'Германия', 'Польша', 'Нидерланды', 'Франция', 
-        'Италия', 'Чехия', 'Литва', 'Латвия'
-      ],
-      features: [
-        'Соблюдение европейских стандартов',
-        'Сертифицированные склады',
-        'Экологические требования',
-        'Интеграция с EU системами'
-      ],
-      color: 'green'
+      name: t('directions.kazakhstan.title'),
+      description: t('directions.kazakhstan.description'),
+      routes: ['Алматы - Нур-Султан', 'Шымкент - Актобе', 'Караганда - Атырау', 'Костанай - Павлодар'],
+      features: t.raw('directions.kazakhstan.features') as string[],
+      color: 'orange'
+    },
+    {
+      name: t('directions.project_cargo.title'),
+      description: t('directions.project_cargo.description'),
+      routes: ['Негабаритные грузы', 'Тяжеловесные перевозки', 'Специальное оборудование', 'Проектные решения'],
+      features: t.raw('directions.project_cargo.features') as string[],
+      color: 'purple'
     }
   ];
 
@@ -148,32 +131,32 @@ export default function DirectionsPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Регионы доставки
+                Основные направления
               </h2>
               <p className="text-lg text-gray-600">
-                Мы работаем в трех ключевых экономических зонах
+                Четыре ключевых направления работы нашей компании
               </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {regions.map((region, index) => (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {directions.map((direction, index) => (
                 <div key={index} className="bg-white rounded-lg shadow-lg p-6 border-t-4 border-custom-blue-600">
                   <h3 className="text-2xl font-bold text-gray-900 mb-3">
-                    {region.name}
+                    {direction.name}
                   </h3>
                   <p className="text-gray-600 mb-6">
-                    {region.description}
+                    {direction.description}
                   </p>
 
                   <div className="mb-6">
-                    <h4 className="text-lg font-semibold text-gray-900 mb-3">Страны и города:</h4>
+                    <h4 className="text-lg font-semibold text-gray-900 mb-3">Основные маршруты:</h4>
                     <div className="flex flex-wrap gap-2">
-                      {region.countries.map((country, countryIndex) => (
+                      {direction.routes.map((route, routeIndex) => (
                         <span
-                          key={countryIndex}
+                          key={routeIndex}
                           className="px-3 py-1 bg-custom-blue-100 text-custom-blue-800 rounded-full text-sm"
                         >
-                          {country}
+                          {route}
                         </span>
                       ))}
                     </div>
@@ -182,7 +165,7 @@ export default function DirectionsPage() {
                   <div>
                     <h4 className="text-lg font-semibold text-gray-900 mb-3">Преимущества:</h4>
                     <ul className="space-y-2">
-                      {region.features.map((feature, featureIndex) => (
+                      {direction.features.map((feature, featureIndex) => (
                         <li key={featureIndex} className="flex items-center text-gray-700">
                           <svg className="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />

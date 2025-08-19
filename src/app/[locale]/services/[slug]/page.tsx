@@ -40,11 +40,16 @@ export default async function ServiceDetailPage({params}: {params: Promise<{loca
   const title = t(i18nKey.title);
   const description = t(i18nKey.description);
 
-  const advantages = [
+  // Получаем данные для конкретного сервиса
+  const serviceKey = `services.${slug}`;
+  const advantages = t.has(`${serviceKey}.advantages`) ? t.raw(`${serviceKey}.advantages`) as string[] : [
     t('home.features.experience'),
     t('home.features.geography'),
     t('home.features.support')
   ];
+
+  const features = t.has(`${serviceKey}.details.features`) ? t.raw(`${serviceKey}.details.features`) as string[] : [];
+  const detailedDescription = t.has(`${serviceKey}.details.description`) ? t(`${serviceKey}.details.description`) : description;
 
   const examples = [
     {
@@ -86,15 +91,33 @@ export default async function ServiceDetailPage({params}: {params: Promise<{loca
                 {title}
               </h2>
               <p className="text-gray-700 text-lg leading-relaxed mb-6">
-                {description}
+                {detailedDescription}
               </p>
+              
+              {features.length > 0 && (
+                <div className="mb-8">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Особенности сервиса:</h3>
+                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {features.map((feature, index) => (
+                      <li key={index} className="flex items-start">
+                        <svg className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span className="text-gray-700">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              
               <div className="space-y-4 text-gray-700">
                 <p>
-                  {/* Placeholder paragraph for future detailed content */}
-                  {t('home.description')}
+                  Наша компания обеспечивает полный цикл логистических услуг с индивидуальным подходом к каждому клиенту. 
+                  Мы гарантируем прозрачность процессов, своевременную доставку и конкурентные цены.
                 </p>
                 <p>
-                  {t('tools.description')}
+                  Опытная команда специалистов поможет выбрать оптимальное решение для ваших потребностей 
+                  и обеспечит сопровождение груза на всех этапах транспортировки.
                 </p>
               </div>
             </article>
@@ -127,13 +150,16 @@ export default async function ServiceDetailPage({params}: {params: Promise<{loca
         {/* Advantages */}
         <section className="py-12 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">{t('recommendations.title')}</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {advantages.map((adv, idx) => (
-                <div key={idx} className="bg-white rounded-2xl border border-gray-200 p-6">
-                  <div className="text-custom-blue-700 text-2xl mb-2">•</div>
-                  <div className="font-semibold text-gray-900 mb-1">{adv}</div>
-                  <div className="text-gray-600">{t('home.description')}</div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">Преимущества</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {advantages.map((advantage, idx) => (
+                <div key={idx} className="bg-white rounded-2xl border border-gray-200 p-6 text-center">
+                  <div className="w-12 h-12 bg-custom-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-6 h-6 text-custom-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div className="font-semibold text-gray-900 text-sm leading-tight">{advantage}</div>
                 </div>
               ))}
             </div>

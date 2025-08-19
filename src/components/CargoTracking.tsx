@@ -2,6 +2,7 @@
 
 import {useState, useEffect} from 'react';
 import {useTranslations} from 'next-intl';
+import LeafletMap from './LeafletMap';
 
 interface TrackingStatus {
   status: string;
@@ -25,6 +26,9 @@ export default function CargoTracking() {
   const [isTracking, setIsTracking] = useState(false);
   const [error, setError] = useState('');
   const [isVisible, setIsVisible] = useState(false);
+  const [mapPoints, setMapPoints] = useState<any[]>([]);
+  const [isLiveTracking, setIsLiveTracking] = useState(false);
+  const [livePosition, setLivePosition] = useState<any>(null);
 
   useEffect(() => {
     setIsVisible(true);
@@ -44,52 +48,110 @@ export default function CargoTracking() {
     // Simulate API call with animated progress
     await new Promise(resolve => setTimeout(resolve, 1000));
     
-    // Mock tracking result
-    const mockResult: TrackingResult = {
-      trackingNumber: trackingNumber,
-      status: 'В пути',
-      estimatedDelivery: '2024-02-15',
-      history: [
-        {
-          status: 'Доставлен',
-          location: 'Москва',
-          date: '2024-02-15',
-          time: '14:30',
-          description: 'Груз доставлен получателю'
-        },
-        {
-          status: 'В пути',
-          location: 'Москва',
-          date: '2024-02-14',
-          time: '08:15',
-          description: 'Груз отправлен в доставку'
-        },
-        {
-          status: 'На складе',
-          location: 'Москва',
-          date: '2024-02-13',
-          time: '16:45',
-          description: 'Груз прибыл на склад назначения'
-        },
-        {
-          status: 'В пути',
-          location: 'Санкт-Петербург',
-          date: '2024-02-12',
-          time: '12:20',
-          description: 'Груз отправлен из Санкт-Петербурга'
-        },
-        {
-          status: 'Принят',
-          location: 'Санкт-Петербург',
-          date: '2024-02-11',
-          time: '10:30',
-          description: 'Груз принят к перевозке'
+    try {
+      // Call real API
+      const response = await fetch(`/api/tracking/${trackingNumber}`);
+      
+      if (!response.ok) {
+        if (response.status === 404) {
+          setError('Номер для отслеживания не найден');
+        } else {
+          setError('Ошибка при получении данных');
         }
-      ]
-    };
-    
-    setResult(mockResult);
+        setIsTracking(false);
+        return;
+      }
+      
+      const trackingData = await response.json();
+      
+      // Convert API response to component format
+      const mockResult: TrackingResult = {
+        trackingNumber: trackingData.trackingNumber,
+        status: trackingData.statusText,
+        estimatedDelivery: trackingData.estimatedDelivery,
+        history: trackingData.route.map((point: any) => ({
+          status: getStatusText(point.status),
+          location: point.location,
+          date: new Date(point.timestamp).toLocaleDateString('ru-RU'),
+          time: new Date(point.timestamp).toLocaleTimeString('ru-RU', { 
+            hour: '2-digit', 
+            minute: '2-digit' 
+          }),
+          description: point.description
+        })).reverse() // Show newest first
+      };
+      
+      setResult(mockResult);
+      setMapPoints(trackingData.route.map((point: any) => ({
+        lat: point.lat,
+        lng: point.lng,
+        title: point.location,
+        description: point.description,
+        status: point.status
+      })));
+
+      // Start live tracking if cargo is in transit
+      if (trackingData.status === 'in_transit') {
+        startLiveTracking(trackingNumber);
+      }
+      
+    } catch (err) {
+      setError('Ошибка соединения с сервером');
+      console.error('Tracking error:', err);
+    }
     setIsTracking(false);
+  };
+
+  const startLiveTracking = (trackingNum: string) => {
+    setIsLiveTracking(true);
+    
+    const eventSource = new EventSource(`/api/tracking/${trackingNum}/stream`);
+    
+    eventSource.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        
+        if (data.type === 'position_update') {
+          setLivePosition(data.position);
+          
+          // Update map with current position
+          setMapPoints(prev => [
+            ...prev,
+            {
+              lat: data.position.lat,
+              lng: data.position.lng,
+              title: 'Текущая позиция',
+              description: `Скорость: ${data.position.speed} км/ч`,
+              status: 'in_transit'
+            }
+          ]);
+        }
+      } catch (error) {
+        console.error('Error parsing SSE data:', error);
+      }
+    };
+
+    eventSource.onerror = () => {
+      console.log('SSE connection error, retrying...');
+      eventSource.close();
+      setIsLiveTracking(false);
+    };
+
+    // Cleanup on component unmount
+    return () => {
+      eventSource.close();
+      setIsLiveTracking(false);
+    };
+  };
+
+  const getStatusText = (status: string) => {
+    switch (status) {
+      case 'pending': return 'Принят';
+      case 'in_transit': return 'В пути';
+      case 'delivered': return 'Доставлен';
+      case 'warehouse': return 'На складе';
+      default: return status;
+    }
   };
 
   const getStatusColor = (status: string) => {
@@ -247,9 +309,38 @@ export default function CargoTracking() {
                 </div>
               </div>
 
-              {/* Map placeholder for future integration */}
-              <div className="mt-6 bg-gray-100 border border-gray-200 rounded-lg h-64 flex items-center justify-center text-gray-500">
-                Карта будет подключена после выдачи ключа (Яндекс / Google / 2ГИС)
+              {/* Interactive Map */}
+              <div className="mt-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                  <span className="mr-2">🗺️</span>
+                  Маршрут груза
+                  {isLiveTracking && (
+                    <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                      <span className="w-2 h-2 bg-green-400 rounded-full mr-1 animate-pulse"></span>
+                      Live
+                    </span>
+                  )}
+                </h3>
+                {livePosition && (
+                  <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                    <div className="flex items-center text-sm text-blue-800">
+                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      <span className="font-medium">Текущая позиция:</span>
+                      <span className="ml-1">{livePosition.address}</span>
+                      <span className="ml-2 text-blue-600">({livePosition.speed} км/ч)</span>
+                    </div>
+                  </div>
+                )}
+                              <LeafletMap
+                points={mapPoints}
+                center={mapPoints.length > 0 ? [mapPoints[0].lat, mapPoints[0].lng] : [55.7558, 37.6176]}
+                zoom={mapPoints.length > 1 ? 6 : 10}
+                height="300px"
+                className="shadow-lg"
+              />
               </div>
 
               <p className="mt-6 text-sm text-gray-600 text-center animate-fade-in-up" style={{animationDelay: '1.5s'}}>

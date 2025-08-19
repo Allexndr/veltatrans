@@ -8,6 +8,14 @@ interface CalculationResult {
   currency: string;
   deliveryTime: string;
   service: string;
+  distance?: number;
+  breakdown?: {
+    baseCost: number;
+    weightCost: number;
+    volumeCost: number;
+    oversizedSurcharge: number;
+    total: number;
+  };
 }
 
 export default function Calculator() {
@@ -43,20 +51,49 @@ export default function Calculator() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsCalculating(true);
-    
-    // Simulate calculation
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    // Mock calculation result
-    const mockResult: CalculationResult = {
-      cost: Math.floor(Math.random() * 50000) + 10000,
-      currency: 'RUB',
-      deliveryTime: '3-5 дней',
-      service: 'Стандартная доставка'
-    };
-    
-    setResult(mockResult);
-    setIsCalculating(false);
+    setError('');
+
+    try {
+      const response = await fetch('/api/calculate-distance', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          fromCity: formData.fromCity,
+          toCity: formData.toCity,
+          weight: parseFloat(formData.weight) || 0,
+          volume: parseFloat(formData.volume) || 0,
+          length: parseFloat(formData.length) || 0,
+          width: parseFloat(formData.width) || 0,
+          height: parseFloat(formData.height) || 0,
+          isOversized: formData.isOversized
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Ошибка расчета');
+      }
+
+      const calculationResult = await response.json();
+      
+      const result: CalculationResult = {
+        cost: calculationResult.estimatedCost,
+        currency: 'RUB',
+        deliveryTime: `${calculationResult.estimatedDays} дн.`,
+        service: formData.shipmentType === 'express' ? 'Экспресс доставка' : 'Стандартная доставка',
+        distance: calculationResult.distance,
+        breakdown: calculationResult.breakdown
+      };
+
+      setResult(result);
+    } catch (err: any) {
+      setError(err.message || 'Произошла ошибка при расчете');
+      console.error('Calculation error:', err);
+    } finally {
+      setIsCalculating(false);
+    }
   };
 
   const resetForm = () => {
