@@ -113,8 +113,25 @@ export default function Calculator() {
       };
 
       // Отправка в Bitrix24 через их API
-      if (typeof window !== 'undefined' && (window as any).b24form) {
-        (window as any).b24form.sendData(bitrixData);
+      if (typeof window !== 'undefined' && (window as typeof window & {b24form?: {sendData: (data: object) => void}}).b24form) {
+        (window as typeof window & {b24form: {sendData: (data: object) => void}}).b24form.sendData(bitrixData);
+      }
+
+      // Отправка уведомления в Telegram канал
+      try {
+        await fetch('/api/telegram/notify', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            type: 'calculation_request',
+            data: bitrixData
+          }),
+        });
+      } catch (error) {
+        console.error('Telegram notification error:', error);
+        // Не прерываем процесс, если уведомление не отправилось
       }
 
       // Показываем сообщение об успешной отправке
@@ -156,7 +173,8 @@ export default function Calculator() {
       height: '',
       features: '',
       phone: '',
-      isOversized: false
+      isOversized: false,
+      isDangerous: false
     });
     setResult(null);
   };

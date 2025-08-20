@@ -1,12 +1,10 @@
 'use client';
 
-import {useTranslations} from 'next-intl';
 import SmoothLink from './SmoothLink';
 import {useEffect, useState} from 'react';
-import {motion, AnimatePresence} from 'framer-motion';
+import {motion} from 'framer-motion';
 
-export default function Hero({locale}: {locale: string}) {
-  const t = useTranslations('home');
+export default function Hero({}: {locale: string}) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

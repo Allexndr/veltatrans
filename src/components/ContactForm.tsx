@@ -43,6 +43,26 @@ export default function ContactForm() {
         body: JSON.stringify(data),
       });
 
+      // Отправка уведомления в Telegram канал
+      try {
+        await fetch('/api/telegram/notify', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            type: 'contact_form',
+            data: {
+              ...data,
+              timestamp: new Date().toISOString()
+            }
+          }),
+        });
+      } catch (telegramError) {
+        console.error('Telegram notification error:', telegramError);
+        // Не прерываем процесс, если уведомление не отправилось
+      }
+
       if (response.ok) {
         setSubmitStatus('success');
         reset();

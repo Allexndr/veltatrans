@@ -20,7 +20,7 @@ interface TrackingResult {
   }>;
 }
 
-export default function TrackingSystem({locale}: TrackingSystemProps) {
+export default function TrackingSystem({}: TrackingSystemProps) {
   const [trackingNumber, setTrackingNumber] = useState('');
   const [trackingNumbers, setTrackingNumbers] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
