@@ -119,11 +119,11 @@ export default async function LocaleLayout({
     <NextIntlClientProvider messages={messages} locale={locale}>
       <div className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
-        {/* Floating contacts: update with real contacts */}
+        {/* Floating contacts: updated with real contacts */}
         <FloatingContacts
-          phone={'+77001234567'}
+          phone={'+77002770006'}
           email={'info@velta-logistics.com'}
-          whatsapp={'77001234567'}
+          whatsapp={'77002770006'}
           telegram={'veltatrans'}
         />
       </div>

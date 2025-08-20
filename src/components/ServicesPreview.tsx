@@ -13,42 +13,30 @@ export default function ServicesPreview({}: {locale: string}) {
   const services = [
     {
       id: 1,
-      title: t('air.title'),
-      description: t('air.description'),
-      icon: (
-        <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-        </svg>
-      ),
-      href: '/services/air',
-      gradient: 'from-blue-500 to-cyan-500'
-    },
-    {
-      id: 2,
-      title: t('sea.title'),
-      description: t('sea.description'),
-      icon: (
-        <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-        </svg>
-      ),
-      href: '/services/sea',
-      gradient: 'from-indigo-500 to-purple-500'
-    },
-    {
-      id: 3,
       title: t('land.title'),
       description: t('land.description'),
       icon: (
         <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0M19 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0M3 12h2m14 0h2M12 3v18" />
         </svg>
       ),
       href: '/services/land',
       gradient: 'from-green-500 to-emerald-500'
     },
     {
-      id: 4,
+      id: 2,
+      title: 'Железнодорожные перевозки',
+      description: 'Надежные железнодорожные перевозки по СНГ и странам Азии с полным сопровождением груза',
+      icon: (
+        <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M3 14h18m-9-4v8m-2 0h4" />
+        </svg>
+      ),
+      href: '/services/railway',
+      gradient: 'from-gray-500 to-slate-500'
+    },
+    {
+      id: 3,
       title: t('multimodal.title'),
       description: t('multimodal.description'),
       icon: (
@@ -58,6 +46,18 @@ export default function ServicesPreview({}: {locale: string}) {
       ),
       href: '/services/multimodal',
       gradient: 'from-orange-500 to-red-500'
+    },
+    {
+      id: 4,
+      title: 'Проектные перевозки',
+      description: 'Специализированные перевозки негабаритных и сверхтяжелых грузов с индивидуальным подходом',
+      icon: (
+        <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+        </svg>
+      ),
+      href: '/services/project',
+      gradient: 'from-purple-500 to-indigo-500'
     }
   ];
 

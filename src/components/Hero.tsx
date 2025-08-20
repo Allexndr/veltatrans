@@ -64,69 +64,68 @@ export default function Hero({locale}: {locale: string}) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
         >
-          {/* Main title: smaller size and without stray hyphen */}
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 md:mb-8 leading-tight">
-            <span className="block bg-gradient-to-r from-white via-custom-blue-200 to-white bg-clip-text text-transparent">
-              {t('title')}
+          {/* Main title: Velta Trans larger, International smaller */}
+          <h1 className="mb-4 sm:mb-6 md:mb-8 leading-tight">
+            <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold bg-gradient-to-r from-white via-custom-blue-200 to-white bg-clip-text text-transparent">
+              Velta Trans
+            </span>
+            <span className="block text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-medium text-white/80 mt-2">
+              Международная логистическая компания
             </span>
           </h1>
           
-          {/* Enhanced subtitle */}
-          <p className="text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-white/90 mb-8 sm:mb-12 md:mb-16 max-w-4xl mx-auto leading-relaxed px-4">
-            {t('subtitle')}
+          {/* Updated subtitle with new text */}
+          <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/90 mb-4 max-w-4xl mx-auto leading-relaxed px-4">
+            B2B грузоперевозки по СНГ, Китаю и Европе
+          </p>
+          
+          {/* Additional subtitle */}
+          <p className="text-base sm:text-lg md:text-xl text-white/70 mb-8 sm:mb-12 md:mb-16 max-w-3xl mx-auto leading-relaxed px-4">
+            Экспортные, импортные и транзитные перевозки
           </p>
 
-          {/* Enhanced CTA buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 justify-center mb-12 sm:mb-16 md:mb-20 px-4">
+          {/* Three main action buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center mb-12 sm:mb-16 md:mb-20 px-4">
             <SmoothLink
-              href="/services"
-              className="group relative px-6 sm:px-8 md:px-10 py-4 sm:py-5 bg-white text-custom-blue-900 rounded-full font-semibold text-lg sm:text-xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl w-full sm:w-auto"
+              href="/calculator"
+              className="group relative px-6 sm:px-8 py-4 sm:py-5 bg-white text-custom-blue-900 rounded-full font-semibold text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl w-full sm:w-auto"
             >
-              <span className="relative z-10 flex items-center justify-center sm:justify-start">
-                <svg className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-4 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              <span className="relative z-10 flex items-center justify-center">
+                <svg className="w-5 h-5 mr-2 sm:mr-3 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                 </svg>
-                {t('cta')}
+                Получить расчет
               </span>
             </SmoothLink>
             
             <SmoothLink
               href="/contacts"
-              className="group relative px-6 sm:px-8 md:px-10 py-4 sm:py-5 border-2 border-white text-white rounded-full font-semibold text-lg sm:text-xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl w-full sm:w-auto"
+              className="group relative px-6 sm:px-8 py-4 sm:py-5 border-2 border-white text-white rounded-full font-semibold text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl w-full sm:w-auto"
             >
-              <span className="relative z-10 flex items-center justify-center sm:justify-start">
-                <svg className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-4 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <span className="relative z-10 flex items-center justify-center">
+                <svg className="w-5 h-5 mr-2 sm:mr-3 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
-                {t('contact.title')}
+                Связаться с нами
+              </span>
+            </SmoothLink>
+            
+            <SmoothLink
+              href="/tracking"
+              className="group relative px-6 sm:px-8 py-4 sm:py-5 bg-transparent border-2 border-white/50 text-white rounded-full font-semibold text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:border-white w-full sm:w-auto"
+            >
+              <span className="relative z-10 flex items-center justify-center">
+                <svg className="w-5 h-5 mr-2 sm:mr-3 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                Отследить груз
               </span>
             </SmoothLink>
           </div>
 
-          {/* Enhanced stats */}
+          {/* Updated stats according to requirements */}
           <div className="grid grid-cols-3 gap-4 sm:gap-8 md:gap-12 max-w-4xl mx-auto px-4">
-            <div className="text-center">
-              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2 sm:mb-4">
-                <span className="bg-gradient-to-r from-custom-blue-200 to-white bg-clip-text text-transparent">
-                  15+
-                </span>
-              </div>
-              <p className="text-white/80 text-sm sm:text-base md:text-lg">
-                {t('stats.years')}
-              </p>
-            </div>
-            
-            <div className="text-center">
-              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2 sm:mb-4">
-                <span className="bg-gradient-to-r from-custom-blue-200 to-white bg-clip-text text-transparent">
-                  1000+
-                </span>
-              </div>
-              <p className="text-white/80 text-sm sm:text-base md:text-lg">
-                {t('stats.clients')}
-              </p>
-            </div>
-            
             <div className="text-center">
               <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2 sm:mb-4">
                 <span className="bg-gradient-to-r from-custom-blue-200 to-white bg-clip-text text-transparent">
@@ -134,7 +133,29 @@ export default function Hero({locale}: {locale: string}) {
                 </span>
               </div>
               <p className="text-white/80 text-sm sm:text-base md:text-lg">
-                {t('stats.countries')}
+                стран доставки
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-2 sm:mb-4">
+                <span className="bg-gradient-to-r from-custom-blue-200 to-white bg-clip-text text-transparent">
+                  Экспорт
+                </span>
+              </div>
+              <p className="text-white/80 text-sm sm:text-base md:text-lg">
+                Импорт • Транзит
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-2 sm:mb-4">
+                <span className="bg-gradient-to-r from-custom-blue-200 to-white bg-clip-text text-transparent">
+                  Под ключ
+                </span>
+              </div>
+              <p className="text-white/80 text-sm sm:text-base md:text-lg">
+                перевозки
               </p>
             </div>
           </div>

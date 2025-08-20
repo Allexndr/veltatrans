@@ -71,12 +71,12 @@ export default function Header() {
 
   return (
     <motion.header 
-      className="sticky top-0 z-50 transition-all duration-300"
+      className="sticky top-0 z-50 transition-all duration-300 border-b border-gray-100/50"
       variants={headerVariants}
       initial="initial"
       animate={isScrolled ? "scrolled" : "animate"}
       style={{
-        backgroundColor: isScrolled ? "rgba(255, 255, 255, 0.95)" : "rgba(255, 255, 255, 0.98)",
+        backgroundColor: isScrolled ? "rgba(255, 255, 255, 0.98)" : "rgba(255, 255, 255, 0.98)",
         backdropFilter: isScrolled ? "blur(20px)" : "blur(10px)",
         borderBottom: isScrolled ? "1px solid rgba(0, 0, 0, 0.05)" : "none"
       }}

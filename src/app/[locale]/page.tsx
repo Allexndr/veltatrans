@@ -140,11 +140,20 @@ export default async function HomePage({params}: {params: Promise<{locale: strin
                     </svg>
                   </div>
                   <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-custom-blue-600 transition-colors duration-300">
-                    {t('home.features.geography')}
+                    Широкая география
                   </h3>
-                  <p className="text-gray-600 leading-relaxed text-lg">
-                    Работаем по всему миру: СНГ, Китай, Европа
+                  <p className="text-gray-600 leading-relaxed text-lg mb-4">
+                    Главные направления: Пекин, Астана, Москва, Алматы
                   </p>
+                  <Link
+                    href="/directions"
+                    className="inline-flex items-center text-custom-blue-600 font-medium hover:text-custom-blue-700 transition-colors"
+                  >
+                    Работа по всему миру - подробнее
+                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </Link>
                 </div>
               </div>
               

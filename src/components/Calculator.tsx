@@ -35,7 +35,8 @@ export default function Calculator() {
     height: '',
     features: '',
     phone: '',
-    isOversized: false
+    isOversized: false,
+    isDangerous: false
   });
   const [result, setResult] = useState<CalculationResult | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
@@ -62,45 +63,78 @@ export default function Calculator() {
     setIsCalculating(true);
     setError('');
 
-    try {
-      const response = await fetch('/api/calculate-distance', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          fromCity: formData.fromCity,
-          toCity: formData.toCity,
-          weight: parseFloat(formData.weight) || 0,
-          volume: parseFloat(formData.volume) || 0,
-          length: parseFloat(formData.length) || 0,
-          width: parseFloat(formData.width) || 0,
-          height: parseFloat(formData.height) || 0,
-          isOversized: formData.isOversized
-        }),
-      });
+    // Валидация обязательных полей
+    const requiredFields = [
+      { field: 'senderName', name: 'Имя грузоотправителя' },
+      { field: 'fromCity', name: 'Город отправления' },
+      { field: 'toCity', name: 'Город назначения' },
+      { field: 'weight', name: 'Вес груза' },
+      { field: 'volume', name: 'Объем груза' },
+      { field: 'phone', name: 'Номер телефона' }
+    ];
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Ошибка расчета');
+    for (const { field, name } of requiredFields) {
+      if (!formData[field as keyof typeof formData] || formData[field as keyof typeof formData] === '') {
+        setError(`Поле "${name}" обязательно для заполнения`);
+        setIsCalculating(false);
+        return;
       }
+    }
 
-      const calculationResult = await response.json();
-      
-      const result: CalculationResult = {
-        cost: calculationResult.estimatedCost,
-        currency: 'RUB',
-        deliveryTime: `${calculationResult.estimatedDays} дн.`,
-        service: formData.shipmentType === 'express' ? 'Экспресс доставка' : 'Стандартная доставка',
-        distance: calculationResult.distance,
-        breakdown: calculationResult.breakdown
+    // Валидация телефона
+    const phoneRegex = /^\+?[0-9]{10,15}$/;
+    if (!phoneRegex.test(formData.phone.replace(/\s/g, ''))) {
+      setError('Введите корректный номер телефона');
+      setIsCalculating(false);
+      return;
+    }
+
+    try {
+      // Отправка данных в Bitrix24
+      const bitrixData = {
+        senderName: formData.senderName,
+        fromCity: formData.fromCity,
+        fromCountry: formData.fromCountry,
+        toCity: formData.toCity,
+        toCountry: formData.toCountry,
+        shipmentType: formData.shipmentType,
+        cargoType: formData.cargoType,
+        weight: formData.weight,
+        volume: formData.volume,
+        length: formData.length,
+        width: formData.width,
+        height: formData.height,
+        phone: formData.phone,
+        isOversized: formData.isOversized,
+        isDangerous: formData.isDangerous,
+        features: formData.features,
+        requestType: 'calculation',
+        timestamp: new Date().toISOString()
       };
 
-      setResult(result);
+      // Отправка в Bitrix24 через их API
+      if (typeof window !== 'undefined' && (window as any).b24form) {
+        (window as any).b24form.sendData(bitrixData);
+      }
+
+      // Показываем сообщение об успешной отправке
+      setResult({
+        cost: 0,
+        currency: 'USD',
+        deliveryTime: '1 час',
+        service: 'Расчет стоимости',
+        distance: 0
+      });
+
+      // Сброс формы через 3 секунды
+      setTimeout(() => {
+        resetForm();
+      }, 3000);
+
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Произошла ошибка при расчете';
+      const errorMessage = err instanceof Error ? err.message : 'Произошла ошибка при отправке заявки';
       setError(errorMessage);
-      console.error('Calculation error:', err);
+      console.error('Submission error:', err);
     } finally {
       setIsCalculating(false);
     }
@@ -154,6 +188,7 @@ export default function Calculator() {
                   value={formData.senderName}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500"
+                  required
                 />
               </div>
               <div>
@@ -249,12 +284,12 @@ export default function Calculator() {
                   value={formData.shipmentType}
                   onChange={handleSelectChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500 bg-white"
+                  required
                 >
-                  <option value="auto">{t('form.types.auto')}</option>
-                  <option value="rail">{t('form.types.rail')}</option>
-                  <option value="air">{t('form.types.air')}</option>
-                  <option value="sea">{t('form.types.sea')}</option>
-                  <option value="multimodal">{t('form.types.multimodal')}</option>
+                  <option value="auto">Автомобильные перевозки</option>
+                  <option value="railway">Железнодорожные перевозки</option>
+                  <option value="multimodal">Мультимодальные перевозки</option>
+                  <option value="project">Проектные перевозки</option>
                 </select>
               </div>
               <div>
@@ -363,21 +398,34 @@ export default function Calculator() {
 
             {/* Oversized and features */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-              <div className="flex items-center">
-              <input
-                type="checkbox"
-                id="isOversized"
-                name="isOversized"
-                checked={formData.isOversized}
-                onChange={handleChange}
-                className="h-4 w-4 text-custom-blue-600 focus:ring-custom-blue-500 border-gray-300 rounded"
-              />
-              <label htmlFor="isOversized" className="ml-2 block text-sm text-gray-700">
-                {t('form.isOversized')}
-              </label>
-              <svg className="w-5 h-5 text-gray-400 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+              <div className="space-y-4">
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    id="isOversized"
+                    name="isOversized"
+                    checked={formData.isOversized}
+                    onChange={handleChange}
+                    className="h-4 w-4 text-custom-blue-600 focus:ring-custom-blue-500 border-gray-300 rounded"
+                  />
+                  <label htmlFor="isOversized" className="ml-2 block text-sm text-gray-700">
+                    Негабаритный груз
+                  </label>
+                </div>
+                
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    id="isDangerous"
+                    name="isDangerous"
+                    checked={formData.isDangerous}
+                    onChange={handleChange}
+                    className="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded"
+                  />
+                  <label htmlFor="isDangerous" className="ml-2 block text-sm text-gray-700">
+                    Опасный груз
+                  </label>
+                </div>
               </div>
               <div>
                 <label htmlFor="features" className="block text-sm font-medium text-gray-700 mb-2">
@@ -421,34 +469,34 @@ export default function Calculator() {
 
           {/* Result */}
           {result && (
-            <div className="mt-8 bg-green-50 border border-green-200 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-green-800 mb-4">
-                {t('result.title')}
+            <div className="mt-8 bg-green-50 border border-green-200 rounded-lg p-6 text-center">
+              <div className="mb-4">
+                <svg className="w-16 h-16 mx-auto text-green-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-green-800 mb-4">
+                Заявка отправлена успешно!
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="text-center">
-                  <p className="text-sm text-green-600 mb-1">{t('result.cost')}</p>
-                  <p className="text-2xl font-bold text-green-800">
-                    {result.cost.toLocaleString()} {result.currency}
-                  </p>
-                </div>
-                <div className="text-center">
-                  <p className="text-sm text-green-600 mb-1">{t('result.deliveryTime')}</p>
-                  <p className="text-lg font-semibold text-green-800">{result.deliveryTime}</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-sm text-green-600 mb-1">{t('result.service')}</p>
-                  <p className="text-lg font-semibold text-green-800">{result.service}</p>
-                </div>
+              <p className="text-green-700 mb-6">
+                Мы вернемся к вам с ответом в течение <strong>1 часа</strong>.<br />
+                Наш менеджер свяжется с вами по указанному номеру телефона.
+              </p>
+              <div className="bg-white rounded-lg p-4 mb-4">
+                <p className="text-sm text-gray-600">
+                  <strong>Ваш номер:</strong> {formData.phone}<br />
+                  <strong>Маршрут:</strong> {formData.fromCity} → {formData.toCity}<br />
+                  <strong>Тип перевозки:</strong> {formData.shipmentType === 'auto' ? 'Автомобильные' : 
+                    formData.shipmentType === 'railway' ? 'Железнодорожные' :
+                    formData.shipmentType === 'multimodal' ? 'Мультимодальные' : 'Проектные'}
+                </p>
               </div>
-              <div className="mt-4 text-center">
-                <button
-                  onClick={resetForm}
-                  className="text-green-600 hover:text-green-800 font-medium"
-                >
-                  {t('result.calculateAgain')}
-                </button>
-              </div>
+              <button
+                onClick={resetForm}
+                className="bg-custom-blue-600 text-white px-6 py-2 rounded-lg hover:bg-custom-blue-700 transition-colors"
+              >
+                Сделать новый расчет
+              </button>
             </div>
           )}
         </div>
