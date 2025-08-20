@@ -1,6 +1,8 @@
 // This file is required for the app directory to work
 // The actual layout is in /app/[locale]/layout.tsx
 
+import '@/lib/telegram-init'
+
 export default function RootLayout({
   children,
 }: {
