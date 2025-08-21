@@ -74,6 +74,53 @@ interface UserState {
   description?: string;
 }
 
+function normalizePhone(raw: string): string | null {
+  const digits = raw.replace(/[^0-9+]/g, '');
+  if (/^\+?[0-9]{10,15}$/.test(digits.replace(/\+/g, (m, i) => (i === 0 ? m : '')))) {
+    return digits.startsWith('+') ? digits : `+${digits}`;
+  }
+  return null;
+}
+
+async function tryQuickRegister(userId: number, chatId: number, text: string) {
+  const drivers = loadDrivers();
+  if (drivers[userId]) return false;
+  const parts = text.split(/[;\n,]/).map(p => p.trim()).filter(Boolean);
+  if (parts.length < 4) return false;
+  const [name, phoneRaw, carNumber, carType] = parts;
+  const phone = normalizePhone(phoneRaw);
+  if (!phone) return false;
+
+  drivers[userId] = {
+    id: userId,
+    name,
+    phone,
+    carNumber,
+    carType,
+    registeredAt: new Date().toISOString(),
+    status: 'active'
+  };
+  saveDrivers(drivers);
+
+  await sendTelegramMessage(chatId, `✅ <b>Регистрация завершена!</b>
+
+<b>Ваши данные:</b>
+👤 Имя: ${name}
+📱 Телефон: ${phone}
+🚛 Автомобиль: ${carNumber}
+🔧 Тип ТС: ${carType}
+
+Теперь вы будете получать уведомления о новых заказах!`);
+  await sendTelegramMessage(CHANNEL_ID, `🚛 <b>Новый водитель зарегистрирован!</b>
+
+👤 <b>Имя:</b> ${name}
+📱 <b>Телефон:</b> ${phone}
+🚛 <b>Автомобиль:</b> ${carNumber}
+🔧 <b>Тип ТС:</b> ${carType}
+🆔 <b>Telegram ID:</b> ${userId}`);
+  return true;
+}
+
 // Функции для работы с данными
 function loadDrivers(): Record<string, Driver> {
   try {
@@ -308,6 +355,11 @@ Email: info@velta-logistics.com
       // Обработка состояний регистрации
       else if (userState.step) {
         await handleRegistrationStep(userId, chatId, text, userState, userStates);
+      }
+      
+      // Попытка быстрой регистрации одной строкой: Имя; +7700...; А123БВ01; Фура 20т
+      else if (await tryQuickRegister(userId, chatId, text)) {
+        // уже обработано
       }
       
       // Обработка создания заказа
