@@ -250,7 +250,7 @@ export default function CargoTracking() {
               <button
                 type="submit"
                 disabled={isTracking}
-                className="btn-primary w-full"
+                className="w-full px-6 py-3 bg-custom-blue-600 text-white font-semibold rounded-lg border-2 border-custom-blue-600 hover:bg-custom-blue-700 hover:border-custom-blue-700 focus:ring-2 focus:ring-custom-blue-500 focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
               >
                 {isTracking ? (
                   <div className="flex items-center justify-center space-x-2">

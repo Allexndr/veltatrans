@@ -117,6 +117,8 @@ export default function Calculator() {
         (window as typeof window & {b24form: {sendData: (data: object) => void}}).b24form.sendData(bitrixData);
       }
 
+
+
       // Отправка уведомления в Telegram канал
       try {
         await fetch('/api/telegram/notify', {
@@ -134,12 +136,12 @@ export default function Calculator() {
         // Не прерываем процесс, если уведомление не отправилось
       }
 
-      // Показываем сообщение об успешной отправке
+      // Показываем сообщение об ожидании
       setResult({
         cost: 0,
         currency: 'USD',
-        deliveryTime: '1 час',
-        service: 'Расчет стоимости',
+        deliveryTime: '5 часов',
+        service: 'Индивидуальный расчет',
         distance: 0
       });
 
@@ -184,10 +186,10 @@ export default function Calculator() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            {t('title')}
+            Заявка на расчет стоимости
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            {t('description')}
+            Заполните форму ниже, и наш менеджер свяжется с вами для индивидуального расчета стоимости перевозки
           </p>
         </div>
 
@@ -466,9 +468,9 @@ export default function Calculator() {
               <button
                 type="submit"
                 disabled={isCalculating}
-                className="btn-primary w-full"
+                className="w-full px-6 py-3 bg-custom-blue-600 text-white font-semibold rounded-lg border-2 border-custom-blue-600 hover:bg-custom-blue-700 hover:border-custom-blue-700 focus:ring-2 focus:ring-custom-blue-500 focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
               >
-                {isCalculating ? t('form.calculating') : t('form.calculate')}
+                {isCalculating ? 'Отправка...' : 'Отправить заявку'}
               </button>
             </div>
           </form>
@@ -494,11 +496,11 @@ export default function Calculator() {
                 </svg>
               </div>
               <h3 className="text-xl font-bold text-green-800 mb-4">
-                Заявка отправлена успешно!
+                Заявка на расчет отправлена!
               </h3>
               <p className="text-green-700 mb-6">
-                Мы вернемся к вам с ответом в течение <strong>1 часа</strong>.<br />
-                Наш менеджер свяжется с вами по указанному номеру телефона.
+                Мы вернемся к вам с ответом в течение <strong>5 часов</strong>.<br />
+                Наш менеджер свяжется с вами по указанному номеру телефона для индивидуального расчета стоимости.
               </p>
               <div className="bg-white rounded-lg p-4 mb-4">
                 <p className="text-sm text-gray-600">
@@ -511,9 +513,9 @@ export default function Calculator() {
               </div>
               <button
                 onClick={resetForm}
-                className="bg-custom-blue-600 text-white px-6 py-2 rounded-lg hover:bg-custom-blue-700 transition-colors"
+                className="bg-custom-blue-600 text-white px-6 py-2 rounded-lg border-2 border-custom-blue-600 hover:bg-custom-blue-700 hover:border-custom-blue-700 focus:ring-2 focus:ring-custom-blue-500 focus:ring-offset-2 transition-all duration-200 shadow-lg"
               >
-                Сделать новый расчет
+                Отправить новую заявку
               </button>
             </div>
           )}
@@ -521,7 +523,7 @@ export default function Calculator() {
 
         <div className="mt-8 text-center">
           <p className="text-sm text-gray-600">
-            {t('note')}
+            После отправки заявки наш менеджер свяжется с вами в течение 5 часов для индивидуального расчета стоимости
           </p>
         </div>
       </div>

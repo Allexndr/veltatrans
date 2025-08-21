@@ -120,6 +120,63 @@ export async function GET(
   // Simulate API delay
   await new Promise(resolve => setTimeout(resolve, 500));
 
+  // Сначала пытаемся найти реальный заказ
+  try {
+    const orderResponse = await fetch(`${request.nextUrl.origin}/api/orders?tracking=${trackingNumber}`);
+    if (orderResponse.ok) {
+      const orderData = await orderResponse.json();
+      if (orderData.success && orderData.order) {
+        const order = orderData.order;
+        
+        // Возвращаем данные реального заказа в формате TrackingResponse
+        const realTrackingData: TrackingResponse = {
+          trackingNumber: order.trackingNumber,
+          status: order.status === 'assigned' ? 'in_transit' : 
+                 order.status === 'completed' ? 'delivered' : 'pending',
+          statusText: order.status === 'assigned' ? 'В пути' : 
+                     order.status === 'completed' ? 'Доставлен' : 'Обрабатывается',
+          estimatedDelivery: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+          currentLocation: {
+            lat: 51.1694 + Math.random() * 0.1,
+            lng: 71.4491 + Math.random() * 0.1,
+            address: order.status === 'assigned' ? `В пути из ${order.from}` : order.from
+          },
+          route: [
+            {
+              lat: 51.1694,
+              lng: 71.4491,
+              timestamp: order.createdAt,
+              location: order.from,
+              status: 'pending',
+              description: 'Заказ создан и принят в обработку'
+            },
+            ...(order.status === 'assigned' ? [{
+              lat: 51.1694 + Math.random() * 0.1,
+              lng: 71.4491 + Math.random() * 0.1,
+              timestamp: new Date().toISOString(),
+              location: `В пути к ${order.to}`,
+              status: 'in_transit',
+              description: 'Груз в пути'
+            }] : []),
+            ...(order.status === 'completed' ? [{
+              lat: 51.1694 + Math.random() * 0.2,
+              lng: 71.4491 + Math.random() * 0.2,
+              timestamp: new Date().toISOString(),
+              location: order.to,
+              status: 'delivered',
+              description: 'Груз доставлен получателю'
+            }] : [])
+          ],
+          lastUpdate: new Date().toISOString()
+        };
+        
+        return NextResponse.json(realTrackingData);
+      }
+    }
+  } catch (error) {
+    console.error('Error fetching real order:', error);
+  }
+
   // Check if tracking number exists in mock data
   const trackingData = mockTrackingData[trackingNumber];
 

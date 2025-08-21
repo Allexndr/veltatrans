@@ -26,7 +26,6 @@ export default function Header() {
     {name: t('about'), href: '/about'},
     {name: t('services'), href: '/services'},
     {name: t('cases'), href: '/cases'},
-    {name: t('calculator'), href: '/calculator'},
     {name: t('rates'), href: '/rates'},
     {name: t('directions'), href: '/directions'},
     {name: t('documents'), href: '/documents'},
@@ -71,14 +70,15 @@ export default function Header() {
 
   return (
     <motion.header 
-      className="sticky top-0 z-50 transition-all duration-300 border-b border-gray-100/50"
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-gray-200/50"
       variants={headerVariants}
       initial="initial"
-      animate={isScrolled ? "scrolled" : "animate"}
+      animate="animate"
       style={{
-        backgroundColor: isScrolled ? "rgba(255, 255, 255, 0.98)" : "rgba(255, 255, 255, 0.98)",
-        backdropFilter: isScrolled ? "blur(20px)" : "blur(10px)",
-        borderBottom: isScrolled ? "1px solid rgba(0, 0, 0, 0.05)" : "none"
+        backgroundColor: "rgba(255, 255, 255, 0.98)",
+        backdropFilter: "blur(20px)",
+        borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
+        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)"
       }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

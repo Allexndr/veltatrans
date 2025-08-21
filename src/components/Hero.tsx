@@ -84,9 +84,9 @@ export default function Hero({}: {locale: string}) {
 
           {/* Three main action buttons */}
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center mb-12 sm:mb-16 md:mb-20 px-4">
-            <SmoothLink
-              href="/calculator"
-              className="group relative px-6 sm:px-8 py-4 sm:py-5 bg-white text-custom-blue-900 rounded-full font-semibold text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl w-full sm:w-auto"
+            <button
+              onClick={() => document.getElementById('calculator-section')?.scrollIntoView({ behavior: 'smooth' })}
+              className="group relative px-6 sm:px-8 py-4 sm:py-5 bg-white text-custom-blue-900 rounded-full font-semibold text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl w-full sm:w-auto border-2 border-white shadow-lg"
             >
               <span className="relative z-10 flex items-center justify-center">
                 <svg className="w-5 h-5 mr-2 sm:mr-3 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -94,7 +94,7 @@ export default function Hero({}: {locale: string}) {
                 </svg>
                 Получить расчет
               </span>
-            </SmoothLink>
+            </button>
             
             <SmoothLink
               href="/contacts"
@@ -108,8 +108,8 @@ export default function Hero({}: {locale: string}) {
               </span>
             </SmoothLink>
             
-            <SmoothLink
-              href="/tracking"
+            <button
+              onClick={() => document.getElementById('tracking-section')?.scrollIntoView({ behavior: 'smooth' })}
               className="group relative px-6 sm:px-8 py-4 sm:py-5 bg-transparent border-2 border-white/50 text-white rounded-full font-semibold text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:border-white w-full sm:w-auto"
             >
               <span className="relative z-10 flex items-center justify-center">
@@ -119,7 +119,7 @@ export default function Hero({}: {locale: string}) {
                 </svg>
                 Отследить груз
               </span>
-            </SmoothLink>
+            </button>
           </div>
 
           {/* Updated stats according to requirements */}

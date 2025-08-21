@@ -1,360 +1,340 @@
 import { NextRequest, NextResponse } from 'next/server';
+import fs from 'fs';
+import path from 'path';
 
-const TELEGRAM_BOT_TOKEN = '8414818778:AAG2QXqDu0WKwsClyMt5CpbpLQBL3QLVWUE';
-const TELEGRAM_CHANNEL_ID = '-1002999769930';
+const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8414818778:AAG2QXqDu0WKwsClyMt5CpbpLQBL3QLVWUE';
+const CHANNEL_ID = process.env.TELEGRAM_CHANNEL_ID || '-1002999769930';
+const ADMIN_ID = '5450018125'; // ID админа
 
-interface TelegramUpdate {
-  update_id: number;
-  message?: {
-    message_id: number;
-    from: {
-      id: number;
-      is_bot: boolean;
-      first_name: string;
-      last_name?: string;
-      username?: string;
-      language_code?: string;
-    };
-    chat: {
-      id: number;
-      first_name?: string;
-      last_name?: string;
-      username?: string;
-      type: string;
-    };
-    date: number;
-    text?: string;
-    contact?: {
-      phone_number: string;
-      first_name: string;
-      last_name?: string;
-      user_id?: number;
-    };
-  };
-  callback_query?: {
-    id: string;
-    from: {
-      id: number;
-      first_name: string;
-      last_name?: string;
-      username?: string;
-    };
-    message?: {
-      message_id: number;
-      chat: {
-        id: number;
-        type: string;
-      };
-    };
-    data?: string;
-  };
+// Пути к файлам данных
+const dataDir = path.join(process.cwd(), 'data');
+const driversFile = path.join(dataDir, 'drivers.json');
+const ordersFile = path.join(dataDir, 'orders.json');
+const userStatesFile = path.join(dataDir, 'user_states.json');
+
+// Убеждаемся что папка data существует
+if (!fs.existsSync(dataDir)) {
+  fs.mkdirSync(dataDir, { recursive: true });
 }
 
-interface DriverData {
-  userId: number;
-  firstName: string;
-  lastName?: string;
-  username?: string;
+// Инициализируем файлы если их нет
+if (!fs.existsSync(driversFile)) {
+  fs.writeFileSync(driversFile, '{}');
+}
+if (!fs.existsSync(ordersFile)) {
+  fs.writeFileSync(ordersFile, '{}');
+}
+if (!fs.existsSync(userStatesFile)) {
+  fs.writeFileSync(userStatesFile, '{}');
+}
+
+interface Driver {
+  id: number;
+  name: string;
   phone: string;
-  registrationDate: string;
-  status: 'pending' | 'approved' | 'rejected';
+  carNumber: string;
+  carType: string;
+  registeredAt: string;
+  status: 'active' | 'inactive';
 }
 
-// Временное хранилище водителей (в продакшене использовать БД)
-const drivers: Map<number, DriverData> = new Map();
+interface Order {
+  id: string;
+  from: string;
+  to: string;
+  carType: string;
+  description: string;
+  createdAt: string;
+  status: 'active' | 'assigned' | 'completed';
+  bids: Bid[];
+  assignedDriver?: number;
+  finalPrice?: number;
+  trackingNumber?: string;
+}
 
-async function sendTelegramMessage(chatId: number, text: string, replyMarkup?: object) {
-  const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-  
-  const payload = {
-    chat_id: chatId,
-    text,
-    parse_mode: 'HTML',
-    ...replyMarkup && { reply_markup: replyMarkup }
-  };
+interface Bid {
+  driverId: number;
+  driverName: string;
+  driverPhone: string;
+  carNumber: string;
+  price: number;
+  timestamp: string;
+}
 
+interface UserState {
+  step?: string;
+  orderStep?: string;
+  biddingOrderId?: string;
+  name?: string;
+  phone?: string;
+  carNumber?: string;
+  carType?: string;
+  from?: string;
+  to?: string;
+  description?: string;
+}
+
+// Функции для работы с данными
+function loadDrivers(): Record<string, Driver> {
   try {
-    const response = await fetch(url, {
+    return JSON.parse(fs.readFileSync(driversFile, 'utf8'));
+  } catch (e) {
+    return {};
+  }
+}
+
+function saveDrivers(drivers: Record<string, Driver>) {
+  fs.writeFileSync(driversFile, JSON.stringify(drivers, null, 2));
+}
+
+function loadOrders(): Record<string, Order> {
+  try {
+    return JSON.parse(fs.readFileSync(ordersFile, 'utf8'));
+  } catch (e) {
+    return {};
+  }
+}
+
+function saveOrders(orders: Record<string, Order>) {
+  fs.writeFileSync(ordersFile, JSON.stringify(orders, null, 2));
+}
+
+function loadUserStates(): Record<string, UserState> {
+  try {
+    return JSON.parse(fs.readFileSync(userStatesFile, 'utf8'));
+  } catch (e) {
+    return {};
+  }
+}
+
+function saveUserStates(states: Record<string, UserState>) {
+  fs.writeFileSync(userStatesFile, JSON.stringify(states, null, 2));
+}
+
+// Генерация уникального номера заказа
+function generateOrderNumber(driverId: number): string {
+  const orderNumber = Math.floor(Math.random() * 100000);
+  return `${driverId}-${orderNumber}`;
+}
+
+async function sendTelegramMessage(chatId: string | number, text: string, replyMarkup?: object) {
+  try {
+    const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: text,
+        parse_mode: 'HTML',
+        reply_markup: replyMarkup,
+      }),
     });
 
-    if (!response.ok) {
-      console.error('Telegram API error:', await response.text());
-    }
-    
-    return response.json();
+    return await response.json();
   } catch (error) {
-    console.error('Error sending message:', error);
+    console.error('Error sending Telegram message:', error);
+    return { ok: false, error: error };
   }
 }
 
-async function sendToChannel(message: string) {
-  return sendTelegramMessage(parseInt(TELEGRAM_CHANNEL_ID), message);
-}
+// Рассылка заказа водителям
+async function broadcastOrderToDrivers(orderId: string, order: Order) {
+  const drivers = loadDrivers();
+  let sentCount = 0;
+  
+  for (const driver of Object.values(drivers)) {
+    // Фильтруем по типу ТС
+    if (driver.carType.toLowerCase().includes(order.carType.toLowerCase()) || 
+        order.carType.toLowerCase().includes(driver.carType.toLowerCase())) {
+      
+      const orderText = `🚛 <b>Новый заказ!</b>
 
-function getMainMenuKeyboard() {
-  return {
-    keyboard: [
-      [{ text: '🚛 Регистрация водителя' }],
-      [{ text: '📋 Мои заказы' }, { text: '📍 Мой статус' }],
-      [{ text: '📞 Поддержка' }, { text: '❓ Помощь' }]
-    ],
-    resize_keyboard: true,
-    one_time_keyboard: false
-  };
-}
+<b>Маршрут:</b> ${order.from} → ${order.to}
+<b>Тип ТС:</b> ${order.carType}
+<b>Описание:</b> ${order.description}
 
-function getContactKeyboard() {
-  return {
-    keyboard: [
-      [{ text: '📱 Поделиться номером', request_contact: true }],
-      [{ text: '◀️ Назад' }]
-    ],
-    resize_keyboard: true,
-    one_time_keyboard: true
-  };
+Хотите взять этот заказ?`;
+
+      const keyboard = {
+        inline_keyboard: [
+          [{ text: '💰 Предложить цену', callback_data: `bid_${orderId}` }],
+          [{ text: '❌ Пропустить', callback_data: 'skip' }]
+        ]
+      };
+
+      await sendTelegramMessage(driver.id, orderText, keyboard);
+      sentCount++;
+    }
+  }
+  
+  // Уведомляем в канал о рассылке
+  await sendTelegramMessage(CHANNEL_ID, `📢 <b>Заказ ${orderId} разослан!</b>
+
+<b>Маршрут:</b> ${order.from} → ${order.to}
+<b>Тип ТС:</b> ${order.carType}
+<b>Разослано водителям:</b> ${sentCount}
+
+Ожидаем предложения цен...`);
 }
 
 export async function POST(request: NextRequest) {
   try {
-    const body: TelegramUpdate = await request.json();
+    const body = await request.json();
     
-    // Обработка обычных сообщений
     if (body.message) {
       const message = body.message;
       const chatId = message.chat.id;
-      const text = message.text;
+      const text = message.text || '';
       const userId = message.from.id;
+      const userName = message.from.first_name || 'Пользователь';
+
+      const drivers = loadDrivers();
+      const userStates = loadUserStates();
+      const userState = userStates[userId] || {};
 
       // Команда /start
       if (text === '/start') {
-        const welcomeMessage = `
-🚛 <b>Добро пожаловать в Velta Trans!</b>
+        if (drivers[userId]) {
+          const driver = drivers[userId];
+          const welcomeText = `🚛 <b>Добро пожаловать, ${driver.name}!</b>
 
-Система управления заказами для водителей.
+<b>Ваши данные:</b>
+📱 Телефон: ${driver.phone}
+🚛 Автомобиль: ${driver.carNumber}
+🔧 Тип ТС: ${driver.carType}
 
-<b>Доступные функции:</b>
-• Регистрация в системе
-• Получение новых заказов  
-• Отслеживание статуса
-• Связь с диспетчером
+Ожидайте заказы. Когда появится подходящий заказ, вам придет уведомление.`;
 
-Выберите действие из меню ⬇️
-        `;
-        
-        await sendTelegramMessage(chatId, welcomeMessage, { reply_markup: getMainMenuKeyboard() });
-        return NextResponse.json({ ok: true });
-      }
+          await sendTelegramMessage(chatId, welcomeText);
+        } else {
+          const welcomeText = `🚛 <b>Добро пожаловать в Velta Trans!</b>
 
-      // Регистрация водителя
-      if (text === '🚛 Регистрация водителя') {
-        if (drivers.has(userId)) {
-          const driver = drivers.get(userId)!;
-          let statusText = '';
-          
-          switch (driver.status) {
-            case 'pending':
-              statusText = '⏳ Ваша заявка на рассмотрении';
-              break;
-            case 'approved':
-              statusText = '✅ Вы уже зарегистрированы в системе';
-              break;
-            case 'rejected':
-              statusText = '❌ Ваша заявка отклонена. Обратитесь в поддержку.';
-              break;
-          }
-          
-          await sendTelegramMessage(chatId, statusText);
-          return NextResponse.json({ ok: true });
+Для работы с системой необходимо зарегистрироваться как водитель.
+
+Нажмите кнопку ниже для регистрации:`;
+
+          const keyboard = {
+            inline_keyboard: [
+              [{ text: '📝 Регистрация водителя', callback_data: 'register_driver' }],
+              [{ text: 'ℹ️ Информация', callback_data: 'info' }]
+            ]
+          };
+
+          await sendTelegramMessage(chatId, welcomeText, keyboard);
         }
-
-        const registrationMessage = `
-📝 <b>Регистрация водителя</b>
-
-Для регистрации в системе Velta Trans необходимо поделиться своим номером телефона.
-
-Нажмите кнопку ниже ⬇️
-        `;
-        
-        await sendTelegramMessage(chatId, registrationMessage, { reply_markup: getContactKeyboard() });
-        return NextResponse.json({ ok: true });
       }
+      
+      // Калькулятор (сайт)
+      else if (text === '/calculate') {
+        const calculateText = `💰 <b>Калькулятор стоимости перевозки</b>
 
-      // Обработка контакта
-      if (message.contact) {
-        const contact = message.contact;
-        const driverData: DriverData = {
-          userId,
-          firstName: message.from.first_name,
-          lastName: message.from.last_name,
-          username: message.from.username,
-          phone: contact.phone_number,
-          registrationDate: new Date().toISOString(),
-          status: 'pending'
+Для расчета заполните форму на сайте:
+🌐 <a href="https://velta-logistics.com">velta-logistics.com</a>
+
+Или свяжитесь с менеджером:
+📞 +7 700 277 00 06
+📧 info@velta-logistics.com`;
+        await sendTelegramMessage(chatId, calculateText);
+      }
+      
+      // Отслеживание
+      else if (text === '/track') {
+        const trackText = `📦 <b>Отслеживание груза</b>
+
+Отправьте номер для отслеживания в формате:
+<code>WT123456-1700000000000</code>
+
+Также вы можете воспользоваться формой на сайте:
+🌐 <a href="https://velta-logistics.com">velta-logistics.com</a>`;
+        await sendTelegramMessage(chatId, trackText);
+      }
+      
+      // Контакты
+      else if (text === '/contact') {
+        const contactText = `📞 <b>Связаться с менеджером</b>
+
+Телефон: +7 700 277 00 06
+Email: info@velta-logistics.com
+Сайт: <a href="https://velta-logistics.com">velta-logistics.com</a>`;
+        await sendTelegramMessage(chatId, contactText);
+      }
+      
+      // Админ панель
+      else if (text === '/admin' && userId.toString() === ADMIN_ID) {
+        const adminText = `👨‍💼 <b>Админ панель</b>
+
+Выберите действие:`;
+
+        const keyboard = {
+          inline_keyboard: [
+            [{ text: '📦 Создать заказ', callback_data: 'create_order' }],
+            [{ text: '👥 Список водителей', callback_data: 'list_drivers' }],
+            [{ text: '📋 Активные заказы', callback_data: 'list_orders' }]
+          ]
         };
 
-        drivers.set(userId, driverData);
-
-        // Уведомление в канал
-        const channelMessage = `
-🚛 <b>НОВАЯ РЕГИСТРАЦИЯ ВОДИТЕЛЯ</b>
-
-👤 <b>Имя:</b> ${driverData.firstName} ${driverData.lastName || ''}
-📞 <b>Телефон:</b> ${driverData.phone}
-👨‍💼 <b>Username:</b> ${driverData.username ? '@' + driverData.username : 'Не указан'}
-🆔 <b>ID:</b> ${userId}
-📅 <b>Дата:</b> ${new Date().toLocaleString('ru-RU')}
-
-<b>Статус:</b> ⏳ Ожидает подтверждения
-        `;
-
-        await sendToChannel(channelMessage);
-
-        const confirmationMessage = `
-✅ <b>Заявка отправлена!</b>
-
-Ваши данные:
-👤 <b>Имя:</b> ${driverData.firstName} ${driverData.lastName || ''}
-📞 <b>Телефон:</b> ${driverData.phone}
-
-⏳ <b>Статус:</b> На рассмотрении
-
-Мы свяжемся с вами в ближайшее время для подтверждения регистрации.
-        `;
-
-        await sendTelegramMessage(chatId, confirmationMessage, { reply_markup: getMainMenuKeyboard() });
-        return NextResponse.json({ ok: true });
+        await sendTelegramMessage(chatId, adminText, keyboard);
       }
-
-      // Мои заказы
-      if (text === '📋 Мои заказы') {
-        const driver = drivers.get(userId);
-        
-        if (!driver || driver.status !== 'approved') {
-          await sendTelegramMessage(chatId, '❌ Сначала пройдите регистрацию!');
-          return NextResponse.json({ ok: true });
-        }
-
-        // Заглушка для заказов
-        const ordersMessage = `
-📋 <b>Ваши заказы</b>
-
-🚛 <b>Активные заказы:</b> 0
-📦 <b>В ожидании:</b> 0
-✅ <b>Выполнено сегодня:</b> 0
-
-<i>Новые заказы будут появляться здесь автоматически.</i>
-        `;
-
-        await sendTelegramMessage(chatId, ordersMessage);
-        return NextResponse.json({ ok: true });
+      
+      // Обработка состояний регистрации
+      else if (userState.step) {
+        await handleRegistrationStep(userId, chatId, text, userState, userStates);
       }
-
-      // Мой статус
-      if (text === '📍 Мой статус') {
-        const driver = drivers.get(userId);
-        
-        if (!driver) {
-          await sendTelegramMessage(chatId, '❌ Сначала пройдите регистрацию!');
-          return NextResponse.json({ ok: true });
-        }
-
-        let statusText = '';
-        let statusEmoji = '';
-        
-        switch (driver.status) {
-          case 'pending':
-            statusEmoji = '⏳';
-            statusText = 'На рассмотрении';
-            break;
-          case 'approved':
-            statusEmoji = '✅';
-            statusText = 'Подтвержден';
-            break;
-          case 'rejected':
-            statusEmoji = '❌';
-            statusText = 'Отклонен';
-            break;
-        }
-
-        const statusMessage = `
-📍 <b>Ваш статус</b>
-
-👤 <b>Имя:</b> ${driver.firstName} ${driver.lastName || ''}
-📞 <b>Телефон:</b> ${driver.phone}
-📅 <b>Регистрация:</b> ${new Date(driver.registrationDate).toLocaleDateString('ru-RU')}
-
-${statusEmoji} <b>Статус:</b> ${statusText}
-        `;
-
-        await sendTelegramMessage(chatId, statusMessage);
-        return NextResponse.json({ ok: true });
+      
+      // Обработка создания заказа
+      else if (userState.orderStep) {
+        await handleOrderCreationStep(userId, chatId, text, userState, userStates);
       }
-
-      // Поддержка
-      if (text === '📞 Поддержка') {
-        const supportMessage = `
-📞 <b>Служба поддержки</b>
-
-<b>Контакты диспетчерской:</b>
-📱 +77002770006
-📱 +77010704011  
-📱 +77010704022
-
-<b>Email:</b> info@velta-logistics.com
-
-<b>Режим работы:</b>
-🕐 Круглосуточно, 7 дней в неделю
-
-<i>Для экстренных вопросов звоните по указанным номерам.</i>
-        `;
-
-        await sendTelegramMessage(chatId, supportMessage);
-        return NextResponse.json({ ok: true });
+      
+      // Обработка предложения цены
+      else if (userState.biddingOrderId) {
+        await handleBidStep(userId, chatId, text, userState, userStates);
       }
+    }
+    
+    // Обработка callback query
+    else if (body.callback_query) {
+      const callbackQuery = body.callback_query;
+      const chatId = callbackQuery.message.chat.id;
+      const data = callbackQuery.data;
+      const userId = callbackQuery.from.id;
 
-      // Помощь
-      if (text === '❓ Помощь') {
-        const helpMessage = `
-❓ <b>Справка по боту</b>
+      if (data === 'register_driver') {
+        await startDriverRegistration(userId, chatId);
+      } else if (data === 'info') {
+        const infoText = `ℹ️ <b>Информация о системе</b>
 
-<b>🚛 Регистрация водителя</b>
-Подать заявку на регистрацию в системе
-
-<b>📋 Мои заказы</b>  
-Просмотр активных и завершенных заказов
-
-<b>📍 Мой статус</b>
-Проверить статус регистрации
-
-<b>📞 Поддержка</b>
-Контакты службы поддержки
+<b>Velta Trans</b> - логистическая компания, специализирующаяся на международных перевозках.
 
 <b>Как это работает:</b>
-1. Пройдите регистрацию
-2. Дождитесь подтверждения
-3. Получайте заказы в боте
-4. Выполняйте и отмечайте статус
+1. Вы регистрируетесь как водитель
+2. Получаете уведомления о новых заказах
+3. Предлагаете свою цену
+4. При выборе получаете контакты для связи
 
-<i>По всем вопросам обращайтесь в поддержку.</i>
-        `;
+<b>Контакты:</b>
+📞 +7 700 277 00 06
+📧 info@velta-logistics.com
+🌐 https://velta-logistics.com`;
 
-        await sendTelegramMessage(chatId, helpMessage);
-        return NextResponse.json({ ok: true });
+        await sendTelegramMessage(chatId, infoText);
+      } else if (data === 'create_order' && userId.toString() === ADMIN_ID) {
+        await startOrderCreation(userId, chatId);
+      } else if (data === 'list_drivers' && userId.toString() === ADMIN_ID) {
+        await listDrivers(chatId);
+      } else if (data === 'list_orders' && userId.toString() === ADMIN_ID) {
+        await listActiveOrders(chatId);
+      } else if (data.startsWith('bid_')) {
+        const orderId = data.split('_')[1];
+        await startBidding(userId, chatId, orderId);
+      } else if (data.startsWith('select_driver_')) {
+        const parts = data.split('_');
+        const orderId = parts[2];
+        const driverId = parts[3];
+        await selectDriver(chatId, orderId, parseInt(driverId));
       }
-
-      // Кнопка "Назад"
-      if (text === '◀️ Назад') {
-        await sendTelegramMessage(chatId, 'Выберите действие:', { reply_markup: getMainMenuKeyboard() });
-        return NextResponse.json({ ok: true });
-      }
-
-      // Неизвестная команда
-      await sendTelegramMessage(chatId, 'Используйте кнопки меню для навигации 👇', { reply_markup: getMainMenuKeyboard() });
     }
 
     return NextResponse.json({ ok: true });
@@ -362,6 +342,343 @@ ${statusEmoji} <b>Статус:</b> ${statusText}
     console.error('Webhook error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
+}
+
+// Регистрация водителя
+async function startDriverRegistration(userId: number, chatId: number) {
+  const userStates = loadUserStates();
+  userStates[userId] = { step: 'name' };
+  saveUserStates(userStates);
+  
+  await sendTelegramMessage(chatId, `📝 <b>Регистрация водителя</b>
+
+Введите ваше полное имя:`);
+}
+
+async function handleRegistrationStep(userId: number, chatId: number, text: string, userState: UserState, userStates: Record<string, UserState>) {
+  const drivers = loadDrivers();
+  
+  if (userState.step === 'name') {
+    userState.name = text;
+    userState.step = 'phone';
+    userStates[userId] = userState;
+    saveUserStates(userStates);
+    await sendTelegramMessage(chatId, 'Введите ваш номер телефона (например: +7 700 123 45 67):');
+  } else if (userState.step === 'phone') {
+    userState.phone = text;
+    userState.step = 'carNumber';
+    userStates[userId] = userState;
+    saveUserStates(userStates);
+    await sendTelegramMessage(chatId, 'Введите номер вашего автомобиля (например: А123БВ01):');
+  } else if (userState.step === 'carNumber') {
+    userState.carNumber = text;
+    userState.step = 'carType';
+    userStates[userId] = userState;
+    saveUserStates(userStates);
+    await sendTelegramMessage(chatId, 'Введите тип вашего автомобиля (например: Фура 20т, Газель, Тент 10т):');
+  } else if (userState.step === 'carType') {
+    userState.carType = text;
+    
+    // Сохраняем водителя
+    drivers[userId] = {
+      id: userId,
+      name: userState.name!,
+      phone: userState.phone!,
+      carNumber: userState.carNumber!,
+      carType: userState.carType!,
+      registeredAt: new Date().toISOString(),
+      status: 'active'
+    };
+    
+    saveDrivers(drivers);
+    delete userStates[userId];
+    saveUserStates(userStates);
+    
+    const successText = `✅ <b>Регистрация завершена!</b>
+
+<b>Ваши данные:</b>
+👤 Имя: ${userState.name}
+📱 Телефон: ${userState.phone}
+🚛 Автомобиль: ${userState.carNumber}
+🔧 Тип ТС: ${userState.carType}
+
+Теперь вы будете получать уведомления о новых заказах!`;
+
+    await sendTelegramMessage(chatId, successText);
+    
+    // Уведомляем админа о новом водителе
+    await sendTelegramMessage(CHANNEL_ID, `🚛 <b>Новый водитель зарегистрирован!</b>
+
+👤 <b>Имя:</b> ${userState.name}
+📱 <b>Телефон:</b> ${userState.phone}
+🚛 <b>Автомобиль:</b> ${userState.carNumber}
+🔧 <b>Тип ТС:</b> ${userState.carType}
+🆔 <b>Telegram ID:</b> ${userId}`);
+  }
+}
+
+// Создание заказа
+async function startOrderCreation(userId: number, chatId: number) {
+  const userStates = loadUserStates();
+  userStates[userId] = { orderStep: 'from' };
+  saveUserStates(userStates);
+  
+  await sendTelegramMessage(chatId, `📦 <b>Создание нового заказа</b>
+
+Введите город отправления:`);
+}
+
+async function handleOrderCreationStep(userId: number, chatId: number, text: string, userState: UserState, userStates: Record<string, UserState>) {
+  if (userState.orderStep === 'from') {
+    userState.from = text;
+    userState.orderStep = 'to';
+    userStates[userId] = userState;
+    saveUserStates(userStates);
+    await sendTelegramMessage(chatId, 'Введите город назначения:');
+  } else if (userState.orderStep === 'to') {
+    userState.to = text;
+    userState.orderStep = 'carType';
+    userStates[userId] = userState;
+    saveUserStates(userStates);
+    await sendTelegramMessage(chatId, 'Введите требуемый тип ТС (например: Фура 20т, Тент, Газель):');
+  } else if (userState.orderStep === 'carType') {
+    userState.carType = text;
+    userState.orderStep = 'description';
+    userStates[userId] = userState;
+    saveUserStates(userStates);
+    await sendTelegramMessage(chatId, 'Введите описание груза:');
+  } else if (userState.orderStep === 'description') {
+    userState.description = text;
+    
+    // Создаем заказ
+    const orderId = Date.now().toString();
+    const orders = loadOrders();
+    
+    orders[orderId] = {
+      id: orderId,
+      from: userState.from!,
+      to: userState.to!,
+      carType: userState.carType!,
+      description: userState.description!,
+      createdAt: new Date().toISOString(),
+      status: 'active',
+      bids: []
+    };
+    
+    saveOrders(orders);
+    delete userStates[userId];
+    saveUserStates(userStates);
+    
+    // Отправляем заказ всем подходящим водителям
+    await broadcastOrderToDrivers(orderId, orders[orderId]);
+    
+    await sendTelegramMessage(chatId, `✅ <b>Заказ создан!</b>
+
+<b>ID заказа:</b> ${orderId}
+<b>Маршрут:</b> ${userState.from} → ${userState.to}
+<b>Тип ТС:</b> ${userState.carType}
+<b>Описание:</b> ${userState.description}
+
+Заказ отправлен водителям. Ожидайте предложения цен в канале.`);
+  }
+}
+
+// Начало торгов
+async function startBidding(userId: number, chatId: number, orderId: string) {
+  const orders = loadOrders();
+  const drivers = loadDrivers();
+  
+  if (!orders[orderId]) {
+    await sendTelegramMessage(chatId, '❌ Заказ не найден.');
+    return;
+  }
+  
+  if (!drivers[userId]) {
+    await sendTelegramMessage(chatId, '❌ Вы не зарегистрированы как водитель.');
+    return;
+  }
+  
+  const userStates = loadUserStates();
+  userStates[userId] = { biddingOrderId: orderId };
+  saveUserStates(userStates);
+  
+  const order = orders[orderId];
+  await sendTelegramMessage(chatId, `💰 <b>Предложение цены</b>
+
+<b>Заказ:</b> ${order.from} → ${order.to}
+
+Введите вашу цену в тенге (например: 150000):`);
+}
+
+// Обработка ставки
+async function handleBidStep(userId: number, chatId: number, text: string, userState: UserState, userStates: Record<string, UserState>) {
+  const price = parseInt(text);
+  
+  if (isNaN(price) || price <= 0) {
+    await sendTelegramMessage(chatId, '❌ Введите корректную цену числом.');
+    return;
+  }
+  
+  const orderId = userState.biddingOrderId!;
+  const orders = loadOrders();
+  const drivers = loadDrivers();
+  const driver = drivers[userId];
+  
+  if (!orders[orderId] || !driver) {
+    await sendTelegramMessage(chatId, '❌ Ошибка при обработке ставки.');
+    delete userStates[userId];
+    saveUserStates(userStates);
+    return;
+  }
+  
+  // Добавляем ставку к заказу
+  orders[orderId].bids.push({
+    driverId: userId,
+    driverName: driver.name,
+    driverPhone: driver.phone,
+    carNumber: driver.carNumber,
+    price: price,
+    timestamp: new Date().toISOString()
+  });
+  
+  saveOrders(orders);
+  delete userStates[userId];
+  saveUserStates(userStates);
+  
+  await sendTelegramMessage(chatId, `✅ <b>Ваше предложение отправлено!</b>
+
+<b>Цена:</b> ${price.toLocaleString()} тенге
+
+Ожидайте решения администратора.`);
+  
+  // Отправляем предложение в канал
+  const order = orders[orderId];
+  const bidText = `💰 <b>Новое предложение цены!</b>
+
+<b>Заказ:</b> ${order.from} → ${order.to}
+<b>Водитель:</b> ${driver.name}
+<b>Телефон:</b> ${driver.phone}
+<b>Автомобиль:</b> ${driver.carNumber}
+<b>Цена:</b> ${price.toLocaleString()} тенге`;
+
+  const keyboard = {
+    inline_keyboard: [
+      [{ text: `✅ Выбрать ${driver.name}`, callback_data: `select_driver_${orderId}_${userId}` }]
+    ]
+  };
+
+  await sendTelegramMessage(CHANNEL_ID, bidText, keyboard);
+}
+
+// Выбор водителя
+async function selectDriver(chatId: number, orderId: string, driverId: number) {
+  const orders = loadOrders();
+  const drivers = loadDrivers();
+  
+  const order = orders[orderId];
+  const driver = drivers[driverId];
+  
+  if (!order || !driver) {
+    await sendTelegramMessage(chatId, '❌ Заказ или водитель не найден.');
+    return;
+  }
+  
+  // Находим ставку водителя
+  const bid = order.bids.find(b => b.driverId === driverId);
+  if (!bid) {
+    await sendTelegramMessage(chatId, '❌ Ставка не найдена.');
+    return;
+  }
+  
+  // Генерируем уникальный номер заказа (WTID-ORDERID)
+  const trackingNumber = `WT${driverId}-${orderId}`;
+  
+  // Обновляем заказ
+  orders[orderId].status = 'assigned';
+  orders[orderId].assignedDriver = driverId;
+  orders[orderId].finalPrice = bid.price;
+  orders[orderId].trackingNumber = trackingNumber;
+  
+  saveOrders(orders);
+  
+  // Уведомляем выбранного водителя
+  await sendTelegramMessage(driverId, `🎉 <b>Вас выбрали!</b>
+
+<b>Заказ:</b> ${order.from} → ${order.to}
+<b>Цена:</b> ${bid.price.toLocaleString()} тенге
+<b>Номер заказа:</b> <code>${trackingNumber}</code>
+
+С вами свяжется менеджер для оформления документов.`);
+  
+  // Уведомляем остальных водителей
+  for (const otherBid of order.bids) {
+    if (otherBid.driverId !== driverId) {
+      await sendTelegramMessage(otherBid.driverId, `😔 <b>Заказ закрыт</b>
+
+Заказ ${order.from} → ${order.to} взял другой водитель.
+Ждите новые заказы!`);
+    }
+  }
+  
+  // Уведомляем в канал
+  await sendTelegramMessage(CHANNEL_ID, `✅ <b>Заказ ${orderId} закрыт!</b>
+
+<b>Выбран водитель:</b> ${driver.name}
+<b>Телефон:</b> ${driver.phone}
+<b>Автомобиль:</b> ${driver.carNumber}
+<b>Цена:</b> ${bid.price.toLocaleString()} тенге
+<b>Номер для отслеживания:</b> <code>${trackingNumber}</code>
+
+Свяжитесь с водителем для оформления.`);
+}
+
+// Список водителей
+async function listDrivers(chatId: number) {
+  const drivers = loadDrivers();
+  const driversList = Object.values(drivers);
+  
+  if (driversList.length === 0) {
+    await sendTelegramMessage(chatId, '📋 Водители не зарегистрированы.');
+    return;
+  }
+  
+  let text = `👥 <b>Зарегистрированные водители (${driversList.length}):</b>\n\n`;
+  
+  driversList.forEach((driver, index) => {
+    text += `${index + 1}. <b>${driver.name}</b>
+📱 ${driver.phone}
+🚛 ${driver.carNumber} (${driver.carType})
+🆔 ${driver.id}
+
+`;
+  });
+  
+  await sendTelegramMessage(chatId, text);
+}
+
+// Список активных заказов
+async function listActiveOrders(chatId: number) {
+  const orders = loadOrders();
+  const activeOrders = Object.values(orders).filter(order => order.status === 'active');
+  
+  if (activeOrders.length === 0) {
+    await sendTelegramMessage(chatId, '📋 Активных заказов нет.');
+    return;
+  }
+  
+  let text = `📦 <b>Активные заказы (${activeOrders.length}):</b>\n\n`;
+  
+  activeOrders.forEach((order, index) => {
+    text += `${index + 1}. <b>${order.from} → ${order.to}</b>
+🔧 ${order.carType}
+📝 ${order.description}
+💰 Ставок: ${order.bids.length}
+🆔 ${order.id}
+
+`;
+  });
+  
+  await sendTelegramMessage(chatId, text);
 }
 
 export async function GET() {

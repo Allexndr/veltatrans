@@ -1,4 +1,5 @@
-import {getTranslations} from 'next-intl/server';
+'use client';
+
 import {Link} from '@/i18n/routing';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
@@ -9,24 +10,29 @@ import Calculator from '@/components/Calculator';
 import CargoTracking from '@/components/CargoTracking';
 import ContactForm from '@/components/ContactForm';
 import Footer from '@/components/Footer';
+import {useTranslations} from 'next-intl';
+import {useParams} from 'next/navigation';
 // import AnimatedBackground from '@/components/AnimatedBackground';
 // import AnimatedCard from '@/components/AnimatedCard';
 // import AnimatedButton from '@/components/AnimatedButton';
 // import {motion, AnimatePresence} from 'framer-motion';
 
-export default async function HomePage({params}: {params: Promise<{locale: string}>}) {
-  const t = await getTranslations();
-  const {locale} = await params;
+export default function HomePage() {
+  const t = useTranslations();
+  const params = useParams();
+  const locale = params.locale as string;
 
   return (
     <div className="min-h-screen bg-white">
       <Header />
+      {/* Отступ для фиксированного header */}
+      <div className="h-16 lg:h-20"></div>
       <main>
         <Hero locale={locale} />
         <ServicesPreview locale={locale} />
         
         {/* Enhanced Calculator and Tracking Section */}
-        <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-br from-gray-50 via-white to-gray-50 relative overflow-hidden">
+        <section id="calculator-section" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-br from-gray-50 via-white to-gray-50 relative overflow-hidden">
           {/* <AnimatedBackground variant="section" /> */}
           
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -53,7 +59,7 @@ export default async function HomePage({params}: {params: Promise<{locale: strin
               <div>
                 <Calculator />
               </div>
-              <div>
+              <div id="tracking-section">
                 <CargoTracking />
               </div>
             </div>
@@ -73,9 +79,9 @@ export default async function HomePage({params}: {params: Promise<{locale: strin
             </h2>
             
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 justify-center px-4">
-              <Link
-                href="/calculator"
-                className="group relative px-6 sm:px-8 md:px-10 py-4 sm:py-5 bg-white text-custom-blue-900 rounded-full font-semibold text-lg sm:text-xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl w-full sm:w-auto"
+              <button
+                onClick={() => document.getElementById('calculator-section')?.scrollIntoView({ behavior: 'smooth' })}
+                className="group relative px-6 sm:px-8 md:px-10 py-4 sm:py-5 bg-white text-custom-blue-900 rounded-full font-semibold text-lg sm:text-xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl w-full sm:w-auto border-2 border-white shadow-lg"
               >
                 <span className="relative z-10 flex items-center justify-center sm:justify-start">
                   <svg className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-4 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -83,19 +89,19 @@ export default async function HomePage({params}: {params: Promise<{locale: strin
                   </svg>
                   {t('home.cta')}
                 </span>
-              </Link>
+              </button>
               
-              <Link
-                href="/contacts"
-                className="group relative px-6 sm:px-8 md:px-10 py-4 sm:py-5 border-2 border-white text-white rounded-full font-semibold text-lg sm:text-xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl w-full sm:w-auto"
+              <button
+                onClick={() => document.getElementById('tracking-section')?.scrollIntoView({ behavior: 'smooth' })}
+                className="group relative px-6 sm:px-8 md:px-10 py-4 sm:py-5 border-2 border-white text-white rounded-full font-semibold text-lg sm:text-xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl w-full sm:w-auto shadow-lg"
               >
                 <span className="relative z-10 flex items-center justify-center sm:justify-start">
                   <svg className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-4 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
                   </svg>
-                  {t('contact.title')}
+                  Отследить груз
                 </span>
-              </Link>
+              </button>
             </div>
           </div>
         </section>

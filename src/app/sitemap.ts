@@ -3,7 +3,7 @@ import {MetadataRoute} from 'next';
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://velta-trans.com';
   const locales = ['ru','en','kz','zh'];
-  const pages = ['','/services','/cases','/calculator','/rates','/directions','/documents','/contacts'];
+  const pages = ['','/services','/cases','/rates','/directions','/documents','/contacts'];
   const serviceSlugs = ['/services/air','/services/sea','/services/land','/services/multimodal'];
 
   const urls: MetadataRoute.Sitemap = [];
