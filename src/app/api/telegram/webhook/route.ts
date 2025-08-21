@@ -6,8 +6,8 @@ const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8414818778:AAG2QXqDu0WKwsCl
 const CHANNEL_ID = process.env.TELEGRAM_CHANNEL_ID || '-1002999769930';
 const ADMIN_ID = '5450018125'; // ID админа
 
-// Пути к файлам данных
-const dataDir = path.join(process.cwd(), 'data');
+// Пути к файлам данных (в serverless среде пишем в /tmp)
+const dataDir = process.env.DATA_DIR || path.join('/tmp', 'velta-data');
 const driversFile = path.join(dataDir, 'drivers.json');
 const ordersFile = path.join(dataDir, 'orders.json');
 const userStatesFile = path.join(dataDir, 'user_states.json');
@@ -139,6 +139,23 @@ async function sendTelegramMessage(chatId: string | number, text: string, replyM
   }
 }
 
+// Подтверждение нажатия на inline-кнопку (снимает спиннер в Telegram)
+async function answerCallbackQuery(callbackQueryId: string, text?: string, showAlert: boolean = false) {
+  try {
+    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/answerCallbackQuery`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        callback_query_id: callbackQueryId,
+        text,
+        show_alert: showAlert
+      })
+    });
+  } catch (error) {
+    console.error('Error answering callback query:', error);
+  }
+}
+
 // Рассылка заказа водителям
 async function broadcastOrderToDrivers(orderId: string, order: Order) {
   const drivers = loadDrivers();
@@ -226,6 +243,16 @@ export async function POST(request: NextRequest) {
         }
       }
       
+      // Быстрый старт регистрации (альтернатива кнопке)
+      else if (text === '/register' || text.toLowerCase() === 'регистрация' || text.toLowerCase() === 'регистрация водителя') {
+        const drivers = loadDrivers();
+        if (drivers[userId]) {
+          await sendTelegramMessage(chatId, 'Вы уже зарегистрированы как водитель. Используйте /orders или /status.');
+        } else {
+          await startDriverRegistration(userId, chatId);
+        }
+      }
+
       // Калькулятор (сайт)
       else if (text === '/calculate') {
         const calculateText = `💰 <b>Калькулятор стоимости перевозки</b>
@@ -300,10 +327,13 @@ Email: info@velta-logistics.com
       const chatId = callbackQuery.message.chat.id;
       const data = callbackQuery.data;
       const userId = callbackQuery.from.id;
+      const callbackQueryId = callbackQuery.id;
 
       if (data === 'register_driver') {
+        await answerCallbackQuery(callbackQueryId);
         await startDriverRegistration(userId, chatId);
       } else if (data === 'info') {
+        await answerCallbackQuery(callbackQueryId);
         const infoText = `ℹ️ <b>Информация о системе</b>
 
 <b>Velta Trans</b> - логистическая компания, специализирующаяся на международных перевозках.
@@ -321,15 +351,20 @@ Email: info@velta-logistics.com
 
         await sendTelegramMessage(chatId, infoText);
       } else if (data === 'create_order' && userId.toString() === ADMIN_ID) {
+        await answerCallbackQuery(callbackQueryId);
         await startOrderCreation(userId, chatId);
       } else if (data === 'list_drivers' && userId.toString() === ADMIN_ID) {
+        await answerCallbackQuery(callbackQueryId);
         await listDrivers(chatId);
       } else if (data === 'list_orders' && userId.toString() === ADMIN_ID) {
+        await answerCallbackQuery(callbackQueryId);
         await listActiveOrders(chatId);
       } else if (data.startsWith('bid_')) {
+        await answerCallbackQuery(callbackQueryId);
         const orderId = data.split('_')[1];
         await startBidding(userId, chatId, orderId);
       } else if (data.startsWith('select_driver_')) {
+        await answerCallbackQuery(callbackQueryId, 'Водитель выбран');
         const parts = data.split('_');
         const orderId = parts[2];
         const driverId = parts[3];

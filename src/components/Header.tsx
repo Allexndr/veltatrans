@@ -101,7 +101,7 @@ export default function Header() {
               >
                 <Link
                   href={item.href}
-                  className="relative text-gray-700 hover:text-custom-blue-900 px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg hover:bg-gradient-to-r hover:from-custom-blue-50 hover:to-custom-blue-100 group"
+                  className="relative text-gray-700 hover:text-custom-blue-900 px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg hover:bg-gradient-to-r hover:from-custom-blue-50 hover:to-custom-blue-100 group border-2 border-gray-300 hover:border-custom-blue-400"
                 >
                   <span className="relative z-10">{item.name}</span>
                   <motion.div
@@ -126,7 +126,7 @@ export default function Header() {
               >
                 <Link
                   href={item.href}
-                  className="text-gray-700 hover:text-custom-blue-900 px-2 py-1 text-xs font-medium transition-all duration-300 hover:bg-custom-blue-50 rounded-md"
+                  className="text-gray-700 hover:text-custom-blue-900 px-2 py-1 text-xs font-medium transition-all duration-300 hover:bg-custom-blue-50 rounded-md border border-gray-300 hover:border-custom-blue-400"
                 >
                   {item.name}
                 </Link>
@@ -214,7 +214,7 @@ export default function Header() {
                   >
                     <Link
                       href={item.href}
-                      className="text-gray-700 hover:text-custom-blue-900 hover:bg-custom-blue-50 block px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300"
+                      className="text-gray-700 hover:text-custom-blue-900 hover:bg-custom-blue-50 block px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 border border-gray-300 hover:border-custom-blue-400"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       {item.name}

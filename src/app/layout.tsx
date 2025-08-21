@@ -2,6 +2,7 @@
 // The actual layout is in /app/[locale]/layout.tsx
 
 import '@/lib/telegram-init'
+import Script from 'next/script'
 
 export default function RootLayout({
   children,
@@ -29,6 +30,20 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/icon-192x192.png" />
       </head>
       <body>
+        {/* Google Analytics 4 */}
+        <Script
+          id="ga4-script"
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID ?? 'G-9QFRTRBRE2'}`}
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);} 
+            gtag('js', new Date());
+            gtag('config', '${process.env.NEXT_PUBLIC_GA_ID ?? 'G-9QFRTRBRE2'}');
+          `}
+        </Script>
         {children}
       </body>
     </html>

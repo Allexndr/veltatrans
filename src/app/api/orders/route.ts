@@ -5,8 +5,8 @@ import path from 'path';
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8414818778:AAG2QXqDu0WKwsClyMt5CpbpLQBL3QLVWUE';
 const CHANNEL_ID = process.env.TELEGRAM_CHANNEL_ID || '-1002999769930';
 
-// Пути к файлам данных
-const dataDir = path.join(process.cwd(), 'data');
+// Пути к файлам данных (в serverless среде используем /tmp)
+const dataDir = process.env.DATA_DIR || path.join('/tmp', 'velta-data');
 const ordersFile = path.join(dataDir, 'orders.json');
 const driversFile = path.join(dataDir, 'drivers.json');
 
