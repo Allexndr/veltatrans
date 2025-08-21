@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
+import * as XLSX from 'xlsx';
 import path from 'path';
 
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8414818778:AAG2QXqDu0WKwsClyMt5CpbpLQBL3QLVWUE';
@@ -12,6 +13,8 @@ const driversFile = path.join(dataDir, 'drivers.json');
 const ordersFile = path.join(dataDir, 'orders.json');
 const userStatesFile = path.join(dataDir, 'user_states.json');
 const staffUsersFile = path.join(dataDir, 'staff_users.json');
+const excelDbFile = process.env.EXCEL_DB_PATH || path.join(dataDir, 'drivers.xlsx');
+const excelSeedPath = path.resolve(process.cwd(), 'materials', 'Контакты водителей.xlsx');
 
 // Убеждаемся что папка data существует
 if (!fs.existsSync(dataDir)) {
@@ -31,6 +34,25 @@ if (!fs.existsSync(userStatesFile)) {
 if (!fs.existsSync(staffUsersFile)) {
   fs.writeFileSync(staffUsersFile, JSON.stringify({ test: { username: 'test', password: '1234' } }, null, 2));
 }
+
+// Инициализация Excel БД
+function ensureExcelDb() {
+  try {
+    if (!fs.existsSync(excelDbFile)) {
+      if (fs.existsSync(excelSeedPath)) {
+        fs.copyFileSync(excelSeedPath, excelDbFile);
+      } else {
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.aoa_to_sheet([[
+          'Имя', 'Телефон', 'Номер авто', 'Тип ТС'
+        ]]);
+        XLSX.utils.book_append_sheet(wb, ws, 'Водители');
+        XLSX.writeFile(wb, excelDbFile);
+      }
+    }
+  } catch {}
+}
+ensureExcelDb();
 
 interface Driver {
   id: number;
@@ -79,6 +101,7 @@ interface UserState {
   from?: string;
   to?: string;
   description?: string;
+  loginStep?: 'phone';
 }
 
 function normalizePhone(raw: string): string | null {
@@ -188,6 +211,7 @@ async function sendDriversMenu(chatId: number) {
   const keyboard = {
     inline_keyboard: [
       [{ text: '📝 Регистрация водителя', callback_data: 'register_driver' }],
+      [{ text: '🔐 Вход в систему', callback_data: 'driver_login' }],
       [{ text: '📱 Поделиться номером', callback_data: 'share_phone' }],
       [{ text: '⬅️ Назад', callback_data: 'back_main' }]
     ]
@@ -475,6 +499,34 @@ Email: info@velta-logistics.com
         }
       }
       
+      // Обработка входа водителя по телефону (Excel)
+      else if (userState.loginStep === 'phone') {
+        const phone = normalizePhone(text) || text.trim();
+        const found = findDriverInExcelByPhone(phone);
+        if (found) {
+          // Записываем в локальную JSON базу, если нет
+          const d = loadDrivers();
+          if (!d[userId]) {
+            d[userId] = {
+              id: userId,
+              name: found.name,
+              phone: found.phone,
+              carNumber: found.carNumber,
+              carType: found.carType,
+              registeredAt: new Date().toISOString(),
+              status: 'active'
+            };
+            saveDrivers(d);
+          }
+          delete userStates[userId].loginStep;
+          saveUserStates(userStates);
+          await sendTelegramMessage(chatId, `✅ Вход выполнен\n\n👤 ${found.name}\n📱 ${found.phone}\n🚛 ${found.carNumber} (${found.carType})`, { reply_markup: { remove_keyboard: true } });
+          await sendTelegramMessage(chatId, 'Теперь вы будете получать заказы, подходящие по типу ТС.');
+        } else {
+          await sendTelegramMessage(chatId, '❌ Телефон не найден в базе. Проверьте формат или зарегистрируйтесь.');
+        }
+      }
+      
       // Обработка состояний регистрации
       else if (userState.step) {
         await handleRegistrationStep(userId, chatId, text, userState, userStates);
@@ -520,6 +572,12 @@ Email: info@velta-logistics.com
       } else if (data === 'back_main') {
         await answerCallbackQuery(callbackQueryId);
         await sendMainMenu(chatId);
+      } else if (data === 'driver_login') {
+        await answerCallbackQuery(callbackQueryId);
+        const userStates = loadUserStates();
+        userStates[userId] = { ...(userStates[userId] || {}), loginStep: 'phone' };
+        saveUserStates(userStates);
+        await sendTelegramMessage(chatId, '🔐 <b>Вход для водителей</b>\n\nВведите номер телефона, как в базе (пример: +7 705 406 06 74):');
       } else if (data === 'share_phone') {
         await answerCallbackQuery(callbackQueryId);
         const keyboard = {
@@ -630,6 +688,15 @@ async function handleRegistrationStep(userId: number, chatId: number, text: stri
     };
     
     saveDrivers(drivers);
+    // Добавляем в Excel БД
+    try {
+      appendDriverToExcel({
+        name: userState.name!,
+        phone: userState.phone!,
+        carNumber: userState.carNumber!,
+        carType: userState.carType!
+      });
+    } catch {}
     delete userStates[userId];
     saveUserStates(userStates);
     
@@ -927,4 +994,45 @@ export async function GET() {
     status: 'Telegram bot webhook is running',
     timestamp: new Date().toISOString()
   });
+}
+
+// ===== Excel helpers =====
+function readDriversFromExcel(): Array<{ name: string; phone: string; carNumber: string; carType: string }> {
+  ensureExcelDb();
+  const wb = XLSX.readFile(excelDbFile);
+  const ws = wb.Sheets[wb.SheetNames[0]];
+  const rows: any[] = XLSX.utils.sheet_to_json(ws, { header: 1 });
+  const result: Array<{ name: string; phone: string; carNumber: string; carType: string }> = [];
+  // assume headers in first row
+  for (let i = 1; i < rows.length; i++) {
+    const row = rows[i];
+    if (!row) continue;
+    const [name, phone, carNumber, carType] = row;
+    if (name || phone || carNumber || carType) {
+      result.push({
+        name: String(name || '').trim(),
+        phone: String(phone || '').trim(),
+        carNumber: String(carNumber || '').trim(),
+        carType: String(carType || '').trim()
+      });
+    }
+  }
+  return result;
+}
+
+function findDriverInExcelByPhone(phoneRaw: string) {
+  const phoneNorm = normalizePhone(phoneRaw) || phoneRaw.trim();
+  const rows = readDriversFromExcel();
+  return rows.find(r => (normalizePhone(r.phone) || r.phone) === phoneNorm);
+}
+
+function appendDriverToExcel(entry: { name: string; phone: string; carNumber: string; carType: string }) {
+  ensureExcelDb();
+  const wb = XLSX.readFile(excelDbFile);
+  const ws = wb.Sheets[wb.SheetNames[0]];
+  const rows: any[] = XLSX.utils.sheet_to_json(ws, { header: 1 });
+  rows.push([entry.name, entry.phone, entry.carNumber, entry.carType]);
+  const newWs = XLSX.utils.aoa_to_sheet(rows);
+  wb.Sheets[wb.SheetNames[0]] = newWs;
+  XLSX.writeFile(wb, excelDbFile);
 }
