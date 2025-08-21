@@ -11,6 +11,7 @@ const dataDir = process.env.DATA_DIR || path.join('/tmp', 'velta-data');
 const driversFile = path.join(dataDir, 'drivers.json');
 const ordersFile = path.join(dataDir, 'orders.json');
 const userStatesFile = path.join(dataDir, 'user_states.json');
+const staffUsersFile = path.join(dataDir, 'staff_users.json');
 
 // Убеждаемся что папка data существует
 if (!fs.existsSync(dataDir)) {
@@ -26,6 +27,9 @@ if (!fs.existsSync(ordersFile)) {
 }
 if (!fs.existsSync(userStatesFile)) {
   fs.writeFileSync(userStatesFile, '{}');
+}
+if (!fs.existsSync(staffUsersFile)) {
+  fs.writeFileSync(staffUsersFile, JSON.stringify({ test: { username: 'test', password: '1234' } }, null, 2));
 }
 
 interface Driver {
@@ -65,6 +69,9 @@ interface UserState {
   step?: string;
   orderStep?: string;
   biddingOrderId?: string;
+  staffStep?: 'login' | 'password';
+  staffLogin?: string;
+  staffAuthed?: boolean;
   name?: string;
   phone?: string;
   carNumber?: string;
@@ -156,6 +163,54 @@ function loadUserStates(): Record<string, UserState> {
 
 function saveUserStates(states: Record<string, UserState>) {
   fs.writeFileSync(userStatesFile, JSON.stringify(states, null, 2));
+}
+
+function loadStaffUsers(): Record<string, { username: string; password: string }> {
+  try {
+    return JSON.parse(fs.readFileSync(staffUsersFile, 'utf8'));
+  } catch (e) {
+    return {} as any;
+  }
+}
+
+async function sendMainMenu(chatId: number) {
+  const keyboard = {
+    inline_keyboard: [
+      [
+        { text: '🚛 Водителям', callback_data: 'menu_drivers' },
+        { text: '📦 Клиентам', callback_data: 'menu_clients' },
+        { text: '👨\u200d💼 Сотрудникам', callback_data: 'menu_staff' }
+      ]
+    ]
+  };
+  await sendTelegramMessage(chatId, 'Выберите раздел:', keyboard);
+}
+
+async function sendDriversMenu(chatId: number) {
+  const keyboard = {
+    inline_keyboard: [
+      [{ text: '📝 Регистрация водителя', callback_data: 'register_driver' }],
+      [{ text: '📱 Поделиться номером', callback_data: 'share_phone' }],
+      [{ text: '⬅️ Назад', callback_data: 'back_main' }]
+    ]
+  };
+  await sendTelegramMessage(chatId, 'Раздел «Водителям»', keyboard);
+}
+
+async function sendClientsMenu(chatId: number) {
+  const keyboard = {
+    inline_keyboard: [
+      [{ text: '🔎 Отследить груз', callback_data: 'client_track' }],
+      [{ text: '⬅️ Назад', callback_data: 'back_main' }]
+    ]
+  };
+  await sendTelegramMessage(chatId, 'Раздел «Клиентам». Введите номер для отслеживания при нажатии.', keyboard);
+}
+
+async function sendStaffLogin(chatId: number, userStates: Record<string, UserState>, userId: number) {
+  userStates[userId] = { ...userStates[userId], staffStep: 'login', staffAuthed: false };
+  saveUserStates(userStates);
+  await sendTelegramMessage(chatId, '👨\u200d💼 Вход сотрудника\n\nВведите логин:');
 }
 
 // Генерация уникального номера заказа
@@ -288,6 +343,7 @@ export async function POST(request: NextRequest) {
 
           await sendTelegramMessage(chatId, welcomeText, keyboard);
         }
+        await sendMainMenu(chatId);
       }
       
       // Быстрый старт регистрации (альтернатива кнопке)
@@ -352,6 +408,31 @@ Email: info@velta-logistics.com
         await sendTelegramMessage(chatId, adminText, keyboard);
       }
       
+      // Сотрудники: обработка логина/пароля
+      else if (userState.staffStep === 'login') {
+        userState.staffLogin = text.trim();
+        userState.staffStep = 'password';
+        userStates[userId] = userState;
+        saveUserStates(userStates);
+        await sendTelegramMessage(chatId, 'Введите пароль:');
+      } else if (userState.staffStep === 'password') {
+        const staffUsers = loadStaffUsers();
+        const login = userState.staffLogin || '';
+        const pass = text.trim();
+        const valid = Object.values(staffUsers).some(u => u.username === login && u.password === pass);
+        if (valid) {
+          userState.staffAuthed = true;
+          userState.staffStep = undefined;
+          userStates[userId] = userState;
+          saveUserStates(userStates);
+          const keyboard = { inline_keyboard: [[{ text: '📦 Создать заказ', callback_data: 'create_order' }], [{ text: '📋 Активные заказы', callback_data: 'list_orders' }], [{ text: '👥 Водители', callback_data: 'list_drivers' }], [{ text: '⬅️ Назад', callback_data: 'back_main' }]] };
+          await sendTelegramMessage(chatId, '✅ Вход выполнен. Панель сотрудника:', keyboard);
+        } else {
+          await sendTelegramMessage(chatId, '❌ Неверный логин или пароль. Попробуйте снова.');
+          await sendStaffLogin(chatId, userStates, userId);
+        }
+      }
+      
       // Обработка состояний регистрации
       else if (userState.step) {
         await handleRegistrationStep(userId, chatId, text, userState, userStates);
@@ -384,6 +465,22 @@ Email: info@velta-logistics.com
       if (data === 'register_driver') {
         await answerCallbackQuery(callbackQueryId);
         await startDriverRegistration(userId, chatId);
+      } else if (data === 'menu_drivers') {
+        await answerCallbackQuery(callbackQueryId);
+        await sendDriversMenu(chatId);
+      } else if (data === 'menu_clients') {
+        await answerCallbackQuery(callbackQueryId);
+        await sendClientsMenu(chatId);
+      } else if (data === 'menu_staff') {
+        await answerCallbackQuery(callbackQueryId);
+        const userStates = loadUserStates();
+        await sendStaffLogin(chatId, userStates, userId);
+      } else if (data === 'back_main') {
+        await answerCallbackQuery(callbackQueryId);
+        await sendMainMenu(chatId);
+      } else if (data === 'client_track') {
+        await answerCallbackQuery(callbackQueryId);
+        await sendTelegramMessage(chatId, 'Введите номер для отслеживания, например: <code>WT123456-1700000000000</code>');
       } else if (data === 'info') {
         await answerCallbackQuery(callbackQueryId);
         const infoText = `ℹ️ <b>Информация о системе</b>
@@ -433,13 +530,12 @@ Email: info@velta-logistics.com
 
 // Регистрация водителя
 async function startDriverRegistration(userId: number, chatId: number) {
-  const userStates = loadUserStates();
-  userStates[userId] = { step: 'name' };
-  saveUserStates(userStates);
-  
   await sendTelegramMessage(chatId, `📝 <b>Регистрация водителя</b>
 
-Введите ваше полное имя:`);
+Отправьте одним сообщением через точку с запятой:
+<code>Имя Фамилия; +7 700 123 45 67; А123БВ01; Фура 20т</code>
+
+Можно скопировать пример и заменить свои данные.`);
 }
 
 async function handleRegistrationStep(userId: number, chatId: number, text: string, userState: UserState, userStates: Record<string, UserState>) {
