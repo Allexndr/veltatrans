@@ -176,11 +176,9 @@ function loadStaffUsers(): Record<string, { username: string; password: string }
 async function sendMainMenu(chatId: number) {
   const keyboard = {
     inline_keyboard: [
-      [
-        { text: '🚛 Водителям', callback_data: 'menu_drivers' },
-        { text: '📦 Клиентам', callback_data: 'menu_clients' },
-        { text: '👨\u200d💼 Сотрудникам', callback_data: 'menu_staff' }
-      ]
+      [{ text: '🚛 Водителям', callback_data: 'menu_drivers' }],
+      [{ text: '📦 Клиентам', callback_data: 'menu_clients' }],
+      [{ text: '👨\u200d💼 Сотрудникам', callback_data: 'menu_staff' }]
     ]
   };
   await sendTelegramMessage(chatId, 'Выберите раздел:', keyboard);
@@ -320,7 +318,25 @@ export async function POST(request: NextRequest) {
       
       // Обработка обычных кнопок
       else if (text === '⬅️ Назад') {
-        await sendMainMenu(chatId);
+        // контекстный назад: если в регистрации — шаг назад, иначе главное меню
+        if (userState.step === 'phone') {
+          userState.step = 'name';
+          userStates[userId] = userState;
+          saveUserStates(userStates);
+          await sendTelegramMessage(chatId, 'Введите ваше имя и фамилию:', { keyboard: [[{ text: '⬅️ Назад' }]], resize_keyboard: true });
+        } else if (userState.step === 'carNumber') {
+          userState.step = 'phone';
+          userStates[userId] = userState;
+          saveUserStates(userStates);
+          await sendTelegramMessage(chatId, 'Введите ваш номер телефона (например: +7 700 123 45 67):', { keyboard: [[{ text: '⬅️ Назад' }]], resize_keyboard: true });
+        } else if (userState.step === 'carType') {
+          userState.step = 'carNumber';
+          userStates[userId] = userState;
+          saveUserStates(userStates);
+          await sendTelegramMessage(chatId, 'Введите номер вашего автомобиля (например: А123БВ01):', { keyboard: [[{ text: '⬅️ Назад' }]], resize_keyboard: true });
+        } else {
+          await sendDriversMenu(chatId);
+        }
       }
       
       // Обработка контактов
@@ -567,12 +583,15 @@ Email: info@velta-logistics.com
 
 // Регистрация водителя
 async function startDriverRegistration(userId: number, chatId: number) {
-  await sendTelegramMessage(chatId, `📝 <b>Регистрация водителя</b>
-
-Отправьте одним сообщением через точку с запятой:
-<code>Имя Фамилия; +7 700 123 45 67; А123БВ01; Фура 20т</code>
-
-Можно скопировать пример и заменить свои данные.`);
+  const userStates = loadUserStates();
+  userStates[userId] = { ...(userStates[userId] || {}), step: 'name' };
+  saveUserStates(userStates);
+  const keyboard = {
+    keyboard: [[{ text: '⬅️ Назад' }]],
+    resize_keyboard: true,
+    one_time_keyboard: false
+  };
+  await sendTelegramMessage(chatId, '📝 <b>Регистрация водителя</b>\n\nВведите ваше имя и фамилию:', keyboard);
 }
 
 async function handleRegistrationStep(userId: number, chatId: number, text: string, userState: UserState, userStates: Record<string, UserState>) {
@@ -583,19 +602,19 @@ async function handleRegistrationStep(userId: number, chatId: number, text: stri
     userState.step = 'phone';
     userStates[userId] = userState;
     saveUserStates(userStates);
-    await sendTelegramMessage(chatId, 'Введите ваш номер телефона (например: +7 700 123 45 67):');
+    await sendTelegramMessage(chatId, 'Введите ваш номер телефона (например: +7 700 123 45 67):', { keyboard: [[{ text: '⬅️ Назад' }]], resize_keyboard: true });
   } else if (userState.step === 'phone') {
     userState.phone = text;
     userState.step = 'carNumber';
     userStates[userId] = userState;
     saveUserStates(userStates);
-    await sendTelegramMessage(chatId, 'Введите номер вашего автомобиля (например: А123БВ01):');
+    await sendTelegramMessage(chatId, 'Введите номер вашего автомобиля (например: А123БВ01):', { keyboard: [[{ text: '⬅️ Назад' }]], resize_keyboard: true });
   } else if (userState.step === 'carNumber') {
     userState.carNumber = text;
     userState.step = 'carType';
     userStates[userId] = userState;
     saveUserStates(userStates);
-    await sendTelegramMessage(chatId, 'Введите тип вашего автомобиля (например: Фура 20т, Газель, Тент 10т):');
+    await sendTelegramMessage(chatId, 'Введите тип вашего автомобиля (например: Фура 20т, Газель, Тент 10т):', { keyboard: [[{ text: '⬅️ Назад' }]], resize_keyboard: true });
   } else if (userState.step === 'carType') {
     userState.carType = text;
     
