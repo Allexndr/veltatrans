@@ -194,7 +194,7 @@ async function sendDriversMenu(chatId: number) {
       [{ text: '⬅️ Назад', callback_data: 'back_main' }]
     ]
   };
-  await sendTelegramMessage(chatId, 'Раздел «Водителям»', keyboard);
+  await sendTelegramMessage(chatId, '🚛 <b>Раздел «Водителям»</b>\n\nВыберите действие:', keyboard);
 }
 
 async function sendClientsMenu(chatId: number) {
@@ -315,35 +315,61 @@ export async function POST(request: NextRequest) {
 
       // Команда /start
       if (text === '/start') {
-        if (drivers[userId]) {
-          const driver = drivers[userId];
-          const welcomeText = `🚛 <b>Добро пожаловать, ${driver.name}!</b>
-
-<b>Ваши данные:</b>
-📱 Телефон: ${driver.phone}
-🚛 Автомобиль: ${driver.carNumber}
-🔧 Тип ТС: ${driver.carType}
-
-Ожидайте заказы. Когда появится подходящий заказ, вам придет уведомление.`;
-
-          await sendTelegramMessage(chatId, welcomeText);
-        } else {
-          const welcomeText = `🚛 <b>Добро пожаловать в Velta Trans!</b>
-
-Для работы с системой необходимо зарегистрироваться как водитель.
-
-Нажмите кнопку ниже для регистрации:`;
-
-          const keyboard = {
-            inline_keyboard: [
-              [{ text: '📝 Регистрация водителя', callback_data: 'register_driver' }],
-              [{ text: 'ℹ️ Информация', callback_data: 'info' }]
-            ]
-          };
-
-          await sendTelegramMessage(chatId, welcomeText, keyboard);
-        }
         await sendMainMenu(chatId);
+      }
+      
+      // Обработка обычных кнопок
+      else if (text === '⬅️ Назад') {
+        await sendMainMenu(chatId);
+      }
+      
+      // Обработка контактов
+      else if (message.contact) {
+        const contact = message.contact;
+        if (contact.user_id === userId) {
+          const phone = contact.phone_number;
+          const normalizedPhone = normalizePhone(phone);
+          if (normalizedPhone) {
+            await sendTelegramMessage(chatId, `📱 <b>Номер получен!</b>\n\nТелефон: ${normalizedPhone}\n\nТеперь введите остальные данные для регистрации:`, {
+              keyboard: {
+                keyboard: [
+                  [{ text: '📝 Завершить регистрацию' }],
+                  [{ text: '⬅️ Назад' }]
+                ],
+                resize_keyboard: true,
+                one_time_keyboard: false
+              }
+            });
+            // Сохраняем номер в состоянии пользователя
+            userState.phone = normalizedPhone;
+            userStates[userId] = userState;
+            saveUserStates(userStates);
+          } else {
+            await sendTelegramMessage(chatId, '❌ Неверный формат номера телефона. Попробуйте еще раз.');
+          }
+        } else {
+          await sendTelegramMessage(chatId, '❌ Это не ваш номер телефона. Поделитесь своим номером.');
+        }
+      }
+      
+      // Обработка кнопки завершения регистрации
+      else if (text === '📝 Завершить регистрацию') {
+        if (userState.phone) {
+          userState.step = 'name';
+          userStates[userId] = userState;
+          saveUserStates(userStates);
+          await sendTelegramMessage(chatId, 'Введите ваше имя и фамилию:', {
+            keyboard: {
+              keyboard: [
+                [{ text: '⬅️ Назад' }]
+              ],
+              resize_keyboard: true,
+              one_time_keyboard: false
+            }
+          });
+        } else {
+          await sendTelegramMessage(chatId, '❌ Сначала поделитесь номером телефона.');
+        }
       }
       
       // Быстрый старт регистрации (альтернатива кнопке)
@@ -478,6 +504,17 @@ Email: info@velta-logistics.com
       } else if (data === 'back_main') {
         await answerCallbackQuery(callbackQueryId);
         await sendMainMenu(chatId);
+      } else if (data === 'share_phone') {
+        await answerCallbackQuery(callbackQueryId);
+        const keyboard = {
+          keyboard: [
+            [{ text: '📱 Поделиться номером', request_contact: true }],
+            [{ text: '⬅️ Назад' }]
+          ],
+          resize_keyboard: true,
+          one_time_keyboard: false
+        };
+        await sendTelegramMessage(chatId, '📱 <b>Поделиться номером телефона</b>\n\nНажмите кнопку ниже, чтобы автоматически поделиться вашим номером телефона:', keyboard);
       } else if (data === 'client_track') {
         await answerCallbackQuery(callbackQueryId);
         await sendTelegramMessage(chatId, 'Введите номер для отслеживания, например: <code>WT123456-1700000000000</code>');
@@ -587,7 +624,9 @@ async function handleRegistrationStep(userId: number, chatId: number, text: stri
 
 Теперь вы будете получать уведомления о новых заказах!`;
 
-    await sendTelegramMessage(chatId, successText);
+    await sendTelegramMessage(chatId, successText, {
+      reply_markup: { remove_keyboard: true }
+    });
     
     // Уведомляем админа о новом водителе
     await sendTelegramMessage(CHANNEL_ID, `🚛 <b>Новый водитель зарегистрирован!</b>
