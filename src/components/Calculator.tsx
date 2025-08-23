@@ -6,8 +6,11 @@ export default function Calculator() {
   useEffect(() => {
     // Функция для загрузки скрипта Bitrix24
     const loadBitrixScript = () => {
+      console.log('Loading Bitrix24 script for Calculator...');
+      
       // Проверяем, не загружен ли уже скрипт
       if (document.querySelector('script[data-b24-form="inline/2/36mjlr"]')) {
+        console.log('Script already loaded, skipping...');
         return;
       }
 
@@ -23,11 +26,14 @@ export default function Calculator() {
       `;
       
       document.head.appendChild(script);
+      console.log('Script added to head');
 
       // Проверяем загрузку через 5 секунд
       setTimeout(() => {
-        const formContainer = document.getElementById('b24form_inline_2_36mjlr');
+        const formContainer = document.getElementById('b24form_calculator');
+        console.log('Checking form container:', formContainer);
         if (formContainer && formContainer.children.length === 0) {
+          console.log('Form not loaded, showing fallback message');
           // Если форма не загрузилась, показываем сообщение
           formContainer.innerHTML = `
             <div class="text-center py-8">
@@ -40,6 +46,8 @@ export default function Calculator() {
               <p class="text-sm text-gray-500">Пожалуйста, свяжитесь с нами по телефону или через другие контакты</p>
             </div>
           `;
+        } else {
+          console.log('Form loaded successfully or container has content');
         }
       }, 5000);
     };
@@ -68,7 +76,7 @@ export default function Calculator() {
       </div>
       
       {/* Bitrix24 форма будет загружена здесь */}
-      <div id="b24form_inline_2_36mjlr" className="min-h-[400px]">
+      <div id="b24form_calculator" className="min-h-[400px]">
         <div className="text-center py-8">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-velta-navy mx-auto mb-4"></div>
           <p className="text-gray-600">Загрузка формы...</p>
@@ -76,7 +84,7 @@ export default function Calculator() {
       </div>
       
       {/* Информация о времени ответа */}
-      <div className="mt-6 text-center text-sm text-gray-500">
+      <div className="text-center text-sm text-gray-500">
         После отправки заявки наш менеджер свяжется с вами в течение 5 часов
       </div>
     </div>

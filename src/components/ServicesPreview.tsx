@@ -69,7 +69,6 @@ export default function ServicesPreview({}: {locale: string}) {
       
       <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
 
-
         {/* Services grid */}
         <motion.div 
           ref={ref}
@@ -78,20 +77,20 @@ export default function ServicesPreview({}: {locale: string}) {
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.8, staggerChildren: 0.2 }}
         >
-                      {services.map((service, index) => (
-              <motion.div 
-                key={service.id} 
-                className="group relative"
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
+          {services.map((service, index) => (
+            <motion.div 
+              key={service.id} 
+              className="group relative"
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+            >
               <div className="relative bg-white rounded-3xl p-8 shadow-lg transition-all duration-500 transform border border-gray-100 overflow-hidden hover:shadow-2xl hover:shadow-velta-100/50 hover:-translate-y-2 flex flex-col h-full">
                 {/* Background gradient on hover */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
                 
                 {/* Content */}
-                <div className="relative z-10">
+                <div className="relative z-10 flex flex-col h-full">
                   {/* Icon */}
                   <div className={`w-20 h-20 bg-gradient-to-br ${service.gradient} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
                     <div className="text-white group-hover:rotate-12 transition-transform duration-300">
@@ -109,26 +108,27 @@ export default function ServicesPreview({}: {locale: string}) {
                     {service.description}
                   </p>
                   
-                  {/* Link */}
-                   <SmoothLink
-                    href={service.href}
-                    className="inline-flex items-center text-velta-600 font-semibold hover:text-velta-700 transition-colors duration-300 group/link text-base md:text-lg"
-                  >
-                    {t('more')}
-                    <svg className="w-5 h-5 ml-2 transition-transform duration-300 group-hover/link:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </SmoothLink>
+                  {/* Link - теперь будет внизу карточки */}
+                  <div className="mt-auto">
+                    <SmoothLink
+                      href={service.href}
+                      className="inline-flex items-center text-velta-600 font-semibold hover:text-velta-700 transition-colors duration-300 group/link text-base md:text-lg"
+                    >
+                      {t('more')}
+                      <svg className="w-5 h-5 ml-2 transition-transform duration-300 group-hover/link:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </SmoothLink>
+                  </div>
                 </div>
                 
                 {/* Decorative elements */}
                 <div className="absolute top-4 right-4 w-2 h-2 bg-velta-200 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="absolute bottom-4 left-4 w-1 h-1 bg-velta-300 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                              </div>
-              </motion.div>
-            ))}
-          </motion.div>
-
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
 
       </div>
     </section>
