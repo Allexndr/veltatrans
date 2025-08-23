@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
-import * as XLSX from 'xlsx';
 import path from 'path';
 
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8414818778:AAG2QXqDu0WKwsClyMt5CpbpLQBL3QLVWUE';
@@ -13,8 +12,6 @@ const driversFile = path.join(dataDir, 'drivers.json');
 const ordersFile = path.join(dataDir, 'orders.json');
 const userStatesFile = path.join(dataDir, 'user_states.json');
 const staffUsersFile = path.join(dataDir, 'staff_users.json');
-const excelDbFile = process.env.EXCEL_DB_PATH || path.join(dataDir, 'drivers.xlsx');
-const excelSeedPath = path.resolve(process.cwd(), 'materials', 'Контакты водителей.xlsx');
 
 // Убеждаемся что папка data существует
 if (!fs.existsSync(dataDir)) {
@@ -23,10 +20,37 @@ if (!fs.existsSync(dataDir)) {
 
 // Инициализируем файлы если их нет
 if (!fs.existsSync(driversFile)) {
-  fs.writeFileSync(driversFile, '{}');
+  // Копируем и конвертируем данные из materials/Контакты водителей.json если он существует
+  const sourceDriversPath = path.resolve(process.cwd(), 'materials', 'Контакты водителей.json');
+  if (fs.existsSync(sourceDriversPath)) {
+    try {
+      const sourceData = fs.readFileSync(sourceDriversPath, 'utf8');
+      const originalDrivers = JSON.parse(sourceData);
+      
+      // Конвертируем в нужный формат
+              const convertedDrivers = originalDrivers.map((driver: Record<string, unknown>, index: number) => ({
+        id: index + 1,
+        name: driver['Водитель'] || driver['Водитель'] || 'Неизвестно',
+        phone: driver['Телефон Водителя'] || driver['Телефон Водителя'] || '',
+        carNumber: driver['Автотранспорт'] || driver['Автотранспорт'] || '',
+        carType: driver['Вид подвижного состава'] || driver['Вид подвижного состава'] || '',
+        registeredAt: new Date().toISOString(),
+        status: 'active'
+      }));
+      
+      // Сохраняем конвертированные данные
+      fs.writeFileSync(driversFile, JSON.stringify(convertedDrivers, null, 2));
+      console.log(`✅ Данные водителей конвертированы и скопированы из materials/Контакты водителей.json (${convertedDrivers.length} водителей)`);
+    } catch (error) {
+      console.error('❌ Ошибка конвертации данных водителей:', error);
+      fs.writeFileSync(driversFile, '[]');
+    }
+  } else {
+    fs.writeFileSync(driversFile, '[]');
+  }
 }
 if (!fs.existsSync(ordersFile)) {
-  fs.writeFileSync(ordersFile, '{}');
+  fs.writeFileSync(ordersFile, '[]');
 }
 if (!fs.existsSync(userStatesFile)) {
   fs.writeFileSync(userStatesFile, '{}');
@@ -34,25 +58,6 @@ if (!fs.existsSync(userStatesFile)) {
 if (!fs.existsSync(staffUsersFile)) {
   fs.writeFileSync(staffUsersFile, JSON.stringify({ test: { username: 'test', password: '1234' } }, null, 2));
 }
-
-// Инициализация Excel БД
-function ensureExcelDb() {
-  try {
-    if (!fs.existsSync(excelDbFile)) {
-      if (fs.existsSync(excelSeedPath)) {
-        fs.copyFileSync(excelSeedPath, excelDbFile);
-      } else {
-        const wb = XLSX.utils.book_new();
-        const ws = XLSX.utils.aoa_to_sheet([[
-          'Имя', 'Телефон', 'Номер авто', 'Тип ТС'
-        ]]);
-        XLSX.utils.book_append_sheet(wb, ws, 'Водители');
-        XLSX.writeFile(wb, excelDbFile);
-      }
-    }
-  } catch {}
-}
-ensureExcelDb();
 
 interface Driver {
   id: number;
@@ -102,13 +107,56 @@ interface UserState {
   to?: string;
   description?: string;
   loginStep?: 'phone';
+  driverAuthed?: boolean;
+  driverData?: {
+    Имя: string;
+    Телефон: string;
+    Номер_авто: string;
+    Тип_ТС: string;
+  };
+  adminStep?: 'add_driver_name' | 'add_driver_phone' | 'add_driver_car_number' | 'add_driver_car_type' | 'edit_driver';
+  tempDriverName?: string;
+  tempDriverPhone?: string;
+  tempDriverCarNumber?: string;
+  editingDriverId?: number;
 }
 
 function normalizePhone(raw: string): string | null {
-  const digits = raw.replace(/[^0-9+]/g, '');
-  if (/^\+?[0-9]{10,15}$/.test(digits.replace(/\+/g, (m, i) => (i === 0 ? m : '')))) {
-    return digits.startsWith('+') ? digits : `+${digits}`;
+  if (!raw) return null;
+  
+  console.log('📱 Нормализация телефона:', raw);
+  
+  // Убираем все символы кроме цифр
+  const digits = raw.replace(/\D/g, '');
+  console.log('📱 Только цифры:', digits);
+  
+  // Проверяем длину
+  if (digits.length < 10 || digits.length > 15) {
+    console.log('📱 Неправильная длина:', digits.length);
+    return null;
   }
+  
+  // Если номер начинается с 8 или 9, добавляем +
+  if (digits.startsWith('8') || digits.startsWith('9')) {
+    const result = '+' + digits;
+    console.log('📱 Нормализован:', result);
+    return result;
+  }
+  
+  // Если номер начинается с 7, добавляем +
+  if (digits.startsWith('7')) {
+    const result = '+' + digits;
+    console.log('📱 Нормализован:', result);
+    return result;
+  }
+  
+  // Если номер уже начинается с +, возвращаем как есть
+  if (raw.startsWith('+')) {
+    console.log('📱 Уже с +:', raw);
+    return raw;
+  }
+  
+  console.log('📱 Не удалось нормализовать');
   return null;
 }
 
@@ -192,7 +240,7 @@ function loadStaffUsers(): Record<string, { username: string; password: string }
   try {
     return JSON.parse(fs.readFileSync(staffUsersFile, 'utf8'));
   } catch (e) {
-    return {} as any;
+          return {} as Record<string, { username: string; password: string }>;
   }
 }
 
@@ -217,6 +265,18 @@ async function sendDriversMenu(chatId: number) {
     ]
   };
   await sendTelegramMessage(chatId, '🚛 <b>Раздел «Водителям»</b>\n\nВыберите действие:', keyboard);
+}
+
+async function sendDriverMenu(chatId: number) {
+  const keyboard = {
+    inline_keyboard: [
+      [{ text: '📋 Смотреть заказы', callback_data: 'view_orders' }],
+      [{ text: '👤 Мой профиль', callback_data: 'driver_profile' }],
+      [{ text: '🔐 Выйти из системы', callback_data: 'driver_logout' }],
+      [{ text: '⬅️ Назад', callback_data: 'back_main' }]
+    ]
+  };
+  await sendTelegramMessage(chatId, '🚛 <b>Меню водителя</b>\n\nВыберите действие:', keyboard);
 }
 
 async function sendClientsMenu(chatId: number) {
@@ -337,7 +397,11 @@ export async function POST(request: NextRequest) {
 
       // Команда /start
       if (text === '/start') {
+        // Очищаем все состояния пользователя при старте
+        delete userStates[userId];
+        saveUserStates(userStates);
         await sendMainMenu(chatId);
+        return; // Прерываем дальнейшую обработку
       }
       
       // Обработка обычных кнопок
@@ -474,6 +538,55 @@ Email: info@velta-logistics.com
         await sendTelegramMessage(chatId, adminText, keyboard);
       }
       
+      // Обработка входа водителя по телефону (Excel) - ПЕРВЫМ ПРИОРИТЕТОМ
+      if (userState.loginStep === 'phone') {
+        const phone = normalizePhone(text) || text.trim();
+        const found = findDriverInJsonByPhone(phone);
+        if (found) {
+          // Записываем в локальную JSON базу, если нет
+          const d = loadDrivers();
+          if (!d[userId]) {
+            d[userId] = {
+              id: userId,
+              name: found.name,
+              phone: found.phone,
+              carNumber: found.carNumber,
+              carType: found.carType,
+              registeredAt: new Date().toISOString(),
+              status: 'active'
+            };
+            saveDrivers(d);
+          }
+          
+          // Сохраняем данные водителя в userState
+          userState.driverAuthed = true;
+          userState.driverData = {
+            Имя: found.name,
+            Телефон: found.phone,
+            Номер_авто: found.carNumber,
+            Тип_ТС: found.carType
+          };
+          delete userState.loginStep;
+          userStates[userId] = userState;
+          saveUserStates(userStates);
+          
+          await sendTelegramMessage(chatId, `✅ <b>Вход выполнен успешно!</b>\n\n👤 <b>${found.name}</b>\n📱 <b>${found.phone}</b>\n🚛 <b>${found.carNumber}</b> (${found.carType})`, { reply_markup: { remove_keyboard: true } });
+          
+          // Показываем меню водителя
+          await sendDriverMenu(chatId);
+        } else {
+          // Очищаем состояние входа и возвращаемся к меню водителя
+          delete userState.loginStep;
+          userStates[userId] = userState;
+          saveUserStates(userStates);
+          
+          await sendTelegramMessage(chatId, '❌ Телефон не найден в базе данных.\n\nПроверьте:\n• Правильность номера\n• Формат номера (например: +7 705 406 06 74)\n\nЕсли вы новый водитель, используйте кнопку "📝 Регистрация водителя"');
+          
+          // Возвращаемся к меню водителя
+          await sendDriversMenu(chatId);
+        }
+      }
+      
       // Сотрудники: обработка логина/пароля
       else if (userState.staffStep === 'login') {
         userState.staffLogin = text.trim();
@@ -491,7 +604,15 @@ Email: info@velta-logistics.com
           userState.staffStep = undefined;
           userStates[userId] = userState;
           saveUserStates(userStates);
-          const keyboard = { inline_keyboard: [[{ text: '📦 Создать заказ', callback_data: 'create_order' }], [{ text: '📋 Активные заказы', callback_data: 'list_orders' }], [{ text: '👥 Водители', callback_data: 'list_drivers' }], [{ text: '⬅️ Назад', callback_data: 'back_main' }]] };
+          const keyboard = { 
+            inline_keyboard: [
+              [{ text: '📦 Создать заказ', callback_data: 'create_order' }], 
+              [{ text: '📋 Активные заказы', callback_data: 'list_orders' }], 
+              [{ text: '👥 Водители', callback_data: 'list_drivers' }], 
+              [{ text: '🚛 Управление водителями', callback_data: 'admin_manage_drivers' }], 
+              [{ text: '⬅️ Назад', callback_data: 'back_main' }]
+            ] 
+          };
           await sendTelegramMessage(chatId, '✅ Вход выполнен. Панель сотрудника:', keyboard);
         } else {
           await sendTelegramMessage(chatId, '❌ Неверный логин или пароль. Попробуйте снова.');
@@ -499,35 +620,7 @@ Email: info@velta-logistics.com
         }
       }
       
-      // Обработка входа водителя по телефону (Excel)
-      else if (userState.loginStep === 'phone') {
-        const phone = normalizePhone(text) || text.trim();
-        const found = findDriverInExcelByPhone(phone);
-        if (found) {
-          // Записываем в локальную JSON базу, если нет
-          const d = loadDrivers();
-          if (!d[userId]) {
-            d[userId] = {
-              id: userId,
-              name: found.name,
-              phone: found.phone,
-              carNumber: found.carNumber,
-              carType: found.carType,
-              registeredAt: new Date().toISOString(),
-              status: 'active'
-            };
-            saveDrivers(d);
-          }
-          delete userStates[userId].loginStep;
-          saveUserStates(userStates);
-          await sendTelegramMessage(chatId, `✅ Вход выполнен\n\n👤 ${found.name}\n📱 ${found.phone}\n🚛 ${found.carNumber} (${found.carType})`, { reply_markup: { remove_keyboard: true } });
-          await sendTelegramMessage(chatId, 'Теперь вы будете получать заказы, подходящие по типу ТС.');
-        } else {
-          await sendTelegramMessage(chatId, '❌ Телефон не найден в базе. Проверьте формат или зарегистрируйтесь.');
-        }
-      }
-      
-      // Обработка состояний регистрации
+      // Обработка состояний регистрации - ПОСЛЕ проверки входа
       else if (userState.step) {
         await handleRegistrationStep(userId, chatId, text, userState, userStates);
       }
@@ -545,6 +638,11 @@ Email: info@velta-logistics.com
       // Обработка предложения цены
       else if (userState.biddingOrderId) {
         await handleBidStep(userId, chatId, text, userState, userStates);
+      }
+      
+      // Обработка админских состояний
+      else if (userState.adminStep) {
+        await handleAdminStep(userId, chatId, text, userState, userStates);
       }
     }
     
@@ -577,7 +675,7 @@ Email: info@velta-logistics.com
         const userStates = loadUserStates();
         userStates[userId] = { ...(userStates[userId] || {}), loginStep: 'phone' };
         saveUserStates(userStates);
-        await sendTelegramMessage(chatId, '🔐 <b>Вход для водителей</b>\n\nВведите номер телефона, как в базе (пример: +7 705 406 06 74):');
+        await sendTelegramMessage(chatId, '🔐 <b>Вход для водителей</b>\n\nВведите номер телефона, как в базе данных (пример: +7 705 406 06 74):\n\n<i>Пароль не требуется - вход только по номеру телефона</i>');
       } else if (data === 'share_phone') {
         await answerCallbackQuery(callbackQueryId);
         const keyboard = {
@@ -618,7 +716,7 @@ Email: info@velta-logistics.com
         await listDrivers(chatId);
       } else if (data === 'list_orders' && userId.toString() === ADMIN_ID) {
         await answerCallbackQuery(callbackQueryId);
-        await listActiveOrders(chatId);
+        await listActiveOrders(chatId, userId);
       } else if (data.startsWith('bid_')) {
         await answerCallbackQuery(callbackQueryId);
         const orderId = data.split('_')[1];
@@ -629,6 +727,80 @@ Email: info@velta-logistics.com
         const orderId = parts[2];
         const driverId = parts[3];
         await selectDriver(chatId, orderId, parseInt(driverId));
+      } else if (data === 'view_orders') {
+        await answerCallbackQuery(callbackQueryId);
+        const userStates = loadUserStates();
+        const userState = userStates[userId] || {};
+        if (userState.driverAuthed) {
+          await listActiveOrders(chatId, userId);
+        } else {
+          await sendTelegramMessage(chatId, '❌ Сначала войдите в систему как водитель.');
+          await sendDriversMenu(chatId);
+        }
+      } else if (data === 'driver_profile') {
+        await answerCallbackQuery(callbackQueryId);
+        const userStates = loadUserStates();
+        const userState = userStates[userId] || {};
+        if (userState.driverData) {
+          const driver = userState.driverData;
+          await sendTelegramMessage(chatId, `👤 <b>Мой профиль</b>\n\n<b>Имя:</b> ${driver.Имя}\n<b>Телефон:</b> ${driver.Телефон}\n<b>Автомобиль:</b> ${driver.Номер_авто}\n<b>Тип ТС:</b> ${driver.Тип_ТС}`);
+        } else {
+          await sendTelegramMessage(chatId, '❌ Профиль не найден. Попробуйте войти в систему заново.');
+        }
+      } else if (data === 'driver_logout') {
+        await answerCallbackQuery(callbackQueryId);
+        const userStates = loadUserStates();
+        delete userStates[userId];
+        saveUserStates(userStates);
+        await sendTelegramMessage(chatId, '✅ Вы вышли из системы.');
+        await sendMainMenu(chatId);
+      } else if (data === 'skip_order') {
+        await answerCallbackQuery(callbackQueryId, 'Заказ пропущен');
+        await sendTelegramMessage(chatId, '✅ Заказ пропущен. Переходим к следующему...');
+      }
+      
+      // ===== Админские callback'и для управления водителями =====
+      else if (data === 'admin_manage_drivers') {
+        await answerCallbackQuery(callbackQueryId);
+        await sendDriversManagementMenu(chatId);
+      } else if (data === 'admin_list_drivers') {
+        await answerCallbackQuery(callbackQueryId);
+        await sendDriversList(chatId);
+      } else if (data === 'admin_add_driver') {
+        await answerCallbackQuery(callbackQueryId);
+        await sendAddDriverForm(chatId);
+      } else if (data === 'admin_edit_driver') {
+        await answerCallbackQuery(callbackQueryId);
+        await sendEditDriverForm(chatId);
+      } else if (data === 'admin_delete_driver') {
+        await answerCallbackQuery(callbackQueryId);
+        await sendDeleteDriverForm(chatId);
+      } else if (data === 'admin_drivers_stats') {
+        await answerCallbackQuery(callbackQueryId);
+        await sendDriversStats(chatId);
+      } else if (data.startsWith('admin_edit_driver_')) {
+        await answerCallbackQuery(callbackQueryId);
+        const driverId = parseInt(data.split('_')[3]);
+        await startEditDriver(chatId, driverId);
+      } else if (data.startsWith('admin_delete_driver_')) {
+        await answerCallbackQuery(callbackQueryId);
+        const driverId = parseInt(data.split('_')[3]);
+        await confirmDeleteDriver(chatId, driverId);
+      } else if (data.startsWith('confirm_delete_driver_')) {
+        await answerCallbackQuery(callbackQueryId);
+        const driverId = parseInt(data.split('_')[3]);
+        const success = deleteDriverById(driverId);
+        
+        if (success) {
+          await sendTelegramMessage(chatId, '✅ Водитель успешно удален!');
+        } else {
+          await sendTelegramMessage(chatId, '❌ Ошибка при удалении водителя.');
+        }
+        
+        await sendDriversManagementMenu(chatId);
+      } else if (data === 'back_to_admin') {
+        await answerCallbackQuery(callbackQueryId);
+        await sendAdminMenu(chatId);
       }
     }
 
@@ -690,12 +862,12 @@ async function handleRegistrationStep(userId: number, chatId: number, text: stri
     saveDrivers(drivers);
     // Добавляем в Excel БД
     try {
-      appendDriverToExcel({
-        name: userState.name!,
-        phone: userState.phone!,
-        carNumber: userState.carNumber!,
-        carType: userState.carType!
-      });
+              appendDriverToJson({
+          name: userState.name!,
+          phone: userState.phone!,
+          carNumber: userState.carNumber!,
+          carType: userState.carType!
+        });
     } catch {}
     delete userStates[userId];
     saveUserStates(userStates);
@@ -965,7 +1137,7 @@ async function listDrivers(chatId: number) {
 }
 
 // Список активных заказов
-async function listActiveOrders(chatId: number) {
+async function listActiveOrders(chatId: number, userId?: number) {
   const orders = loadOrders();
   const activeOrders = Object.values(orders).filter(order => order.status === 'active');
   
@@ -974,19 +1146,45 @@ async function listActiveOrders(chatId: number) {
     return;
   }
   
-  let text = `📦 <b>Активные заказы (${activeOrders.length}):</b>\n\n`;
+  // Если это водитель, показываем заказы с кнопками для предложения цены
+  const userStates = loadUserStates();
+  const userState = userId ? userStates[userId] : userStates[chatId] || {};
   
-  activeOrders.forEach((order, index) => {
-    text += `${index + 1}. <b>${order.from} → ${order.to}</b>
+  if (userState.driverAuthed && userState.driverData) {
+    // Показываем заказы по одному с кнопками
+    for (const order of activeOrders) {
+      const orderText = `📦 <b>Заказ ${order.id}</b>
+
+<b>Маршрут:</b> ${order.from} → ${order.to}
+<b>Тип ТС:</b> ${order.carType}
+<b>Описание:</b> ${order.description}
+<b>Ставок:</b> ${order.bids.length}`;
+
+      const keyboard = {
+        inline_keyboard: [
+          [{ text: '💰 Предложить цену', callback_data: `bid_${order.id}` }],
+          [{ text: '❌ Пропустить', callback_data: 'skip_order' }]
+        ]
+      };
+
+      await sendTelegramMessage(chatId, orderText, keyboard);
+    }
+  } else {
+    // Для админов показываем общий список
+    let text = `📦 <b>Активные заказы (${activeOrders.length}):</b>\n\n`;
+    
+    activeOrders.forEach((order, index) => {
+      text += `${index + 1}. <b>${order.from} → ${order.to}</b>
 🔧 ${order.carType}
 📝 ${order.description}
 💰 Ставок: ${order.bids.length}
 🆔 ${order.id}
 
 `;
-  });
-  
-  await sendTelegramMessage(chatId, text);
+    });
+    
+    await sendTelegramMessage(chatId, text);
+  }
 }
 
 export async function GET() {
@@ -996,43 +1194,439 @@ export async function GET() {
   });
 }
 
-// ===== Excel helpers =====
-function readDriversFromExcel(): Array<{ name: string; phone: string; carNumber: string; carType: string }> {
-  ensureExcelDb();
-  const wb = XLSX.readFile(excelDbFile);
-  const ws = wb.Sheets[wb.SheetNames[0]];
-  const rows: any[] = XLSX.utils.sheet_to_json(ws, { header: 1 });
-  const result: Array<{ name: string; phone: string; carNumber: string; carType: string }> = [];
-  // assume headers in first row
-  for (let i = 1; i < rows.length; i++) {
-    const row = rows[i];
-    if (!row) continue;
-    const [name, phone, carNumber, carType] = row;
-    if (name || phone || carNumber || carType) {
-      result.push({
-        name: String(name || '').trim(),
-        phone: String(phone || '').trim(),
-        carNumber: String(carNumber || '').trim(),
-        carType: String(carType || '').trim()
-      });
+// ===== JSON helpers =====
+function readDriversFromJson(): Array<{ id: number; name: string; phone: string; carNumber: string; carType: string }> {
+  try {
+    console.log('📁 Читаю JSON файл водителей:', driversFile);
+    console.log('📁 Файл существует:', fs.existsSync(driversFile));
+    
+    if (!fs.existsSync(driversFile)) {
+      console.log('❌ JSON файл водителей не найден');
+      return [];
+    }
+    
+    const jsonContent = fs.readFileSync(driversFile, 'utf8');
+    const drivers = JSON.parse(jsonContent);
+    
+    console.log('👥 Найдено водителей:', drivers.length);
+    if (drivers.length > 0) {
+      console.log('👤 Первый водитель:', drivers[0]);
+    }
+    
+    return drivers;
+  } catch (error) {
+    console.error('❌ Ошибка чтения JSON файла водителей:', error);
+    console.error('❌ Детали ошибки:', error instanceof Error ? error.message : String(error));
+    return [];
+  }
+}
+
+function findDriverInJsonByPhone(phoneRaw: string) {
+  try {
+    console.log('🔍 Ищу водителя по телефону:', phoneRaw);
+    const phoneNorm = normalizePhone(phoneRaw) || phoneRaw.trim();
+    console.log('📱 Нормализованный телефон:', phoneNorm);
+    
+    const drivers = readDriversFromJson();
+    console.log('📋 Всего водителей в базе:', drivers.length);
+    
+    // Ищем водителя по нормализованному номеру
+    const found = drivers.find(driver => {
+      const driverPhone = normalizePhone(driver.phone) || driver.phone;
+      console.log(`🔍 Проверяю: ${driver.name} - ${driver.phone} (${driverPhone})`);
+      
+      // Сравниваем нормализованные номера
+      if (driverPhone === phoneNorm) {
+        return true;
+      }
+      
+      // Также проверяем без + в начале
+      if (driverPhone.startsWith('+') && driverPhone.slice(1) === phoneNorm.slice(1)) {
+        return true;
+      }
+      
+      if (phoneNorm.startsWith('+') && phoneNorm.slice(1) === driverPhone.slice(1)) {
+        return true;
+      }
+      
+      return false;
+    });
+    
+    if (found) {
+      console.log('✅ Водитель найден:', found.name);
+    } else {
+      console.log('❌ Водитель не найден');
+    }
+    
+    return found;
+  } catch (error) {
+    console.error('❌ Ошибка поиска водителя:', error);
+    return null;
+  }
+}
+
+function appendDriverToJson(entry: { name: string; phone: string; carNumber: string; carType: string }) {
+  try {
+    const drivers = readDriversFromJson();
+    
+    // Добавляем нового водителя
+    const newDriver = {
+      id: drivers.length + 1,
+      name: entry.name,
+      phone: entry.phone,
+      carNumber: entry.carNumber,
+      carType: entry.carType
+    };
+    
+    drivers.push(newDriver);
+    
+    // Сохраняем обратно в JSON
+    fs.writeFileSync(driversFile, JSON.stringify(drivers, null, 2), 'utf8');
+    console.log('✅ Новый водитель добавлен в JSON:', newDriver.name);
+  } catch (error) {
+    console.error('❌ Ошибка при добавлении водителя в JSON:', error);
+  }
+}
+
+// ===== Админские функции для управления водителями =====
+function getAllDrivers(): Array<{ id: number; name: string; phone: string; carNumber: string; carType: string }> {
+  return readDriversFromJson();
+}
+
+function deleteDriverById(driverId: number): boolean {
+  try {
+    const drivers = readDriversFromJson();
+    const initialCount = drivers.length;
+    
+    const filteredDrivers = drivers.filter(driver => driver.id !== driverId);
+    
+    if (filteredDrivers.length === initialCount) {
+      console.log(`❌ Водитель с ID ${driverId} не найден`);
+      return false;
+    }
+    
+    // Пересчитываем ID для оставшихся водителей
+    const updatedDrivers = filteredDrivers.map((driver, index) => ({
+      ...driver,
+      id: index + 1
+    }));
+    
+    fs.writeFileSync(driversFile, JSON.stringify(updatedDrivers, null, 2), 'utf8');
+    console.log(`✅ Водитель с ID ${driverId} удален. Осталось водителей: ${updatedDrivers.length}`);
+    return true;
+  } catch (error) {
+    console.error('❌ Ошибка при удалении водителя:', error);
+    return false;
+  }
+}
+
+function updateDriverById(driverId: number, updates: Partial<{ name: string; phone: string; carNumber: string; carType: string }>): boolean {
+  try {
+    const drivers = readDriversFromJson();
+    const driverIndex = drivers.findIndex(driver => driver.id === driverId);
+    
+    if (driverIndex === -1) {
+      console.log(`❌ Водитель с ID ${driverId} не найден`);
+      return false;
+    }
+    
+    // Обновляем данные водителя
+    drivers[driverIndex] = {
+      ...drivers[driverIndex],
+      ...updates
+    };
+    
+    fs.writeFileSync(driversFile, JSON.stringify(drivers, null, 2), 'utf8');
+    console.log(`✅ Водитель с ID ${driverId} обновлен`);
+    return true;
+  } catch (error) {
+    console.error('❌ Ошибка при обновлении водителя:', error);
+    return false;
+  }
+}
+
+function getDriverById(driverId: number): { id: number; name: string; phone: string; carNumber: string; carType: string } | null {
+  const drivers = readDriversFromJson();
+  return drivers.find(driver => driver.id === driverId) || null;
+}
+
+// ===== Функции для админского меню управления водителями =====
+async function sendDriversManagementMenu(chatId: number) {
+  const keyboard = {
+    inline_keyboard: [
+      [{ text: '👥 Список всех водителей', callback_data: 'admin_list_drivers' }],
+      [{ text: '➕ Добавить водителя', callback_data: 'admin_add_driver' }],
+      [{ text: '✏️ Редактировать водителя', callback_data: 'admin_edit_driver' }],
+      [{ text: '🗑️ Удалить водителя', callback_data: 'admin_delete_driver' }],
+      [{ text: '📊 Статистика водителей', callback_data: 'admin_drivers_stats' }],
+      [{ text: '⬅️ Назад к админке', callback_data: 'back_to_admin' }]
+    ]
+  };
+  
+  await sendTelegramMessage(chatId, '🚛 <b>Управление водителями</b>\n\nВыберите действие:', keyboard);
+}
+
+async function sendDriversList(chatId: number) {
+  const drivers = getAllDrivers();
+  
+  if (drivers.length === 0) {
+    await sendTelegramMessage(chatId, '📋 <b>Список водителей</b>\n\nВ базе нет водителей.');
+    return;
+  }
+  
+  let message = `📋 <b>Список всех водителей</b>\n\nВсего водителей: ${drivers.length}\n\n`;
+  
+  drivers.forEach((driver, index) => {
+    message += `${index + 1}. <b>${driver.name}</b>\n`;
+    message += `   📱 ${driver.phone}\n`;
+    message += `   🚗 ${driver.carNumber}\n`;
+    message += `   🚛 ${driver.carType}\n`;
+    message += `   🆔 ID: ${driver.id}\n\n`;
+  });
+  
+  const keyboard = {
+    inline_keyboard: [
+      [{ text: '⬅️ Назад к управлению', callback_data: 'admin_manage_drivers' }]
+    ]
+  };
+  
+  await sendTelegramMessage(chatId, message, keyboard);
+}
+
+async function sendAddDriverForm(chatId: number) {
+  const keyboard = {
+    keyboard: [
+      ['⬅️ Назад к управлению']
+    ],
+    resize_keyboard: true,
+    one_time_keyboard: false
+  };
+  
+  await sendTelegramMessage(chatId, '➕ <b>Добавление нового водителя</b>\n\nВведите имя водителя:', keyboard);
+  
+  // Устанавливаем состояние для добавления водителя
+  const userId = chatId.toString();
+  const userStates = loadUserStates();
+  if (!userStates[userId]) userStates[userId] = {};
+  userStates[userId].adminStep = 'add_driver_name';
+  saveUserStates(userStates);
+}
+
+async function sendEditDriverForm(chatId: number) {
+  const drivers = getAllDrivers();
+  
+  if (drivers.length === 0) {
+    await sendTelegramMessage(chatId, '❌ Нет водителей для редактирования.');
+    return;
+  }
+  
+  // Создаем кнопки для каждого водителя
+  const keyboard = {
+    inline_keyboard: [
+      ...drivers.map(driver => [{
+        text: `${driver.name} (${driver.phone})`,
+        callback_data: `admin_edit_driver_${driver.id}`
+      }]),
+      [{ text: '⬅️ Назад к управлению', callback_data: 'admin_manage_drivers' }]
+    ]
+  };
+  
+  await sendTelegramMessage(chatId, '✏️ <b>Редактирование водителя</b>\n\nВыберите водителя для редактирования:', keyboard);
+}
+
+async function sendDeleteDriverForm(chatId: number) {
+  const drivers = getAllDrivers();
+  
+  if (drivers.length === 0) {
+    await sendTelegramMessage(chatId, '❌ Нет водителей для удаления.');
+    return;
+  }
+  
+  // Создаем кнопки для каждого водителя
+  const keyboard = {
+    inline_keyboard: [
+      ...drivers.map(driver => [{
+        text: `🗑️ ${driver.name} (${driver.phone})`,
+        callback_data: `admin_delete_driver_${driver.id}`
+      }]),
+      [{ text: '⬅️ Назад к управлению', callback_data: 'admin_manage_drivers' }]
+    ]
+  };
+  
+  await sendTelegramMessage(chatId, '🗑️ <b>Удаление водителя</b>\n\n⚠️ Внимание! Это действие нельзя отменить!\n\nВыберите водителя для удаления:', keyboard);
+}
+
+async function sendDriversStats(chatId: number) {
+  const drivers = getAllDrivers();
+  
+  if (drivers.length === 0) {
+    await sendTelegramMessage(chatId, '📊 <b>Статистика водителей</b>\n\nВ базе нет водителей.');
+    return;
+  }
+  
+  // Группируем по типу ТС
+  const carTypeStats: { [key: string]: number } = {};
+  drivers.forEach(driver => {
+    carTypeStats[driver.carType] = (carTypeStats[driver.carType] || 0) + 1;
+  });
+  
+  let message = `📊 <b>Статистика водителей</b>\n\n`;
+  message += `👥 Всего водителей: ${drivers.length}\n\n`;
+  message += `<b>По типам ТС:</b>\n`;
+  
+  Object.entries(carTypeStats).forEach(([carType, count]) => {
+    message += `🚛 ${carType}: ${count}\n`;
+  });
+  
+  const keyboard = {
+    inline_keyboard: [
+      [{ text: '⬅️ Назад к управлению', callback_data: 'admin_manage_drivers' }]
+    ]
+  };
+  
+  await sendTelegramMessage(chatId, message, keyboard);
+}
+
+// ===== Функции для редактирования и удаления водителей =====
+async function startEditDriver(chatId: number, driverId: number) {
+  const driver = getDriverById(driverId);
+  if (!driver) {
+    await sendTelegramMessage(chatId, '❌ Водитель не найден.');
+    return;
+  }
+  
+  const keyboard = {
+    keyboard: [
+      ['⬅️ Назад к управлению']
+    ],
+    resize_keyboard: true,
+    one_time_keyboard: false
+  };
+  
+  const message = `✏️ <b>Редактирование водителя</b>\n\n<b>Текущие данные:</b>\n`;
+  message += `👤 Имя: ${driver.name}\n`;
+  message += `📱 Телефон: ${driver.phone}\n`;
+  message += `🚗 Номер авто: ${driver.carNumber}\n`;
+  message += `🚛 Тип ТС: ${driver.carType}\n\n`;
+  message += `Введите новые данные в формате:\n`;
+  message += `<code>Имя;Телефон;Номер авто;Тип ТС</code>\n\n`;
+  message += `Например:\n`;
+  message += `<code>Нурбек;+77054060674;А123БВ01;Фура 20т</code>`;
+  
+  await sendTelegramMessage(chatId, message, keyboard);
+  
+  // Устанавливаем состояние для редактирования
+  const userId = chatId.toString();
+  if (!userStates[userId]) userStates[userId] = {};
+  userStates[userId].adminStep = 'edit_driver';
+  userStates[userId].editingDriverId = driverId;
+  saveUserStates(userStates);
+}
+
+async function confirmDeleteDriver(chatId: number, driverId: number) {
+  const driver = getDriverById(driverId);
+  if (!driver) {
+    await sendTelegramMessage(chatId, '❌ Водитель не найден.');
+    return;
+  }
+  
+  const keyboard = {
+    inline_keyboard: [
+      [{ text: '🗑️ Да, удалить', callback_data: `confirm_delete_driver_${driverId}` }],
+      [{ text: '❌ Отмена', callback_data: 'admin_manage_drivers' }]
+    ]
+  };
+  
+  const message = `🗑️ <b>Подтверждение удаления</b>\n\n`;
+  message += `Вы действительно хотите удалить водителя?\n\n`;
+  message += `👤 Имя: ${driver.name}\n`;
+  message += `📱 Телефон: ${driver.phone}\n`;
+  message += `🚗 Номер авто: ${driver.carNumber}\n`;
+  message += `🚛 Тип ТС: ${driver.carType}\n\n`;
+  message += `⚠️ <b>Это действие нельзя отменить!</b>`;
+  
+  await sendTelegramMessage(chatId, message, keyboard);
+}
+
+async function sendAdminMenu(chatId: number) {
+  const keyboard = { 
+    inline_keyboard: [
+      [{ text: '📦 Создать заказ', callback_data: 'create_order' }], 
+      [{ text: '📋 Активные заказы', callback_data: 'list_orders' }], 
+      [{ text: '👥 Водители', callback_data: 'list_drivers' }], 
+      [{ text: '🚛 Управление водителями', callback_data: 'admin_manage_drivers' }], 
+      [{ text: '⬅️ Назад', callback_data: 'back_main' }]
+    ] 
+  };
+  
+  await sendTelegramMessage(chatId, '✅ Панель сотрудника:', keyboard);
+}
+
+// ===== Обработка состояний админки =====
+async function handleAdminStep(userId: number, chatId: number, text: string, userState: UserState, userStates: Record<string, UserState>) {
+  if (userState.adminStep === 'add_driver_name') {
+    userState.adminStep = 'add_driver_phone';
+    userState.tempDriverName = text;
+    userStates[userId] = userState;
+    saveUserStates(userStates);
+    await sendTelegramMessage(chatId, 'Введите номер телефона водителя:');
+  } else if (userState.adminStep === 'add_driver_phone') {
+    userState.adminStep = 'add_driver_car_number';
+    userState.tempDriverPhone = text;
+    userStates[userId] = userState;
+    saveUserStates(userStates);
+    await sendTelegramMessage(chatId, 'Введите номер автомобиля водителя:');
+  } else if (userState.adminStep === 'add_driver_car_number') {
+    userState.adminStep = 'add_driver_car_type';
+    userState.tempDriverCarNumber = text;
+    userStates[userId] = userState;
+    saveUserStates(userStates);
+    await sendTelegramMessage(chatId, 'Введите тип автомобиля водителя:');
+  } else if (userState.adminStep === 'add_driver_car_type') {
+    // Сохраняем нового водителя
+    const newDriver = {
+      name: userState.tempDriverName!,
+      phone: userState.tempDriverPhone!,
+      carNumber: userState.tempDriverCarNumber!,
+      carType: text
+    };
+    
+    appendDriverToJson(newDriver);
+    
+    // Очищаем временные данные
+    delete userState.adminStep;
+    delete userState.tempDriverName;
+    delete userState.tempDriverPhone;
+    delete userState.tempDriverCarNumber;
+    userStates[userId] = userState;
+    saveUserStates(userStates);
+    
+    await sendTelegramMessage(chatId, `✅ Водитель ${newDriver.name} успешно добавлен!`);
+    await sendDriversManagementMenu(chatId);
+  } else if (userState.adminStep === 'edit_driver') {
+    // Парсим данные в формате "Имя;Телефон;Номер авто;Тип ТС"
+    const parts = text.split(';');
+    if (parts.length === 4) {
+      const [name, phone, carNumber, carType] = parts.map(p => p.trim());
+      const driverId = userState.editingDriverId!;
+      
+      const success = updateDriverById(driverId, { name, phone, carNumber, carType });
+      
+      if (success) {
+        await sendTelegramMessage(chatId, `✅ Водитель ${name} успешно обновлен!`);
+      } else {
+        await sendTelegramMessage(chatId, '❌ Ошибка при обновлении водителя.');
+      }
+      
+      // Очищаем состояние
+      delete userState.adminStep;
+      delete userState.editingDriverId;
+      userStates[userId] = userState;
+      saveUserStates(userStates);
+      
+      await sendDriversManagementMenu(chatId);
+    } else {
+      await sendTelegramMessage(chatId, '❌ Неверный формат. Используйте формат: Имя;Телефон;Номер авто;Тип ТС');
     }
   }
-  return result;
-}
-
-function findDriverInExcelByPhone(phoneRaw: string) {
-  const phoneNorm = normalizePhone(phoneRaw) || phoneRaw.trim();
-  const rows = readDriversFromExcel();
-  return rows.find(r => (normalizePhone(r.phone) || r.phone) === phoneNorm);
-}
-
-function appendDriverToExcel(entry: { name: string; phone: string; carNumber: string; carType: string }) {
-  ensureExcelDb();
-  const wb = XLSX.readFile(excelDbFile);
-  const ws = wb.Sheets[wb.SheetNames[0]];
-  const rows: any[] = XLSX.utils.sheet_to_json(ws, { header: 1 });
-  rows.push([entry.name, entry.phone, entry.carNumber, entry.carType]);
-  const newWs = XLSX.utils.aoa_to_sheet(rows);
-  wb.Sheets[wb.SheetNames[0]] = newWs;
-  XLSX.writeFile(wb, excelDbFile);
 }

@@ -84,14 +84,14 @@ export default function LoaderDemoPage() {
         </div>
 
         {/* Описание */}
-        <div className="mt-12 bg-gradient-to-r from-custom-blue-50 to-custom-blue-100 rounded-xl p-8">
-          <h3 className="text-2xl font-semibold text-custom-blue-900 mb-4">
+        <div className="mt-12 bg-gradient-to-r from-velta-50 to-velta-100 rounded-xl p-8">
+          <h3 className="text-2xl font-semibold text-velta-900 mb-4">
             Особенности лоадера
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h4 className="text-lg font-medium text-custom-blue-800 mb-2">Анимации</h4>
-              <ul className="text-custom-blue-700 space-y-1">
+              <h4 className="text-lg font-medium text-velta-800 mb-2">Анимации</h4>
+              <ul className="text-velta-700 space-y-1">
                 <li>• Плавное движение грузовика</li>
                 <li>• Подпрыгивание на неровностях</li>
                 <li>• Дым из выхлопной трубы</li>
@@ -100,8 +100,8 @@ export default function LoaderDemoPage() {
               </ul>
             </div>
             <div>
-              <h4 className="text-lg font-medium text-custom-blue-800 mb-2">Настройки</h4>
-              <ul className="text-custom-blue-700 space-y-1">
+              <h4 className="text-lg font-medium text-velta-800 mb-2">Настройки</h4>
+              <ul className="text-velta-700 space-y-1">
                 <li>• 3 размера: sm, md, lg</li>
                 <li>• 3 скорости: slow, normal, fast</li>
                 <li>• Кастомизируемые сообщения</li>

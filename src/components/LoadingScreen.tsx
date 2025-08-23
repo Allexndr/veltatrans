@@ -26,9 +26,9 @@ export default function LoadingScreen({
       <div className="text-center">
         <p className="text-lg font-medium text-gray-700 mb-2">{message}</p>
         <div className="flex justify-center space-x-1">
-          <div className="w-2 h-2 bg-custom-blue-500 rounded-full animate-bounce" style={{animationDelay: '0ms'}}></div>
-          <div className="w-2 h-2 bg-custom-blue-500 rounded-full animate-bounce" style={{animationDelay: '150ms'}}></div>
-          <div className="w-2 h-2 bg-custom-blue-500 rounded-full animate-bounce" style={{animationDelay: '300ms'}}></div>
+          <div className="w-2 h-2 bg-velta-500 rounded-full animate-bounce" style={{animationDelay: '0ms'}}></div>
+          <div className="w-2 h-2 bg-velta-500 rounded-full animate-bounce" style={{animationDelay: '150ms'}}></div>
+          <div className="w-2 h-2 bg-velta-500 rounded-full animate-bounce" style={{animationDelay: '300ms'}}></div>
         </div>
       </div>
     </div>

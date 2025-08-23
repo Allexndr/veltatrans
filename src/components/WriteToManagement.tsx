@@ -90,7 +90,7 @@ export default function WriteToManagement() {
                   required
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-500 focus:border-velta-500"
                 />
               </div>
 
@@ -105,7 +105,7 @@ export default function WriteToManagement() {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-500 focus:border-velta-500"
                 />
               </div>
 
@@ -119,7 +119,7 @@ export default function WriteToManagement() {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-500 focus:border-velta-500"
                 />
               </div>
 
@@ -133,7 +133,7 @@ export default function WriteToManagement() {
                   name="company"
                   value={formData.company}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-500 focus:border-velta-500"
                 />
               </div>
             </div>
@@ -148,7 +148,7 @@ export default function WriteToManagement() {
                 required
                 value={formData.subject}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-500 focus:border-velta-500"
               >
                 <option value="">{t('form.selectSubject')}</option>
                 <option value="problem">{t('form.options.problem')}</option>
@@ -170,7 +170,7 @@ export default function WriteToManagement() {
                 rows={6}
                 value={formData.message}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-500 focus:border-velta-500"
                 placeholder={t('form.messagePlaceholder')}
               />
             </div>
@@ -179,7 +179,7 @@ export default function WriteToManagement() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="bg-custom-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-custom-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="bg-velta-navy text-white px-8 py-3 rounded-lg font-semibold hover:bg-velta-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 {isSubmitting ? t('form.sending') : t('form.send')}
               </button>

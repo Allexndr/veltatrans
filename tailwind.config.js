@@ -10,15 +10,17 @@ module.exports = {
       colors: {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
-        // Custom blue colors based on #00509e
-        'custom-blue': {
+        // Velta Trans brand colors
+        'velta': {
+          'royal-blue': '#0050A0',
+          'navy': '#003F7D',
           50: '#e6f0ff',
           100: '#cce0ff',
           200: '#99c2ff',
           300: '#66a3ff',
           400: '#3385ff',
-          500: '#00509e', // Main color
-          600: '#004085',
+          500: '#0050A0', // Royal blue
+          600: '#003F7D', // Navy
           700: '#00306b',
           800: '#002052',
           900: '#001038',

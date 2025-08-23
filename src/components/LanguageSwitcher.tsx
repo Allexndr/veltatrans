@@ -29,7 +29,7 @@ export default function LanguageSwitcher() {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-2 text-gray-600 hover:text-custom-blue-900 px-3 py-2 text-sm font-medium transition-colors"
+        className="flex items-center space-x-2 text-gray-600 hover:text-velta-900 px-3 py-2 text-sm font-medium transition-colors"
       >
         <span>{currentLanguage?.flag}</span>
         <span>{currentLanguage?.code.toUpperCase()}</span>
@@ -46,13 +46,13 @@ export default function LanguageSwitcher() {
                 key={language.code}
                 onClick={() => handleLanguageChange(language.code)}
                 className={`flex items-center w-full px-4 py-2 text-sm hover:bg-gray-100 ${
-                  locale === language.code ? 'bg-custom-blue-50 text-custom-blue-900' : 'text-gray-700'
+                  locale === language.code ? 'bg-velta-50 text-velta-900' : 'text-gray-700'
                 }`}
               >
                 <span className="mr-3">{language.flag}</span>
                 <span>{language.name}</span>
                 {locale === language.code && (
-                  <svg className="ml-auto w-4 h-4 text-custom-blue-900" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="ml-auto w-4 h-4 text-velta-900" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                 )}

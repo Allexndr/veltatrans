@@ -84,13 +84,13 @@ export default function RecommendationsSection({}: RecommendationsSectionProps) 
         </div>
 
         {/* Banner */}
-        <div className="bg-gradient-to-r from-custom-blue-50 to-custom-blue-100 rounded-lg p-8 mb-12">
+        <div className="bg-gradient-to-r from-velta-50 to-velta-100 rounded-lg p-8 mb-12">
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="text-center md:text-left mb-4 md:mb-0">
-              <h3 className="text-2xl font-bold text-custom-blue-900 mb-2">
+              <h3 className="text-2xl font-bold text-velta-900 mb-2">
                 {t('banner.title')}
               </h3>
-              <p className="text-custom-blue-800">
+              <p className="text-velta-800">
                 {t('banner.subtitle')}
               </p>
             </div>
@@ -135,8 +135,8 @@ export default function RecommendationsSection({}: RecommendationsSectionProps) 
                     {rec.date}
                   </p>
                 </div>
-                <div className="w-12 h-12 bg-custom-blue-100 rounded-full flex items-center justify-center">
-                  <svg className="w-6 h-6 text-custom-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 bg-velta-100 rounded-full flex items-center justify-center">
+                  <svg className="w-6 h-6 text-velta-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                   </svg>
                 </div>
@@ -153,8 +153,8 @@ export default function RecommendationsSection({}: RecommendationsSectionProps) 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {[1, 2, 3, 4].map((i) => (
               <div key={i} className="bg-white border border-gray-200 rounded-lg p-4 text-center hover:shadow-md transition-shadow">
-                <div className="w-16 h-16 bg-custom-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-custom-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-16 h-16 bg-velta-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-velta-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                 </div>

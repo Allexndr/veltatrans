@@ -1,4 +1,5 @@
 import {useTranslations} from 'next-intl';
+import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
@@ -7,83 +8,91 @@ export default function DirectionsPage() {
 
   const directions = [
     {
-      name: t('directions.china_cis.title'),
-      description: t('directions.china_cis.description'),
-      routes: ['Пекин - Алматы', 'Шанхай - Москва', 'Гуанчжоу - Ташкент', 'Урумчи - Бишкек'],
-      features: t.raw('directions.china_cis.features') as string[],
+      name: 'Китай - Казахстан',
+      description: 'Прямые перевозки из Китая в Казахстан через ключевые пограничные переходы',
+      routes: ['Хоргос - Алматы', 'Алтынколь - Нур-Султан', 'Шэньчжэнь - Алматы', 'Гуанчжоу - Астана'],
+      features: ['Пограничные переходы', 'Таможенное оформление', 'Контейнерные перевозки', 'Сборные грузы'],
       color: 'blue'
     },
     {
-      name: t('directions.russia_kazakhstan.title'),
-      description: t('directions.russia_kazakhstan.description'),
-      routes: ['Москва - Алматы', 'Новосибирск - Нур-Султан', 'Екатеринбург - Шымкент', 'Омск - Караганда'],
-      features: t.raw('directions.russia_kazakhstan.features') as string[],
+      name: 'Китай - Россия',
+      description: 'Международные перевозки из Китая в ключевые города России',
+      routes: ['Москва - Шанхай', 'Екатеринбург - Гуанчжоу', 'Новосибирск - Шэньчжэнь', 'Ростов - Пекин'],
+      features: ['Железнодорожные маршруты', 'Автомобильные перевозки', 'Мультимодальные решения', 'Полное сопровождение'],
       color: 'green'
     },
     {
-      name: t('directions.kazakhstan.title'),
-      description: t('directions.kazakhstan.description'),
-      routes: ['Алматы - Нур-Султан', 'Шымкент - Актобе', 'Караганда - Атырау', 'Костанай - Павлодар'],
-      features: t.raw('directions.kazakhstan.features') as string[],
+      name: 'Китай - Европа',
+      description: 'Трансконтинентальные перевозки из Китая в Европу',
+      routes: ['Варшава - Шанхай', 'Гамбург - Гуанчжоу', 'Стамбул - Шэньчжэнь', 'Будапешт - Пекин'],
+      features: ['Мультимодальные маршруты', 'Контейнерные поезда', 'Автомобильные перевозки', 'Европейская логистика'],
       color: 'orange'
     },
     {
-      name: t('directions.project_cargo.title'),
-      description: t('directions.project_cargo.description'),
+      name: 'Проектные перевозки',
+      description: 'Специализированные перевозки негабаритных и тяжеловесных грузов',
       routes: ['Негабаритные грузы', 'Тяжеловесные перевозки', 'Специальное оборудование', 'Проектные решения'],
-      features: t.raw('directions.project_cargo.features') as string[],
+      features: ['Индивидуальный подход', 'Спецтехника', 'Согласования маршрутов', 'Полное сопровождение'],
       color: 'purple'
     }
   ];
 
   const routes = [
     {
-      from: 'Алматы',
-      to: 'Пекин',
-      distance: '3,800 км',
-      time: '12-15 дней',
+      from: 'Хоргос',
+      to: 'Алматы',
+      distance: '380 км',
+      time: '1-2 дня',
       type: 'Автомобильный',
-      price: 'от $3.50/кг'
+      price: 'от $2.50/кг'
     },
     {
-      from: 'Москва',
-      to: 'Шанхай',
+      from: 'Алтынколь',
+      to: 'Нур-Султан',
+      distance: '450 км',
+      time: '1-2 дня',
+      type: 'Автомобильный',
+      price: 'от $2.80/кг'
+    },
+    {
+      from: 'Шэньчжэнь',
+      to: 'Москва',
       distance: '8,100 км',
       time: '18-22 дня',
       type: 'Ж/д + авто',
       price: 'от $4.20/кг'
     },
     {
-      from: 'Ташкент',
-      to: 'Гуанчжоу',
-      distance: '4,200 км',
-      time: '14-18 дней',
-      type: 'Автомобильный',
+      from: 'Гуанчжоу',
+      to: 'Екатеринбург',
+      distance: '7,800 км',
+      time: '16-20 дней',
+      type: 'Ж/д + авто',
+      price: 'от $4.00/кг'
+    },
+    {
+      from: 'Шанхай',
+      to: 'Новосибирск',
+      distance: '7,200 км',
+      time: '15-19 дней',
+      type: 'Ж/д + авто',
       price: 'от $3.80/кг'
     },
     {
-      from: 'Бишкек',
-      to: 'Урумчи',
-      distance: '700 км',
-      time: '3-5 дней',
-      type: 'Автомобильный',
-      price: 'от $2.20/кг'
-    },
-    {
-      from: 'Алматы',
+      from: 'Шэньчжэнь',
       to: 'Варшава',
-      distance: '4,500 км',
-      time: '15-20 дней',
-      type: 'Автомобильный',
+      distance: '9,500 км',
+      time: '20-25 дней',
+      type: 'Мультимодальный',
       price: 'от $5.50/кг'
     },
     {
-      from: 'Москва',
+      from: 'Гуанчжоу',
       to: 'Гамбург',
-      distance: '2,100 км',
-      time: '10-14 дней',
-      type: 'Автомобильный',
-      price: 'от $4.80/кг'
+      distance: '9,800 км',
+      time: '22-28 дней',
+      type: 'Мультимодальный',
+      price: 'от $5.80/кг'
     }
   ];
 
@@ -92,34 +101,36 @@ export default function DirectionsPage() {
       name: 'Хоргос',
       countries: 'Казахстан - Китай',
       description: 'Крупнейший пограничный переход в регионе',
-      features: ['24/7 работа', 'Ускоренное оформление', 'Современная инфраструктура']
+      features: ['24/7 работа', 'Ускоренное оформление', 'Современная инфраструктура', 'Контейнерные операции']
+    },
+    {
+      name: 'Алтынколь',
+      countries: 'Казахстан - Китай',
+      description: 'Железнодорожный и автомобильный переход',
+      features: ['Ж/д терминал', 'Таможенный склад', 'Контейнерные операции', 'Сборные грузы']
     },
     {
       name: 'Алашанькоу',
       countries: 'Китай - Казахстан',
       description: 'Железнодорожный и автомобильный переход',
-      features: ['Ж/д терминал', 'Таможенный склад', 'Контейнерные операции']
-    },
-    {
-      name: 'Достык',
-      countries: 'Казахстан - Китай',
-      description: 'Альтернативный маршрут для грузов',
-      features: ['Меньшие очереди', 'Специализация на авто', 'Быстрое оформление']
+      features: ['Ж/д терминал', 'Таможенный склад', 'Контейнерные операции', 'FCL/LCL услуги']
     }
   ];
 
   return (
     <div className="min-h-screen bg-white">
       <Header />
+      {/* Отступ для фиксированного header */}
+      <div className="h-16 lg:h-20"></div>
       <main>
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-custom-blue-900 via-custom-blue-800 to-custom-blue-700 text-white py-16">
+        <section className="bg-velta-navy text-white py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
               <h1 className="text-4xl md:text-5xl font-bold mb-6">
                 {t('directions.title')}
               </h1>
-              <p className="text-xl text-custom-blue-100 max-w-3xl mx-auto">
+              <p className="text-xl text-velta-100 max-w-3xl mx-auto">
                 {t('directions.description')}
               </p>
             </div>
@@ -140,7 +151,7 @@ export default function DirectionsPage() {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {directions.map((direction, index) => (
-                <div key={index} className="bg-white rounded-lg shadow-lg p-6 border-t-4 border-custom-blue-600">
+                <div key={index} className="bg-white rounded-lg shadow-lg p-6 border-t-4 border-velta-600">
                   <h3 className="text-2xl font-bold text-gray-900 mb-3">
                     {direction.name}
                   </h3>
@@ -154,7 +165,7 @@ export default function DirectionsPage() {
                       {direction.routes.map((route, routeIndex) => (
                         <span
                           key={routeIndex}
-                          className="px-3 py-1 bg-custom-blue-100 text-custom-blue-800 rounded-full text-sm"
+                          className="px-3 py-1 bg-velta-100 text-velta-800 rounded-full text-sm"
                         >
                           {route}
                         </span>
@@ -200,7 +211,7 @@ export default function DirectionsPage() {
                     <h3 className="text-lg font-semibold text-gray-900">
                       {route.from} → {route.to}
                     </h3>
-                    <svg className="w-6 h-6 text-custom-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-6 h-6 text-velta-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </div>
@@ -220,13 +231,16 @@ export default function DirectionsPage() {
                     </div>
                     <div className="flex justify-between">
                       <span>Стоимость:</span>
-                      <span className="font-medium text-custom-blue-600">{route.price}</span>
+                      <span className="font-medium text-velta-600">{route.price}</span>
                     </div>
                   </div>
 
-                  <button className="w-full mt-4 bg-custom-blue-600 text-white py-2 px-4 rounded-lg hover:bg-custom-blue-700 transition-colors">
+                  <Link 
+                    href="/#calculator-section" 
+                    className="w-full mt-4 bg-velta-navy text-white py-2 px-4 rounded-lg hover:bg-velta-700 transition-colors text-center block"
+                  >
                     Рассчитать доставку
-                  </button>
+                  </Link>
                 </div>
               ))}
             </div>
@@ -235,7 +249,7 @@ export default function DirectionsPage() {
 
         {/* Border Crossings */}
         <section className="py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
                 Пограничные переходы
@@ -249,7 +263,7 @@ export default function DirectionsPage() {
               {borderCrossings.map((crossing, index) => (
                 <div key={index} className="bg-white rounded-lg shadow-lg p-6">
                   <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 bg-custom-blue-600 rounded-lg flex items-center justify-center mr-4">
+                    <div className="w-12 h-12 bg-velta-navy rounded-lg flex items-center justify-center mr-4">
                       <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -286,7 +300,7 @@ export default function DirectionsPage() {
 
         {/* Map Section */}
         <section className="py-16 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
                 География работы
@@ -299,7 +313,7 @@ export default function DirectionsPage() {
             <div className="bg-white rounded-lg shadow-lg p-8">
               <div className="w-full h-96 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center">
                 <div className="text-center">
-                  <svg className="w-24 h-24 text-custom-blue-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-24 h-24 text-velta-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <h3 className="text-xl font-semibold text-gray-700">Интерактивная карта</h3>

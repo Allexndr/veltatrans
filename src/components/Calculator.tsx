@@ -207,7 +207,7 @@ export default function Calculator() {
                   name="senderName"
                   value={formData.senderName}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-royal-blue focus:border-velta-royal-blue"
                   required
                 />
               </div>
@@ -222,7 +222,7 @@ export default function Calculator() {
                   placeholder="+7 700 000 00 00"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-royal-blue focus:border-velta-royal-blue"
                 />
               </div>
             </div>
@@ -240,7 +240,7 @@ export default function Calculator() {
                   value={formData.fromCity}
                   onChange={handleChange}
                   placeholder={t('form.cityPlaceholder')}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-royal-blue focus:border-velta-royal-blue"
                 />
               </div>
 
@@ -256,7 +256,7 @@ export default function Calculator() {
                   value={formData.toCity}
                   onChange={handleChange}
                   placeholder={t('form.cityPlaceholder')}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-royal-blue focus:border-velta-royal-blue"
                 />
               </div>
             </div>
@@ -273,7 +273,7 @@ export default function Calculator() {
                   value={formData.fromCountry}
                   onChange={handleChange}
                   placeholder={t('form.countryPlaceholder')}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-royal-blue focus:border-velta-royal-blue"
                 />
               </div>
               <div>
@@ -287,7 +287,7 @@ export default function Calculator() {
                   value={formData.toCountry}
                   onChange={handleChange}
                   placeholder={t('form.countryPlaceholder')}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-royal-blue focus:border-velta-royal-blue"
                 />
               </div>
             </div>
@@ -303,7 +303,7 @@ export default function Calculator() {
                   name="shipmentType"
                   value={formData.shipmentType}
                   onChange={handleSelectChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500 bg-white"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-royal-blue focus:border-velta-royal-blue bg-white"
                   required
                 >
                   <option value="auto">Автомобильные перевозки</option>
@@ -323,7 +323,7 @@ export default function Calculator() {
                   value={formData.cargoType}
                   onChange={handleChange}
                   placeholder={t('form.cargoPlaceholder')}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-royal-blue focus:border-velta-royal-blue"
                 />
               </div>
             </div>
@@ -343,7 +343,7 @@ export default function Calculator() {
                   step="0.1"
                   value={formData.weight}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-royal-blue focus:border-velta-royal-blue"
                 />
               </div>
 
@@ -360,7 +360,7 @@ export default function Calculator() {
                   step="0.001"
                   value={formData.volume}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-royal-blue focus:border-velta-royal-blue"
                 />
               </div>
             </div>
@@ -379,7 +379,7 @@ export default function Calculator() {
                   step="0.01"
                   value={formData.length}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-royal-blue focus:border-velta-royal-blue"
                 />
               </div>
 
@@ -395,7 +395,7 @@ export default function Calculator() {
                   step="0.01"
                   value={formData.width}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-royal-blue focus:border-velta-royal-blue"
                 />
               </div>
 
@@ -411,7 +411,7 @@ export default function Calculator() {
                   step="0.01"
                   value={formData.height}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-royal-blue focus:border-velta-royal-blue"
                 />
               </div>
             </div>
@@ -426,7 +426,7 @@ export default function Calculator() {
                     name="isOversized"
                     checked={formData.isOversized}
                     onChange={handleChange}
-                    className="h-4 w-4 text-custom-blue-600 focus:ring-custom-blue-500 border-gray-300 rounded"
+                    className="h-4 w-4 text-velta-royal-blue focus:ring-velta-royal-blue border-gray-300 rounded"
                   />
                   <label htmlFor="isOversized" className="ml-2 block text-sm text-gray-700">
                     Негабаритный груз
@@ -458,7 +458,7 @@ export default function Calculator() {
                   value={formData.features}
                   onChange={handleChange}
                   placeholder={t('form.featuresPlaceholder')}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-royal-blue focus:border-velta-royal-blue"
                 />
               </div>
             </div>
@@ -468,7 +468,7 @@ export default function Calculator() {
               <button
                 type="submit"
                 disabled={isCalculating}
-                className="w-full px-6 py-3 bg-custom-blue-600 text-white font-semibold rounded-lg border-2 border-custom-blue-600 hover:bg-custom-blue-700 hover:border-custom-blue-700 focus:ring-2 focus:ring-custom-blue-500 focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+                className="w-full px-6 py-3 bg-velta-royal-blue text-white font-semibold rounded-lg border-2 border-velta-royal-blue hover:bg-velta-navy hover:border-velta-navy focus:ring-2 focus:ring-velta-royal-blue focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
               >
                 {isCalculating ? 'Отправка...' : 'Отправить заявку'}
               </button>
@@ -513,7 +513,7 @@ export default function Calculator() {
               </div>
               <button
                 onClick={resetForm}
-                className="bg-custom-blue-600 text-white px-6 py-2 rounded-lg border-2 border-custom-blue-600 hover:bg-custom-blue-700 hover:border-custom-blue-700 focus:ring-2 focus:ring-custom-blue-500 focus:ring-offset-2 transition-all duration-200 shadow-lg"
+                className="bg-velta-royal-blue text-white px-6 py-2 rounded-lg border-2 border-velta-royal-blue hover:bg-velta-navy hover:border-velta-navy focus:ring-2 focus:ring-velta-royal-blue focus:ring-offset-2 transition-all duration-200 shadow-lg"
               >
                 Отправить новую заявку
               </button>

@@ -52,9 +52,9 @@ export default function AnimatedCard({
     
     switch (variant) {
       case 'elevated':
-        return `${baseClasses} bg-white hover:shadow-2xl hover:shadow-custom-blue-100/50`;
+        return `${baseClasses} bg-white hover:shadow-2xl hover:shadow-velta-100/50`;
       case 'gradient':
-        return `${baseClasses} bg-gradient-to-br from-white to-gray-50 hover:from-custom-blue-50 hover:to-custom-blue-100`;
+        return `${baseClasses} bg-gradient-to-br from-white to-gray-50 hover:from-velta-50 hover:to-velta-100`;
       default:
         return `${baseClasses} bg-white hover:shadow-2xl`;
     }
@@ -63,7 +63,7 @@ export default function AnimatedCard({
   const getBackgroundGradient = () => {
     switch (variant) {
       case 'gradient':
-        return "bg-gradient-to-br from-custom-blue-50/50 to-custom-blue-100/50";
+        return "bg-gradient-to-br from-velta-50/50 to-velta-100/50";
       default:
         return "bg-gradient-to-br from-gray-50 to-white";
     }
@@ -97,13 +97,13 @@ export default function AnimatedCard({
 
       {/* Decorative elements */}
       <motion.div 
-        className="absolute top-4 right-4 w-2 h-2 bg-custom-blue-200 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        className="absolute top-4 right-4 w-2 h-2 bg-velta-200 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         initial={{ scale: 0 }}
         whileHover={{ scale: 1 }}
         transition={{ duration: 0.3, delay: 0.1 }}
       />
       <motion.div 
-        className="absolute bottom-4 left-4 w-1 h-1 bg-custom-blue-300 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        className="absolute bottom-4 left-4 w-1 h-1 bg-velta-300 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         initial={{ scale: 0 }}
         whileHover={{ scale: 1 }}
         transition={{ duration: 0.3, delay: 0.2 }}
@@ -119,7 +119,7 @@ export default function AnimatedCard({
 
       {/* Border glow effect */}
       <motion.div
-        className="absolute inset-0 rounded-3xl border border-transparent group-hover:border-custom-blue-200/30 transition-colors duration-300"
+        className="absolute inset-0 rounded-3xl border border-transparent group-hover:border-velta-200/30 transition-colors duration-300"
         initial={{ opacity: 0 }}
         whileHover={{ opacity: 1 }}
         transition={{ duration: 0.3 }}

@@ -231,7 +231,7 @@ export default function CargoTracking() {
                   value={trackingNumber}
                   onChange={(e) => setTrackingNumber(e.target.value)}
                   placeholder={t('form.placeholder')}
-                  className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500 transition-all duration-300 hover:shadow-md"
+                  className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-royal-blue focus:border-velta-royal-blue transition-all duration-300 hover:shadow-md"
                 />
                 <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 animate-pulse">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -250,7 +250,7 @@ export default function CargoTracking() {
               <button
                 type="submit"
                 disabled={isTracking}
-                className="w-full px-6 py-3 bg-custom-blue-600 text-white font-semibold rounded-lg border-2 border-custom-blue-600 hover:bg-custom-blue-700 hover:border-custom-blue-700 focus:ring-2 focus:ring-custom-blue-500 focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+                className="w-full px-6 py-3 bg-velta-royal-blue text-white font-semibold rounded-lg border-2 border-velta-royal-blue hover:bg-velta-navy hover:border-velta-navy focus:ring-2 focus:ring-velta-royal-blue focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
               >
                 {isTracking ? (
                   <div className="flex items-center justify-center space-x-2">
@@ -277,7 +277,7 @@ export default function CargoTracking() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="text-center p-4 bg-white rounded-lg shadow-sm animate-fade-in-up" style={{animationDelay: '0.2s'}}>
                     <div className="text-sm text-gray-700 mb-1">{t('result.trackingNumber')}</div>
-                    <div className="text-lg font-bold text-custom-blue-600">{result.trackingNumber}</div>
+                    <div className="text-lg font-bold text-velta-royal-blue">{result.trackingNumber}</div>
                   </div>
                   <div className="text-center p-4 bg-white rounded-lg shadow-sm animate-fade-in-up" style={{animationDelay: '0.4s'}}>
                     <div className="text-sm text-gray-700 mb-1">{t('result.status')}</div>

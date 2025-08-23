@@ -37,10 +37,10 @@ export default function AnimatedButton({
     };
 
     const variantClasses = {
-      primary: "bg-gradient-to-r from-custom-blue-600 to-custom-blue-700 text-white hover:from-custom-blue-700 hover:to-custom-blue-800 focus:ring-custom-blue-500 shadow-lg hover:shadow-xl",
+      primary: "bg-gradient-to-r from-velta-600 to-velta-700 text-white hover:from-velta-700 hover:to-velta-800 focus:ring-velta-500 shadow-lg hover:shadow-xl",
       secondary: "bg-gradient-to-r from-gray-600 to-gray-700 text-white hover:from-gray-700 hover:to-gray-800 focus:ring-gray-500 shadow-lg hover:shadow-xl",
-      outline: "border-2 border-custom-blue-600 text-custom-blue-600 hover:bg-custom-blue-600 hover:text-white focus:ring-custom-blue-500",
-      ghost: "text-custom-blue-600 hover:bg-custom-blue-50 focus:ring-custom-blue-500"
+      outline: "border-2 border-velta-600 text-velta-600 hover:bg-velta-600 hover:text-white focus:ring-velta-500",
+      ghost: "text-velta-600 hover:bg-velta-50 focus:ring-velta-500"
     };
 
     const widthClass = fullWidth ? "w-full" : "";
@@ -52,26 +52,38 @@ export default function AnimatedButton({
   const getBackgroundGradient = () => {
     switch (variant) {
       case 'primary':
-        return "bg-gradient-to-r from-custom-blue-700 to-custom-blue-800";
+        return "bg-gradient-to-r from-velta-700 to-velta-800";
       case 'secondary':
         return "bg-gradient-to-r from-gray-700 to-gray-800";
       case 'outline':
-        return "bg-custom-blue-600";
+        return "bg-velta-600";
       default:
-        return "bg-custom-blue-50";
+        return "bg-velta-50";
     }
   };
 
   const buttonVariants = {
-    initial: { scale: 1 },
-    hover: { 
-      scale: disabled ? 1 : 1.05,
-      transition: { duration: 0.2 }
-    },
-    tap: { 
-      scale: disabled ? 1 : 0.95,
-      transition: { duration: 0.1 }
-    }
+    primary: "bg-velta-navy text-white hover:bg-velta-700 focus:ring-velta-500 shadow-lg hover:shadow-xl",
+    secondary: "bg-white text-velta-navy border-2 border-velta-navy hover:bg-velta-navy hover:text-white focus:ring-velta-500 shadow-lg hover:shadow-xl",
+    outline: "bg-transparent text-velta-navy border-2 border-velta-navy hover:bg-velta-navy hover:text-white focus:ring-velta-500 shadow-lg hover:shadow-xl",
+    ghost: "bg-transparent text-velta-navy hover:bg-velta-50 focus:ring-velta-500",
+    danger: "bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 shadow-lg hover:shadow-xl",
+    success: "bg-green-600 text-white hover:bg-green-700 focus:ring-green-500 shadow-lg hover:shadow-xl",
+    warning: "bg-yellow-600 text-white hover:bg-yellow-700 focus:ring-yellow-500 shadow-lg hover:shadow-xl",
+    info: "bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500 shadow-lg hover:shadow-xl",
+  };
+
+  const sizeClasses = {
+    sm: "px-3 py-2 text-sm",
+    md: "px-4 py-2 text-base",
+    lg: "px-6 py-3 text-lg",
+    xl: "px-8 py-4 text-xl",
+  };
+
+  const getDisabledClasses = () => {
+    if (variant === 'primary') return "bg-velta-navy";
+    if (variant === 'secondary') return "bg-white";
+    return "";
   };
 
   const iconVariants = {

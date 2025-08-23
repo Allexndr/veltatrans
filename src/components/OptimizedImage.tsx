@@ -147,7 +147,7 @@ export default function OptimizedImage({
           transition={{ duration: 0.3 }}
         >
           <motion.div
-            className="w-8 h-8 border-2 border-custom-blue-600 border-t-transparent rounded-full"
+            className="w-8 h-8 border-2 border-velta-600 border-t-transparent rounded-full"
             animate={{ rotate: 360 }}
             transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
           />

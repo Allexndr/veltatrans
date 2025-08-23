@@ -187,14 +187,14 @@ export default function TrackingSystem({}: TrackingSystemProps) {
                     value={trackingNumber}
                     onChange={(e) => setTrackingNumber(e.target.value.toUpperCase())}
                     placeholder="WT123456"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-500 focus:border-velta-500"
                     maxLength={8}
                   />
                 </div>
                 <button
                   onClick={handleSingleTracking}
                   disabled={loading}
-                  className="w-full bg-custom-blue-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-custom-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-velta-navy text-white py-3 px-6 rounded-lg font-medium hover:bg-velta-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? (
                     <div className="flex items-center justify-center">
@@ -222,7 +222,7 @@ export default function TrackingSystem({}: TrackingSystemProps) {
                     type="file"
                     accept=".txt,.csv"
                     onChange={handleFileUpload}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-blue-500 focus:border-custom-blue-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-500 focus:border-velta-500"
                   />
                 </div>
                 <p className="text-sm text-gray-500">
@@ -253,7 +253,7 @@ export default function TrackingSystem({}: TrackingSystemProps) {
                 <button
                   onClick={() => navigateTracking('prev')}
                   disabled={currentIndex === 0}
-                  className="flex items-center px-4 py-2 text-custom-blue-600 hover:text-custom-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center px-4 py-2 text-velta-600 hover:text-velta-700 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -268,7 +268,7 @@ export default function TrackingSystem({}: TrackingSystemProps) {
                 <button
                   onClick={() => navigateTracking('next')}
                   disabled={currentIndex === results.length - 1}
-                  className="flex items-center px-4 py-2 text-custom-blue-600 hover:text-custom-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center px-4 py-2 text-velta-600 hover:text-velta-700 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Следующий
                   <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -324,7 +324,7 @@ export default function TrackingSystem({}: TrackingSystemProps) {
                 {currentResult.route.map((point, index) => (
                   <div key={index} className="flex items-start space-x-4">
                     <div className="flex-shrink-0">
-                      <div className={`w-3 h-3 rounded-full ${index === currentResult.route.length - 1 ? 'bg-custom-blue-600' : 'bg-gray-300'}`} />
+                      <div className={`w-3 h-3 rounded-full ${index === currentResult.route.length - 1 ? 'bg-velta-600' : 'bg-gray-300'}`} />
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center space-x-4 mb-1">
@@ -332,7 +332,7 @@ export default function TrackingSystem({}: TrackingSystemProps) {
                         <span className="text-sm text-gray-500">{point.date}</span>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <span className="text-sm font-medium text-custom-blue-600">{point.status}</span>
+                        <span className="text-sm font-medium text-velta-600">{point.status}</span>
                         <span className="text-sm text-gray-600">• {point.description}</span>
                       </div>
                     </div>

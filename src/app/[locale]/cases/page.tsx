@@ -8,8 +8,10 @@ export default async function CasesPage({params}: {params: Promise<{locale: stri
   return (
     <div className="min-h-screen bg-white">
       <Header />
+      {/* Отступ для фиксированного header */}
+      <div className="h-16 lg:h-20"></div>
       <main>
-        <CasesSection locale={locale} />
+        <CasesSection />
       </main>
       <Footer />
     </div>

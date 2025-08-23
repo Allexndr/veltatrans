@@ -63,6 +63,12 @@
     "title": "联系我们",
     "description": "联系我们获取咨询",
     "phone": "电话",
+    "phones": {
+      "main": "+77002770006",
+      "office1": "+77010704011",
+      "office2": "+77010704022",
+      "multichannel": "多通道"
+    },
     "email": "邮箱",
     "address": "地址",
     "form": {

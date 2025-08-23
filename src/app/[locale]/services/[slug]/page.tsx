@@ -69,14 +69,16 @@ export default async function ServiceDetailPage({params}: {params: Promise<{loca
   return (
     <div className="min-h-screen bg-white">
       <Header />
+      {/* Отступ для фиксированного header */}
+      <div className="h-16 lg:h-20"></div>
       <main>
         {/* Hero */}
-        <section className="bg-gradient-to-br from-custom-blue-900 via-custom-blue-800 to-custom-blue-700 text-white py-14 sm:py-16 md:py-20">
+        <section className="bg-gradient-to-br from-velta-900 via-velta-800 to-velta-700 text-white py-14 sm:py-16 md:py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
               {title}
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-custom-blue-100 max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-velta-100 max-w-3xl mx-auto">
               {description}
             </p>
           </div>
@@ -128,7 +130,7 @@ export default async function ServiceDetailPage({params}: {params: Promise<{loca
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">{t('services.title')}</h3>
                 <ul className="space-y-2">
                   {([['air','✈️'], ['sea','🚢'], ['land','🚚'], ['multimodal','🔀']] as [ServiceSlug,string][]) .map(([s, icon]) => (
-                    <li key={s} className={`flex items-center justify-between py-2 px-3 rounded-lg ${slug===s? 'bg-custom-blue-50 text-custom-blue-900' : 'text-gray-700 hover:bg-gray-50'}`}>
+                    <li key={s} className={`flex items-center justify-between py-2 px-3 rounded-lg ${slug===s? 'bg-velta-50 text-velta-900' : 'text-gray-700 hover:bg-gray-50'}`}>
                       <span className="flex items-center gap-2">
                         <span aria-hidden>{icon}</span>
                         {t(SLUG_TO_I18N_KEY[s].title)}
@@ -138,10 +140,10 @@ export default async function ServiceDetailPage({params}: {params: Promise<{loca
                 </ul>
               </div>
 
-              <div className="mt-6 bg-gradient-to-br from-custom-blue-600 to-custom-blue-700 text-white rounded-2xl p-6">
+              <div className="mt-6 bg-gradient-to-br from-velta-600 to-velta-700 text-white rounded-2xl p-6">
                 <h4 className="text-lg font-semibold mb-2">{t('contact_form.title')}</h4>
                 <p className="text-white/90 mb-4">{t('contact_form.description')}</p>
-                <Link href="/contacts" className="inline-block bg-white text-custom-blue-700 font-semibold px-5 py-3 rounded-lg hover:opacity-90 transition">{t('home.cta')}</Link>
+                <Link href="/contacts" className="inline-block bg-white text-velta-700 font-semibold px-5 py-3 rounded-lg hover:opacity-90 transition">{t('home.cta')}</Link>
               </div>
             </aside>
           </div>
@@ -154,8 +156,8 @@ export default async function ServiceDetailPage({params}: {params: Promise<{loca
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {advantages.map((advantage, idx) => (
                 <div key={idx} className="bg-white rounded-2xl border border-gray-200 p-6 text-center">
-                  <div className="w-12 h-12 bg-custom-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <svg className="w-6 h-6 text-custom-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-12 h-12 bg-velta-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-6 h-6 text-velta-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
@@ -173,7 +175,7 @@ export default async function ServiceDetailPage({params}: {params: Promise<{loca
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {examples.map((ex, idx) => (
                 <div key={idx} className="bg-white rounded-2xl border border-gray-200 p-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-custom-blue-600 to-custom-blue-700 rounded-xl mb-4" />
+                  <div className="w-16 h-16 bg-gradient-to-br from-velta-600 to-velta-700 rounded-xl mb-4" />
                   <div className="font-semibold text-gray-900 mb-1">{ex.title}</div>
                   <div className="text-gray-600">{ex.description}</div>
                 </div>

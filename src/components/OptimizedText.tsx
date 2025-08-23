@@ -69,7 +69,7 @@ export default function OptimizedText({
   const getColorClasses = () => {
     const colorMap = {
       default: 'text-gray-900',
-      primary: 'text-custom-blue-600',
+      primary: 'text-velta-600',
       secondary: 'text-gray-600',
       muted: 'text-gray-500',
       white: 'text-white',
@@ -80,11 +80,11 @@ export default function OptimizedText({
 
   const getGradientClasses = () => {
     const gradientMap = {
-      blue: 'bg-gradient-to-r from-custom-blue-600 to-custom-blue-700 bg-clip-text text-transparent',
+      blue: 'bg-gradient-to-r from-velta-600 to-velta-700 bg-clip-text text-transparent',
       purple: 'bg-gradient-to-r from-purple-600 to-purple-700 bg-clip-text text-transparent',
       green: 'bg-gradient-to-r from-green-600 to-green-700 bg-clip-text text-transparent',
       orange: 'bg-gradient-to-r from-orange-600 to-orange-700 bg-clip-text text-transparent',
-      custom: 'bg-gradient-to-r from-custom-blue-900 to-custom-blue-700 bg-clip-text text-transparent'
+      custom: 'bg-gradient-to-r from-velta-900 to-velta-700 bg-clip-text text-transparent'
     };
     return gradientMap[gradient] || gradientMap.blue;
   };

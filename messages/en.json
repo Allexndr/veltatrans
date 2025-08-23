@@ -413,6 +413,12 @@
     "title": "Contacts",
     "description": "Contact us for consultation",
     "phone": "Phone",
+    "phones": {
+      "main": "+77002770006",
+      "office1": "+77010704011",
+      "office2": "+77010704022",
+      "multichannel": "multichannel"
+    },
     "email": "Email",
     "address": "Address",
     "form": {

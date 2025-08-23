@@ -6,28 +6,41 @@ import Link from 'next/link';
 interface LogoProps {
   href?: string;
   className?: string;
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
 }
 
 export default function Logo({href = '/', className = '', size = 'md'}: LogoProps) {
-  // Use the mark-only image next to the brand text to avoid duplicating the wordmark
-  const [src, setSrc] = useState('/images/logo-mark.png');
-  const dimension = size === 'sm' ? 32 : size === 'lg' ? 48 : 40;
+  // Use the new Velta Trans logo
+  const [src, setSrc] = useState('/images/logo-velta.svg');
+  
+  // Увеличенные размеры для лучшего отображения
+  const getDimensions = () => {
+    switch (size) {
+      case 'sm': return { width: 140, height: 42 };
+      case 'md': return { width: 180, height: 54 };
+      case 'lg': return { width: 240, height: 72 };
+      case 'xl': return { width: 320, height: 96 };
+      default: return { width: 180, height: 54 };
+    }
+  };
+
+  const { width, height } = getDimensions();
 
   return (
     <Link href={href} className={`flex items-center ${className}`}>
-      {/* Runtime fallback to placeholder if image not yet uploaded */}
+      {/* New Velta Trans logo */}
       <img
         src={src}
         alt="Velta Trans"
-        width={dimension}
-        height={dimension}
-        className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 mr-2 sm:mr-3 object-contain"
-        onError={() => setSrc('/file.svg')}
+        width={width}
+        height={height}
+        className={`object-contain transition-all duration-300 hover:scale-105`}
+        style={{
+          height: `${height}px`,
+          minHeight: `${height}px`
+        }}
+        onError={() => setSrc('/images/logo-velta.png')}
       />
-      <span className="text-lg sm:text-xl lg:text-2xl font-bold bg-gradient-to-r from-custom-blue-900 to-custom-blue-700 bg-clip-text text-transparent">
-        Velta Trans
-      </span>
     </Link>
   );
 }

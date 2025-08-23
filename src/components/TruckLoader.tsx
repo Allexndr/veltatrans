@@ -107,7 +107,7 @@ export default function TruckLoader({size = 'md', className = '', speed = 'norma
       {dots.map((dot, index) => (
         <div
           key={dot.id}
-          className={`absolute bottom-1 ${dotSizeClasses[size]} bg-gradient-to-r from-custom-blue-400 to-custom-blue-600 rounded-full transition-all duration-300 shadow-sm`}
+          className={`absolute bottom-1 ${dotSizeClasses[size]} bg-gradient-to-r from-velta-400 to-velta-600 rounded-full transition-all duration-300 shadow-sm`}
           style={{
             left: `${5 + index * 7.5}%`,
             opacity: dot.opacity,
@@ -126,7 +126,7 @@ export default function TruckLoader({size = 'md', className = '', speed = 'norma
         }}
       >
         {/* Кабина грузовика */}
-        <div className="w-3/5 h-full bg-gradient-to-br from-custom-blue-600 to-custom-blue-700 rounded-l-lg relative shadow-lg">
+        <div className="w-3/5 h-full bg-gradient-to-br from-velta-600 to-velta-700 rounded-l-lg relative shadow-lg">
           {/* Окно */}
           <div className="absolute top-1 left-1 w-2 h-1.5 bg-gradient-to-br from-blue-100 to-blue-200 rounded-sm shadow-inner"></div>
           {/* Фары */}
@@ -136,12 +136,12 @@ export default function TruckLoader({size = 'md', className = '', speed = 'norma
         </div>
         
         {/* Кузов */}
-        <div className="absolute top-0 right-0 w-2/5 h-full bg-gradient-to-br from-custom-blue-700 to-custom-blue-800 rounded-r-lg shadow-lg">
+        <div className="absolute top-0 right-0 w-2/5 h-full bg-gradient-to-br from-velta-700 to-velta-800 rounded-r-lg shadow-lg">
           {/* Груз в кузове */}
-          <div className="absolute top-1 left-1 right-1 bottom-1 bg-gradient-to-br from-custom-blue-800 to-custom-blue-900 rounded-sm">
+          <div className="absolute top-1 left-1 right-1 bottom-1 bg-gradient-to-br from-velta-800 to-velta-900 rounded-sm">
             {/* Детали груза */}
-            <div className="absolute top-0.5 left-0.5 w-1 h-0.5 bg-custom-blue-600 rounded-sm"></div>
-            <div className="absolute top-0.5 right-0.5 w-1 h-0.5 bg-custom-blue-600 rounded-sm"></div>
+            <div className="absolute top-0.5 left-0.5 w-1 h-0.5 bg-velta-600 rounded-sm"></div>
+            <div className="absolute top-0.5 right-0.5 w-1 h-0.5 bg-velta-600 rounded-sm"></div>
           </div>
         </div>
         

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="120" viewBox="0 0 400 120">
+  <!-- Background -->
+  <defs>
+    <linearGradient id="iconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0050A0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#003F7D;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0050A0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#003F7D;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Enhanced Icon - Larger and more prominent -->
+  <g id="icon" transform="translate(20, 20)">
+    <!-- Main icon container with enhanced size -->
+    <rect x="0" y="0" width="60" height="80" rx="8" fill="url(#iconGradient)" opacity="0.95"/>
+    
+    <!-- Enhanced horizontal lines with better spacing and thickness -->
+    <rect x="8" y="12" width="44" height="4" rx="2" fill="white" opacity="0.9"/>
+    <rect x="8" y="22" width="40" height="4" rx="2" fill="white" opacity="0.85"/>
+    <rect x="8" y="32" width="36" height="4" rx="2" fill="white" opacity="0.8"/>
+    <rect x="8" y="42" width="32" height="4" rx="2" fill="white" opacity="0.75"/>
+    <rect x="8" y="52" width="28" height="4" rx="2" fill="white" opacity="0.7"/>
+    <rect x="8" y="62" width="24" height="4" rx="2" fill="white" opacity="0.65"/>
+    
+    <!-- Vertical accent line -->
+    <rect x="28" y="8" width="4" height="64" rx="2" fill="white" opacity="0.8"/>
+    
+    <!-- Bottom circle accent -->
+    <circle cx="30" cy="70" r="6" fill="white" opacity="0.9"/>
+    
+    <!-- Subtle glow effect -->
+    <circle cx="30" cy="40" r="35" fill="url(#iconGradient)" opacity="0.1"/>
+  </g>
+  
+  <!-- Text "VELTA" - Larger and more prominent -->
+  <text x="100" y="45" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="url(#textGradient)" letter-spacing="2">
+    VELTA
+  </text>
+  
+  <!-- Text "TRANS" - Enhanced subtitle -->
+  <text x="100" y="70" font-family="Arial, sans-serif" font-size="18" font-weight="600" fill="url(#textGradient)" letter-spacing="1">
+    TRANS
+  </text>
+  
+  <!-- Subtle background elements for depth -->
+  <circle cx="350" cy="60" r="40" fill="url(#iconGradient)" opacity="0.05"/>
+  <circle cx="50" cy="60" r="30" fill="url(#iconGradient)" opacity="0.05"/>
+</svg>

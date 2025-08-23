@@ -85,7 +85,7 @@ export default function FloatingContacts({
       key: "phone",
       href: isMobile ? `tel:${phone}` : `tel:${phone}`,
       label: phone,
-      bg: "bg-custom-blue-700",
+      bg: "bg-velta-navy",
       icon: (
         <svg viewBox="0 0 24 24" className="w-5 h-5 text-white">
           <path

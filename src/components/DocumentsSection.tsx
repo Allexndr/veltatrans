@@ -145,8 +145,8 @@ export default function DocumentsSection({}: DocumentsSectionProps) {
               onClick={() => setActiveCategory(category.id)}
               className={`px-6 py-2 rounded-lg border transition-colors ${
                 activeCategory === category.id
-                  ? 'bg-custom-blue-600 border-custom-blue-600 text-white'
-                  : 'bg-white border-gray-300 text-gray-700 hover:bg-custom-blue-50 hover:border-custom-blue-300 hover:text-custom-blue-700'
+                  ? 'bg-velta-600 border-velta-600 text-white'
+                  : 'bg-white border-gray-300 text-gray-700 hover:bg-velta-50 hover:border-velta-300 hover:text-velta-700'
               }`}
             >
               {category.name}
@@ -178,7 +178,7 @@ export default function DocumentsSection({}: DocumentsSectionProps) {
               
               <button
                 onClick={() => handleDownload(doc.downloadUrl, doc.title)}
-                className="w-full bg-custom-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-custom-blue-700 transition-colors inline-flex items-center justify-center mt-auto"
+                className="w-full bg-velta-navy text-white px-4 py-2 rounded-lg font-medium hover:bg-velta-700 transition-colors inline-flex items-center justify-center mt-auto"
               >
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />

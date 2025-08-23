@@ -2,6 +2,7 @@
 
 import {useTranslations} from 'next-intl';
 import SmoothLink from './SmoothLink';
+import Logo from './Logo';
 
 export default function Footer() {
   const t = useTranslations();
@@ -12,22 +13,27 @@ export default function Footer() {
     <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-10 left-10 w-20 h-20 bg-custom-blue-500 rounded-full animate-pulse" style={{animationDuration: '3s'}}></div>
-        <div className="absolute top-20 right-20 w-16 h-16 bg-custom-blue-400 rounded-full animate-pulse" style={{animationDuration: '4s', animationDelay: '1s'}}></div>
-        <div className="absolute bottom-20 left-1/4 w-12 h-12 bg-custom-blue-300 rounded-full animate-pulse" style={{animationDuration: '2.5s', animationDelay: '2s'}}></div>
+        <div className="absolute top-10 left-10 w-20 h-20 bg-velta-500 rounded-full animate-pulse" style={{animationDuration: '3s'}}></div>
+        <div className="absolute top-20 right-20 w-16 h-16 bg-velta-400 rounded-full animate-pulse" style={{animationDuration: '4s', animationDelay: '1s'}}></div>
+        <div className="absolute bottom-20 left-1/4 w-12 h-12 bg-velta-300 rounded-full animate-pulse" style={{animationDuration: '2.5s', animationDelay: '2s'}}></div>
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Logo Section */}
+        <div className="flex justify-center mb-8 animate-fade-in-up" style={{animationDelay: '0.1s'}}>
+          <Logo size="xl" href="/" className="filter brightness-0 invert" />
+        </div>
+        
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="col-span-1 md:col-span-2 animate-fade-in-up" style={{animationDelay: '0.2s'}}>
             <div className="flex items-center mb-4 group">
-              <div className="w-12 h-12 bg-gradient-to-br from-custom-blue-600 to-custom-blue-700 rounded-xl flex items-center justify-center mr-3 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
+              <div className="w-12 h-12 bg-velta-navy rounded-xl flex items-center justify-center mr-3 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
                 <svg className="w-7 h-7 text-white transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold group-hover:text-custom-blue-300 transition-colors duration-300">
+              <h3 className="text-2xl font-bold group-hover:text-velta-300 transition-colors duration-300">
                 {t('company.name')}
               </h3>
             </div>
@@ -97,7 +103,7 @@ export default function Footer() {
              </h4>
             <div className="space-y-3 text-gray-300">
               <div className="flex items-center group">
-                <div className="w-8 h-8 bg-custom-blue-600 rounded-full flex items-center justify-center mr-3 group-hover:bg-custom-blue-500 transition-colors duration-300">
+                <div className="w-8 h-8 bg-velta-navy rounded-full flex items-center justify-center mr-3 group-hover:bg-velta-500 transition-colors duration-300">
                   <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
@@ -107,7 +113,7 @@ export default function Footer() {
                 </span>
               </div>
               <div className="flex items-center group">
-                <div className="w-8 h-8 bg-custom-blue-600 rounded-full flex items-center justify-center mr-3 group-hover:bg-custom-blue-500 transition-colors duration-300">
+                <div className="w-8 h-8 bg-velta-navy rounded-full flex items-center justify-center mr-3 group-hover:bg-velta-500 transition-colors duration-300">
                   <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
@@ -121,7 +127,7 @@ export default function Footer() {
               <div className="flex space-x-4 mt-6">
                 <a 
                   href="#" 
-                  className="w-10 h-10 bg-custom-blue-600 rounded-full flex items-center justify-center text-white hover:bg-custom-blue-500 transition-all duration-300 transform hover:scale-110 hover:shadow-lg group"
+                  className="w-10 h-10 bg-velta-600 rounded-full flex items-center justify-center text-white hover:bg-velta-500 transition-all duration-300 transform hover:scale-110 hover:shadow-lg group"
                 >
                   <span className="sr-only">WhatsApp</span>
                   <svg className="w-5 h-5 transition-transform duration-300 group-hover:rotate-12" fill="currentColor" viewBox="0 0 24 24">
@@ -130,7 +136,7 @@ export default function Footer() {
                 </a>
                 <a 
                   href="#" 
-                  className="w-10 h-10 bg-custom-blue-600 rounded-full flex items-center justify-center text-white hover:bg-custom-blue-500 transition-all duration-300 transform hover:scale-110 hover:shadow-lg group"
+                  className="w-10 h-10 bg-velta-600 rounded-full flex items-center justify-center text-white hover:bg-velta-500 transition-all duration-300 transform hover:scale-110 hover:shadow-lg group"
                 >
                   <span className="sr-only">Telegram</span>
                   <svg className="w-5 h-5 transition-transform duration-300 group-hover:rotate-12" fill="currentColor" viewBox="0 0 24 24">

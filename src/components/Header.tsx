@@ -85,7 +85,7 @@ export default function Header() {
         <div className="flex justify-between items-center h-16 lg:h-20">
           {/* Logo */}
           <motion.div className="flex-shrink-0" whileHover={{ scale: 1.03 }} transition={{ duration: 0.2 }}>
-            <Logo />
+            <Logo size="lg" />
           </motion.div>
 
           {/* Desktop Navigation */}
@@ -101,11 +101,11 @@ export default function Header() {
               >
                 <Link
                   href={item.href}
-                  className="relative text-gray-700 hover:text-custom-blue-900 px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg hover:bg-gradient-to-r hover:from-custom-blue-50 hover:to-custom-blue-100 group border-2 border-gray-300 hover:border-custom-blue-400"
+                  className="relative text-gray-700 hover:text-velta-navy px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg hover:bg-gradient-to-r hover:from-velta-50 hover:to-velta-100 group border-2 border-gray-300 hover:border-velta-royal-blue"
                 >
                   <span className="relative z-10">{item.name}</span>
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-custom-blue-100 to-custom-blue-200 rounded-lg opacity-0 group-hover:opacity-100"
+                    className="absolute inset-0 bg-gradient-to-r from-velta-100 to-velta-200 rounded-lg opacity-0 group-hover:opacity-100"
                     initial={{ scale: 0.8, opacity: 0 }}
                     whileHover={{ scale: 1, opacity: 1 }}
                     transition={{ duration: 0.2 }}
@@ -126,7 +126,7 @@ export default function Header() {
               >
                 <Link
                   href={item.href}
-                  className="text-gray-700 hover:text-custom-blue-900 px-2 py-1 text-xs font-medium transition-all duration-300 hover:bg-custom-blue-50 rounded-md border border-gray-300 hover:border-custom-blue-400"
+                  className="text-gray-700 hover:text-velta-navy px-2 py-1 text-xs font-medium transition-all duration-300 hover:bg-velta-50 rounded-md border border-gray-300 hover:border-velta-royal-blue"
                 >
                   {item.name}
                 </Link>
@@ -138,7 +138,7 @@ export default function Header() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.3 }}
             >
-              <button className="text-gray-700 hover:text-custom-blue-900 px-2 py-1 text-xs font-medium transition-all duration-300 hover:bg-custom-blue-50 rounded-md">
+              <button className="text-gray-700 hover:text-velta-navy px-2 py-1 text-xs font-medium transition-all duration-300 hover:bg-velta-50 rounded-md">
                 ...
               </button>
               <motion.div 
@@ -150,7 +150,7 @@ export default function Header() {
                   <Link
                     key={item.name}
                     href={item.href}
-                    className="block px-3 py-2 text-xs text-gray-700 hover:text-custom-blue-900 hover:bg-custom-blue-50 transition-colors rounded-lg mx-1 my-1"
+                    className="block px-3 py-2 text-xs text-gray-700 hover:text-velta-navy hover:bg-velta-50 transition-colors rounded-lg mx-1 my-1"
                   >
                     {item.name}
                   </Link>
@@ -172,7 +172,7 @@ export default function Header() {
             {/* Mobile menu button */}
             <motion.button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden inline-flex items-center justify-center p-2 rounded-lg text-gray-700 hover:text-custom-blue-900 hover:bg-custom-blue-50 focus:outline-none focus:ring-2 focus:ring-custom-blue-500 transition-all duration-300"
+              className="md:hidden inline-flex items-center justify-center p-2 rounded-lg text-gray-700 hover:text-velta-navy hover:bg-velta-50 focus:outline-none focus:ring-2 focus:ring-velta-royal-blue transition-all duration-300"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -214,7 +214,7 @@ export default function Header() {
                   >
                     <Link
                       href={item.href}
-                      className="text-gray-700 hover:text-custom-blue-900 hover:bg-custom-blue-50 block px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 border border-gray-300 hover:border-custom-blue-400"
+                      className="text-gray-700 hover:text-velta-navy hover:bg-velta-50 block px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 border border-gray-300 hover:border-velta-royal-blue"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       {item.name}

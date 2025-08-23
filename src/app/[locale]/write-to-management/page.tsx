@@ -6,6 +6,8 @@ export default function WriteToManagementPage() {
   return (
     <div className="min-h-screen bg-white">
       <Header />
+      {/* Отступ для фиксированного header */}
+      <div className="h-16 lg:h-20"></div>
       <main>
         <WriteToManagement />
       </main>
