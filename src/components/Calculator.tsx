@@ -30,7 +30,7 @@ export default function Calculator() {
 
       // Проверяем загрузку через 5 секунд
       setTimeout(() => {
-        const formContainer = document.getElementById('b24form_calculator');
+        const formContainer = document.getElementById('b24form_calculator_main');
         console.log('Checking form container:', formContainer);
         if (formContainer && formContainer.children.length === 0) {
           console.log('Form not loaded, showing fallback message');
@@ -76,7 +76,7 @@ export default function Calculator() {
       </div>
       
       {/* Bitrix24 форма будет загружена здесь */}
-      <div id="b24form_calculator" className="min-h-[400px]">
+      <div id="b24form_calculator_main" className="min-h-[400px]">
         <div className="text-center py-8">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-velta-navy mx-auto mb-4"></div>
           <p className="text-gray-600">Загрузка формы...</p>

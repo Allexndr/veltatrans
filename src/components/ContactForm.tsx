@@ -32,7 +32,7 @@ export default function ContactForm() {
 
       // Проверяем загрузку через 5 секунд
       setTimeout(() => {
-        const formContainer = document.getElementById('b24form_contact');
+        const formContainer = document.getElementById('b24form_inline_2_36mjlr');
         if (formContainer && formContainer.children.length === 0) {
           // Если форма не загрузилась, показываем сообщение
           formContainer.innerHTML = `
@@ -133,7 +133,7 @@ export default function ContactForm() {
             </div>
             
             {/* Bitrix24 форма будет загружена здесь */}
-            <div id="b24form_contact" className="min-h-[300px]">
+            <div id="b24form_inline_2_36mjlr" className="min-h-[300px]">
               <div className="text-center py-8">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-velta-navy mx-auto mb-4"></div>
                 <p className="text-gray-600">Загрузка формы...</p>
