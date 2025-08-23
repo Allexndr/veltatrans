@@ -1,532 +1,84 @@
 'use client';
 
-import {useState} from 'react';
-import {useTranslations} from 'next-intl';
-
-interface CalculationResult {
-  cost: number;
-  currency: string;
-  deliveryTime: string;
-  service: string;
-  distance?: number;
-  breakdown?: {
-    baseCost: number;
-    weightCost: number;
-    volumeCost: number;
-    oversizedSurcharge: number;
-    total: number;
-  };
-}
+import {useEffect} from 'react';
 
 export default function Calculator() {
-  const t = useTranslations('calculator');
-  const [formData, setFormData] = useState({
-    senderName: '',
-    fromCity: '',
-    fromCountry: '',
-    toCity: '',
-    toCountry: '',
-    shipmentType: 'auto',
-    cargoType: '',
-    weight: '',
-    volume: '',
-    length: '',
-    width: '',
-    height: '',
-    features: '',
-    phone: '',
-    isOversized: false,
-    isDangerous: false
-  });
-  const [result, setResult] = useState<CalculationResult | null>(null);
-  const [isCalculating, setIsCalculating] = useState(false);
-  const [error, setError] = useState('');
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, value, type, checked} = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === 'checkbox' ? checked : value
-    });
-  };
-
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const {name, value} = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsCalculating(true);
-    setError('');
-
-    // Валидация обязательных полей
-    const requiredFields = [
-      { field: 'senderName', name: 'Имя грузоотправителя' },
-      { field: 'fromCity', name: 'Город отправления' },
-      { field: 'toCity', name: 'Город назначения' },
-      { field: 'weight', name: 'Вес груза' },
-      { field: 'volume', name: 'Объем груза' },
-      { field: 'phone', name: 'Номер телефона' }
-    ];
-
-    for (const { field, name } of requiredFields) {
-      if (!formData[field as keyof typeof formData] || formData[field as keyof typeof formData] === '') {
-        setError(`Поле "${name}" обязательно для заполнения`);
-        setIsCalculating(false);
+  useEffect(() => {
+    // Функция для загрузки скрипта Bitrix24
+    const loadBitrixScript = () => {
+      // Проверяем, не загружен ли уже скрипт
+      if (document.querySelector('script[data-b24-form="inline/2/36mjlr"]')) {
         return;
       }
-    }
 
-    // Валидация телефона
-    const phoneRegex = /^\+?[0-9]{10,15}$/;
-    if (!phoneRegex.test(formData.phone.replace(/\s/g, ''))) {
-      setError('Введите корректный номер телефона');
-      setIsCalculating(false);
-      return;
-    }
+      // Создаем и добавляем скрипт
+      const script = document.createElement('script');
+      script.setAttribute('data-b24-form', 'inline/2/36mjlr');
+      script.setAttribute('data-skip-moving', 'true');
+      script.innerHTML = `
+        (function(w,d,u){
+          var s=d.createElement('script');s.async=true;s.src=u+'?'+(Date.now()/180000|0);
+          var h=d.getElementsByTagName('script')[0];h.parentNode.insertBefore(s,h);
+        })(window,document,'https://cdn-ru.bitrix24.kz/b34575790/crm/form/loader_2.js');
+      `;
+      
+      document.head.appendChild(script);
 
-    try {
-      // Отправка данных в Bitrix24
-      const bitrixData = {
-        senderName: formData.senderName,
-        fromCity: formData.fromCity,
-        fromCountry: formData.fromCountry,
-        toCity: formData.toCity,
-        toCountry: formData.toCountry,
-        shipmentType: formData.shipmentType,
-        cargoType: formData.cargoType,
-        weight: formData.weight,
-        volume: formData.volume,
-        length: formData.length,
-        width: formData.width,
-        height: formData.height,
-        phone: formData.phone,
-        isOversized: formData.isOversized,
-        isDangerous: formData.isDangerous,
-        features: formData.features,
-        requestType: 'calculation',
-        timestamp: new Date().toISOString()
-      };
-
-      // Отправка в Bitrix24 через их API
-      if (typeof window !== 'undefined' && (window as typeof window & {b24form?: {sendData: (data: object) => void}}).b24form) {
-        (window as typeof window & {b24form: {sendData: (data: object) => void}}).b24form.sendData(bitrixData);
-      }
-
-
-
-      // Отправка уведомления в Telegram канал
-      try {
-        await fetch('/api/telegram/notify', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            type: 'calculation_request',
-            data: bitrixData
-          }),
-        });
-      } catch (error) {
-        console.error('Telegram notification error:', error);
-        // Не прерываем процесс, если уведомление не отправилось
-      }
-
-      // Показываем сообщение об ожидании
-      setResult({
-        cost: 0,
-        currency: 'USD',
-        deliveryTime: '5 часов',
-        service: 'Индивидуальный расчет',
-        distance: 0
-      });
-
-      // Сброс формы через 3 секунды
+      // Проверяем загрузку через 5 секунд
       setTimeout(() => {
-        resetForm();
-      }, 3000);
+        const formContainer = document.getElementById('b24form_inline_2_36mjlr');
+        if (formContainer && formContainer.children.length === 0) {
+          // Если форма не загрузилась, показываем сообщение
+          formContainer.innerHTML = `
+            <div class="text-center py-8">
+              <div class="text-gray-500 mb-4">
+                <svg class="w-16 h-16 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <p class="text-gray-600 mb-4">Форма временно недоступна</p>
+              <p class="text-sm text-gray-500">Пожалуйста, свяжитесь с нами по телефону или через другие контакты</p>
+            </div>
+          `;
+        }
+      }, 5000);
+    };
 
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Произошла ошибка при отправке заявки';
-      setError(errorMessage);
-      console.error('Submission error:', err);
-    } finally {
-      setIsCalculating(false);
-    }
-  };
+    // Загружаем скрипт
+    loadBitrixScript();
 
-  const resetForm = () => {
-    setFormData({
-      senderName: '',
-      fromCity: '',
-      fromCountry: '',
-      toCity: '',
-      toCountry: '',
-      shipmentType: 'auto',
-      cargoType: '',
-      weight: '',
-      volume: '',
-      length: '',
-      width: '',
-      height: '',
-      features: '',
-      phone: '',
-      isOversized: false,
-      isDangerous: false
-    });
-    setResult(null);
-  };
+    return () => {
+      // Очищаем скрипт при размонтировании компонента
+      const script = document.querySelector('script[data-b24-form="inline/2/36mjlr"]');
+      if (script && script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
+    };
+  }, []);
 
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            Заявка на расчет стоимости
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Заполните форму ниже, и наш менеджер свяжется с вами для индивидуального расчета стоимости перевозки
-          </p>
-        </div>
-
-        <div className="bg-white rounded-lg shadow-lg p-8">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Sender and phone */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="senderName" className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('form.senderName')}
-                </label>
-                <input
-                  type="text"
-                  id="senderName"
-                  name="senderName"
-                  value={formData.senderName}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-royal-blue focus:border-velta-royal-blue"
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('form.phone')}
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  placeholder="+7 700 000 00 00"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-royal-blue focus:border-velta-royal-blue"
-                />
-              </div>
-            </div>
-            {/* Cities and countries */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="fromCity" className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('form.fromCity')} *
-                </label>
-                <input
-                  type="text"
-                  id="fromCity"
-                  name="fromCity"
-                  required
-                  value={formData.fromCity}
-                  onChange={handleChange}
-                  placeholder={t('form.cityPlaceholder')}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-royal-blue focus:border-velta-royal-blue"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="toCity" className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('form.toCity')} *
-                </label>
-                <input
-                  type="text"
-                  id="toCity"
-                  name="toCity"
-                  required
-                  value={formData.toCity}
-                  onChange={handleChange}
-                  placeholder={t('form.cityPlaceholder')}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-royal-blue focus:border-velta-royal-blue"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="fromCountry" className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('form.fromCountry')}
-                </label>
-                <input
-                  type="text"
-                  id="fromCountry"
-                  name="fromCountry"
-                  value={formData.fromCountry}
-                  onChange={handleChange}
-                  placeholder={t('form.countryPlaceholder')}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-royal-blue focus:border-velta-royal-blue"
-                />
-              </div>
-              <div>
-                <label htmlFor="toCountry" className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('form.toCountry')}
-                </label>
-                <input
-                  type="text"
-                  id="toCountry"
-                  name="toCountry"
-                  value={formData.toCountry}
-                  onChange={handleChange}
-                  placeholder={t('form.countryPlaceholder')}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-royal-blue focus:border-velta-royal-blue"
-                />
-              </div>
-            </div>
-
-            {/* Shipment type and cargo */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="shipmentType" className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('form.shipmentType')}
-                </label>
-                <select
-                  id="shipmentType"
-                  name="shipmentType"
-                  value={formData.shipmentType}
-                  onChange={handleSelectChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-royal-blue focus:border-velta-royal-blue bg-white"
-                  required
-                >
-                  <option value="auto">Автомобильные перевозки</option>
-                  <option value="railway">Железнодорожные перевозки</option>
-                  <option value="multimodal">Мультимодальные перевозки</option>
-                  <option value="project">Проектные перевозки</option>
-                </select>
-              </div>
-              <div>
-                <label htmlFor="cargoType" className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('form.cargoType')}
-                </label>
-                <input
-                  type="text"
-                  id="cargoType"
-                  name="cargoType"
-                  value={formData.cargoType}
-                  onChange={handleChange}
-                  placeholder={t('form.cargoPlaceholder')}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-royal-blue focus:border-velta-royal-blue"
-                />
-              </div>
-            </div>
-
-            {/* Weight and Volume */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="weight" className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('form.weight')} (кг) *
-                </label>
-                <input
-                  type="number"
-                  id="weight"
-                  name="weight"
-                  required
-                  min="0.1"
-                  step="0.1"
-                  value={formData.weight}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-royal-blue focus:border-velta-royal-blue"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="volume" className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('form.volume')} (м³) *
-                </label>
-                <input
-                  type="number"
-                  id="volume"
-                  name="volume"
-                  required
-                  min="0.001"
-                  step="0.001"
-                  value={formData.volume}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-royal-blue focus:border-velta-royal-blue"
-                />
-              </div>
-            </div>
-
-            {/* Dimensions */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div>
-                <label htmlFor="length" className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('form.length')} (м)
-                </label>
-                <input
-                  type="number"
-                  id="length"
-                  name="length"
-                  min="0"
-                  step="0.01"
-                  value={formData.length}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-royal-blue focus:border-velta-royal-blue"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="width" className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('form.width')} (м)
-                </label>
-                <input
-                  type="number"
-                  id="width"
-                  name="width"
-                  min="0"
-                  step="0.01"
-                  value={formData.width}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-royal-blue focus:border-velta-royal-blue"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="height" className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('form.height')} (м)
-                </label>
-                <input
-                  type="number"
-                  id="height"
-                  name="height"
-                  min="0"
-                  step="0.01"
-                  value={formData.height}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-royal-blue focus:border-velta-royal-blue"
-                />
-              </div>
-            </div>
-
-            {/* Oversized and features */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-              <div className="space-y-4">
-                <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    id="isOversized"
-                    name="isOversized"
-                    checked={formData.isOversized}
-                    onChange={handleChange}
-                    className="h-4 w-4 text-velta-royal-blue focus:ring-velta-royal-blue border-gray-300 rounded"
-                  />
-                  <label htmlFor="isOversized" className="ml-2 block text-sm text-gray-700">
-                    Негабаритный груз
-                  </label>
-                </div>
-                
-                <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    id="isDangerous"
-                    name="isDangerous"
-                    checked={formData.isDangerous}
-                    onChange={handleChange}
-                    className="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded"
-                  />
-                  <label htmlFor="isDangerous" className="ml-2 block text-sm text-gray-700">
-                    Опасный груз
-                  </label>
-                </div>
-              </div>
-              <div>
-                <label htmlFor="features" className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('form.features')}
-                </label>
-                <input
-                  type="text"
-                  id="features"
-                  name="features"
-                  value={formData.features}
-                  onChange={handleChange}
-                  placeholder={t('form.featuresPlaceholder')}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-royal-blue focus:border-velta-royal-blue"
-                />
-              </div>
-            </div>
-
-            {/* Submit Button */}
-            <div className="text-center">
-              <button
-                type="submit"
-                disabled={isCalculating}
-                className="w-full px-6 py-3 bg-velta-royal-blue text-white font-semibold rounded-lg border-2 border-velta-royal-blue hover:bg-velta-navy hover:border-velta-navy focus:ring-2 focus:ring-velta-royal-blue focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
-              >
-                {isCalculating ? 'Отправка...' : 'Отправить заявку'}
-              </button>
-            </div>
-          </form>
-
-          {/* Error */}
-          {error && (
-            <div className="mt-6 bg-red-50 border border-red-200 rounded-lg p-4">
-              <div className="flex items-center">
-                <svg className="w-5 h-5 text-red-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <p className="text-red-700 font-medium">{error}</p>
-              </div>
-            </div>
-          )}
-
-          {/* Result */}
-          {result && (
-            <div className="mt-8 bg-green-50 border border-green-200 rounded-lg p-6 text-center">
-              <div className="mb-4">
-                <svg className="w-16 h-16 mx-auto text-green-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-green-800 mb-4">
-                Заявка на расчет отправлена!
-              </h3>
-              <p className="text-green-700 mb-6">
-                Мы вернемся к вам с ответом в течение <strong>5 часов</strong>.<br />
-                Наш менеджер свяжется с вами по указанному номеру телефона для индивидуального расчета стоимости.
-              </p>
-              <div className="bg-white rounded-lg p-4 mb-4">
-                <p className="text-sm text-gray-600">
-                  <strong>Ваш номер:</strong> {formData.phone}<br />
-                  <strong>Маршрут:</strong> {formData.fromCity} → {formData.toCity}<br />
-                  <strong>Тип перевозки:</strong> {formData.shipmentType === 'auto' ? 'Автомобильные' : 
-                    formData.shipmentType === 'railway' ? 'Железнодорожные' :
-                    formData.shipmentType === 'multimodal' ? 'Мультимодальные' : 'Проектные'}
-                </p>
-              </div>
-              <button
-                onClick={resetForm}
-                className="bg-velta-royal-blue text-white px-6 py-2 rounded-lg border-2 border-velta-royal-blue hover:bg-velta-navy hover:border-velta-navy focus:ring-2 focus:ring-velta-royal-blue focus:ring-offset-2 transition-all duration-200 shadow-lg"
-              >
-                Отправить новую заявку
-              </button>
-            </div>
-          )}
-        </div>
-
-        <div className="mt-8 text-center">
-          <p className="text-sm text-gray-600">
-            После отправки заявки наш менеджер свяжется с вами в течение 5 часов для индивидуального расчета стоимости
-          </p>
+    <div className="bg-white rounded-2xl shadow-xl p-8">
+      <div className="text-center mb-8">
+        <h3 className="text-2xl font-bold text-gray-900 mb-4">
+          Рассчитать стоимость доставки
+        </h3>
+        <p className="text-gray-600">
+          Заполните форму и получите точный расчет стоимости перевозки
+        </p>
+      </div>
+      
+      {/* Bitrix24 форма будет загружена здесь */}
+      <div id="b24form_inline_2_36mjlr" className="min-h-[400px]">
+        <div className="text-center py-8">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-velta-navy mx-auto mb-4"></div>
+          <p className="text-gray-600">Загрузка формы...</p>
         </div>
       </div>
-    </section>
+      
+      {/* Информация о времени ответа */}
+      <div className="mt-6 text-center text-sm text-gray-500">
+        После отправки заявки наш менеджер свяжется с вами в течение 5 часов
+      </div>
+    </div>
   );
 } 
