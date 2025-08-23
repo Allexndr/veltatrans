@@ -11,7 +11,7 @@ interface LogoProps {
 
 export default function Logo({href = '/', className = '', size = 'md'}: LogoProps) {
   // Use the new Velta Trans logo
-  const [src, setSrc] = useState('/images/logo-velta.svg');
+  const [src, setSrc] = useState('/images/logo-velta.png');
   
   // Увеличенные размеры для лучшего отображения
   const getDimensions = () => {
@@ -39,7 +39,7 @@ export default function Logo({href = '/', className = '', size = 'md'}: LogoProp
           height: `${height}px`,
           minHeight: `${height}px`
         }}
-        onError={() => setSrc('/images/logo-velta.png')}
+        onError={() => setSrc('/images/logo-velta.svg')}
       />
     </Link>
   );
