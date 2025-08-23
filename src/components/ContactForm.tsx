@@ -9,8 +9,11 @@ export default function ContactForm() {
   useEffect(() => {
     // Функция для загрузки скрипта Bitrix24
     const loadBitrixScript = () => {
+      console.log('Loading Bitrix24 script for ContactForm...');
+      
       // Проверяем, не загружен ли уже скрипт
       if (document.querySelector('script[data-b24-form="inline/2/36mjlr"]')) {
+        console.log('Script already loaded, skipping...');
         return;
       }
 
@@ -94,7 +97,7 @@ export default function ContactForm() {
               <div className="flex items-start space-x-4">
                 <div className="w-10 h-10 bg-velta-navy rounded-lg flex items-center justify-center flex-shrink-0">
                   <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 0 002 2z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                 </div>
                 <div>
