@@ -4,7 +4,7 @@ import {useState} from 'react';
 
 interface LogoProps {
   className?: string;
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'footer';
 }
 
 export default function Logo({className = '', size = 'md'}: LogoProps) {
@@ -18,6 +18,7 @@ export default function Logo({className = '', size = 'md'}: LogoProps) {
       case 'md': return { width: 180, height: 54 };
       case 'lg': return { width: 240, height: 72 };
       case 'xl': return { width: 320, height: 96 };
+      case 'footer': return { width: 400, height: 120 };
       default: return { width: 180, height: 54 };
     }
   };

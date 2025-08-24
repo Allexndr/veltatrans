@@ -15,7 +15,7 @@ export default function Footer() {
           {/* О компании */}
           <div className="col-span-1 md:col-span-2 lg:col-span-1">
             <div className="mb-6">
-              <Logo size="lg" className="filter brightness-0 invert" />
+              <Logo size="footer" className="filter brightness-0 invert" />
             </div>
             <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-6">
               {t('description')}
