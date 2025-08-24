@@ -15,7 +15,6 @@ export default function ServicesPreview({}: {locale: string}) {
       id: 1,
       title: 'Автоперевозки',
       description: 'Мы организуем международные автомобильные перевозки из Китая в Россию, Казахстан и Европу. Работаем как с комплектными грузами (FTL), так и со сборными (LTL). У нас собственная сеть проверенных перевозчиков и надежная система отслеживания.',
-      image: '/images/logistics/truck-velta-trans.jpg',
       icon: (
         <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <rect x="1" y="3" width="15" height="8" rx="2" strokeWidth={2} />
@@ -32,7 +31,6 @@ export default function ServicesPreview({}: {locale: string}) {
       id: 2,
       title: 'ЖД перевозки',
       description: 'Прямые контейнерные поезда из Китая в Россию и страны СНГ. Возможность отправки как полных контейнеров (FCL), так и сборных грузов (LCL). Оперативные сроки и конкурентные тарифы.',
-      image: '/images/logistics/railway-wagons.jpg',
       icon: (
         <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 18h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -49,7 +47,6 @@ export default function ServicesPreview({}: {locale: string}) {
       id: 3,
       title: 'Мультимодальные',
       description: 'Комбинация морского, автомобильного и железнодорожного транспорта. Оптимальное решение по цене и срокам доставки. Подбираем маршрут под задачу клиента.',
-      image: '/images/logistics/multimodal-transport.jpg',
       icon: (
         <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -62,7 +59,6 @@ export default function ServicesPreview({}: {locale: string}) {
       id: 4,
       title: 'Проектные перевозки',
       description: 'Доставка негабаритных и тяжеловесных грузов. Разработка маршрута, организация спецтехники и согласования. Опыт перевозки оборудования для строительства и энергетики.',
-      image: '/images/logistics/project-cargo.jpg',
       icon: (
         <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
@@ -111,15 +107,7 @@ export default function ServicesPreview({}: {locale: string}) {
                   </div>
                   
                   {/* Service Image */}
-                  {service.image && (
-                    <div className="mb-6 overflow-hidden rounded-xl">
-                      <img 
-                        src={service.image} 
-                        alt={service.title}
-                        className="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                    </div>
-                  )}
+                  {/* Removed image display */}
                   
                   {/* Title */}
                   <h3 className="text-xl lg:text-2xl font-bold text-gray-900 mb-4 group-hover:text-velta-600 transition-colors duration-300 min-h-[48px] lg:min-h-[64px] leading-tight">
