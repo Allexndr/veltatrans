@@ -2,26 +2,39 @@ import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
-const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8414818778:AAG2QXqDu0WKwsClyMt5CpbpLQBL3QLVWUE';
-const CHANNEL_ID = process.env.TELEGRAM_CHANNEL_ID || '-1002999769930';
-
-// Пути к файлам данных (в serverless среде используем /tmp)
-const dataDir = process.env.DATA_DIR || path.join('/tmp', 'velta-data');
+// Пути к файлам данных
+const dataDir = process.env.DATA_DIR || path.join(process.cwd(), 'data', 'velta-data');
 const ordersFile = path.join(dataDir, 'orders.json');
 const driversFile = path.join(dataDir, 'drivers.json');
 
+// Убеждаемся что папка data существует
+if (!fs.existsSync(dataDir)) {
+  fs.mkdirSync(dataDir, { recursive: true });
+}
+
+// Инициализируем файлы если их нет
+if (!fs.existsSync(ordersFile)) {
+  fs.writeFileSync(ordersFile, '[]');
+}
+
 interface Order {
   id: string;
+  trackingNumber: string; // WT123456
+  clientName: string;
   from: string;
   to: string;
   carType: string;
   description: string;
+  weight: number;
+  volume: number;
   createdAt: string;
-  status: 'active' | 'assigned' | 'completed';
-  bids: Bid[];
+  status: 'created' | 'assigned' | 'in_transit' | 'warehouse' | 'delivered' | 'delayed';
   assignedDriver?: number;
   finalPrice?: number;
-  trackingNumber?: string;
+  bids: Bid[];
+  route: RoutePoint[];
+  clientPhone: string;
+  clientEmail: string;
 }
 
 interface Bid {
@@ -30,286 +43,147 @@ interface Bid {
   driverPhone: string;
   carNumber: string;
   price: number;
+  location: string;
+  loadingDate: string;
   timestamp: string;
 }
 
-interface Driver {
-  id: number;
-  name: string;
-  phone: string;
-  carNumber: string;
-  carType: string;
-  registeredAt: string;
-  status: 'active' | 'inactive';
+interface RoutePoint {
+  lat: number;
+  lng: number;
+  location: string;
+  status: string;
+  description: string;
+  timestamp: string;
 }
 
-// Убеждаемся что папка data существует
-if (!fs.existsSync(dataDir)) {
-  fs.mkdirSync(dataDir, { recursive: true });
+// Генерация уникального номера ТТН
+function generateTrackingNumber(): string {
+  const prefix = 'WT';
+  const numbers = Math.floor(Math.random() * 900000) + 100000; // 6 цифр
+  return `${prefix}${numbers}`;
 }
 
-if (!fs.existsSync(ordersFile)) {
-  fs.writeFileSync(ordersFile, '{}');
-}
-
-if (!fs.existsSync(driversFile)) {
-  fs.writeFileSync(driversFile, '{}');
-}
-
-function loadOrders(): Record<string, Order> {
-  try {
-    return JSON.parse(fs.readFileSync(ordersFile, 'utf8'));
-  } catch (e) {
-    return {};
-  }
-}
-
-function saveOrders(orders: Record<string, Order>) {
-  fs.writeFileSync(ordersFile, JSON.stringify(orders, null, 2));
-}
-
-// Генерация номера заказа в формате: WTID_водителя-номер_заказа
-function generateTrackingNumber(driverId: number, orderId: string): string {
-  return `WT${driverId}-${orderId}`;
-}
-
-function loadDrivers(): Record<string, Driver> {
-  try {
-    return JSON.parse(fs.readFileSync(driversFile, 'utf8'));
-  } catch (e) {
-    return {};
-  }
-}
-
-async function sendTelegramMessage(chatId: string | number, text: string, replyMarkup?: object) {
-  try {
-    const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: text,
-        parse_mode: 'HTML',
-        reply_markup: replyMarkup,
-      }),
-    });
-
-    return await response.json();
-  } catch (error) {
-    console.error('Error sending Telegram message:', error);
-    return { ok: false, error: error };
-  }
-}
-
-// Рассылка заказа водителям
-async function broadcastOrderToDrivers(orderId: string, order: Order) {
-  const drivers = loadDrivers();
-  let sentCount = 0;
-  
-  for (const driver of Object.values(drivers)) {
-    // Фильтруем по типу ТС
-    if (driver.carType.toLowerCase().includes(order.carType.toLowerCase()) || 
-        order.carType.toLowerCase().includes(driver.carType.toLowerCase())) {
-      
-      const orderText = `🚛 <b>Новый заказ!</b>
-
-<b>Маршрут:</b> ${order.from} → ${order.to}
-<b>Тип ТС:</b> ${order.carType}
-<b>Описание:</b> ${order.description}
-
-Хотите взять этот заказ?`;
-
-      const keyboard = {
-        inline_keyboard: [
-          [{ text: '💰 Предложить цену', callback_data: `bid_${orderId}` }],
-          [{ text: '❌ Пропустить', callback_data: 'skip' }]
-        ]
-      };
-
-      await sendTelegramMessage(driver.id, orderText, keyboard);
-      sentCount++;
-    }
-  }
-  
-  // Уведомляем в канал о рассылке
-  await sendTelegramMessage(CHANNEL_ID, `📢 <b>Заказ ${orderId} разослан!</b>
-
-<b>Маршрут:</b> ${order.from} → ${order.to}
-<b>Тип ТС:</b> ${order.carType}
-<b>Разослано водителям:</b> ${sentCount}
-
-Ожидаем предложения цен...`);
-}
-
-// GET - получить список заказов
+// GET - получение заказов
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const status = searchParams.get('status');
-    const trackingNumber = searchParams.get('tracking');
+    const tracking = searchParams.get('tracking');
+    const clientBin = searchParams.get('clientBin');
     
-    const orders = loadOrders();
-    
-    // Поиск по номеру отслеживания
-    if (trackingNumber) {
-      const order = Object.values(orders).find(o => o.trackingNumber === trackingNumber);
-      if (order) {
-        return NextResponse.json({
-          success: true,
-          order: {
-            id: order.id,
-            from: order.from,
-            to: order.to,
-            status: order.status,
-            trackingNumber: order.trackingNumber,
-            createdAt: order.createdAt,
-            assignedDriver: order.assignedDriver,
-            finalPrice: order.finalPrice
-          }
-        });
-      } else {
-        return NextResponse.json({
-          success: false,
-          message: 'Заказ не найден'
-        }, { status: 404 });
-      }
+    if (!fs.existsSync(ordersFile)) {
+      return NextResponse.json({ error: 'Orders file not found' }, { status: 404 });
     }
     
-    // Фильтрация по статусу
-    let filteredOrders = Object.values(orders);
-    if (status) {
-      filteredOrders = filteredOrders.filter(order => order.status === status);
+    const ordersData = fs.readFileSync(ordersFile, 'utf8');
+    let orders: Order[] = JSON.parse(ordersData);
+    
+    // Фильтрация по параметрам
+    if (tracking) {
+      orders = orders.filter(order => order.trackingNumber === tracking);
     }
     
-    return NextResponse.json({
-      success: true,
-      orders: filteredOrders.map(order => ({
-        id: order.id,
-        from: order.from,
-        to: order.to,
-        carType: order.carType,
-        description: order.description,
-        status: order.status,
-        createdAt: order.createdAt,
-        bidsCount: order.bids.length,
-        trackingNumber: order.trackingNumber,
-        finalPrice: order.finalPrice
-      }))
-    });
+    if (clientBin) {
+      // Здесь можно добавить фильтрацию по БИН клиента
+      // Пока возвращаем все заказы
+    }
+    
+    return NextResponse.json(orders);
   } catch (error) {
-    console.error('Error getting orders:', error);
-    return NextResponse.json({
-      success: false,
-      message: 'Ошибка сервера'
-    }, { status: 500 });
+    console.error('Error reading orders:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 
-// POST - создать новый заказ
+// POST - создание нового заказа
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { from, to, carType, description, source } = body;
-    
-    // Валидация
-    if (!from || !to || !carType || !description) {
-      return NextResponse.json({
-        success: false,
-        message: 'Все поля обязательны для заполнения'
-      }, { status: 400 });
-    }
-    
-    // Создаем заказ
-    const orderId = Date.now().toString();
-    const orders = loadOrders();
     
     const newOrder: Order = {
-      id: orderId,
-      from,
-      to,
-      carType,
-      description,
+      id: Date.now().toString(),
+      trackingNumber: generateTrackingNumber(),
+      clientName: body.clientName || '',
+      from: body.from || '',
+      to: body.to || '',
+      carType: body.carType || 'tent',
+      description: body.description || '',
+      weight: body.weight || 0,
+      volume: body.volume || 0,
       createdAt: new Date().toISOString(),
-      status: 'active',
-      bids: []
+      status: 'created',
+      bids: [],
+      route: [],
+      clientPhone: body.clientPhone || '',
+      clientEmail: body.clientEmail || ''
     };
     
-    orders[orderId] = newOrder;
-    saveOrders(orders);
+    // Читаем существующие заказы
+    let orders: Order[] = [];
+    if (fs.existsSync(ordersFile)) {
+      const ordersData = fs.readFileSync(ordersFile, 'utf8');
+      orders = JSON.parse(ordersData);
+    }
     
-    // Отправляем заказ водителям
-    await broadcastOrderToDrivers(orderId, newOrder);
+    // Добавляем новый заказ
+    orders.push(newOrder);
     
-    // Уведомляем в канал о новом заказе
-    const sourceText = source === 'calculator' ? '(из калькулятора сайта)' : '(из формы сайта)';
-    await sendTelegramMessage(CHANNEL_ID, `📦 <b>Новый заказ с сайта!</b> ${sourceText}
-
-<b>ID заказа:</b> ${orderId}
-<b>Маршрут:</b> ${from} → ${to}
-<b>Тип ТС:</b> ${carType}
-<b>Описание:</b> ${description}
-
-Заказ автоматически разослан подходящим водителям.`);
+    // Сохраняем обновленный список
+    fs.writeFileSync(ordersFile, JSON.stringify(orders, null, 2));
     
-    return NextResponse.json({
-      success: true,
-      message: 'Заказ создан и отправлен водителям',
-      orderId: orderId
-    });
+    // Отправляем уведомление в Telegram канал
+    try {
+      await fetch('/api/telegram/notify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'new_order',
+          data: newOrder
+        })
+      });
+    } catch (telegramError) {
+      console.error('Telegram notification error:', telegramError);
+    }
+    
+    return NextResponse.json(newOrder, { status: 201 });
   } catch (error) {
     console.error('Error creating order:', error);
-    return NextResponse.json({
-      success: false,
-      message: 'Ошибка при создании заказа'
-    }, { status: 500 });
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 
-// PUT - обновить заказ
+// PUT - обновление заказа
 export async function PUT(request: NextRequest) {
   try {
     const body = await request.json();
-    const { orderId, status, trackingNumber } = body;
+    const { orderId, ...updates } = body;
     
     if (!orderId) {
-      return NextResponse.json({
-        success: false,
-        message: 'ID заказа обязателен'
-      }, { status: 400 });
+      return NextResponse.json({ error: 'Order ID is required' }, { status: 400 });
     }
     
-    const orders = loadOrders();
+    if (!fs.existsSync(ordersFile)) {
+      return NextResponse.json({ error: 'Orders file not found' }, { status: 404 });
+    }
     
-    if (!orders[orderId]) {
-      return NextResponse.json({
-        success: false,
-        message: 'Заказ не найден'
-      }, { status: 404 });
+    const ordersData = fs.readFileSync(ordersFile, 'utf8');
+    let orders: Order[] = JSON.parse(ordersData);
+    
+    const orderIndex = orders.findIndex(order => order.id === orderId);
+    if (orderIndex === -1) {
+      return NextResponse.json({ error: 'Order not found' }, { status: 404 });
     }
     
     // Обновляем заказ
-    if (status) {
-      orders[orderId].status = status;
-    }
+    orders[orderIndex] = { ...orders[orderIndex], ...updates };
     
-    if (trackingNumber) {
-      orders[orderId].trackingNumber = trackingNumber;
-    }
+    // Сохраняем обновленный список
+    fs.writeFileSync(ordersFile, JSON.stringify(orders, null, 2));
     
-    saveOrders(orders);
-    
-    return NextResponse.json({
-      success: true,
-      message: 'Заказ обновлен'
-    });
+    return NextResponse.json(orders[orderIndex]);
   } catch (error) {
     console.error('Error updating order:', error);
-    return NextResponse.json({
-      success: false,
-      message: 'Ошибка при обновлении заказа'
-    }, { status: 500 });
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 

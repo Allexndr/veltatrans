@@ -7,7 +7,7 @@ const CHANNEL_ID = process.env.TELEGRAM_CHANNEL_ID || '-1002999769930';
 const ADMIN_ID = '5450018125'; // ID админа
 
 // Пути к файлам данных (в serverless среде пишем в /tmp)
-const dataDir = process.env.DATA_DIR || path.join('/tmp', 'velta-data');
+const dataDir = process.env.DATA_DIR || path.join(process.cwd(), 'data', 'velta-data');
 const driversFile = path.join(dataDir, 'drivers.json');
 const ordersFile = path.join(dataDir, 'orders.json');
 const userStatesFile = path.join(dataDir, 'user_states.json');
@@ -119,6 +119,8 @@ interface UserState {
   tempDriverPhone?: string;
   tempDriverCarNumber?: string;
   editingDriverId?: number;
+  orderNumberForStatus?: string;
+  driverId?: number;
 }
 
 function normalizePhone(raw: string): string | null {
@@ -134,6 +136,19 @@ function normalizePhone(raw: string): string | null {
   if (digits.length < 10 || digits.length > 15) {
     console.log('📱 Неправильная длина:', digits.length);
     return null;
+  }
+  
+  // В Казахстане 870 и 770 - это один код страны
+  if (digits.startsWith('870')) {
+    // Заменяем 870 на 770 для единообразия
+    const result = '+770' + digits.slice(3);
+    console.log('📱 Нормализован (870→770):', result);
+    return result;
+  } else if (digits.startsWith('770')) {
+    // Заменяем 770 на 870 для единообразия
+    const result = '+870' + digits.slice(3);
+    console.log('📱 Нормализован (770→870):', result);
+    return result;
   }
   
   // Если номер начинается с 8 или 9, добавляем +
@@ -270,13 +285,32 @@ async function sendDriversMenu(chatId: number) {
 async function sendDriverMenu(chatId: number) {
   const keyboard = {
     inline_keyboard: [
-      [{ text: '📋 Смотреть заказы', callback_data: 'view_orders' }],
+      [{ text: '📋 Активные заказы', callback_data: 'view_active_orders' }],
+      [{ text: '📚 Закрытые заказы', callback_data: 'view_closed_orders' }],
+      [{ text: '🚛 Доступные заказы', callback_data: 'view_available_orders' }],
+      [{ text: '📍 Обновить статус', callback_data: 'update_order_status' }],
       [{ text: '👤 Мой профиль', callback_data: 'driver_profile' }],
       [{ text: '🔐 Выйти из системы', callback_data: 'driver_logout' }],
       [{ text: '⬅️ Назад', callback_data: 'back_main' }]
     ]
   };
   await sendTelegramMessage(chatId, '🚛 <b>Меню водителя</b>\n\nВыберите действие:', keyboard);
+}
+
+async function sendOrderStatusUpdateMenu(chatId: number, userId: number, userStates: Record<string, UserState>) {
+  const userState = userStates[userId] || {};
+  userState.step = 'select_order_for_status';
+  userStates[userId] = userState;
+  saveUserStates(userStates);
+  
+  const keyboard = {
+    inline_keyboard: [
+      [{ text: '📝 Ввести номер заказа вручную', callback_data: 'manual_order_number' }],
+      [{ text: '⬅️ Назад', callback_data: 'back_driver_menu' }]
+    ]
+  };
+  
+  await sendTelegramMessage(chatId, '📍 <b>Обновление статуса заказа</b>\n\nВыберите способ указания заказа:', keyboard);
 }
 
 async function sendClientsMenu(chatId: number) {
@@ -644,6 +678,73 @@ Email: info@velta-logistics.com
       else if (userState.adminStep) {
         await handleAdminStep(userId, chatId, text, userState, userStates);
       }
+      
+      // Обработка обновления статуса заказа
+      else if (userState.step === 'enter_order_number') {
+        // Пользователь ввел номер заказа
+        const orderNumber = text.trim();
+        userState.orderNumberForStatus = orderNumber;
+        userState.step = 'enter_order_status';
+        userStates[userId] = userState;
+        saveUserStates(userStates);
+        
+        const keyboard = {
+          inline_keyboard: [
+            [{ text: '🚛 В пути', callback_data: 'status_in_transit' }],
+            [{ text: '📦 На складе', callback_data: 'status_warehouse' }],
+            [{ text: '✅ Доставлен', callback_data: 'status_delivered' }],
+            [{ text: '⚠️ Задержка', callback_data: 'status_delayed' }],
+            [{ text: '📝 Кастомный статус', callback_data: 'status_custom' }],
+            [{ text: '⬅️ Назад', callback_data: 'back_driver_menu' }]
+          ]
+        };
+        
+        await sendTelegramMessage(chatId, `📝 <b>Обновление статуса заказа</b>\n\nЗаказ: <code>${orderNumber}</code>\n\nВыберите новый статус:`, keyboard);
+      }
+      
+      // Обработка ввода кастомного статуса
+      else if (userState.step === 'enter_custom_status') {
+        const customStatus = text.trim();
+        if (customStatus.length < 3) {
+          await sendTelegramMessage(chatId, '❌ Статус должен содержать минимум 3 символа. Попробуйте еще раз:');
+          return;
+        }
+        
+        // Обновляем статус заказа через API
+        try {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/driver/location`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              driverId: userState.driverId,
+              orderId: userState.orderNumberForStatus,
+              lat: 0, // Водитель может указать координаты позже
+              lng: 0,
+              location: 'Обновлено через Telegram',
+              status: customStatus,
+              description: `Статус обновлен водителем: ${customStatus}`,
+              timestamp: new Date().toISOString()
+            })
+          });
+          
+          if (response.ok) {
+            await sendTelegramMessage(chatId, `✅ Статус заказа <code>${userState.orderNumberForStatus}</code> успешно обновлен на: <b>${customStatus}</b>`);
+          } else {
+            await sendTelegramMessage(chatId, '❌ Ошибка при обновлении статуса. Проверьте номер заказа и попробуйте еще раз.');
+          }
+        } catch (error) {
+          await sendTelegramMessage(chatId, '❌ Ошибка соединения с сервером. Попробуйте позже.');
+        }
+        
+        // Очищаем состояние
+        delete userState.step;
+        delete userState.orderNumberForStatus;
+        delete userState.driverId;
+        userStates[userId] = userState;
+        saveUserStates(userStates);
+        
+        await sendDriverMenu(chatId);
+      }
     }
     
     // Обработка callback query
@@ -736,6 +837,126 @@ Email: info@velta-logistics.com
         } else {
           await sendTelegramMessage(chatId, '❌ Сначала войдите в систему как водитель.');
           await sendDriversMenu(chatId);
+        }
+      } else if (data === 'view_active_orders') {
+        await answerCallbackQuery(callbackQueryId);
+        const userStates = loadUserStates();
+        const userState = userStates[userId] || {};
+        if (userState.driverAuthed && userState.driverData) {
+          // Получаем ID водителя из базы по телефону
+          const driverPhone = userState.driverData.Телефон;
+          const drivers = loadDrivers();
+          const driver = Object.values(drivers).find(d => d.phone === driverPhone);
+          
+          if (driver) {
+            await showDriverActiveOrders(chatId, driver.id);
+          } else {
+            await sendTelegramMessage(chatId, '❌ Ошибка: водитель не найден в базе.');
+            await sendDriverMenu(chatId);
+          }
+        } else {
+          await sendTelegramMessage(chatId, '❌ Сначала войдите в систему как водитель.');
+          await sendDriversMenu(chatId);
+        }
+      } else if (data === 'view_closed_orders') {
+        await answerCallbackQuery(callbackQueryId);
+        const userStates = loadUserStates();
+        const userState = userStates[userId] || {};
+        if (userState.driverAuthed && userState.driverData) {
+          // Получаем ID водителя из базы по телефону
+          const driverPhone = userState.driverData.Телефон;
+          const drivers = loadDrivers();
+          const driver = Object.values(drivers).find(d => d.phone === driverPhone);
+          
+          if (driver) {
+            await showDriverClosedOrders(chatId, driver.id);
+          } else {
+            await sendTelegramMessage(chatId, '❌ Ошибка: водитель не найден в базе.');
+            await sendDriverMenu(chatId);
+          }
+        } else {
+          await sendTelegramMessage(chatId, '❌ Сначала войдите в систему как водитель.');
+          await sendDriversMenu(chatId);
+        }
+      } else if (data === 'view_available_orders') {
+        await answerCallbackQuery(callbackQueryId);
+        await showAvailableOrders(chatId);
+      } else if (data === 'refresh_available_orders') {
+        await answerCallbackQuery(callbackQueryId);
+        await showAvailableOrders(chatId);
+      } else if (data === 'update_order_status') {
+        await answerCallbackQuery(callbackQueryId);
+        const userStates = loadUserStates();
+        const userState = userStates[userId] || {};
+        if (userState.driverAuthed) {
+          await sendOrderStatusUpdateMenu(chatId, userId, userStates);
+        } else {
+          await sendTelegramMessage(chatId, '❌ Сначала войдите в систему как водитель.');
+          await sendDriversMenu(chatId);
+        }
+      } else if (data === 'manual_order_number') {
+        await answerCallbackQuery(callbackQueryId);
+        const userStates = loadUserStates();
+        const userState = userStates[userId] || {};
+        userState.step = 'enter_order_number';
+        userStates[userId] = userState;
+        saveUserStates(userStates);
+        await sendTelegramMessage(chatId, '📝 Введите номер заказа для обновления статуса:');
+      } else if (data.startsWith('status_')) {
+        await answerCallbackQuery(callbackQueryId);
+        const userStates = loadUserStates();
+        const userState = userStates[userId] || {};
+        const statusType = data.split('_')[1];
+        
+        if (statusType === 'custom') {
+          userState.step = 'enter_custom_status';
+          userStates[userId] = userState;
+          saveUserStates(userStates);
+          await sendTelegramMessage(chatId, '📝 Введите свой кастомный статус заказа:');
+        } else {
+          // Обновляем статус заказа через API
+          const statusMap: Record<string, string> = {
+            'in_transit': 'В пути',
+            'warehouse': 'На складе',
+            'delivered': 'Доставлен',
+            'delayed': 'Задержка'
+          };
+          
+          const newStatus = statusMap[statusType] || statusType;
+          
+          try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/driver/location`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                driverId: userState.driverId || 1, // Временно используем ID 1
+                orderId: userState.orderNumberForStatus,
+                lat: 0,
+                lng: 0,
+                location: 'Обновлено через Telegram',
+                status: newStatus,
+                description: `Статус обновлен водителем: ${newStatus}`,
+                timestamp: new Date().toISOString()
+              })
+            });
+            
+            if (response.ok) {
+              await sendTelegramMessage(chatId, `✅ Статус заказа <code>${userState.orderNumberForStatus}</code> успешно обновлен на: <b>${newStatus}</b>`);
+            } else {
+              await sendTelegramMessage(chatId, '❌ Ошибка при обновлении статуса. Проверьте номер заказа и попробуйте еще раз.');
+            }
+          } catch (error) {
+            await sendTelegramMessage(chatId, '❌ Ошибка соединения с сервером. Попробуйте позже.');
+          }
+          
+          // Очищаем состояние
+          delete userState.step;
+          delete userState.orderNumberForStatus;
+          delete userState.driverId;
+          userStates[userId] = userState;
+          saveUserStates(userStates);
+          
+          await sendDriverMenu(chatId);
         }
       } else if (data === 'driver_profile') {
         await answerCallbackQuery(callbackQueryId);
@@ -1187,6 +1408,8 @@ async function listActiveOrders(chatId: number, userId?: number) {
   }
 }
 
+
+
 export async function GET() {
   return NextResponse.json({ 
     status: 'Telegram bot webhook is running',
@@ -1221,46 +1444,85 @@ function readDriversFromJson(): Array<{ id: number; name: string; phone: string;
   }
 }
 
-function findDriverInJsonByPhone(phoneRaw: string) {
+// Функция для поиска водителя по номеру телефона
+function findDriverInJsonByPhone(phone: string): any {
   try {
-    console.log('🔍 Ищу водителя по телефону:', phoneRaw);
-    const phoneNorm = normalizePhone(phoneRaw) || phoneRaw.trim();
-    console.log('📱 Нормализованный телефон:', phoneNorm);
+    console.log(`📱 Нормализация телефона: ${phone}`);
     
-    const drivers = readDriversFromJson();
-    console.log('📋 Всего водителей в базе:', drivers.length);
+    // Убираем все символы кроме цифр
+    const digitsOnly = phone.replace(/[^\d]/g, '');
+    console.log(`📱 Только цифры: ${digitsOnly}`);
     
-    // Ищем водителя по нормализованному номеру
-    const found = drivers.find(driver => {
-      const driverPhone = normalizePhone(driver.phone) || driver.phone;
-      console.log(`🔍 Проверяю: ${driver.name} - ${driver.phone} (${driverPhone})`);
-      
-      // Сравниваем нормализованные номера
-      if (driverPhone === phoneNorm) {
-        return true;
+    // В Казахстане 870 и 770 - это один код страны
+    let normalizedPhone = phone;
+    if (digitsOnly.startsWith('870')) {
+      // Заменяем 870 на 770 для единообразия
+      normalizedPhone = `+770${digitsOnly.slice(3)}`;
+    } else if (digitsOnly.startsWith('770')) {
+      // Заменяем 770 на 870 для единообразия
+      normalizedPhone = `+870${digitsOnly.slice(3)}`;
+    } else {
+      // Для остальных номеров добавляем + если его нет
+      if (!phone.startsWith('+')) {
+        normalizedPhone = `+${digitsOnly}`;
       }
-      
-      // Также проверяем без + в начале
-      if (driverPhone.startsWith('+') && driverPhone.slice(1) === phoneNorm.slice(1)) {
-        return true;
+    }
+    
+    console.log(`📱 Нормализован: ${normalizedPhone}`);
+    
+    // Ищем водителя по оригинальному номеру
+    const driver = readDriversFromJson().find(d => d.phone === normalizedPhone);
+    if (driver) {
+      console.log(`✅ Водитель найден: ${driver.name}`);
+      return driver;
+    }
+    
+    // Ищем по вариантам номеров (если есть)
+    const driverByVariants = readDriversFromJson().find(d => {
+      if (d.phoneVariants && Array.isArray(d.phoneVariants)) {
+        return d.phoneVariants.includes(normalizedPhone);
       }
-      
-      if (phoneNorm.startsWith('+') && phoneNorm.slice(1) === driverPhone.slice(1)) {
-        return true;
-      }
-      
       return false;
     });
     
-    if (found) {
-      console.log('✅ Водитель найден:', found.name);
-    } else {
-      console.log('❌ Водитель не найден');
+    if (driverByVariants) {
+      console.log(`✅ Водитель найден по вариантам: ${driverByVariants.name}`);
+      return driverByVariants;
     }
     
-    return found;
+    // Ищем по точному совпадению цифр
+    const driverByDigits = readDriversFromJson().find(d => {
+      const driverDigits = d.phone.replace(/[^\d]/g, '');
+      return driverDigits === digitsOnly;
+    });
+    
+    if (driverByDigits) {
+      console.log(`✅ Водитель найден по цифрам: ${driverByDigits.name}`);
+      return driverByDigits;
+    }
+    
+    // Ищем по номеру с заменой 870/770
+    if (digitsOnly.startsWith('870')) {
+      const searchPhone = `+770${digitsOnly.slice(3)}`;
+      const driverBy870 = readDriversFromJson().find(d => d.phone === searchPhone);
+      if (driverBy870) {
+        console.log(`✅ Водитель найден по 870→770: ${driverBy870.name}`);
+        return driverBy870;
+      }
+    } else if (digitsOnly.startsWith('770')) {
+      const searchPhone = `+870${digitsOnly.slice(3)}`;
+      const driverBy770 = readDriversFromJson().find(d => d.phone === searchPhone);
+      if (driverBy770) {
+        console.log(`✅ Водитель найден по 770→870: ${driverBy770.name}`);
+        return driverBy770;
+      }
+    }
+    
+    console.log('❌ Водитель не найден');
+    return null;
+    
   } catch (error) {
-    console.error('❌ Ошибка поиска водителя:', error);
+    console.error('Ошибка при поиске водителя:', error);
     return null;
   }
 }
@@ -1628,5 +1890,132 @@ async function handleAdminStep(userId: number, chatId: number, text: string, use
     } else {
       await sendTelegramMessage(chatId, '❌ Неверный формат. Используйте формат: Имя;Телефон;Номер авто;Тип ТС');
     }
+  }
+}
+
+// Функция для показа активных заказов водителя
+async function showDriverActiveOrders(chatId: number, driverId: number) {
+  try {
+    const orders = loadOrders();
+    const driverOrders = Object.values(orders).filter(order => 
+      order.driverId === driverId && 
+      ['assigned', 'in_transit', 'warehouse', 'delayed'].includes(order.status)
+    );
+
+    if (driverOrders.length === 0) {
+      await sendTelegramMessage(chatId, '📋 <b>Активные заказы</b>\n\nУ вас нет активных заказов в данный момент.');
+      return;
+    }
+
+    let message = `📋 <b>Активные заказы</b>\n\nУ вас ${driverOrders.length} активных заказов:\n\n`;
+    
+    driverOrders.forEach((order, index) => {
+      const statusText = getStatusText(order.status);
+      const statusIcon = getStatusIcon(order.status);
+      
+      message += `${index + 1}. <b>${order.trackingNumber}</b>\n`;
+      message += `   📍 ${order.route.from} → ${order.route.to}\n`;
+      message += `   📦 ${order.description}\n`;
+      message += `   ⚖️ ${order.weight} кг, ${order.volume} м³\n`;
+      message += `   💰 ${order.price} ${order.currency}\n`;
+      message += `   ${statusIcon} ${statusText}\n`;
+      message += `   📅 Срок: ${new Date(order.deadline).toLocaleDateString('ru-RU')}\n\n`;
+    });
+
+    const keyboard = {
+      inline_keyboard: [
+        [{ text: '📍 Обновить статус', callback_data: 'update_order_status' }],
+        [{ text: '⬅️ Назад', callback_data: 'back_driver_menu' }]
+      ]
+    };
+
+    await sendTelegramMessage(chatId, message, keyboard);
+  } catch (error) {
+    console.error('Ошибка при показе активных заказов:', error);
+    await sendTelegramMessage(chatId, '❌ Ошибка при загрузке заказов. Попробуйте позже.');
+  }
+}
+
+// Функция для показа закрытых заказов водителя
+async function showDriverClosedOrders(chatId: number, driverId: number) {
+  try {
+    const orders = loadOrders();
+    const driverOrders = Object.values(orders).filter(order => 
+      order.driverId === driverId && 
+      ['delivered', 'cancelled'].includes(order.status)
+    );
+
+    if (driverOrders.length === 0) {
+      await sendTelegramMessage(chatId, '📚 <b>Закрытые заказы</b>\n\nУ вас нет завершенных заказов.');
+      return;
+    }
+
+    let message = `📚 <b>Закрытые заказы</b>\n\nУ вас ${driverOrders.length} завершенных заказов:\n\n`;
+    
+    driverOrders.forEach((order, index) => {
+      const statusText = getStatusText(order.status);
+      const statusIcon = getStatusIcon(order.status);
+      const completionDate = order.routePoints && order.routePoints.length > 0 
+        ? new Date(order.routePoints[order.routePoints.length - 1].timestamp).toLocaleDateString('ru-RU')
+        : 'Не указана';
+      
+      message += `${index + 1}. <b>${order.trackingNumber}</b>\n`;
+      message += `   📍 ${order.route.from} → ${order.route.to}\n`;
+      message += `   📦 ${order.description}\n`;
+      message += `   💰 ${order.price} ${order.currency}\n`;
+      message += `   ${statusIcon} ${statusText}\n`;
+      message += `   ✅ Завершен: ${completionDate}\n\n`;
+    });
+
+    const keyboard = {
+      inline_keyboard: [
+        [{ text: '📋 Активные заказы', callback_data: 'view_active_orders' }],
+        [{ text: '⬅️ Назад', callback_data: 'back_driver_menu' }]
+      ]
+    };
+
+    await sendTelegramMessage(chatId, message, keyboard);
+  } catch (error) {
+    console.error('Ошибка при показе закрытых заказов:', error);
+    await sendTelegramMessage(chatId, '❌ Ошибка при загрузке заказов. Попробуйте позже.');
+  }
+}
+
+// Функция для показа доступных заказов (для всех водителей)
+async function showAvailableOrders(chatId: number) {
+  try {
+    const orders = loadOrders();
+    const availableOrders = Object.values(orders).filter(order => 
+      order.status === 'new' && !order.driverId
+    );
+
+    if (availableOrders.length === 0) {
+      await sendTelegramMessage(chatId, '📋 <b>Доступные заказы</b>\n\nВ данный момент нет доступных заказов.');
+      return;
+    }
+
+    let message = `📋 <b>Доступные заказы</b>\n\nДоступно ${availableOrders.length} заказов:\n\n`;
+    
+    availableOrders.forEach((order, index) => {
+      message += `${index + 1}. <b>${order.trackingNumber}</b>\n`;
+      message += `   📍 ${order.route.from} → ${order.route.to}\n`;
+      message += `   📦 ${order.description}\n`;
+      message += `   ⚖️ ${order.weight} кг, ${order.volume} м³\n`;
+      message += `   💰 ${order.price} ${order.currency}\n`;
+      message += `   📅 Срок: ${new Date(order.deadline).toLocaleDateString('ru-RU')}\n`;
+      message += `   🚛 <a href="bid_${order.id}">Подать заявку</a>\n\n`;
+    });
+
+    const keyboard = {
+      inline_keyboard: [
+        [{ text: '🔄 Обновить список', callback_data: 'refresh_available_orders' }],
+        [{ text: '⬅️ Назад', callback_data: 'back_driver_menu' }]
+      ]
+    };
+
+    await sendTelegramMessage(chatId, message, keyboard);
+  } catch (error) {
+    console.error('Ошибка при показе доступных заказов:', error);
+    await sendTelegramMessage(chatId, '❌ Ошибка при загрузке заказов. Попробуйте позже.');
   }
 }

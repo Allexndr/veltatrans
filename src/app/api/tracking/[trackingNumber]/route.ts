@@ -1,196 +1,151 @@
 import { NextRequest, NextResponse } from 'next/server';
+import fs from 'fs';
+import path from 'path';
 
-interface TrackingPoint {
+// Пути к файлам данных
+const dataDir = process.env.DATA_DIR || path.join(process.cwd(), 'data', 'velta-data');
+const ordersFile = path.join(dataDir, 'orders.json');
+
+interface Order {
+  id: string;
+  trackingNumber: string;
+  clientName: string;
+  from: string;
+  to: string;
+  carType: string;
+  description: string;
+  weight: number;
+  volume: number;
+  createdAt: string;
+  status: 'created' | 'assigned' | 'in_transit' | 'warehouse' | 'delivered' | 'delayed';
+  assignedDriver?: number;
+  finalPrice?: number;
+  bids: any[];
+  route: RoutePoint[];
+  clientPhone: string;
+  clientEmail: string;
+}
+
+interface RoutePoint {
   lat: number;
   lng: number;
-  timestamp: string;
   location: string;
   status: string;
   description: string;
+  timestamp: string;
 }
 
-interface TrackingResponse {
-  trackingNumber: string;
-  status: string;
-  statusText: string;
-  estimatedDelivery: string;
-  currentLocation: {
-    lat: number;
-    lng: number;
-    address: string;
-  };
-  route: TrackingPoint[];
-  lastUpdate: string;
-}
-
-// Mock tracking data for demonstration
-const mockTrackingData: Record<string, TrackingResponse> = {
-  'VT123456': {
-    trackingNumber: 'VT123456',
-    status: 'in_transit',
-    statusText: 'В пути',
-    estimatedDelivery: '2024-02-15',
-    currentLocation: {
-      lat: 55.7558,
-      lng: 37.6176,
-      address: 'Москва, Россия'
-    },
-    route: [
-      {
-        lat: 59.9311,
-        lng: 30.3609,
-        timestamp: '2024-02-11T10:30:00Z',
-        location: 'Санкт-Петербург',
-        status: 'pending',
-        description: 'Груз принят к перевозке'
-      },
-      {
-        lat: 59.9311,
-        lng: 30.3609,
-        timestamp: '2024-02-12T12:20:00Z',
-        location: 'Санкт-Петербург',
-        status: 'in_transit',
-        description: 'Груз отправлен из Санкт-Петербурга'
-      },
-      {
-        lat: 57.8431,
-        lng: 34.0969,
-        timestamp: '2024-02-13T16:45:00Z',
-        location: 'Тверь',
-        status: 'in_transit',
-        description: 'Груз проследовал через Тверь'
-      },
-      {
-        lat: 55.7558,
-        lng: 37.6176,
-        timestamp: '2024-02-14T08:15:00Z',
-        location: 'Москва',
-        status: 'warehouse',
-        description: 'Груз прибыл на склад назначения'
-      }
-    ],
-    lastUpdate: '2024-02-14T08:15:00Z'
-  },
-  'VT789012': {
-    trackingNumber: 'VT789012',
-    status: 'delivered',
-    statusText: 'Доставлен',
-    estimatedDelivery: '2024-02-10',
-    currentLocation: {
-      lat: 43.2381,
-      lng: 76.9452,
-      address: 'Алматы, Казахстан'
-    },
-    route: [
-      {
-        lat: 39.9042,
-        lng: 116.4074,
-        timestamp: '2024-02-05T09:00:00Z',
-        location: 'Пекин, Китай',
-        status: 'pending',
-        description: 'Груз принят к перевозке'
-      },
-      {
-        lat: 43.8256,
-        lng: 87.6168,
-        timestamp: '2024-02-07T14:30:00Z',
-        location: 'Урумчи, Китай',
-        status: 'in_transit',
-        description: 'Груз на таможенном терминале'
-      },
-      {
-        lat: 43.2381,
-        lng: 76.9452,
-        timestamp: '2024-02-10T11:20:00Z',
-        location: 'Алматы, Казахстан',
-        status: 'delivered',
-        description: 'Груз доставлен получателю'
-      }
-    ],
-    lastUpdate: '2024-02-10T11:20:00Z'
-  }
-};
-
+// GET - получение информации о грузе по номеру ТТН
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ trackingNumber: string }> }
 ) {
-  const { trackingNumber } = await params;
-
-  // Simulate API delay
-  await new Promise(resolve => setTimeout(resolve, 500));
-
-  // Сначала пытаемся найти реальный заказ
   try {
-    const orderResponse = await fetch(`${request.nextUrl.origin}/api/orders?tracking=${trackingNumber}`);
-    if (orderResponse.ok) {
-      const orderData = await orderResponse.json();
-      if (orderData.success && orderData.order) {
-        const order = orderData.order;
-        
-        // Возвращаем данные реального заказа в формате TrackingResponse
-        const realTrackingData: TrackingResponse = {
-          trackingNumber: order.trackingNumber,
-          status: order.status === 'assigned' ? 'in_transit' : 
-                 order.status === 'completed' ? 'delivered' : 'pending',
-          statusText: order.status === 'assigned' ? 'В пути' : 
-                     order.status === 'completed' ? 'Доставлен' : 'Обрабатывается',
-          estimatedDelivery: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-          currentLocation: {
-            lat: 51.1694 + Math.random() * 0.1,
-            lng: 71.4491 + Math.random() * 0.1,
-            address: order.status === 'assigned' ? `В пути из ${order.from}` : order.from
-          },
-          route: [
-            {
-              lat: 51.1694,
-              lng: 71.4491,
-              timestamp: order.createdAt,
-              location: order.from,
-              status: 'pending',
-              description: 'Заказ создан и принят в обработку'
-            },
-            ...(order.status === 'assigned' ? [{
-              lat: 51.1694 + Math.random() * 0.1,
-              lng: 71.4491 + Math.random() * 0.1,
-              timestamp: new Date().toISOString(),
-              location: `В пути к ${order.to}`,
-              status: 'in_transit',
-              description: 'Груз в пути'
-            }] : []),
-            ...(order.status === 'completed' ? [{
-              lat: 51.1694 + Math.random() * 0.2,
-              lng: 71.4491 + Math.random() * 0.2,
-              timestamp: new Date().toISOString(),
-              location: order.to,
-              status: 'delivered',
-              description: 'Груз доставлен получателю'
-            }] : [])
-          ],
-          lastUpdate: new Date().toISOString()
-        };
-        
-        return NextResponse.json(realTrackingData);
-      }
+    const { trackingNumber } = await params;
+    
+    if (!fs.existsSync(ordersFile)) {
+      return NextResponse.json({ error: 'Orders file not found' }, { status: 404 });
     }
+    
+         const ordersData = fs.readFileSync(ordersFile, 'utf8');
+    const orders: Order[] = JSON.parse(ordersData);
+    
+    const order = orders.find(o => o.trackingNumber === trackingNumber);
+    
+    if (!order) {
+      return NextResponse.json({ error: 'Order not found' }, { status: 404 });
+    }
+    
+    // Формируем ответ для отслеживания
+    const trackingInfo = {
+      trackingNumber: order.trackingNumber,
+      status: order.status,
+      from: order.from,
+      to: order.to,
+      carType: order.carType,
+      description: order.description,
+      weight: order.weight,
+      volume: order.volume,
+      createdAt: order.createdAt,
+      assignedDriver: order.assignedDriver,
+      finalPrice: order.finalPrice,
+      route: order.route,
+      lastUpdate: order.route.length > 0 ? order.route[order.route.length - 1].timestamp : order.createdAt
+    };
+    
+    return NextResponse.json(trackingInfo);
   } catch (error) {
-    console.error('Error fetching real order:', error);
+    console.error('Error getting tracking info:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
+}
 
-  // Check if tracking number exists in mock data
-  const trackingData = mockTrackingData[trackingNumber];
-
-  if (!trackingData) {
-    return NextResponse.json(
-      { 
-        error: 'Tracking number not found',
-        message: 'Номер для отслеживания не найден' 
-      },
-      { status: 404 }
-    );
+// PUT - обновление местоположения груза
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: Promise<{ trackingNumber: string }> }
+) {
+  try {
+    const { trackingNumber } = await params;
+    const body = await request.json();
+    
+    if (!fs.existsSync(ordersFile)) {
+      return NextResponse.json({ error: 'Orders file not found' }, { status: 404 });
+    }
+    
+    const ordersData = fs.readFileSync(ordersFile, 'utf8');
+    let orders: Order[] = JSON.parse(ordersData);
+    
+    const orderIndex = orders.findIndex(o => o.trackingNumber === trackingNumber);
+    
+    if (orderIndex === -1) {
+      return NextResponse.json({ error: 'Order not found' }, { status: 404 });
+    }
+    
+    // Добавляем новую точку маршрута
+    const newRoutePoint: RoutePoint = {
+      lat: body.lat || 0,
+      lng: body.lng || 0,
+      location: body.location || '',
+      status: body.status || 'in_transit',
+      description: body.description || '',
+      timestamp: new Date().toISOString()
+    };
+    
+    orders[orderIndex].route.push(newRoutePoint);
+    
+    // Обновляем статус заказа если передан
+    if (body.status) {
+      orders[orderIndex].status = body.status;
+    }
+    
+    // Сохраняем обновленный список
+    fs.writeFileSync(ordersFile, JSON.stringify(orders, null, 2));
+    
+    // Отправляем уведомление в Telegram канал
+    try {
+      await fetch('/api/telegram/notify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'location_update',
+          data: {
+            trackingNumber,
+            location: body.location,
+            status: body.status,
+            driverId: body.driverId
+          }
+        })
+      });
+    } catch (telegramError) {
+      console.error('Telegram notification error:', telegramError);
+    }
+    
+    return NextResponse.json({ success: true, routePoint: newRoutePoint });
+  } catch (error) {
+    console.error('Error updating tracking info:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
-
-  return NextResponse.json(trackingData);
 }
 
 // Health check endpoint

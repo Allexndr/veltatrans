@@ -1,0 +1,161 @@
+[
+  {
+    "id": "WT123456",
+    "trackingNumber": "WT123456-1700000000000",
+    "clientName": "ООО 'Торговый Дом'",
+    "weight": 1500,
+    "volume": 25,
+    "route": {
+      "from": "Алматы",
+      "to": "Москва",
+      "distance": 3200
+    },
+    "clientPhone": "+7 701 123 45 67",
+    "clientEmail": "info@td-example.kz",
+    "status": "new",
+    "price": 85000,
+    "currency": "KZT",
+    "createdAt": "2024-01-15T10:00:00.000Z",
+    "deadline": "2024-01-25T18:00:00.000Z",
+    "description": "Электроника и бытовая техника",
+    "driverId": null,
+    "driverBids": [],
+    "routePoints": []
+  },
+  {
+    "id": "WT789012",
+    "trackingNumber": "WT789012-1700000000001",
+    "clientName": "ИП 'СтройМаркет'",
+    "weight": 2500,
+    "volume": 40,
+    "route": {
+      "from": "Нур-Султан",
+      "to": "Санкт-Петербург",
+      "distance": 2800
+    },
+    "clientPhone": "+7 702 234 56 78",
+    "clientEmail": "manager@stroymarket.kz",
+    "status": "assigned",
+    "price": 120000,
+    "currency": "KZT",
+    "createdAt": "2024-01-14T14:00:00.000Z",
+    "deadline": "2024-01-24T18:00:00.000Z",
+    "description": "Строительные материалы",
+    "driverId": 1,
+    "driverBids": [
+      {
+        "driverId": 1,
+        "driverName": "- Хабдулманап",
+        "price": 115000,
+        "message": "Готов взять заказ, опытный водитель",
+        "createdAt": "2024-01-14T15:00:00.000Z"
+      }
+    ],
+    "routePoints": [
+      {
+        "lat": 51.1801,
+        "lng": 71.446,
+        "location": "Нур-Султан",
+        "status": "Погрузка",
+        "timestamp": "2024-01-15T08:00:00.000Z",
+        "description": "Загружен строительный материал"
+      }
+    ]
+  },
+  {
+    "id": "WT345678",
+    "trackingNumber": "WT345678-1700000000002",
+    "clientName": "ТОО 'ПродуктСервис'",
+    "weight": 1800,
+    "volume": 30,
+    "route": {
+      "from": "Шымкент",
+      "to": "Екатеринбург",
+      "distance": 2200
+    },
+    "clientPhone": "+7 703 345 67 89",
+    "clientEmail": "logistics@productservice.kz",
+    "status": "in_transit",
+    "price": 95000,
+    "currency": "KZT",
+    "createdAt": "2024-01-13T09:00:00.000Z",
+    "deadline": "2024-01-23T18:00:00.000Z",
+    "description": "Продукты питания",
+    "driverId": 2,
+    "driverBids": [
+      {
+        "driverId": 2,
+        "driverName": "Ababakir Kosimjon Ugli Mamadaliev",
+        "price": 92000,
+        "message": "Специализируюсь на продуктах, рефрижератор",
+        "createdAt": "2024-01-13T10:00:00.000Z"
+      }
+    ],
+    "routePoints": [
+      {
+        "lat": 42.3154,
+        "lng": 69.5939,
+        "location": "Шымкент",
+        "status": "Погрузка",
+        "timestamp": "2024-01-13T10:00:00.000Z",
+        "description": "Загружены продукты питания"
+      },
+      {
+        "lat": 43.5855,
+        "lng": 39.7231,
+        "location": "Краснодар",
+        "status": "В пути",
+        "timestamp": "2024-01-15T12:00:00.000Z",
+        "description": "Проезжаю через Краснодар"
+      }
+    ]
+  },
+  {
+    "id": "WT901234",
+    "trackingNumber": "WT901234-1700000000003",
+    "clientName": "ИП 'АвтоДеталь'",
+    "weight": 800,
+    "volume": 15,
+    "route": {
+      "from": "Актобе",
+      "to": "Казань",
+      "distance": 1800
+    },
+    "clientPhone": "+7 704 456 78 90",
+    "clientEmail": "sales@autodetail.kz",
+    "status": "delivered",
+    "price": 65000,
+    "currency": "KZT",
+    "createdAt": "2024-01-10T11:00:00.000Z",
+    "deadline": "2024-01-20T18:00:00.000Z",
+    "description": "Автозапчасти",
+    "driverId": 3,
+    "driverBids": [
+      {
+        "driverId": 3,
+        "driverName": "Abatbay Dauletbaevich Tureshov",
+        "price": 62000,
+        "message": "Быстрая доставка, опыт 8 лет",
+        "createdAt": "2024-01-10T12:00:00.000Z"
+      }
+    ],
+    "routePoints": [
+      {
+        "lat": 50.2833,
+        "lng": 57.1667,
+        "location": "Актобе",
+        "status": "Погрузка",
+        "timestamp": "2024-01-10T12:00:00.000Z",
+        "description": "Загружены автозапчасти"
+      },
+      {
+        "lat": 55.7887,
+        "lng": 49.1221,
+        "location": "Казань",
+        "status": "Доставлен",
+        "timestamp": "2024-01-18T16:00:00.000Z",
+        "description": "Заказ доставлен получателю"
+      }
+    ]
+  }
+]

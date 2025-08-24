@@ -1,231 +1,154 @@
 'use client';
 
-import {useTranslations} from 'next-intl';
-import {Link} from '@/i18n/routing';
-import Logo from './Logo';
-import LanguageSwitcher from './LanguageSwitcher';
-import {useState, useEffect} from 'react';
-import {motion, AnimatePresence} from 'framer-motion';
+import { useState } from 'react'
+import { useLocale } from 'next-intl'
+import Link from 'next/link'
+import Logo from './Logo'
+import { useTranslations } from 'next-intl'
 
 export default function Header() {
-  const t = useTranslations('navigation');
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const locale = useLocale()
+  const t = useTranslations('navigation')
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen)
+  }
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const navigation = [
-    {name: t('home'), href: '/'},
-    {name: t('about'), href: '/about'},
-    {name: t('services'), href: '/services'},
-    {name: t('cases'), href: '/cases'},
-    {name: t('rates'), href: '/rates'},
-    {name: t('directions'), href: '/directions'},
-    {name: t('documents'), href: '/documents'},
-    {name: t('contacts'), href: '/contacts'},
-  ];
-
-  const headerVariants = {
-    initial: { y: -100, opacity: 0 },
-    animate: { 
-      y: 0, 
-      opacity: 1,
-      transition: { duration: 0.6, ease: "easeOut" as const }
-    },
-    scrolled: {
-      backgroundColor: "rgba(255, 255, 255, 0.95)",
-      backdropFilter: "blur(20px)",
-      boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
-      transition: { duration: 0.3 }
-    }
-  };
-
-  const navItemVariants = {
-    hover: {
-      y: -2,
-      scale: 1.05,
-      transition: { duration: 0.2 }
-    }
-  };
-
-  const mobileMenuVariants = {
-    closed: {
-      opacity: 0,
-      height: 0,
-      transition: { duration: 0.3, ease: "easeInOut" as const }
-    },
-    open: {
-      opacity: 1,
-      height: "auto",
-      transition: { duration: 0.3, ease: "easeInOut" as const }
-    }
-  };
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false)
+  }
 
   return (
-    <motion.header 
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-gray-200/50"
-      variants={headerVariants}
-      initial="initial"
-      animate="animate"
-      style={{
-        backgroundColor: "rgba(255, 255, 255, 0.98)",
-        backdropFilter: "blur(20px)",
-        borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
-        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)"
-      }}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 lg:h-20">
-          {/* Logo */}
-          <motion.div className="flex-shrink-0" whileHover={{ scale: 1.03 }} transition={{ duration: 0.2 }}>
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-lg">
+      <div className="container mx-auto px-4 lg:px-8">
+        <div className="flex items-center justify-between h-16 lg:h-20">
+          {/* Логотип */}
+          <Link href={`/${locale}`} className="flex-shrink-0">
             <Logo size="lg" />
-          </motion.div>
+          </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex space-x-2">
-            {navigation.map((item, index) => (
-              <motion.div
-                key={item.name}
-                variants={navItemVariants}
-                whileHover="hover"
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
-              >
-                <Link
-                  href={item.href}
-                  className="relative text-gray-700 hover:text-velta-navy px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg hover:bg-gradient-to-r hover:from-velta-50 hover:to-velta-100 group border-2 border-gray-300 hover:border-velta-royal-blue"
-                >
-                  <span className="relative z-10">{item.name}</span>
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-velta-100 to-velta-200 rounded-lg opacity-0 group-hover:opacity-100"
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    whileHover={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.2 }}
-                  />
-                </Link>
-              </motion.div>
-            ))}
+          {/* Десктопная навигация */}
+          <nav className="hidden lg:flex items-center space-x-8">
+            <Link 
+              href={`/${locale}`}
+              className="text-gray-700 hover:text-velta-blue transition-colors duration-200 font-medium"
+            >
+              {t('home')}
+            </Link>
+            <Link 
+              href={`/${locale}/services`}
+              className="text-gray-700 hover:text-velta-blue transition-colors duration-200 font-medium"
+            >
+              {t('services')}
+            </Link>
+            <Link 
+              href={`/${locale}/directions`}
+              className="text-gray-700 hover:text-velta-blue transition-colors duration-200 font-medium"
+            >
+              {t('directions')}
+            </Link>
+            <Link 
+              href={`/${locale}/cases`}
+              className="text-gray-700 hover:text-velta-blue transition-colors duration-200 font-medium"
+            >
+              {t('cases')}
+            </Link>
+            <Link 
+              href={`/${locale}/contacts`}
+              className="text-gray-700 hover:text-velta-blue transition-colors duration-200 font-medium"
+            >
+              {t('contacts')}
+            </Link>
+            <Link 
+              href={`/${locale}/analytics`}
+              className="text-gray-700 hover:text-velta-blue transition-colors duration-200 font-medium"
+            >
+              {t('analytics')}
+            </Link>
           </nav>
 
-          {/* Tablet Navigation - Compact */}
-          <nav className="hidden md:flex lg:hidden space-x-1">
-            {navigation.slice(0, 6).map((item, index) => (
-              <motion.div
-                key={item.name}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
-              >
-                <Link
-                  href={item.href}
-                  className="text-gray-700 hover:text-velta-navy px-2 py-1 text-xs font-medium transition-all duration-300 hover:bg-velta-50 rounded-md border border-gray-300 hover:border-velta-royal-blue"
-                >
-                  {item.name}
-                </Link>
-              </motion.div>
-            ))}
-            <motion.div 
-              className="relative group"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.3 }}
-            >
-              <button className="text-gray-700 hover:text-velta-navy px-2 py-1 text-xs font-medium transition-all duration-300 hover:bg-velta-50 rounded-md">
-                ...
-              </button>
-              <motion.div 
-                className="absolute right-0 top-full mt-2 w-32 bg-white/95 backdrop-blur-md shadow-xl rounded-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50"
-                initial={{ y: -10, opacity: 0 }}
-                whileHover={{ y: 0, opacity: 1 }}
-              >
-                {navigation.slice(6).map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className="block px-3 py-2 text-xs text-gray-700 hover:text-velta-navy hover:bg-velta-50 transition-colors rounded-lg mx-1 my-1"
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </motion.div>
-            </motion.div>
-          </nav>
-
-          {/* Language Switcher and Mobile Menu Button */}
-          <div className="flex items-center space-x-2 sm:space-x-3">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, delay: 0.4 }}
-            >
-              <LanguageSwitcher />
-            </motion.div>
-            
-            {/* Mobile menu button */}
-            <motion.button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden inline-flex items-center justify-center p-2 rounded-lg text-gray-700 hover:text-velta-navy hover:bg-velta-50 focus:outline-none focus:ring-2 focus:ring-velta-royal-blue transition-all duration-300"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <motion.svg 
-                className="h-6 w-6" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor"
-                animate={{ rotate: isMobileMenuOpen ? 180 : 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                {isMobileMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </motion.svg>
-            </motion.button>
-          </div>
+          {/* Мобильная кнопка меню */}
+          <button
+            onClick={toggleMobileMenu}
+            className="lg:hidden p-2 rounded-md text-gray-700 hover:text-velta-blue hover:bg-gray-100 transition-colors duration-200"
+            aria-label="Открыть меню"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
         </div>
-
-        {/* Mobile Navigation */}
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div 
-              className="md:hidden overflow-hidden"
-              variants={mobileMenuVariants}
-              initial="closed"
-              animate="open"
-              exit="closed"
-            >
-              <div className="px-2 pt-2 pb-4 space-y-1 bg-white/95 backdrop-blur-md border-t border-gray-200">
-                {navigation.map((item, index) => (
-                  <motion.div
-                    key={item.name}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.05 }}
-                  >
-                    <Link
-                      href={item.href}
-                      className="text-gray-700 hover:text-velta-navy hover:bg-velta-50 block px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 border border-gray-300 hover:border-velta-royal-blue"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </div>
-    </motion.header>
-  );
+
+      {/* Мобильное меню */}
+      <div className={`lg:hidden fixed inset-0 bg-black bg-opacity-50 z-50 transition-opacity duration-300 ${
+        isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+      }`}>
+        <div className={`fixed top-0 right-0 h-full w-80 bg-white shadow-xl transform transition-transform duration-300 ${
+          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}>
+          <div className="flex items-center justify-between p-6 border-b">
+            <Logo size="md" />
+            <button
+              onClick={closeMobileMenu}
+              className="p-2 rounded-md text-gray-700 hover:text-velta-blue hover:bg-gray-100 transition-colors duration-200"
+              aria-label="Закрыть меню"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          
+          <nav className="p-6">
+            <div className="flex flex-col space-y-4">
+              <Link 
+                href={`/${locale}`}
+                onClick={closeMobileMenu}
+                className="text-gray-700 hover:text-velta-blue transition-colors duration-200 font-medium text-lg py-2 border-b border-gray-100"
+              >
+                {t('home')}
+              </Link>
+              <Link 
+                href={`/${locale}/services`}
+                onClick={closeMobileMenu}
+                className="text-gray-700 hover:text-velta-blue transition-colors duration-200 font-medium text-lg py-2 border-b border-gray-100"
+              >
+                {t('services')}
+              </Link>
+              <Link 
+                href={`/${locale}/directions`}
+                onClick={closeMobileMenu}
+                className="text-gray-700 hover:text-velta-blue transition-colors duration-200 font-medium text-lg py-2 border-b border-gray-100"
+              >
+                {t('directions')}
+              </Link>
+              <Link 
+                href={`/${locale}/cases`}
+                onClick={closeMobileMenu}
+                className="text-gray-700 hover:text-velta-blue transition-colors duration-200 font-medium text-lg py-2 border-b border-gray-100"
+              >
+                {t('cases')}
+              </Link>
+              <Link 
+                href={`/${locale}/contacts`}
+                onClick={closeMobileMenu}
+                className="text-gray-700 hover:text-velta-blue transition-colors duration-200 font-medium text-lg py-2 border-b border-gray-100"
+              >
+                {t('contacts')}
+              </Link>
+              <Link 
+                href={`/${locale}/analytics`}
+                onClick={closeMobileMenu}
+                className="text-gray-700 hover:text-velta-blue transition-colors duration-200 font-medium text-lg py-2 border-b border-gray-100"
+              >
+                {t('analytics')}
+              </Link>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </header>
+  )
 }

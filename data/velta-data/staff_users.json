@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Администратор",
+    "phone": "+7 700 000 00 00",
+    "role": "admin",
+    "permissions": ["manage_drivers", "manage_orders", "view_stats"],
+    "login": "admin",
+    "password": "admin123",
+    "createdAt": "2024-01-01T10:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "name": "Тестовый сотрудник",
+    "phone": "+7 701 000 00 00",
+    "role": "staff",
+    "permissions": ["view_orders", "view_stats"],
+    "login": "test",
+    "password": "12345",
+    "createdAt": "2024-01-15T10:00:00.000Z"
+  },
+  {
+    "id": 3,
+    "name": "Менеджер по водителям",
+    "phone": "+7 702 000 00 00",
+    "role": "manager",
+    "permissions": ["manage_drivers", "view_orders", "view_stats"],
+    "login": "manager",
+    "password": "manager123",
+    "createdAt": "2024-01-15T10:00:00.000Z"
+  }
+]

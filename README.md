@@ -1,192 +1,256 @@
-# Velta Trans - International Logistics Company
+# Velta Trans - Система логистики и отслеживания
 
-🌐 **Multilingual** | 📱 **Responsive** | ⚡ **Fast** | 🎨 **Modern UI**
+## 🚀 Обзор системы
 
-A comprehensive B2B logistics website with full internationalization support, featuring advanced tools and customer-focused functionality.
+Velta Trans - это комплексная система логистики, включающая веб-сайт, Telegram бота и API для управления грузоперевозками, отслеживания грузов и координации работы водителей.
 
-## 🚀 **New Features Implemented**
+## ✨ Основные возможности
 
-### 1. **Cases Section with Photos** 📸
-- **Portfolio showcase** of successful transportation projects
-- **Category filtering** (General, Container, Oversized, Dangerous, Consolidated, Project cargo)
-- **Visual presentation** with transportation photos and detailed descriptions
-- **Builds trust** by showing real examples of similar cargo transportation
+### 🌐 Веб-сайт
+- **Главная страница** с информацией о компании и услугах
+- **Система отслеживания грузов** с интерактивной картой
+- **Калькулятор стоимости** доставки
+- **Формы обратной связи** (Bitrix24 интеграция)
+- **Многоязычность** (RU, EN, KZ, ZH)
 
-### 2. **Write to Management Function** ✉️
-- **Direct communication** with company management
-- **Multiple contact options**: Report problems, leave reviews, send suggestions, cooperation proposals
-- **Professional form** with validation and success feedback
-- **Creates transparency** and builds customer confidence
+### 🤖 Telegram бот (@velta_logistics_bot)
+- **Регистрация водителей** по номеру телефона
+- **Просмотр доступных заказов** и подача заявок
+- **Отслеживание грузов** по номеру ТТН
+- **Админ-панель** для управления водителями и заказами
+- **Уведомления** о статусе заказов
 
-### 3. **Recommendations Section** ⭐
-- **Customer testimonials** with company names and positions
-- **Star ratings** and detailed feedback
-- **Certificates and awards** display
-- **Reputational advantage** through social proof
+### 📱 API система
+- **Управление заказами** (создание, редактирование, удаление)
+- **Отслеживание грузов** по номеру ТТН
+- **Обновление местоположения** водителей
+- **Уведомления в реальном времени** (Server-Sent Events)
+- **Интеграция с картами** (OpenStreetMap/Leaflet)
+- **Аналитика и метрики** (MongoDB + дашборд)
 
-### 4. **Delivery Cost Calculator** 🧮
-- **Real-time calculation** of transportation costs
-- **Multiple parameters**: weight, volume, dimensions, oversized cargo
-- **City-to-city routing** with comprehensive form
-- **Instant results** with delivery time and service type
+### 📊 Аналитический дашборд
+- **Метрики заказов** (общее количество, по статусам, доходы)
+- **Статистика водителей** (рейтинги, производительность, заработки)
+- **Системные метрики** (пользователи, uptime, производительность)
+- **Визуализация данных** (графики, диаграммы, таблицы)
+- **Real-time обновления** (автоматическое обновление данных)
 
-### 5. **Cargo Tracking System** 📍
-- **Real-time tracking** using tracking numbers
-- **Status updates** with detailed movement history
-- **Visual timeline** showing cargo progress
-- **Estimated delivery** information
+## 🏗️ Архитектура
 
-### 6. **Document Download Center** 📄
-- **Comprehensive document library** organized by categories
-- **Contract forms**, powers of attorney, requisites
-- **Easy download** with file type and size information
-- **Transparency** through accessible company documents
-
-## 🛠 **Technical Stack**
-
-- **Framework**: Next.js 15.4.5 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS 3.4.17
-- **Internationalization**: next-intl
-- **Deployment**: Vercel-ready
-
-## 🌍 **Supported Languages**
-
-- 🇷🇺 **Russian** (ru)
-- 🇺🇸 **English** (en) 
-- 🇨🇳 **Chinese** (zh)
-- 🇰🇿 **Kazakh** (kz)
-
-## 🎨 **Design Features**
-
-- **Custom Blue Color Scheme** (#00509e)
-- **Responsive Design** for all devices
-- **Modern UI/UX** with smooth animations
-- **Professional Layout** optimized for B2B clients
-
-## 📁 **Project Structure**
-
+### Структура проекта
 ```
 src/
 ├── app/
-│   └── [locale]/
-│       ├── cases/           # Cases page
-│       ├── write-to-management/  # Management contact
-│       ├── documents/       # Document downloads
-│       └── ...              # Other pages
-├── components/
-│   ├── CasesSection.tsx     # Portfolio showcase
-│   ├── WriteToManagement.tsx # Contact management
-│   ├── RecommendationsSection.tsx # Testimonials
-│   ├── Calculator.tsx       # Cost calculator
-│   ├── CargoTracking.tsx    # Tracking system
-│   ├── DocumentsSection.tsx # Document center
-│   └── ...                  # Other components
-└── messages/
-    ├── ru.json             # Russian translations
-    ├── en.json             # English translations
-    ├── zh.json             # Chinese translations
-    └── kz.json             # Kazakh translations
+│   ├── [locale]/           # Многоязычные страницы
+│   ├── api/                # API endpoints
+│   │   ├── orders/         # Управление заказами
+│   │   ├── tracking/       # Отслеживание грузов
+│   │   ├── driver/         # API для водителей
+│   │   ├── notifications/  # Уведомления в реальном времени
+│   │   ├── test-data/      # Тестовые данные
+│   │   └── telegram/       # Telegram бот webhook
+│   └── globals.css         # Глобальные стили
+├── components/              # React компоненты
+│   ├── CargoTracking.tsx   # Система отслеживания
+│   ├── DriverLocationUpdate.tsx # Обновление местоположения
+│   ├── LeafletMap.tsx      # Карта
+│   ├── AnalyticsDashboard.tsx # Аналитический дашборд
+│   └── ...                 # Другие компоненты
+├── i18n/                   # Интернационализация
+├── lib/                    # Утилиты и конфигурация
+│   ├── mongodb.ts          # Конфигурация MongoDB
+│   └── models.ts           # Модели данных
+└── data/velta-data/        # Локальные данные (JSON)
 ```
 
-## 🚀 **Getting Started**
+### Технологии
+- **Frontend**: Next.js 14, React, TypeScript, Tailwind CSS
+- **Backend**: Next.js API Routes, MongoDB Atlas
+- **Карты**: Leaflet.js, OpenStreetMap
+- **API**: Next.js API Routes, Server-Sent Events
+- **Бот**: Telegram Bot API
+- **Стили**: Tailwind CSS, Framer Motion
+- **Данные**: MongoDB Atlas (продакшн), JSON файлы (локальная разработка)
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd china
-   ```
+## 🚀 Быстрый старт
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+### 1. Установка зависимостей
+```bash
+npm install
+```
 
-3. **Run development server**
-   ```bash
-   npm run dev
-   ```
+### 2. Настройка окружения
+Создайте файл `.env.local`:
+```env
+TELEGRAM_BOT_TOKEN=your_bot_token
+TELEGRAM_CHANNEL_ID=your_channel_id
+NEXT_PUBLIC_GA_ID=your_ga_id
+MONGODB_URI=your_mongodb_atlas_connection_string
+MONGODB_DB_NAME=velta_trans
+```
 
-4. **Open browser**
-   ```
-   http://localhost:3000
-   ```
+### 3. Запуск разработки
+```bash
+# Запуск веб-сайта
+npm run dev
 
-## 📋 **Available Scripts**
+# Запуск Telegram бота (polling для разработки)
+npm run bot:poll
+```
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run start` - Start production server
-- `npm run lint` - Run ESLint
+### 4. Создание тестовых данных
+```bash
+# Создание тестового заказа
+curl -X POST http://localhost:3000/api/test-order
 
-## 🌐 **Internationalization**
+# Создание полного набора тестовых данных
+curl -X POST http://localhost:3000/api/test-data
 
-The website supports 4 languages with automatic locale detection:
+# Просмотр доступных заказов
+curl http://localhost:3000/api/test-data
 
-- **URL Structure**: `/{locale}/page`
-- **Examples**: `/ru/`, `/en/`, `/zh/`, `/kz/`
-- **Language Switcher**: Available in header navigation
+# Миграция данных в MongoDB (опционально)
+curl -X POST http://localhost:3000/api/migrate/mongodb
+```
 
-## 🎯 **Key Business Benefits**
+## 📋 API Endpoints
 
-### **Customer Trust Building**
-- ✅ **Visual proof** through case studies with photos
-- ✅ **Direct management access** for transparency
-- ✅ **Customer testimonials** and recommendations
-- ✅ **Professional document library**
+### Заказы
+- `POST /api/orders` - Создание нового заказа
+- `GET /api/orders` - Получение списка заказов
+- `PUT /api/orders` - Обновление заказа
 
-### **Operational Efficiency**
-- ✅ **Self-service calculator** reduces inquiry calls
-- ✅ **Online tracking** reduces support workload
-- ✅ **Document downloads** save time for clients
-- ✅ **Multilingual support** for international clients
+### Отслеживание
+- `GET /api/tracking/[trackingNumber]` - Получение данных отслеживания
+- `PUT /api/tracking/[trackingNumber]` - Обновление статуса заказа
 
-### **Competitive Advantages**
-- ✅ **B2B-focused design** with clear segmentation
-- ✅ **Professional appearance** builds credibility
-- ✅ **Comprehensive tools** demonstrate expertise
-- ✅ **Modern technology** shows innovation
+### Водители
+- `POST /api/driver/location` - Обновление местоположения водителя
+- `GET /api/driver/location` - Получение последнего местоположения
 
-## 📱 **Responsive Design**
+### Уведомления
+- `GET /api/notifications/stream` - SSE stream для уведомлений в реальном времени
 
-- **Mobile-first** approach
-- **Tablet optimized** layouts
-- **Desktop enhanced** features
-- **Touch-friendly** interfaces
+### Аналитика
+- `GET /api/analytics/overview` - Общая аналитика и метрики
+- `POST /api/migrate/mongodb` - Миграция данных в MongoDB
+- `GET /api/migrate/mongodb` - Статистика коллекций MongoDB
 
-## 🔧 **Customization**
+### Тестовые данные
+- `POST /api/test-order` - Создание тестового заказа
+- `POST /api/test-data` - Создание полного набора тестовых данных
+- `GET /api/test-data` - Просмотр доступных заказов
 
-### **Colors**
-The website uses a custom blue color scheme based on `#00509e`:
-- Primary: `custom-blue-500` (#00509e)
-- Light variants: `custom-blue-50` to `custom-blue-400`
-- Dark variants: `custom-blue-600` to `custom-blue-900`
+## 🤖 Telegram бот
 
-### **Content**
-All text content is managed through translation files in `messages/` directory.
+### Команды
+- `/start` - Главное меню
 
-## 🚀 **Deployment**
+### Основные функции
+1. **Водителям**
+   - Регистрация по номеру телефона
+   - Просмотр доступных заказов
+   - Подача заявок на заказы
+   - Просмотр назначенных заказов
 
-### **Vercel (Recommended)**
-1. Connect your GitHub repository to Vercel
-2. Set build command: `npm run build`
-3. Set output directory: `.next`
-4. Deploy automatically on push
+2. **Клиентам**
+   - Отслеживание груза по номеру ТТН
+   - Создание заказа (связь с менеджером)
 
-### **Environment Variables**
-No environment variables required for basic functionality.
+3. **Сотрудникам**
+   - Админ-панель для управления
+   - Создание и редактирование заказов
+   - Управление водителями
+   - Просмотр статистики
 
-## 📞 **Contact Information**
+## 🗺️ Система отслеживания
 
-- **Company**: Velta Trans
-- **Type**: International Logistics
-- **Services**: B2B freight transportation
-- **Regions**: CIS, China, Europe
+### Компонент CargoTracking
+- Форма ввода номера ТТН
+- Отображение статуса заказа
+- История перемещений
+- Интерактивная карта с маршрутом
+- Кнопки для тестирования системы
 
-## 📄 **License**
+### Компонент DriverLocationUpdate
+- Форма обновления местоположения
+- Автоматическое получение GPS координат
+- Выбор статуса заказа
+- Описание текущего местоположения
 
-This project is private and proprietary.
+### Карта (LeafletMap)
+- Отображение точек маршрута
+- Разные цвета для разных статусов
+- Автоматическое масштабирование
+- Интерактивные маркеры
+
+## 📊 Тестовые данные
+
+Система включает 4 предустановленных тестовых заказа:
+
+1. **WT123456** - Электроника из Алматы в Москву (в пути)
+2. **WT789012** - Овощи из Шанхая в Астану (назначен)
+3. **WT345678** - Строительные материалы из Гуанчжоу в СПб (создан)
+4. **WT901234** - Оборудование из Алматы в Москву (доставлен)
+
+## 🔧 Разработка
+
+### Локальная разработка
+- Данные хранятся в `data/velta-data/`
+- Telegram бот работает в режиме polling
+- Все API доступны локально
+
+### Продакшн
+- Данные можно перенести в базу данных
+- Telegram бот работает через webhook
+- API развертывается на Vercel/другом хостинге
+
+## 📱 Тестирование
+
+### Веб-сайт
+1. Откройте `http://localhost:3000/ru`
+2. Прокрутите до секции "Отслеживание груза"
+3. Используйте кнопки для создания тестовых данных
+4. Введите номер ТТН и нажмите "Отследить"
+
+### Telegram бот
+1. Найдите `@velta_logistics_bot`
+2. Отправьте `/start`
+3. Протестируйте регистрацию водителя
+4. Проверьте отслеживание груза
+
+### API
+```bash
+# Тестирование отслеживания
+curl http://localhost:3000/api/tracking/WT123456
+
+# Обновление местоположения
+curl -X POST http://localhost:3000/api/driver/location \
+  -H "Content-Type: application/json" \
+  -d '{"driverId":1,"orderId":"1755963546047","lat":43.5,"lng":76.8,"location":"Тест","status":"in_transit","description":"Тестовое обновление"}'
+```
+
+## 🚀 Следующие шаги
+
+### Планируемые улучшения
+1. **База данных**: Миграция с JSON на PostgreSQL/MongoDB
+2. **Аутентификация**: JWT токены для API
+3. **Мобильное приложение**: React Native для водителей
+4. **Аналитика**: Дашборд с метриками и отчетами
+5. **Интеграции**: 1C, SAP, другие системы
+
+### Оптимизация
+1. **Кэширование**: Redis для быстрого доступа к данным
+2. **Масштабирование**: Микросервисная архитектура
+3. **Мониторинг**: Логирование и метрики
+4. **Безопасность**: Rate limiting, валидация данных
+
+## 📞 Поддержка
+
+Для вопросов и предложений обращайтесь к команде разработки Velta Trans.
 
 ---
 
-**Built with ❤️ for Velta Trans**
+**Версия**: 1.0.0  
+**Последнее обновление**: Август 2024  
+**Статус**: В разработке

@@ -3,6 +3,7 @@
 import {useState, useEffect} from 'react';
 import {useTranslations} from 'next-intl';
 import LeafletMap from './LeafletMap';
+import DriverLocationUpdate from './DriverLocationUpdate';
 
 interface TrackingStatus {
   status: string;
@@ -87,8 +88,8 @@ export default function CargoTracking() {
       // Convert API response to component format
       const mockResult: TrackingResult = {
         trackingNumber: trackingData.trackingNumber,
-        status: trackingData.statusText,
-        estimatedDelivery: trackingData.estimatedDelivery,
+        status: getStatusText(trackingData.status),
+        estimatedDelivery: trackingData.estimatedDelivery || 'В процессе доставки',
         history: trackingData.route.map((point: RoutePoint) => ({
           status: getStatusText(point.status),
           location: point.location,
@@ -170,7 +171,10 @@ export default function CargoTracking() {
       case 'in_transit': return 'В пути';
       case 'delivered': return 'Доставлен';
       case 'warehouse': return 'На складе';
-      default: return status;
+      case 'delayed': return 'Задержка';
+      case 'assigned': return 'Назначен водителю';
+      case 'created': return 'Создан';
+      default: return status; // Возвращаем кастомный статус как есть
     }
   };
 
@@ -184,8 +188,15 @@ export default function CargoTracking() {
         return 'text-yellow-600 bg-yellow-100 border-yellow-300';
       case 'Принят':
         return 'text-gray-600 bg-gray-100 border-gray-300';
-      default:
+      case 'Задержка':
+        return 'text-red-600 bg-red-100 border-red-300';
+      case 'Назначен водителю':
+        return 'text-purple-600 bg-purple-100 border-purple-300';
+      case 'Создан':
         return 'text-gray-600 bg-gray-100 border-gray-300';
+      default:
+        // Для кастомных статусов используем оранжевый цвет
+        return 'text-orange-600 bg-orange-100 border-orange-300';
     }
   };
 
@@ -199,8 +210,15 @@ export default function CargoTracking() {
         return '📦';
       case 'Принят':
         return '📋';
+      case 'Задержка':
+        return '⚠️';
+      case 'Назначен водителю':
+        return '👤';
+      case 'Создан':
+        return '📝';
       default:
-        return '📋';
+        // Для кастомных статусов используем универсальную иконку
+        return '📍';
     }
   };
 
@@ -366,6 +384,42 @@ export default function CargoTracking() {
               <p className="mt-6 text-sm text-gray-600 text-center animate-fade-in-up" style={{animationDelay: '1.5s'}}>
                 {t('note')}
               </p>
+              
+              {/* Driver Location Update Section - для демонстрации */}
+              {result && (
+                <DriverLocationUpdate
+                  driverId={1} // Тестовый водитель
+                  orderId={result.trackingNumber}
+                  onLocationUpdate={(newLocation) => {
+                    // Обновляем карту с новой точкой
+                    setMapPoints(prev => [...prev, {
+                      lat: newLocation.lat,
+                      lng: newLocation.lng,
+                      title: newLocation.location,
+                      description: newLocation.description,
+                      status: newLocation.status
+                    }]);
+                    
+                    // Обновляем историю
+                    setResult(prev => prev ? {
+                      ...prev,
+                      history: [
+                        {
+                          status: getStatusText(newLocation.status),
+                          location: newLocation.location,
+                          date: new Date(newLocation.timestamp).toLocaleDateString('ru-RU'),
+                          time: new Date(newLocation.timestamp).toLocaleTimeString('ru-RU', { 
+                            hour: '2-digit', 
+                            minute: '2-digit' 
+                          }),
+                          description: newLocation.description
+                        },
+                        ...prev.history
+                      ]
+                    } : null);
+                  }}
+                />
+              )}
             </div>
           )}
         </div>

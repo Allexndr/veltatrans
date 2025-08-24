@@ -1,8 +1,49 @@
 // This file is required for the app directory to work
 // The actual layout is in /app/[locale]/layout.tsx
 
-import '@/lib/telegram-init'
-import Script from 'next/script'
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import './globals.css'
+import './responsive.css'
+
+const inter = Inter({ subsets: ['latin'] })
+
+export const metadata: Metadata = {
+  title: 'Velta Trans - Международные логистические услуги',
+  description: 'Профессиональные логистические услуги: автоперевозки, железнодорожные перевозки, мультимодальные перевозки, проектные перевозки. Доставка грузов по всему миру.',
+  keywords: 'логистика, перевозки, доставка, груз, Казахстан, Китай, Россия, Европа',
+  authors: [{ name: 'Velta Trans' }],
+  creator: 'Velta Trans',
+  publisher: 'Velta Trans',
+  robots: 'index, follow',
+  openGraph: {
+    title: 'Velta Trans - Международные логистические услуги',
+    description: 'Профессиональные логистические услуги по всему миру',
+    url: 'https://www.velta-logistics.com',
+    siteName: 'Velta Trans',
+    locale: 'ru_RU',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Velta Trans - Международные логистические услуги',
+    description: 'Профессиональные логистические услуги по всему миру',
+  },
+  manifest: '/manifest.json',
+  icons: {
+    icon: '/favicon.png',
+    shortcut: '/favicon.png',
+    apple: '/favicon.png',
+  },
+}
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+}
+
+export const themeColor = '#0050A0'
 
 export default function RootLayout({
   children,
@@ -10,42 +51,19 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="ru" suppressHydrationWarning>
+    <html lang="ru">
       <head>
-        {/* Preconnect to external domains */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        
-        {/* DNS prefetch for performance */}
-        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
-        
-        {/* PWA Manifest */}
-        <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#0050A0" />
+        <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Velta Trans" />
-        <link rel="apple-touch-icon" href="/icon-192x192.png" />
       </head>
-      <body>
-        {/* Google Analytics 4 */}
-        <Script
-          id="ga4-script"
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID ?? 'G-9QFRTRBRE2'}`}
-          strategy="afterInteractive"
-        />
-        <Script id="ga4-init" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);} 
-            gtag('js', new Date());
-            gtag('config', '${process.env.NEXT_PUBLIC_GA_ID ?? 'G-9QFRTRBRE2'}');
-          `}
-        </Script>
+      <body className={inter.className}>
         {children}
       </body>
     </html>
-  );
+  )
 }

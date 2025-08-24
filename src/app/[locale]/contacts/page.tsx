@@ -136,7 +136,7 @@ export default function ContactsPage() {
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">WhatsApp</h3>
                 <p className="text-gray-600 mb-4">Быстрые ответы в мессенджере</p>
                 <a
-                  href="https://wa.me/77011234567"
+                  href="https://wa.me/77010704011"
                   className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors"
                 >
                   Написать
@@ -152,7 +152,7 @@ export default function ContactsPage() {
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Telegram</h3>
                 <p className="text-gray-600 mb-4">Удобное общение в чате</p>
                 <a
-                  href="https://t.me/veltatrans"
+                  href="https://t.me/velta_logistics_bot"
                   className="bg-velta-navy text-white px-6 py-2 rounded-lg hover:bg-velta-700 transition-colors"
                 >
                   Написать

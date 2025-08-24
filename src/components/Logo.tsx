@@ -1,15 +1,13 @@
 'use client';
 
 import {useState} from 'react';
-import Link from 'next/link';
 
 interface LogoProps {
-  href?: string;
   className?: string;
   size?: 'sm' | 'md' | 'lg' | 'xl';
 }
 
-export default function Logo({href = '/', className = '', size = 'md'}: LogoProps) {
+export default function Logo({className = '', size = 'md'}: LogoProps) {
   // Use the new Velta Trans logo
   const [src, setSrc] = useState('/images/logo-velta.png');
   
@@ -27,7 +25,7 @@ export default function Logo({href = '/', className = '', size = 'md'}: LogoProp
   const { width, height } = getDimensions();
 
   return (
-    <Link href={href} className={`flex items-center ${className}`}>
+    <div className={`flex items-center ${className}`}>
       {/* New Velta Trans logo */}
       <img
         src={src}
@@ -41,7 +39,7 @@ export default function Logo({href = '/', className = '', size = 'md'}: LogoProp
         }}
         onError={() => setSrc('/images/logo-velta.svg')}
       />
-    </Link>
+    </div>
   );
 }
 

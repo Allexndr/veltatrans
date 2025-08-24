@@ -4,9 +4,11 @@ import SmoothLink from './SmoothLink';
 import {useEffect, useState} from 'react';
 import {motion} from 'framer-motion';
 import HeroGallery from './HeroGallery';
+import { useTranslations } from 'next-intl'
 
 export default function Hero({}: {locale: string}) {
   const [isLoading, setIsLoading] = useState(true);
+  const t = useTranslations('hero')
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -24,6 +26,13 @@ export default function Hero({}: {locale: string}) {
         </div>
       </div>
     );
+  }
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId)
+    if (element) {
+      element.scrollIntoView({ behavior: 'auto' })
+    }
   }
 
   return (

@@ -1,182 +1,138 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const TELEGRAM_BOT_TOKEN = '8414818778:AAG2QXqDu0WKwsClyMt5CpbpLQBL3QLVWUE';
-const TELEGRAM_CHANNEL_ID = '-1002999769930';
+const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8414818778:AAG2QXqDu0WKwsClyMt5CpbpLQBL3QLVWUE';
+const CHANNEL_ID = process.env.TELEGRAM_CHANNEL_ID || '-1002999769930';
 
-interface OrderNotification {
-  orderId: string;
-  customerName: string;
-  fromCity: string;
-  toCity: string;
-  cargoType: string;
-  weight: string;
-  volume: string;
-  shipmentType: string;
-  phone: string;
-  urgency: 'low' | 'medium' | 'high';
-  specialRequirements?: string;
-}
-
+// Отправка сообщения в Telegram
 async function sendTelegramMessage(chatId: string | number, text: string, replyMarkup?: object) {
-  const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-  
-  const payload = {
-    chat_id: chatId,
-    text,
-    parse_mode: 'HTML',
-    ...replyMarkup && { reply_markup: replyMarkup }
-  };
-
   try {
-    const response = await fetch(url, {
+    const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: text,
+        parse_mode: 'HTML',
+        reply_markup: replyMarkup,
+      }),
     });
 
-    if (!response.ok) {
-      console.error('Telegram API error:', await response.text());
-      return null;
-    }
-    
-    return response.json();
+    return await response.json();
   } catch (error) {
-    console.error('Error sending message:', error);
-    return null;
+    console.error('Error sending Telegram message:', error);
+    return { ok: false, error: error };
   }
 }
 
-function getUrgencyEmoji(urgency: string): string {
-  switch (urgency) {
-    case 'high': return '🔴';
-    case 'medium': return '🟡';
-    case 'low': return '🟢';
-    default: return '⚪';
-  }
-}
-
-function getShipmentTypeEmoji(type: string): string {
-  switch (type) {
-    case 'auto': return '🚛';
-    case 'railway': return '🚂';
-    case 'multimodal': return '🔄';
-    case 'project': return '🏗️';
-    default: return '📦';
-  }
-}
-
+// POST - отправка уведомления
 export async function POST(request: NextRequest) {
   try {
-    const { type, data } = await request.json();
+    const body = await request.json();
+    const { type, data } = body;
 
-    if (type === 'new_order') {
-      const order: OrderNotification = data;
-      
-      const urgencyEmoji = getUrgencyEmoji(order.urgency);
-      const shipmentEmoji = getShipmentTypeEmoji(order.shipmentType);
-      
-      const orderMessage = `
-${urgencyEmoji} <b>НОВЫЙ ЗАКАЗ</b> ${shipmentEmoji}
+    let message = '';
+    let replyMarkup;
 
-📋 <b>ID заказа:</b> ${order.orderId}
-👤 <b>Клиент:</b> ${order.customerName}
-📞 <b>Телефон:</b> ${order.phone}
+    switch (type) {
+      case 'new_order':
+        message = `📦 <b>Новый заказ!</b>
 
-🛣️ <b>Маршрут:</b>
-📍 Откуда: ${order.fromCity}
-📍 Куда: ${order.toCity}
+<b>Номер ТТН:</b> ${data.trackingNumber}
+<b>Клиент:</b> ${data.clientName}
+<b>Маршрут:</b> ${data.from} → ${data.to}
+<b>Тип ТС:</b> ${data.carType}
+<b>Описание:</b> ${data.description}
+<b>Вес:</b> ${data.weight} кг
+<b>Объем:</b> ${data.volume} м³
 
-📦 <b>Груз:</b>
-• Тип: ${order.cargoType}
-• Вес: ${order.weight}
-• Объем: ${order.volume}
+Заказ автоматически разослан подходящим водителям.`;
 
-🚛 <b>Тип перевозки:</b> ${order.shipmentType === 'auto' ? 'Автомобильные' : 
-  order.shipmentType === 'railway' ? 'Железнодорожные' :
-  order.shipmentType === 'multimodal' ? 'Мультимодальные' : 'Проектные'}
+        replyMarkup = {
+          inline_keyboard: [
+            [{ text: '👁️ Просмотреть заказ', callback_data: `view_order_${data.id}` }],
+            [{ text: '📊 Статистика', callback_data: 'stats' }]
+          ]
+        };
+        break;
 
-${order.specialRequirements ? `⚠️ <b>Особые требования:</b> ${order.specialRequirements}` : ''}
+      case 'location_update':
+        message = `📍 <b>Обновление местоположения</b>
 
-⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}
+<b>Номер ТТН:</b> ${data.trackingNumber}
+<b>Местоположение:</b> ${data.location}
+<b>Статус:</b> ${data.status}
+<b>Время:</b> ${new Date().toLocaleString('ru-RU')}
 
-<i>Водители могут откликнуться через бота</i>
-      `;
+Водитель обновил информацию о грузе.`;
 
-      // Отправляем в канал
-      const result = await sendTelegramMessage(TELEGRAM_CHANNEL_ID, orderMessage);
-      
-      return NextResponse.json({ 
-        success: !!result,
-        message_id: result?.result?.message_id 
-      });
+        replyMarkup = {
+          inline_keyboard: [
+            [{ text: '🗺️ Показать на карте', callback_data: `map_${data.trackingNumber}` }],
+            [{ text: '📱 Связаться с водителем', callback_data: `contact_driver_${data.driverId}` }]
+          ]
+        };
+        break;
+
+      case 'driver_bid':
+        message = `💰 <b>Новая ставка от водителя!</b>
+
+<b>Заказ:</b> ${data.orderId}
+<b>Водитель:</b> ${data.driverName}
+<b>Телефон:</b> ${data.driverPhone}
+<b>Номер авто:</b> ${data.carNumber}
+<b>Цена:</b> ${data.price} тенге
+<b>Местоположение:</b> ${data.location}
+<b>Дата погрузки:</b> ${data.loadingDate}
+
+Выберите действие:`;
+
+        replyMarkup = {
+          inline_keyboard: [
+            [{ text: '✅ Принять', callback_data: `accept_bid_${data.bidId}` }],
+            [{ text: '❌ Отклонить', callback_data: `reject_bid_${data.bidId}` }],
+            [{ text: '📞 Позвонить', callback_data: `call_${data.driverPhone}` }]
+          ]
+        };
+        break;
+
+      case 'order_completed':
+        message = `✅ <b>Заказ завершен!</b>
+
+<b>Номер ТТН:</b> ${data.trackingNumber}
+<b>Маршрут:</b> ${data.from} → ${data.to}
+<b>Водитель:</b> ${data.driverName}
+<b>Финальная цена:</b> ${data.finalPrice} тенге
+<b>Время завершения:</b> ${new Date().toLocaleString('ru-RU')}
+
+Груз успешно доставлен получателю.`;
+
+        replyMarkup = {
+          inline_keyboard: [
+            [{ text: '📊 Отчет', callback_data: `report_${data.trackingNumber}` }],
+            [{ text: '⭐ Оценить', callback_data: `rate_${data.trackingNumber}` }]
+          ]
+        };
+        break;
+
+      default:
+        message = `ℹ️ <b>Уведомление</b>
+
+${data.message || 'Новое уведомление от системы'}`;
     }
 
-    if (type === 'calculation_request') {
-      const calc = data;
-      
-      const calcMessage = `
-📊 <b>ЗАПРОС НА РАСЧЕТ</b>
+    // Отправляем сообщение в канал
+    const result = await sendTelegramMessage(CHANNEL_ID, message, replyMarkup);
 
-👤 <b>Клиент:</b> ${calc.senderName}
-📞 <b>Телефон:</b> ${calc.phone}
-
-🛣️ <b>Маршрут:</b>
-📍 ${calc.fromCity} → ${calc.toCity}
-
-📦 <b>Параметры груза:</b>
-• Вес: ${calc.weight} кг
-• Объем: ${calc.volume} м³
-• Тип: ${calc.cargoType || 'Не указан'}
-
-🚛 <b>Тип перевозки:</b> ${calc.shipmentType === 'auto' ? 'Автомобильные' : 
-  calc.shipmentType === 'railway' ? 'Железнодорожные' :
-  calc.shipmentType === 'multimodal' ? 'Мультимодальные' : 'Проектные'}
-
-${calc.isOversized ? '⚠️ Негабаритный груз' : ''}
-${calc.isDangerous ? '☢️ Опасный груз' : ''}
-
-⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}
-
-<i>❗ Требуется ответ в течение 1 часа</i>
-      `;
-
-      const result = await sendTelegramMessage(TELEGRAM_CHANNEL_ID, calcMessage);
-      
-      return NextResponse.json({ 
-        success: !!result,
-        message_id: result?.result?.message_id 
-      });
+    if (result.ok) {
+      return NextResponse.json({ success: true, message: 'Notification sent successfully' });
+    } else {
+      return NextResponse.json({ error: 'Failed to send notification' }, { status: 500 });
     }
 
-    if (type === 'contact_form') {
-      const contact = data;
-      
-      const contactMessage = `
-📧 <b>НОВОЕ ОБРАЩЕНИЕ</b>
-
-👤 <b>Имя:</b> ${contact.name}
-📞 <b>Телефон:</b> ${contact.phone}
-📧 <b>Email:</b> ${contact.email}
-
-💬 <b>Сообщение:</b>
-${contact.message}
-
-⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}
-      `;
-
-      const result = await sendTelegramMessage(TELEGRAM_CHANNEL_ID, contactMessage);
-      
-      return NextResponse.json({ 
-        success: !!result,
-        message_id: result?.result?.message_id 
-      });
-    }
-
-    return NextResponse.json({ error: 'Unknown notification type' }, { status: 400 });
   } catch (error) {
-    console.error('Notification error:', error);
+    console.error('Error sending notification:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
@@ -194,12 +150,12 @@ export async function GET() {
 ⏰ ${new Date().toLocaleString('ru-RU')}
     `;
 
-    const result = await sendTelegramMessage(TELEGRAM_CHANNEL_ID, testMessage);
+    const result = await sendTelegramMessage(CHANNEL_ID, testMessage);
     
     return NextResponse.json({
       success: !!result,
       test_sent: true,
-      channel_id: TELEGRAM_CHANNEL_ID
+      channel_id: CHANNEL_ID
     });
   } catch (error) {
     console.error('Test error:', error);

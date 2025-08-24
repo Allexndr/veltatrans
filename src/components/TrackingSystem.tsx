@@ -2,6 +2,7 @@
 
 import {useState} from 'react';
 import {motion} from 'framer-motion';
+import LeafletMap from './LeafletMap';
 
 interface TrackingSystemProps {
   locale: string;
@@ -17,6 +18,8 @@ interface TrackingResult {
     date: string;
     status: string;
     description: string;
+    lat?: number;
+    lng?: number;
   }>;
 }
 
@@ -28,41 +31,7 @@ export default function TrackingSystem({}: TrackingSystemProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // Заглушка для демонстрации функционала
-  const mockTrackingData = (ttn: string): TrackingResult => {
-    const statuses: Array<'pending' | 'in_transit' | 'delivered' | 'warehouse'> = ['pending', 'in_transit', 'delivered', 'warehouse'];
-    const locations = ['Алматы', 'Астана', 'Москва', 'Пекин', 'Урумчи', 'Ташкент'];
-    const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
-    const randomLocation = locations[Math.floor(Math.random() * locations.length)];
-    
-    return {
-      ttn,
-      status: randomStatus,
-      location: randomLocation,
-      lastUpdate: new Date().toLocaleString('ru-RU'),
-      route: [
-        {
-          location: 'Алматы',
-          date: '2024-08-15 10:00',
-          status: 'Груз принят',
-          description: 'Груз принят к перевозке'
-        },
-        {
-          location: 'Астана',
-          date: '2024-08-16 14:30',
-          status: 'В пути',
-          description: 'Груз в пути, прошел таможенный контроль'
-        },
-        {
-          location: randomLocation,
-          date: new Date().toLocaleString('ru-RU'),
-          status: getStatusText(randomStatus),
-          description: 'Текущее местоположение'
-        }
-      ]
-    };
-  };
-
+  // Получение текста статуса
   const getStatusText = (status: string): string => {
     switch (status) {
       case 'pending': return 'Ожидает отправки';
@@ -72,6 +41,44 @@ export default function TrackingSystem({}: TrackingSystemProps) {
       default: return 'Неизвестно';
     }
   };
+
+  // Получение реальных данных отслеживания
+  const fetchTrackingData = async (ttn: string): Promise<TrackingResult | null> => {
+    try {
+      const response = await fetch(`/api/tracking/${ttn}`);
+      if (!response.ok) {
+        throw new Error('Заказ не найден');
+      }
+      
+      const orderData = await response.json();
+      
+      // Конвертируем данные заказа в формат TrackingResult
+      return {
+        ttn: orderData.trackingNumber,
+        status: orderData.status === 'created' ? 'pending' : 
+               orderData.status === 'assigned' ? 'in_transit' : 
+               orderData.status === 'delivered' ? 'delivered' : 
+               orderData.status === 'warehouse' ? 'warehouse' : 'pending',
+        location: orderData.route.length > 0 ? orderData.route[orderData.route.length - 1].location : orderData.from,
+        lastUpdate: orderData.lastUpdate,
+        route: orderData.route.map((point: any) => ({
+          location: point.location,
+          date: new Date(point.timestamp).toLocaleString('ru-RU'),
+          status: getStatusText(point.status),
+          description: point.description
+        }))
+      };
+    } catch (error) {
+      console.error('Error fetching tracking data:', error);
+      return null;
+    }
+  };
+
+
+
+
+
+
 
   const getStatusColor = (status: string): string => {
     switch (status) {
@@ -97,17 +104,24 @@ export default function TrackingSystem({}: TrackingSystemProps) {
     setLoading(true);
     setError('');
 
-    // Имитация запроса к API
-    setTimeout(() => {
-      const result = mockTrackingData(trackingNumber);
-      setResults([result]);
-      setTrackingNumbers([trackingNumber]);
-      setCurrentIndex(0);
+    try {
+      // Реальный запрос к API
+      const result = await fetchTrackingData(trackingNumber);
+      if (result) {
+        setResults([result]);
+        setTrackingNumbers([trackingNumber]);
+        setCurrentIndex(0);
+      } else {
+        setError('Заказ не найден или произошла ошибка');
+      }
+    } catch (error) {
+      setError('Ошибка при получении данных');
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
   };
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
@@ -129,14 +143,23 @@ export default function TrackingSystem({}: TrackingSystemProps) {
       setLoading(true);
       setError('');
 
-      // Имитация обработки множественных номеров
-      setTimeout(() => {
-        const trackingResults = numbers.map(num => mockTrackingData(num));
+      // Обработка множественных номеров
+      try {
+        const trackingResults = [];
+        for (const num of numbers) {
+          const result = await fetchTrackingData(num);
+          if (result) {
+            trackingResults.push(result);
+          }
+        }
         setResults(trackingResults);
         setTrackingNumbers(numbers);
         setCurrentIndex(0);
+      } catch (error) {
+        setError('Ошибка при обработке файла');
+      } finally {
         setLoading(false);
-      }, 2000);
+      }
     };
 
     reader.readAsText(file);
@@ -162,6 +185,7 @@ export default function TrackingSystem({}: TrackingSystemProps) {
           <p className="text-lg text-gray-600">
             Введите номер ТТН или загрузите файл со списком номеров
           </p>
+
         </div>
 
         {/* Форма ввода */}
@@ -302,16 +326,23 @@ export default function TrackingSystem({}: TrackingSystemProps) {
                 </div>
               </div>
 
-              {/* Заглушка карты */}
-              <div className="bg-gray-100 rounded-lg p-6 flex items-center justify-center">
-                <div className="text-center">
-                  <svg className="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                  <p className="text-gray-500">Карта будет добавлена позже</p>
-                  <p className="text-sm text-gray-400 mt-1">OpenStreetMap интеграция</p>
-                </div>
+              {/* Карта с маршрутом */}
+              <div className="bg-gray-100 rounded-lg overflow-hidden">
+                <LeafletMap
+                  points={currentResult.route.map(point => ({
+                    lat: point.lat || 0,
+                    lng: point.lng || 0,
+                    title: point.location,
+                    status: point.status === 'Груз принят' ? 'pending' : 
+                           point.status === 'В пути' ? 'in_transit' : 
+                           point.status === 'Доставлено' ? 'delivered' : 
+                           point.status === 'На складе' ? 'warehouse' : 'pending',
+                    timestamp: point.date
+                  }))}
+                  center={[51.1694, 71.4491]} // Алматы по умолчанию
+                  zoom={6}
+                  height="300px"
+                />
               </div>
             </div>
 

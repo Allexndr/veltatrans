@@ -123,8 +123,8 @@ export default async function LocaleLayout({
         <FloatingContacts
           phone={'+77002770006'}
           email={'info@velta-logistics.com'}
-          whatsapp={'77002770006'}
-          telegram={'veltatrans'}
+          whatsapp={'77010704011'}
+          telegram={'velta_logistics_bot'}
         />
       </div>
       
