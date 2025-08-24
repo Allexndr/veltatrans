@@ -7,19 +7,31 @@ export default function HeroGallery() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
-  // Массив изображений логистики
+  // Массив изображений логистики с новыми фотографиями
   const images = [
     {
-      src: '/images/logistics/container-ship.jpg',
+      src: '/images/logistics/container-ship-new.jpg',
       alt: 'Контейнеровоз в порту',
       title: 'Морские перевозки',
       icon: '🚢'
     },
     {
-      src: '/images/logistics/train-cargo.jpg', 
+      src: '/images/logistics/freight-train.jpg', 
       alt: 'Железнодорожные перевозки',
       title: 'Железнодорожные перевозки',
       icon: '🚂'
+    },
+    {
+      src: '/images/logistics/warehouse-digital.jpg',
+      alt: 'Цифровые складские решения',
+      title: 'Складские услуги',
+      icon: '🏭'
+    },
+    {
+      src: '/images/logistics/international-logistics.jpg',
+      alt: 'Международная логистика',
+      title: 'Международная логистика',
+      icon: '🌍'
     },
     {
       src: '/images/logistics/truck-fleet.jpg',
@@ -28,22 +40,10 @@ export default function HeroGallery() {
       icon: '🚛'
     },
     {
-      src: '/images/logistics/warehouse.jpg',
-      alt: 'Складские помещения',
-      title: 'Складские услуги',
-      icon: '🏭'
-    },
-    {
-      src: '/images/logistics/customs.jpg',
-      alt: 'Таможенное оформление',
+      src: '/images/logistics/customs-new.jpg',
+      alt: 'Таможенное оформление и документооборот',
       title: 'Таможенные услуги',
       icon: '🏛️'
-    },
-    {
-      src: '/images/logistics/global-map.jpg',
-      alt: 'Глобальная логистическая сеть',
-      title: 'Международная логистика',
-      icon: '🌍'
     }
   ];
 

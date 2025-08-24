@@ -276,12 +276,12 @@ export default function CargoTracking() {
                     <span>{t('form.tracking')}</span>
                   </div>
                 ) : (
-                                     <div className="flex items-center justify-center space-x-2">
-                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 4m0 13V4m-6 3l6-3" />
-                     </svg>
-                     <span>{t('form.track')}</span>
-                   </div>
+                  <div className="flex items-center justify-center space-x-2">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 4m0 13V4m-6 3l6-3" />
+                    </svg>
+                    <span>{t('form.track')}</span>
+                  </div>
                 )}
               </button>
             </div>
@@ -372,13 +372,13 @@ export default function CargoTracking() {
                     </div>
                   </div>
                 )}
-                              <LeafletMap
-                points={mapPoints}
-                center={mapPoints.length > 0 ? [mapPoints[0].lat, mapPoints[0].lng] : [55.7558, 37.6176]}
-                zoom={mapPoints.length > 1 ? 6 : 10}
-                height="300px"
-                className="shadow-lg"
-              />
+                <LeafletMap
+                  points={mapPoints}
+                  center={mapPoints.length > 0 ? [mapPoints[0].lat, mapPoints[0].lng] : [55.7558, 37.6176]}
+                  zoom={mapPoints.length > 1 ? 6 : 10}
+                  height="300px"
+                  className="shadow-lg"
+                />
               </div>
 
               <p className="mt-6 text-sm text-gray-600 text-center animate-fade-in-up" style={{animationDelay: '1.5s'}}>
@@ -457,4 +457,4 @@ export default function CargoTracking() {
       `}</style>
     </section>
   );
-} 
+}

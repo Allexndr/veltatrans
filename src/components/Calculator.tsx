@@ -69,12 +69,12 @@ export default function Calculator() {
       <div className="text-center mb-8">
         <h3 className="text-2xl font-bold text-gray-900 mb-4">
           Рассчитать стоимость доставки
-        </h3>
+              </h3>
         <p className="text-gray-600">
           Заполните форму и получите точный расчет стоимости перевозки
         </p>
-      </div>
-      
+        </div>
+
       {/* Bitrix24 форма будет загружена здесь */}
       <div id="b24form_calculator_main" className="min-h-[400px]">
         <div className="text-center py-8">

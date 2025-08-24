@@ -18,12 +18,16 @@ export default function ServicesPage() {
       ],
       icon: (
         <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0M19 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0M3 12h2m14 0h2M12 3v18" />
+          <rect x="1" y="3" width="15" height="8" rx="2" strokeWidth={2} />
+          <rect x="16" y="6" width="6" height="5" rx="1" strokeWidth={2} />
+          <circle cx="6" cy="17" r="2" strokeWidth={2} />
+          <circle cx="19" cy="17" r="2" strokeWidth={2} />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 15v2M20 15v2" />
         </svg>
       ),
     },
     {
-      title: 'Железнодорожные перевозки',
+      title: 'ЖД перевозки',
       description: 'Прямые контейнерные поезда из Китая в Россию и страны СНГ. Возможность отправки как полных контейнеров (FCL), так и сборных грузов (LCL). Оперативные сроки и конкурентные тарифы.',
       features: [
         'FCL и LCL контейнеры',
@@ -34,12 +38,16 @@ export default function ServicesPage() {
       ],
       icon: (
         <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M3 14h18m-9-4v8m-2 0h4" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 18h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 18v2a1 1 0 01-1 1H6a1 1 0 01-1-1v-2M16 18v2a1 1 0 001 1h1a1 1 0 001-1v-2" />
+          <circle cx="8" cy="21" r="1" />
+          <circle cx="16" cy="21" r="1" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 10h6M9 13h6" />
         </svg>
       ),
     },
     {
-      title: 'Мультимодальные перевозки',
+      title: 'Мультимодальные',
       description: 'Комбинация морского, автомобильного и железнодорожного транспорта. Оптимальное решение по цене и срокам доставки. Подбираем маршрут под задачу клиента.',
       features: [
         'Море + авто комбинации',

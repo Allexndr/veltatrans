@@ -323,3 +323,11 @@ async function migrateToMongoDB() {
 
 // Запускаем миграцию
 migrateToMongoDB().catch(console.error);
+
+
+
+
+
+
+
+

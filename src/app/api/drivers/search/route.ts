@@ -117,3 +117,11 @@ function normalizePhone(phone: string): string {
   console.log('📱 Результат нормализации:', result);
   return result;
 }
+
+
+
+
+
+
+
+

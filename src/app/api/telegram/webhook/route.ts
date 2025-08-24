@@ -1891,9 +1891,7 @@ async function handleAdminStep(userId: number, chatId: number, text: string, use
       await sendTelegramMessage(chatId, '❌ Неверный формат. Используйте формат: Имя;Телефон;Номер авто;Тип ТС');
     }
   }
-}
-
-// Функция для показа активных заказов водителя
+}// Функция для показа активных заказов водителя
 async function showDriverActiveOrders(chatId: number, driverId: number) {
   try {
     const orders = loadOrders();
@@ -2018,4 +2016,7 @@ async function showAvailableOrders(chatId: number) {
     console.error('Ошибка при показе доступных заказов:', error);
     await sendTelegramMessage(chatId, '❌ Ошибка при загрузке заказов. Попробуйте позже.');
   }
+}
+
+
 }

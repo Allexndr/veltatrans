@@ -17,7 +17,11 @@ export default function ServicesPreview({}: {locale: string}) {
       description: 'Мы организуем международные автомобильные перевозки из Китая в Россию, Казахстан и Европу. Работаем как с комплектными грузами (FTL), так и со сборными (LTL). У нас собственная сеть проверенных перевозчиков и надежная система отслеживания.',
       icon: (
         <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0M19 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0M3 12h2m14 0h2M12 3v18" />
+          <rect x="1" y="3" width="15" height="8" rx="2" strokeWidth={2} />
+          <rect x="16" y="6" width="6" height="5" rx="1" strokeWidth={2} />
+          <circle cx="6" cy="17" r="2" strokeWidth={2} />
+          <circle cx="19" cy="17" r="2" strokeWidth={2} />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 15v2M20 15v2" />
         </svg>
       ),
       href: '/services/land',
@@ -25,11 +29,15 @@ export default function ServicesPreview({}: {locale: string}) {
     },
     {
       id: 2,
-      title: 'Железнодорожные перевозки',
+      title: 'ЖД перевозки',
       description: 'Прямые контейнерные поезда из Китая в Россию и страны СНГ. Возможность отправки как полных контейнеров (FCL), так и сборных грузов (LCL). Оперативные сроки и конкурентные тарифы.',
       icon: (
         <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M3 14h18m-9-4v8m-2 0h4" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 18h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 18v2a1 1 0 01-1 1H6a1 1 0 01-1-1v-2M16 18v2a1 1 0 001 1h1a1 1 0 001-1v-2" />
+          <circle cx="8" cy="21" r="1" />
+          <circle cx="16" cy="21" r="1" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 10h6M9 13h6" />
         </svg>
       ),
       href: '/services/railway',
@@ -37,7 +45,7 @@ export default function ServicesPreview({}: {locale: string}) {
     },
     {
       id: 3,
-      title: 'Мультимодальные перевозки',
+      title: 'Мультимодальные',
       description: 'Комбинация морского, автомобильного и железнодорожного транспорта. Оптимальное решение по цене и срокам доставки. Подбираем маршрут под задачу клиента.',
       icon: (
         <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -62,7 +70,7 @@ export default function ServicesPreview({}: {locale: string}) {
   ];
 
   return (
-    <section className="py-24 bg-white relative overflow-hidden">
+    <section className="py-16 sm:py-20 lg:py-24 bg-white relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute top-20 left-10 w-32 h-32 bg-velta-50 rounded-full blur-2xl animate-pulse" />
       <div className="absolute bottom-20 right-10 w-40 h-40 bg-velta-50 rounded-full blur-2xl animate-pulse" style={{animationDelay: '2s'}} />
@@ -72,7 +80,7 @@ export default function ServicesPreview({}: {locale: string}) {
         {/* Services grid */}
         <motion.div 
           ref={ref}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 items-stretch"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-12 items-stretch"
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.8, staggerChildren: 0.2 }}
@@ -85,7 +93,7 @@ export default function ServicesPreview({}: {locale: string}) {
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              <div className="relative bg-white rounded-3xl p-8 shadow-lg transition-all duration-500 transform border border-gray-100 overflow-hidden hover:shadow-2xl hover:shadow-velta-100/50 hover:-translate-y-2 flex flex-col h-full">
+              <div className="relative bg-white rounded-3xl p-6 lg:p-8 shadow-lg transition-all duration-500 transform border border-gray-100 overflow-hidden hover:shadow-2xl hover:shadow-velta-100/50 hover:-translate-y-2 flex flex-col h-full">
                 {/* Background gradient on hover */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
                 
@@ -99,7 +107,7 @@ export default function ServicesPreview({}: {locale: string}) {
                   </div>
                   
                   {/* Title */}
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-velta-600 transition-colors duration-300 min-h-[64px]">
+                  <h3 className="text-xl lg:text-2xl font-bold text-gray-900 mb-4 group-hover:text-velta-600 transition-colors duration-300 min-h-[48px] lg:min-h-[64px] leading-tight">
                     {service.title}
                   </h3>
                   
