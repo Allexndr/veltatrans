@@ -31,9 +31,9 @@ export const metadata: Metadata = {
   },
   manifest: '/manifest.json',
   icons: {
-    icon: '/favicon.png',
-    shortcut: '/favicon.png',
-    apple: '/favicon.png',
+    icon: '/assets/logos/New Logo VELTA TRANS favicon svg.svg',
+    shortcut: '/assets/logos/New Logo VELTA TRANS favicon svg.svg',
+    apple: '/assets/logos/New Logo VELTA TRANS.png',
   },
 }
 

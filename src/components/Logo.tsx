@@ -8,8 +8,8 @@ interface LogoProps {
 }
 
 export default function Logo({className = '', size = 'md'}: LogoProps) {
-  // Use the new Velta Trans logo
-  const [src, setSrc] = useState('/images/logo-velta.png');
+  // Use the new Velta Trans logo from assets
+  const [src, setSrc] = useState('/assets/logos/New Logo VELTA TRANS.png');
   
   // Увеличенные размеры для лучшего отображения
   const getDimensions = () => {
@@ -38,7 +38,7 @@ export default function Logo({className = '', size = 'md'}: LogoProps) {
           height: `${height}px`,
           minHeight: `${height}px`
         }}
-        onError={() => setSrc('/images/logo-velta.svg')}
+        onError={() => setSrc('/assets/logos/New Logo VELTA TRANS svg.svg')}
       />
     </div>
   );

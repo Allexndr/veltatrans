@@ -10,37 +10,37 @@ export default function HeroGallery() {
   // Массив изображений логистики с новыми фотографиями
   const images = [
     {
-      src: '/images/logistics/truck-velta-trans.jpg',
+      src: '/assets/images/truck-velta-trans.jpg',
       alt: 'Автопарк VELTA TRANS',
       title: 'Автомобильные перевозки',
       icon: '🚛'
     },
     {
-      src: '/images/logistics/railway-wagons.jpg', 
+      src: '/assets/images/railway-wagons.jpg', 
       alt: 'Железнодорожные перевозки - полувагоны',
       title: 'Железнодорожные перевозки',
       icon: '🚂'
     },
     {
-      src: '/images/logistics/warehouse-outdoor.jpg',
+      src: '/assets/images/warehouse-outdoor.jpg',
       alt: 'Складские услуги - уличные ангары',
       title: 'Складские услуги',
       icon: '🏭'
     },
     {
-      src: '/images/logistics/multimodal-transport.jpg',
+      src: '/assets/images/multimodal-transport.jpg',
       alt: 'Мультимодальные перевозки',
       title: 'Мультимодальные перевозки',
       icon: '🚢✈️'
     },
     {
-      src: '/images/logistics/project-cargo.jpg',
+      src: '/assets/images/project-cargo.jpg',
       alt: 'Проектные перевозки - крупногабаритные грузы',
       title: 'Проектные перевозки',
       icon: '🏗️'
     },
     {
-      src: '/images/logistics/customs-new.jpg',
+      src: '/assets/images/customs-new.jpg',
       alt: 'Таможенное оформление и документооборот',
       title: 'Таможенные услуги',
       icon: '🏛️'

@@ -1,85 +1,113 @@
 # Velta Trans - Структура проекта
 
-## 📁 Основная структура
+## 📁 Организация файлов
 
 ```
-china/
-├── src/                    # Исходный код
-│   ├── app/               # Next.js App Router
-│   │   ├── [locale]/      # Локализованные страницы
-│   │   └── layout.tsx     # Корневой layout
-│   ├── components/        # React компоненты
-│   ├── i18n/             # Интернационализация
-│   └── styles/            # Стили и CSS
-├── public/                # Статические файлы
-│   ├── images/            # Изображения
-│   │   └── logistics/     # Фотографии логистики
-│   └── favicon.ico        # Иконка сайта
-├── messages/              # Переводы
-│   └── ru.json           # Русский язык
-├── materials/             # Исходные материалы
-├── scripts/               # Скрипты и утилиты
-└── docs/                  # Документация
+velta-trans/
+├── 📁 src/                          # Исходный код
+│   ├── 📁 app/                      # Next.js App Router
+│   │   ├── 📁 [locale]/            # Локализованные страницы
+│   │   │   ├── 📄 page.tsx         # Главная страница
+│   │   │   ├── 📄 about/           # О компании
+│   │   │   ├── 📄 services/        # Услуги
+│   │   │   ├── 📄 directions/      # Направления
+│   │   │   ├── 📄 rates/           # Тарифы
+│   │   │   ├── 📄 contacts/        # Контакты
+│   │   │   └── 📄 layout.tsx       # Локализованный layout
+│   │   ├── 📁 api/                 # API маршруты
+│   │   │   ├── 📁 telegram/        # Telegram бот API
+│   │   │   ├── 📁 contact/         # Контактные формы
+│   │   │   └── 📁 tracking/        # Отслеживание грузов
+│   │   ├── 📄 layout.tsx           # Корневой layout
+│   │   └── 📄 globals.css          # Глобальные стили
+│   ├── 📁 components/               # React компоненты
+│   │   ├── 📄 Header.tsx           # Шапка сайта
+│   │   ├── 📄 Footer.tsx           # Подвал сайта
+│   │   ├── 📄 Logo.tsx             # Логотип
+│   │   ├── 📄 Hero.tsx             # Главная секция
+│   │   ├── 📄 HeroGallery.tsx      # Галерея изображений
+│   │   ├── 📄 ServicesPreview.tsx  # Предварительный просмотр услуг
+│   │   └── 📄 FloatingContacts.tsx # Плавающие контакты
+│   ├── 📁 lib/                     # Библиотеки и утилиты
+│   ├── 📁 utils/                   # Вспомогательные функции
+│   └── 📁 i18n/                    # Интернационализация
+├── 📁 assets/                       # Ресурсы проекта
+│   ├── 📁 images/                  # Изображения
+│   │   ├── 📄 truck-velta-trans.jpg
+│   │   ├── 📄 railway-wagons.jpg
+│   │   ├── 📄 warehouse-outdoor.jpg
+│   │   ├── 📄 multimodal-transport.jpg
+│   │   ├── 📄 project-cargo.jpg
+│   │   └── 📄 customs-new.jpg
+│   ├── 📁 logos/                   # Логотипы и иконки
+│   │   ├── 📄 New Logo VELTA TRANS.png
+│   │   ├── 📄 New Logo VELTA TRANS svg.svg
+│   │   ├── 📄 New Logo VELTA TRANS favicon svg.svg
+│   │   └── 📄 *.svg                # SVG иконки
+│   ├── 📁 documents/               # Документы
+│   │   ├── 📄 Презентация_*.pptx
+│   │   ├── 📄 КП VT rus.pdf
+│   │   └── 📄 *.pdf, *.docx, *.txt
+│   └── 📁 data/                    # Данные
+│       ├── 📄 drivers.json
+│       ├── 📄 Контакты водителей.json
+│       └── 📄 *.xlsx
+├── 📁 public/                       # Публичные файлы
+│   ├── 📄 manifest.json            # PWA манифест
+│   └── 📄 robots.txt               # SEO robots
+├── 📁 messages/                     # Переводы
+│   ├── 📄 ru.json                  # Русский
+│   ├── 📄 en.json                  # Английский
+│   ├── 📄 kz.json                  # Казахский
+│   └── 📄 zh.json                  # Китайский
+├── 📁 docs/                         # Документация
+│   ├── 📄 README.md
+│   └── 📄 PROJECT_STRUCTURE.md
+├── 📄 package.json                  # Зависимости
+├── 📄 next.config.js               # Конфигурация Next.js
+├── 📄 tailwind.config.js           # Конфигурация Tailwind CSS
+├── 📄 tsconfig.json                # Конфигурация TypeScript
+└── 📄 .gitignore                   # Git игнорируемые файлы
 ```
 
-## 🎯 Основные компоненты
+## 🚀 Технологии
 
-### Header
-- **Файл:** `src/components/Header.tsx`
-- **Описание:** Навигационная панель с логотипом и меню
-- **Особенности:** 
-  - Адаптивный дизайн
-  - Локализация
-  - Стильные hover эффекты
-  - Аккуратные обводки кнопок
+- **Framework:** Next.js 14.2.32
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Internationalization:** next-intl
+- **Deployment:** Vercel
 
-### HeroGallery
-- **Файл:** `src/components/HeroGallery.tsx`
-- **Описание:** Карусель изображений логистики
-- **Изображения:**
-  - Морские перевозки
-  - Железнодорожные перевозки
-  - Складские услуги
-  - Международная логистика
-  - Автомобильные перевозки
-  - Таможенные услуги
+## 🎯 Основные функции
 
-### Logo
-- **Файл:** `src/components/Logo.tsx`
-- **Описание:** Логотип компании с адаптивными размерами
+- 🌍 Многоязычность (RU, EN, KZ, ZH)
+- 🚛 Логистические услуги
+- 📱 Адаптивный дизайн
+- 🔍 SEO оптимизация
+- 📊 Аналитика и отслеживание
+- 🤖 Telegram бот интеграция
 
-## 🌐 Интернационализация
+## 📱 Страницы
 
-- **Поддержка языков:** RU, EN, KZ, ZH
-- **Файлы переводов:** `messages/ru.json`
-- **Роутинг:** `src/i18n/routing.ts`
+1. **Главная** - Обзор услуг и компании
+2. **Услуги** - Детальное описание логистических услуг
+3. **Направления** - География перевозок
+4. **Тарифы** - Стоимость услуг
+5. **О компании** - Информация о Velta Trans
+6. **Контакты** - Способы связи
 
-## 🎨 Стилизация
-
-- **CSS Framework:** Tailwind CSS
-- **Анимации:** Framer Motion
-- **Цветовая схема:** Velta brand colors
-- **Адаптивность:** Mobile-first подход
-
-## 🚀 Запуск проекта
+## 🔧 Разработка
 
 ```bash
-npm run dev          # Разработка
-npm run build        # Сборка
-npm run start        # Продакшн
+# Установка зависимостей
+npm install
+
+# Запуск в режиме разработки
+npm run dev
+
+# Сборка для продакшена
+npm run build
+
+# Запуск продакшн версии
+npm start
 ```
-
-## 📱 Адаптивность
-
-- **Mobile:** 320px+
-- **Tablet:** 768px+
-- **Desktop:** 1024px+
-- **Large:** 1280px+
-
-## 🔧 Технологии
-
-- **Frontend:** Next.js 15, React 18
-- **Styling:** Tailwind CSS
-- **Animations:** Framer Motion
-- **Internationalization:** next-intl
-- **TypeScript:** Полная поддержка
