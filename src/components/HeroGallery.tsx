@@ -10,34 +10,34 @@ export default function HeroGallery() {
   // Массив изображений логистики с новыми фотографиями
   const images = [
     {
-      src: '/images/logistics/container-ship-new.jpg',
-      alt: 'Контейнеровоз в порту',
-      title: 'Морские перевозки',
-      icon: '🚢'
+      src: '/images/logistics/truck-velta-trans.jpg',
+      alt: 'Автопарк VELTA TRANS',
+      title: 'Автомобильные перевозки',
+      icon: '🚛'
     },
     {
-      src: '/images/logistics/freight-train.jpg', 
-      alt: 'Железнодорожные перевозки',
+      src: '/images/logistics/railway-wagons.jpg', 
+      alt: 'Железнодорожные перевозки - полувагоны',
       title: 'Железнодорожные перевозки',
       icon: '🚂'
     },
     {
-      src: '/images/logistics/warehouse-digital.jpg',
-      alt: 'Цифровые складские решения',
+      src: '/images/logistics/warehouse-outdoor.jpg',
+      alt: 'Складские услуги - уличные ангары',
       title: 'Складские услуги',
       icon: '🏭'
     },
     {
-      src: '/images/logistics/international-logistics.jpg',
-      alt: 'Международная логистика',
-      title: 'Международная логистика',
-      icon: '🌍'
+      src: '/images/logistics/multimodal-transport.jpg',
+      alt: 'Мультимодальные перевозки',
+      title: 'Мультимодальные перевозки',
+      icon: '🚢✈️'
     },
     {
-      src: '/images/logistics/truck-fleet.jpg',
-      alt: 'Автопарк для перевозок',
-      title: 'Автомобильные перевозки',
-      icon: '🚛'
+      src: '/images/logistics/project-cargo.jpg',
+      alt: 'Проектные перевозки - крупногабаритные грузы',
+      title: 'Проектные перевозки',
+      icon: '🏗️'
     },
     {
       src: '/images/logistics/customs-new.jpg',
