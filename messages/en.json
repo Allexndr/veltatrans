@@ -442,11 +442,31 @@
       "send": "Send"
     }
   },
+  "analytics": {
+    "title": "Analytics and Metrics",
+    "description": "Comprehensive analysis of logistics system performance"
+  },
   "footer": {
     "title": "Velta Trans",
     "description": "International logistics company",
+    "tagline": "International logistics solutions",
     "phone": "Phone",
     "email": "Email",
-    "social": "We are on social media"
+    "social": "We are on social media",
+    "quickLinks": "Quick Links",
+    "services": "Services",
+    "directions": "Directions",
+    "cases": "Cases",
+    "contacts": "Contacts",
+    "autoTransport": "Auto Transport",
+    "railwayTransport": "Railway Transport",
+    "multimodalTransport": "Multimodal Transport",
+    "projectTransport": "Project Transport",
+    "mainPhone": "Main Phone",
+    "address": "Address",
+    "addressText": "Kazakhstan, Almaty",
+    "allRightsReserved": "All rights reserved",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use"
   }
 }

@@ -14,6 +14,13 @@
     "name": "Velta Trans",
     "tagline": "国际物流解决方案"
   },
+  "hero": {
+    "title": "CIS、中国和欧洲的国际货运",
+    "subtitle": "为您的企业提供可靠物流，包括完整服务和海关清关",
+    "content": "我们组织俄罗斯、哈萨克斯坦和中国之间的货物运输，提供全方位的物流服务。",
+    "cta": "计算成本",
+    "secondary_cta": "提交申请"
+  },
   "common": {
     "loading": "加载中..."
   },
@@ -383,11 +390,31 @@
       "send": "发送"
     }
   },
+  "analytics": {
+    "title": "分析和指标",
+    "description": "物流系统性能的综合分析"
+  },
   "footer": {
     "title": "Velta Trans",
     "description": "国际物流公司",
+    "tagline": "国际物流解决方案",
     "phone": "电话",
     "email": "邮箱",
-    "social": "我们在社交媒体上"
+    "social": "我们在社交媒体上",
+    "quickLinks": "快速链接",
+    "services": "服务",
+    "directions": "路线",
+    "cases": "案例",
+    "contacts": "联系方式",
+    "autoTransport": "汽车运输",
+    "railwayTransport": "铁路运输",
+    "multimodalTransport": "多式联运",
+    "projectTransport": "项目运输",
+    "mainPhone": "主要电话",
+    "address": "地址",
+    "addressText": "哈萨克斯坦，阿拉木图",
+    "allRightsReserved": "保留所有权利",
+    "privacy": "隐私政策",
+    "terms": "使用条款"
   }
 }
