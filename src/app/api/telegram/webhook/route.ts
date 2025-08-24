@@ -1765,7 +1765,7 @@ async function startEditDriver(chatId: number, driverId: number) {
     one_time_keyboard: false
   };
   
-  const message = `✏️ <b>Редактирование водителя</b>\n\n<b>Текущие данные:</b>\n`;
+  let message = `✏️ <b>Редактирование водителя</b>\n\n<b>Текущие данные:</b>\n`;
   message += `👤 Имя: ${driver.name}\n`;
   message += `📱 Телефон: ${driver.phone}\n`;
   message += `🚗 Номер авто: ${driver.carNumber}\n`;
@@ -1799,7 +1799,7 @@ async function confirmDeleteDriver(chatId: number, driverId: number) {
     ]
   };
   
-  const message = `🗑️ <b>Подтверждение удаления</b>\n\n`;
+  let message = `🗑️ <b>Подтверждение удаления</b>\n\n`;
   message += `Вы действительно хотите удалить водителя?\n\n`;
   message += `👤 Имя: ${driver.name}\n`;
   message += `📱 Телефон: ${driver.phone}\n`;

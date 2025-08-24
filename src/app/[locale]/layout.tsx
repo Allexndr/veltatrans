@@ -2,7 +2,7 @@ import {NextIntlClientProvider} from 'next-intl';
 import {getMessages, getTranslations} from 'next-intl/server';
 import {notFound} from 'next/navigation';
 import {routing} from '@/i18n/routing';
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 import PerformanceOptimizer from '@/components/PerformanceOptimizer';
 import {SEO} from '@/utils/constants';
@@ -10,15 +10,8 @@ import '../globals.css';
 import FloatingContacts from '@/components/FloatingContacts';
 import Script from 'next/script';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-  display: 'swap',
-  preload: true,
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   display: 'swap',
   preload: true,
@@ -117,7 +110,7 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider messages={messages} locale={locale}>
-      <div className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <div className={`${inter.variable} antialiased`}>
         {children}
         {/* Floating contacts: updated with real contacts */}
         <FloatingContacts
