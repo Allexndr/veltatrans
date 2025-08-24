@@ -1,11 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
-import { getDb } from '@/lib/mongodb';
-import { Driver, Order, UserState, StaffUser } from '@/lib/models';
 
 export async function POST(request: NextRequest) {
   try {
+    // Проверяем наличие MongoDB URI
+    if (!process.env.MONGODB_URI) {
+      return NextResponse.json({
+        success: false,
+        message: 'MongoDB URI не настроен. Добавьте MONGODB_URI в .env.local',
+        error: 'MONGODB_URI_MISSING'
+      }, { status: 400 });
+    }
+
+    // Динамически импортируем MongoDB модули только при необходимости
+    const { getDb } = await import('@/lib/mongodb');
     const db = await getDb();
     
     // Пути к JSON файлам
@@ -116,9 +125,8 @@ export async function POST(request: NextRequest) {
         if (Array.isArray(staffUsersData)) {
           const staffUsersToInsert = staffUsersData.map((staff: any) => ({
             ...staff,
-            createdAt: staff.createdAt || new Date().toISOString(),
-            lastLogin: staff.lastLogin || new Date().toISOString(),
-            isActive: true
+            createdAt: new Date().toISOString(),
+            lastActivity: new Date().toISOString()
           }));
           
           if (staffUsersToInsert.length > 0) {
@@ -132,77 +140,71 @@ export async function POST(request: NextRequest) {
       }
     }
     
-    // Создаем индексы для оптимизации
-    try {
-      const ordersCollection = db.collection('orders');
-      const driversCollection = db.collection('drivers');
-      const userStatesCollection = db.collection('user_states');
-      
-      // Индексы для заказов
-      await ordersCollection.createIndex({ trackingNumber: 1 }, { unique: true });
-      await ordersCollection.createIndex({ status: 1 });
-      await ordersCollection.createIndex({ createdAt: 1 });
-      await ordersCollection.createIndex({ assignedDriver: 1 });
-      
-      // Индексы для водителей
-      await driversCollection.createIndex({ phone: 1 }, { unique: true });
-      await driversCollection.createIndex({ status: 1 });
-      
-      // Индексы для состояний пользователей
-      await userStatesCollection.createIndex({ userId: 1 }, { unique: true });
-      await userStatesCollection.createIndex({ lastActivity: 1 });
-      
-      console.log('✅ Индексы созданы');
-    } catch (error) {
-      errors.push(`Ошибка создания индексов: ${error}`);
+    if (errors.length > 0) {
+      return NextResponse.json({
+        success: true,
+        message: `Миграция завершена с ошибками. Мигрировано: ${migratedCount}`,
+        migratedCount,
+        errors
+      }, { status: 200 });
     }
     
     return NextResponse.json({
       success: true,
-      message: `Миграция завершена. Перенесено ${migratedCount} записей.`,
-      migratedCount,
-      errors: errors.length > 0 ? errors : undefined
+      message: `Миграция успешно завершена. Мигрировано: ${migratedCount}`,
+      migratedCount
     });
     
   } catch (error) {
-    console.error('Migration error:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' }, 
-      { status: 500 }
-    );
+    console.error('Ошибка миграции:', error);
+    return NextResponse.json({
+      success: false,
+      message: 'Ошибка при миграции данных',
+      error: error instanceof Error ? error.message : 'Unknown error'
+    }, { status: 500 });
   }
 }
 
 export async function GET() {
   try {
+    // Проверяем наличие MongoDB URI
+    if (!process.env.MONGODB_URI) {
+      return NextResponse.json({
+        success: false,
+        message: 'MongoDB URI не настроен. Добавьте MONGODB_URI в .env.local',
+        error: 'MONGODB_URI_MISSING'
+      }, { status: 400 });
+    }
+
+    // Динамически импортируем MongoDB модули только при необходимости
+    const { getDb } = await import('@/lib/mongodb');
     const db = await getDb();
     
-    // Получаем статистику по коллекциям
-    const collections = ['orders', 'drivers', 'user_states', 'staff_users'];
-    const stats: Record<string, number> = {};
+    const collections = ['drivers', 'orders', 'user_states', 'staff_users'];
+    const stats: any = {};
     
     for (const collectionName of collections) {
       try {
         const collection = db.collection(collectionName);
-        stats[collectionName] = await collection.countDocuments();
+        const count = await collection.countDocuments();
+        stats[collectionName] = count;
       } catch (error) {
-        stats[collectionName] = 0;
+        stats[collectionName] = { error: 'Ошибка при подсчете' };
       }
     }
     
     return NextResponse.json({
       success: true,
-      data: {
-        collections: stats,
-        timestamp: new Date().toISOString()
-      }
+      message: 'Статистика коллекций MongoDB',
+      stats
     });
     
   } catch (error) {
-    console.error('Stats error:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' }, 
-      { status: 500 }
-    );
+    console.error('Ошибка получения статистики:', error);
+    return NextResponse.json({
+      success: false,
+      message: 'Ошибка при получении статистики',
+      error: error instanceof Error ? error.message : 'Unknown error'
+    }, { status: 500 });
   }
 }

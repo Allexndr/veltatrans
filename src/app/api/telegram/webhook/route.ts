@@ -1392,19 +1392,19 @@ async function listActiveOrders(chatId: number, userId?: number) {
     }
   } else {
     // Для админов показываем общий список
-    let text = `📦 <b>Активные заказы (${activeOrders.length}):</b>\n\n`;
-    
-    activeOrders.forEach((order, index) => {
-      text += `${index + 1}. <b>${order.from} → ${order.to}</b>
+  let text = `📦 <b>Активные заказы (${activeOrders.length}):</b>\n\n`;
+  
+  activeOrders.forEach((order, index) => {
+    text += `${index + 1}. <b>${order.from} → ${order.to}</b>
 🔧 ${order.carType}
 📝 ${order.description}
 💰 Ставок: ${order.bids.length}
 🆔 ${order.id}
 
 `;
-    });
-    
-    await sendTelegramMessage(chatId, text);
+  });
+  
+  await sendTelegramMessage(chatId, text);
   }
 }
 
@@ -2016,7 +2016,4 @@ async function showAvailableOrders(chatId: number) {
     console.error('Ошибка при показе доступных заказов:', error);
     await sendTelegramMessage(chatId, '❌ Ошибка при загрузке заказов. Попробуйте позже.');
   }
-}
-
-
 }
