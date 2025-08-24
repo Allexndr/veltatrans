@@ -11,15 +11,15 @@ export default function Logo({className = '', size = 'md'}: LogoProps) {
   // Use the new Velta Trans logo from assets
   const [src, setSrc] = useState('/assets/logos/New Logo VELTA TRANS.png');
   
-  // Увеличенные размеры для лучшего отображения
+  // Увеличенные размеры для лучшего отображения (удвоены)
   const getDimensions = () => {
     switch (size) {
-      case 'sm': return { width: 140, height: 42 };
-      case 'md': return { width: 180, height: 54 };
-      case 'lg': return { width: 240, height: 72 };
-      case 'xl': return { width: 320, height: 96 };
-      case 'footer': return { width: 400, height: 120 };
-      default: return { width: 180, height: 54 };
+      case 'sm': return { width: 280, height: 84 };
+      case 'md': return { width: 360, height: 108 };
+      case 'lg': return { width: 480, height: 144 };
+      case 'xl': return { width: 640, height: 192 };
+      case 'footer': return { width: 800, height: 240 };
+      default: return { width: 360, height: 108 };
     }
   };
 
