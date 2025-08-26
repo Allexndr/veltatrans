@@ -1,93 +1,16 @@
-import {NextIntlClientProvider} from 'next-intl';
-import {getMessages, getTranslations} from 'next-intl/server';
-import {notFound} from 'next/navigation';
-import {routing} from '@/i18n/routing';
-import { Inter } from "next/font/google";
-import type { Metadata } from "next";
-import PerformanceOptimizer from '@/components/PerformanceOptimizer';
-import {SEO} from '@/utils/constants';
-import '../globals.css';
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
+import { notFound } from 'next/navigation';
+import { Inter } from 'next/font/google';
+import { routing } from '@/i18n/routing';
 import FloatingContacts from '@/components/FloatingContacts';
 import Script from 'next/script';
+import AnimatedTruck from '@/components/AnimatedTruck';
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: 'swap',
-  preload: true,
-});
-
-export async function generateMetadata({params}: {params: Promise<{locale: string}>}): Promise<Metadata> {
-  const {locale} = await params;
-  const t = await getTranslations({locale});
-  
-  return {
-    title: {
-      default: t('home.title'),
-      template: `%s | ${t('home.title')}`
-    },
-    description: t('home.description'),
-    keywords: SEO.DEFAULT_KEYWORDS,
-    authors: [{ name: 'Velta Trans' }],
-    creator: 'Velta Trans',
-    publisher: 'Velta Trans',
-    formatDetection: {
-      email: false,
-      address: false,
-      telephone: false,
-    },
-    metadataBase: new URL(SEO.SITE_URL),
-    alternates: {
-      canonical: '/',
-      languages: {
-        'ru': '/ru',
-        'en': '/en',
-        'kz': '/kz',
-        'zh': '/zh',
-      } as Record<string, string>,
-    },
-    openGraph: {
-      title: t('home.title'),
-      description: t('home.description'),
-      url: SEO.SITE_URL,
-      siteName: 'Velta Trans',
-      locale: locale,
-      type: 'website',
-      images: [
-        {
-          url: '/og-image.jpg',
-          width: 1200,
-          height: 630,
-          alt: 'Velta Trans - Международная логистика',
-        },
-      ],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: t('home.title'),
-      description: t('home.description'),
-      images: ['/og-image.jpg'],
-    },
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        'max-video-preview': -1,
-        'max-image-preview': 'large',
-        'max-snippet': -1,
-      },
-    },
-    verification: {
-      google: process.env.NEXT_PUBLIC_SEO_GOOGLE || undefined,
-      yandex: process.env.NEXT_PUBLIC_SEO_YANDEX || undefined,
-    },
-  };
-}
+const inter = Inter({ subsets: ['latin'] });
 
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({locale}));
+  return routing.locales.map((locale) => ({ locale }));
 }
 
 export default async function LocaleLayout({
@@ -111,6 +34,9 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider messages={messages} locale={locale}>
       <div className={`${inter.variable} antialiased`}>
+        {/* Анимированный грузовик */}
+        <AnimatedTruck />
+        
         {children}
         {/* Floating contacts: updated with real contacts */}
         <FloatingContacts

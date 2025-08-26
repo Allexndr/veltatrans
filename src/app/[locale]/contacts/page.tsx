@@ -37,7 +37,6 @@ export default function ContactsPage() {
     <div className="min-h-screen bg-white">
       <Header />
       {/* Отступ для фиксированного header */}
-      <div className="h-16 lg:h-20"></div>
       <main>
         {/* Hero Section */}
         <section className="bg-velta-navy text-white py-16">
@@ -110,6 +109,27 @@ export default function ContactsPage() {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Телефоны с пояснениями (06 — многоканальный, 11 — sales, 22 — логисты) */}
+        <section className="py-8">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Телефоны</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="border rounded-lg p-5">
+                <p className="text-gray-700 font-medium mb-1">Многоканальный (06)</p>
+                <a href="tel:+77002770006" className="text-velta-navy font-semibold">+7 700 277 00 06</a>
+              </div>
+              <div className="border rounded-lg p-5">
+                <p className="text-gray-700 font-medium mb-1">Sales (11)</p>
+                <a href="tel:+77010704011" className="text-velta-navy font-semibold">+7 701 070 40 11</a>
+              </div>
+              <div className="border rounded-lg p-5">
+                <p className="text-gray-700 font-medium mb-1">Логисты (22)</p>
+                <a href="tel:+77002770022" className="text-velta-navy font-semibold">+7 700 277 00 22</a>
+              </div>
             </div>
           </div>
         </section>

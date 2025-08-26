@@ -17,13 +17,11 @@ export default function ServicesPage() {
         'Доставка от двери до двери'
       ],
       icon: (
-        <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <rect x="1" y="3" width="15" height="8" rx="2" strokeWidth={2} />
-          <rect x="16" y="6" width="6" height="5" rx="1" strokeWidth={2} />
-          <circle cx="6" cy="17" r="2" strokeWidth={2} />
-          <circle cx="19" cy="17" r="2" strokeWidth={2} />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 15v2M20 15v2" />
-        </svg>
+        <img 
+          src="/truck-speed-svgrepo-com.svg" 
+          alt="Автоперевозки" 
+          className="w-12 h-12 brightness-0 invert"
+        />
       ),
     },
     {
@@ -37,27 +35,25 @@ export default function ServicesPage() {
         'Контейнерные решения'
       ],
       icon: (
-        <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 18h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 18v2a1 1 0 01-1 1H6a1 1 0 01-1-1v-2M16 18v2a1 1 0 001 1h1a1 1 0 001-1v-2" />
-          <circle cx="8" cy="21" r="1" />
-          <circle cx="16" cy="21" r="1" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 10h6M9 13h6" />
-        </svg>
+        <img 
+          src="/train-locomotive-svgrepo-com.svg" 
+          alt="ЖД перевозки" 
+          className="w-12 h-12 brightness-0 invert"
+        />
       ),
     },
     {
-      title: 'Мультимодальные',
+      title: 'Мультимодальные перевозки',
       description: 'Комбинация морского, автомобильного и железнодорожного транспорта. Оптимальное решение по цене и срокам доставки. Подбираем маршрут под задачу клиента.',
       features: [
-        'Море + авто комбинации',
-        'ЖД + авто доставка',
+        'Морские перевозки',
+        'Железнодорожные перевозки',
+        'Автомобильные перевозки',
         'Оптимизация маршрутов',
-        'Единый договор',
-        'Снижение рисков'
+        'Комплексные решения'
       ],
       icon: (
-        <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-12 h-12 brightness-0 invert" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
         </svg>
       ),
@@ -116,7 +112,6 @@ export default function ServicesPage() {
     <div className="min-h-screen bg-white">
       <Header />
       {/* Отступ для фиксированного header */}
-      <div className="h-16 lg:h-20"></div>
       <main>
         {/* Hero Section */}
         <section className="bg-velta-navy text-white py-16">

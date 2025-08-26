@@ -31,9 +31,10 @@
     "cta": "获取报价",
     "contact": {"title": "联系我们"},
     "stats": {
-      "years": "多年经验",
-      "clients": "满意客户",
-      "countries": "配送国家"
+      "countries": "配送国家",
+      "experience": "15年以上经验",
+      "geography": "广泛地理覆盖",
+      "support": "24/7支持"
     },
     "features": {
       "experience": "15年以上经验",
@@ -48,6 +49,22 @@
   "services": {
     "title": "我们的服务",
     "description": "为您的企业提供全方位的物流服务",
+    "autoTransport": {
+      "title": "公路运输",
+      "description": "我们组织从中国到俄罗斯、哈萨克斯坦和欧洲的国际公路运输。我们处理整车运输(FTL)和零担运输(LTL)。我们拥有自己的验证承运人网络和可靠的跟踪系统。"
+    },
+    "railwayTransport": {
+      "title": "铁路运输",
+      "description": "从中国到俄罗斯和独联体国家的直达集装箱列车。可以发送整箱(FCL)和拼箱(LCL)。快速交货时间和有竞争力的价格。"
+    },
+    "multimodalTransport": {
+      "title": "多式联运",
+      "description": "海、陆、铁运输的组合。价格和交货时间的最佳解决方案。我们为客户的任务选择合适的路线。"
+    },
+    "projectTransport": {
+      "title": "项目货物运输",
+      "description": "超限和重型货物的交付。路线开发、特种设备组织和协调。运输建筑和能源设备的经验。"
+    },
     "air": {"title": "航空运输", "description": "使用航空运输的快速交付"},
     "sea": {"title": "海运", "description": "经济型海运货物运输"},
     "land": {"title": "陆运", "description": "铁路和公路运输"},
@@ -64,7 +81,25 @@
       "title": "咨询服务",
       "description": "专业物流咨询"
     },
-    "more": "了解更多"
+    "more": "了解更多",
+    "cards": {
+      "auto": {
+        "title": "公路运输",
+        "description": "组织从中国到俄罗斯、哈萨克斯坦和欧洲的国际公路运输。支持整车(FTL)和拼车(LTL)。自有可靠承运商网络与跟踪系统。"
+      },
+      "rail": {
+        "title": "铁路运输",
+        "description": "中国至俄罗斯及独联体国家的直达集装箱班列。支持整箱(FCL)与拼箱(LCL)。时效稳定、价格具有竞争力。"
+      },
+      "multimodal": {
+        "title": "多式联运",
+        "description": "海运、公路与铁路相结合。兼顾价格与时效的最佳解决方案。根据客户任务定制路线。"
+      },
+      "project": {
+        "title": "项目运输",
+        "description": "超限与重型货物运输。路线设计、特种设备与许可办理。具备建筑与能源设备运输经验。"
+      }
+    }
   },
   "contact": {
     "title": "联系我们",
@@ -345,6 +380,7 @@
   "cases": {
     "title": "我们的案例",
     "description": "成功项目和运输的示例",
+    "home": "首页",
     "categories": {
       "all": "所有案例",
       "general": "普通货物",
@@ -377,7 +413,9 @@
     "case6": {
       "title": "项目货物",
       "description": "大型基础设施项目的综合物流"
-    }
+    },
+    "viewDetails": "查看详情",
+    "viewAll": "所有案例"
   },
   "contact_form": {
     "title": "联系我们",

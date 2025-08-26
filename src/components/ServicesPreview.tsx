@@ -13,42 +13,38 @@ export default function ServicesPreview({}: {locale: string}) {
   const services = [
     {
       id: 1,
-      title: 'Автоперевозки',
-      description: 'Мы организуем международные автомобильные перевозки из Китая в Россию, Казахстан и Европу. Работаем как с комплектными грузами (FTL), так и со сборными (LTL). У нас собственная сеть проверенных перевозчиков и надежная система отслеживания.',
+      title: t('cards.auto.title'),
+      description: t('cards.auto.description'),
       icon: (
-        <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <rect x="1" y="3" width="15" height="8" rx="2" strokeWidth={2} />
-          <rect x="16" y="6" width="6" height="5" rx="1" strokeWidth={2} />
-          <circle cx="6" cy="17" r="2" strokeWidth={2} />
-          <circle cx="19" cy="17" r="2" strokeWidth={2} />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 15v2M20 15v2" />
-        </svg>
+        <img 
+          src="/truck-speed-svgrepo-com.svg" 
+          alt={t('cards.auto.title')} 
+          className="w-12 h-12 brightness-0 invert"
+        />
       ),
       href: '/services/land',
       gradient: 'from-green-500 to-emerald-500'
     },
     {
       id: 2,
-      title: 'ЖД перевозки',
-      description: 'Прямые контейнерные поезда из Китая в Россию и страны СНГ. Возможность отправки как полных контейнеров (FCL), так и сборных грузов (LCL). Оперативные сроки и конкурентные тарифы.',
+      title: t('cards.rail.title'),
+      description: t('cards.rail.description'),
       icon: (
-        <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 18h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 18v2a1 1 0 01-1 1H6a1 1 0 01-1-1v-2M16 18v2a1 1 0 001 1h1a1 1 0 001-1v-2" />
-          <circle cx="8" cy="21" r="1" />
-          <circle cx="16" cy="21" r="1" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 10h6M9 13h6" />
-        </svg>
+        <img 
+          src="/train-locomotive-svgrepo-com.svg" 
+          alt={t('cards.rail.title')} 
+          className="w-12 h-12 brightness-0 invert"
+        />
       ),
       href: '/services/railway',
       gradient: 'from-gray-500 to-slate-500'
     },
     {
       id: 3,
-      title: 'Мультимодальные',
-      description: 'Комбинация морского, автомобильного и железнодорожного транспорта. Оптимальное решение по цене и срокам доставки. Подбираем маршрут под задачу клиента.',
+      title: t('cards.multimodal.title'),
+      description: t('cards.multimodal.description'),
       icon: (
-        <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-12 h-12 brightness-0 invert" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
         </svg>
       ),
@@ -57,8 +53,8 @@ export default function ServicesPreview({}: {locale: string}) {
     },
     {
       id: 4,
-      title: 'Проектные перевозки',
-      description: 'Доставка негабаритных и тяжеловесных грузов. Разработка маршрута, организация спецтехники и согласования. Опыт перевозки оборудования для строительства и энергетики.',
+      title: t('cards.project.title'),
+      description: t('cards.project.description'),
       icon: (
         <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />

@@ -5,7 +5,7 @@ import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import HeroGallery from '@/components/HeroGallery';
 import ServicesPreview from '@/components/ServicesPreview';
-import CasesSection from '@/components/CasesSection';
+import CasesGrid from '@/components/CasesGrid';
 import RecommendationsSection from '@/components/RecommendationsSection';
 import Calculator from '@/components/Calculator';
 import CargoTracking from '@/components/CargoTracking';
@@ -69,7 +69,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <CasesSection />
+        <CasesGrid locale={locale} />
         <RecommendationsSection locale={locale} />
         
         {/* New Advantages Section */}

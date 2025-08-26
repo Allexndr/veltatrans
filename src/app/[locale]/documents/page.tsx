@@ -9,7 +9,6 @@ export default async function DocumentsPage({params}: {params: Promise<{locale: 
     <div className="min-h-screen bg-white">
       <Header />
       {/* Отступ для фиксированного header */}
-      <div className="h-16 lg:h-20"></div>
       <main>
         <DocumentsSection locale={locale} />
       </main>

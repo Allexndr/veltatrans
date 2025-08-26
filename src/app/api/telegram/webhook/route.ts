@@ -67,6 +67,12 @@ interface Driver {
   carType: string;
   registeredAt: string;
   status: 'active' | 'inactive';
+  rating: number; // Средний рейтинг водителя (0-5)
+  totalOrders: number; // Общее количество заказов
+  completedOrders: number; // Завершенные заказы
+  ratingCount: number; // Количество оценок
+  clientRating: number; // Средний рейтинг от клиентов (0-5)
+  clientRatingCount: number; // Количество оценок от клиентов
 }
 
 interface Order {
@@ -81,6 +87,10 @@ interface Order {
   assignedDriver?: number;
   finalPrice?: number;
   trackingNumber?: string;
+  clientRating?: number; // Рейтинг клиента от водителя (1-5)
+  driverRating?: number; // Рейтинг водителя от клиента (1-5)
+  clientReview?: string; // Отзыв о клиенте
+  driverReview?: string; // Отзыв о водителе
 }
 
 interface Bid {
@@ -264,6 +274,7 @@ async function sendMainMenu(chatId: number) {
     inline_keyboard: [
       [{ text: '🚛 Водителям', callback_data: 'menu_drivers' }],
       [{ text: '📦 Клиентам', callback_data: 'menu_clients' }],
+      [{ text: '⭐ Рейтинг водителей', callback_data: 'show_rating' }],
       [{ text: '👨\u200d💼 Сотрудникам', callback_data: 'menu_staff' }]
     ]
   };
@@ -289,6 +300,8 @@ async function sendDriverMenu(chatId: number) {
       [{ text: '📚 Закрытые заказы', callback_data: 'view_closed_orders' }],
       [{ text: '🚛 Доступные заказы', callback_data: 'view_available_orders' }],
       [{ text: '📍 Обновить статус', callback_data: 'update_order_status' }],
+      [{ text: '⭐ Мой рейтинг', callback_data: 'my_driver_rating' }],
+      [{ text: '🔔 Уведомления', callback_data: 'configure_notifications' }],
       [{ text: '👤 Мой профиль', callback_data: 'driver_profile' }],
       [{ text: '🔐 Выйти из системы', callback_data: 'driver_logout' }],
       [{ text: '⬅️ Назад', callback_data: 'back_main' }]
@@ -435,7 +448,7 @@ export async function POST(request: NextRequest) {
         delete userStates[userId];
         saveUserStates(userStates);
         await sendMainMenu(chatId);
-        return; // Прерываем дальнейшую обработку
+        return NextResponse.json({ success: true }); // Прерываем дальнейшую обработку
       }
       
       // Обработка обычных кнопок
@@ -484,6 +497,7 @@ export async function POST(request: NextRequest) {
             saveUserStates(userStates);
           } else {
             await sendTelegramMessage(chatId, '❌ Неверный формат номера телефона. Попробуйте еще раз.');
+            return NextResponse.json({ success: true });
           }
         } else {
           await sendTelegramMessage(chatId, '❌ Это не ваш номер телефона. Поделитесь своим номером.');
@@ -507,6 +521,7 @@ export async function POST(request: NextRequest) {
           });
         } else {
           await sendTelegramMessage(chatId, '❌ Сначала поделитесь номером телефона.');
+          return NextResponse.json({ success: true });
         }
       }
       
@@ -554,7 +569,58 @@ Email: info@velta-logistics.com
 Сайт: <a href="https://velta-logistics.com">velta-logistics.com</a>`;
         await sendTelegramMessage(chatId, contactText);
       }
-      
+
+      // Рейтинги и статистика
+      else if (text === '/rating' || text.toLowerCase() === 'рейтинг') {
+        await showTopDrivers(chatId);
+      }
+      else if (text === '/myrating' || text.toLowerCase() === 'мой рейтинг') {
+        if (userState.driverAuthed && userState.driverData) {
+          const driverPhone = userState.driverData.Телефон;
+          const drivers = loadDrivers();
+          const driver = Object.values(drivers).find(d => d.phone === driverPhone);
+          if (driver) {
+            await showDriverRating(chatId, driver.id);
+          } else {
+            await sendTelegramMessage(chatId, '❌ Ваш профиль не найден. Попробуйте войти в систему заново.');
+          }
+        } else {
+          await sendTelegramMessage(chatId, '❌ Сначала войдите в систему как водитель.');
+        }
+      }
+
+      // Аналитика
+      else if (text === '/analytics' || text.toLowerCase() === 'аналитика') {
+        if (userId.toString() === ADMIN_ID) {
+          await showAnalytics(chatId);
+        } else {
+          await sendTelegramMessage(chatId, '❌ Доступ к аналитике только для администраторов.');
+        }
+      }
+      else if (text === '/stats' || text.toLowerCase() === 'статистика') {
+        if (userId.toString() === ADMIN_ID) {
+          await showAnalytics(chatId);
+        } else {
+          await sendTelegramMessage(chatId, '❌ Доступ к статистике только для администраторов.');
+        }
+      }
+
+      // Уведомления в реальном времени
+      else if (text === '/notifications' || text.toLowerCase() === 'уведомления') {
+        if (userState.driverAuthed && userState.driverData) {
+          const driverPhone = userState.driverData.Телефон;
+          const drivers = loadDrivers();
+          const driver = Object.values(drivers).find(d => d.phone === driverPhone);
+          if (driver) {
+            await showNotificationSettings(chatId, driver.id);
+          } else {
+            await sendTelegramMessage(chatId, '❌ Ваш профиль не найден.');
+          }
+        } else {
+          await showNotificationSettings(chatId);
+        }
+      }
+
       // Админ панель
       else if (text === '/admin' && userId.toString() === ADMIN_ID) {
         const adminText = `👨‍💼 <b>Админ панель</b>
@@ -587,9 +653,27 @@ Email: info@velta-logistics.com
               carNumber: found.carNumber,
               carType: found.carType,
               registeredAt: new Date().toISOString(),
-              status: 'active'
+              status: 'active',
+              rating: 0,
+              totalOrders: 0,
+              completedOrders: 0,
+              ratingCount: 0,
+              clientRating: 0,
+              clientRatingCount: 0
             };
             saveDrivers(d);
+          } else {
+            // Обновляем поля рейтинга у существующего водителя, если их нет
+            const driver = d[userId];
+            if (typeof driver.rating === 'undefined') {
+              driver.rating = 0;
+              driver.totalOrders = 0;
+              driver.completedOrders = 0;
+              driver.ratingCount = 0;
+              driver.clientRating = 0;
+              driver.clientRatingCount = 0;
+              saveDrivers(d);
+            }
           }
           
           // Сохраняем данные водителя в userState
@@ -707,7 +791,7 @@ Email: info@velta-logistics.com
         const customStatus = text.trim();
         if (customStatus.length < 3) {
           await sendTelegramMessage(chatId, '❌ Статус должен содержать минимум 3 символа. Попробуйте еще раз:');
-          return;
+          return NextResponse.json({ success: true });
         }
         
         // Обновляем статус заказа через API
@@ -771,6 +855,9 @@ Email: info@velta-logistics.com
       } else if (data === 'back_main') {
         await answerCallbackQuery(callbackQueryId);
         await sendMainMenu(chatId);
+      } else if (data === 'show_rating') {
+        await answerCallbackQuery(callbackQueryId);
+        await showTopDrivers(chatId);
       } else if (data === 'driver_login') {
         await answerCallbackQuery(callbackQueryId);
         const userStates = loadUserStates();
@@ -958,6 +1045,22 @@ Email: info@velta-logistics.com
           
           await sendDriverMenu(chatId);
         }
+      } else if (data === 'my_driver_rating') {
+        await answerCallbackQuery(callbackQueryId);
+        const userStates = loadUserStates();
+        const userState = userStates[userId] || {};
+        if (userState.driverData) {
+          const driverPhone = userState.driverData.Телефон;
+          const drivers = loadDrivers();
+          const driver = Object.values(drivers).find(d => d.phone === driverPhone);
+          if (driver) {
+            await showDriverRating(chatId, driver.id);
+          } else {
+            await sendTelegramMessage(chatId, '❌ Ваш профиль не найден. Попробуйте войти в систему заново.');
+          }
+        } else {
+          await sendTelegramMessage(chatId, '❌ Сначала войдите в систему как водитель.');
+        }
       } else if (data === 'driver_profile') {
         await answerCallbackQuery(callbackQueryId);
         const userStates = loadUserStates();
@@ -979,7 +1082,89 @@ Email: info@velta-logistics.com
         await answerCallbackQuery(callbackQueryId, 'Заказ пропущен');
         await sendTelegramMessage(chatId, '✅ Заказ пропущен. Переходим к следующему...');
       }
-      
+
+      // Обработка рейтингов
+      else if (data.startsWith('rate_')) {
+        await answerCallbackQuery(callbackQueryId, 'Спасибо за оценку!');
+        const rating = parseInt(data.split('_')[1]);
+        const userStates = loadUserStates();
+        await processRating(chatId, rating, userStates);
+      }
+      else if (data === 'skip_rating') {
+        await answerCallbackQuery(callbackQueryId, 'Оценка пропущена');
+        const userStates = loadUserStates();
+        const userId = chatId.toString();
+        const userState = userStates[userId];
+        if (userState) {
+          delete userState.ratingOrderId;
+          delete userState.ratingType;
+          userStates[userId] = userState;
+          saveUserStates(userStates);
+        }
+        await sendTelegramMessage(chatId, '✅ Оценка пропущена.');
+      }
+      else if (data === 'driver_stats') {
+        await answerCallbackQuery(callbackQueryId);
+        await showTopDrivers(chatId, 20); // Показать больше водителей
+      }
+      else if (data.startsWith('rate_driver_')) {
+        await answerCallbackQuery(callbackQueryId);
+        const orderId = data.split('_')[2];
+        const userStates = loadUserStates();
+        await requestOrderRating(chatId, orderId, false); // Клиент оценивает водителя
+      }
+
+      // Обработка аналитики
+      else if (data === 'show_analytics') {
+        await answerCallbackQuery(callbackQueryId);
+        await showAnalytics(chatId);
+      }
+      else if (data === 'detailed_analytics') {
+        await answerCallbackQuery(callbackQueryId);
+        await showDetailedAnalytics(chatId);
+      }
+      else if (data === 'drivers_analytics') {
+        await answerCallbackQuery(callbackQueryId);
+        await showDriversAnalytics(chatId);
+      }
+      else if (data === 'finance_analytics') {
+        await answerCallbackQuery(callbackQueryId);
+        await showFinanceAnalytics(chatId);
+      }
+
+      // Обработка уведомлений
+      else if (data === 'enable_notifications') {
+        await answerCallbackQuery(callbackQueryId);
+        const subscriberId = subscribeToNotifications(chatId);
+        await sendTelegramMessage(chatId, `✅ <b>Уведомления включены!</b>\n\nТеперь вы будете получать:\n• Новые заказы\n• Обновления статуса\n• Системные оповещения`);
+      }
+      else if (data === 'disable_notifications') {
+        await answerCallbackQuery(callbackQueryId);
+        unsubscribeFromNotifications(chatId);
+        await sendTelegramMessage(chatId, '🔕 <b>Уведомления отключены</b>\n\nВы больше не будете получать автоматические уведомления.');
+      }
+      else if (data === 'configure_filters') {
+        await answerCallbackQuery(callbackQueryId);
+        await sendTelegramMessage(chatId, '⚙️ <b>Настройка фильтров</b>\n\nФункция настройки фильтров будет доступна в следующих обновлениях.');
+      }
+      else if (data === 'configure_notifications') {
+        await answerCallbackQuery(callbackQueryId);
+        const userStates = loadUserStates();
+        const userState = userStates[userId] || {};
+        if (userState.driverAuthed && userState.driverData) {
+          const driverPhone = userState.driverData.Телефон;
+          const drivers = loadDrivers();
+          const driver = Object.values(drivers).find(d => d.phone === driverPhone);
+          if (driver) {
+            await showNotificationSettings(chatId, driver.id);
+          } else {
+            await sendTelegramMessage(chatId, '❌ Ваш профиль не найден.');
+          }
+        } else {
+          await showNotificationSettings(chatId);
+        }
+      }
+
       // ===== Админские callback'и для управления водителями =====
       else if (data === 'admin_manage_drivers') {
         await answerCallbackQuery(callbackQueryId);
@@ -1077,7 +1262,13 @@ async function handleRegistrationStep(userId: number, chatId: number, text: stri
       carNumber: userState.carNumber!,
       carType: userState.carType!,
       registeredAt: new Date().toISOString(),
-      status: 'active'
+      status: 'active',
+      rating: 0,
+      totalOrders: 0,
+      completedOrders: 0,
+      ratingCount: 0,
+      clientRating: 0,
+      clientRatingCount: 0
     };
     
     saveDrivers(drivers);
@@ -1172,7 +1363,11 @@ async function handleOrderCreationStep(userId: number, chatId: number, text: str
     
     // Отправляем заказ всем подходящим водителям
     await broadcastOrderToDrivers(orderId, orders[orderId]);
-    
+
+    // Отправляем уведомление всем подписчикам о новом заказе
+    const orderMessage = `📦 <b>Новый заказ</b> ${order.from} → ${order.to}\nТип ТС: ${order.carType}\nВес: ${order.weight} кг\nЦена: ${order.finalPrice} тенге`;
+    await broadcastNotification('new_order', orderMessage, { orderId, order: orders[orderId] });
+
     await sendTelegramMessage(chatId, `✅ <b>Заказ создан!</b>
 
 <b>ID заказа:</b> ${orderId}
@@ -1191,12 +1386,12 @@ async function startBidding(userId: number, chatId: number, orderId: string) {
   
   if (!orders[orderId]) {
     await sendTelegramMessage(chatId, '❌ Заказ не найден.');
-    return;
+    return NextResponse.json({ success: true });
   }
   
   if (!drivers[userId]) {
     await sendTelegramMessage(chatId, '❌ Вы не зарегистрированы как водитель.');
-    return;
+    return NextResponse.json({ success: true });
   }
   
   const userStates = loadUserStates();
@@ -1213,12 +1408,12 @@ async function startBidding(userId: number, chatId: number, orderId: string) {
 
 // Обработка ставки
 async function handleBidStep(userId: number, chatId: number, text: string, userState: UserState, userStates: Record<string, UserState>) {
-  const price = parseInt(text);
-  
-  if (isNaN(price) || price <= 0) {
+  if (isNaN(parseInt(text)) || parseInt(text) <= 0) {
     await sendTelegramMessage(chatId, '❌ Введите корректную цену числом.');
-    return;
+    return NextResponse.json({ success: true });
   }
+  
+  const price = parseInt(text);
   
   const orderId = userState.biddingOrderId!;
   const orders = loadOrders();
@@ -1229,7 +1424,7 @@ async function handleBidStep(userId: number, chatId: number, text: string, userS
     await sendTelegramMessage(chatId, '❌ Ошибка при обработке ставки.');
     delete userStates[userId];
     saveUserStates(userStates);
-    return;
+    return NextResponse.json({ success: true });
   }
   
   // Добавляем ставку к заказу
@@ -1281,7 +1476,7 @@ async function selectDriver(chatId: number, orderId: string, driverId: number) {
   
   if (!order || !driver) {
     await sendTelegramMessage(chatId, '❌ Заказ или водитель не найден.');
-    return;
+    return NextResponse.json({ success: true });
   }
   
   // Находим ставку водителя
@@ -1340,7 +1535,7 @@ async function listDrivers(chatId: number) {
   
   if (driversList.length === 0) {
     await sendTelegramMessage(chatId, '📋 Водители не зарегистрированы.');
-    return;
+    return NextResponse.json({ success: true });
   }
   
   let text = `👥 <b>Зарегистрированные водители (${driversList.length}):</b>\n\n`;
@@ -1364,7 +1559,7 @@ async function listActiveOrders(chatId: number, userId?: number) {
   
   if (activeOrders.length === 0) {
     await sendTelegramMessage(chatId, '📋 Активных заказов нет.');
-    return;
+    return NextResponse.json({ success: true });
   }
   
   // Если это водитель, показываем заказы с кнопками для предложения цены
@@ -1633,7 +1828,7 @@ async function sendDriversList(chatId: number) {
   
   if (drivers.length === 0) {
     await sendTelegramMessage(chatId, '📋 <b>Список водителей</b>\n\nВ базе нет водителей.');
-    return;
+    return NextResponse.json({ success: true });
   }
   
   let message = `📋 <b>Список всех водителей</b>\n\nВсего водителей: ${drivers.length}\n\n`;
@@ -1679,7 +1874,7 @@ async function sendEditDriverForm(chatId: number) {
   
   if (drivers.length === 0) {
     await sendTelegramMessage(chatId, '❌ Нет водителей для редактирования.');
-    return;
+    return NextResponse.json({ success: true });
   }
   
   // Создаем кнопки для каждого водителя
@@ -1701,7 +1896,7 @@ async function sendDeleteDriverForm(chatId: number) {
   
   if (drivers.length === 0) {
     await sendTelegramMessage(chatId, '❌ Нет водителей для удаления.');
-    return;
+    return NextResponse.json({ success: true });
   }
   
   // Создаем кнопки для каждого водителя
@@ -1723,7 +1918,7 @@ async function sendDriversStats(chatId: number) {
   
   if (drivers.length === 0) {
     await sendTelegramMessage(chatId, '📊 <b>Статистика водителей</b>\n\nВ базе нет водителей.');
-    return;
+    return NextResponse.json({ success: true });
   }
   
   // Группируем по типу ТС
@@ -1754,7 +1949,7 @@ async function startEditDriver(chatId: number, driverId: number) {
   const driver = getDriverById(driverId);
   if (!driver) {
     await sendTelegramMessage(chatId, '❌ Водитель не найден.');
-    return;
+    return NextResponse.json({ success: true });
   }
   
   const keyboard = {
@@ -1789,7 +1984,7 @@ async function confirmDeleteDriver(chatId: number, driverId: number) {
   const driver = getDriverById(driverId);
   if (!driver) {
     await sendTelegramMessage(chatId, '❌ Водитель не найден.');
-    return;
+    return NextResponse.json({ success: true });
   }
   
   const keyboard = {
@@ -1811,16 +2006,17 @@ async function confirmDeleteDriver(chatId: number, driverId: number) {
 }
 
 async function sendAdminMenu(chatId: number) {
-  const keyboard = { 
+  const keyboard = {
     inline_keyboard: [
-      [{ text: '📦 Создать заказ', callback_data: 'create_order' }], 
-      [{ text: '📋 Активные заказы', callback_data: 'list_orders' }], 
-      [{ text: '👥 Водители', callback_data: 'list_drivers' }], 
-      [{ text: '🚛 Управление водителями', callback_data: 'admin_manage_drivers' }], 
+      [{ text: '📦 Создать заказ', callback_data: 'create_order' }],
+      [{ text: '📋 Активные заказы', callback_data: 'list_orders' }],
+      [{ text: '👥 Водители', callback_data: 'list_drivers' }],
+      [{ text: '🚛 Управление водителями', callback_data: 'admin_manage_drivers' }],
+      [{ text: '📊 Аналитика', callback_data: 'show_analytics' }],
       [{ text: '⬅️ Назад', callback_data: 'back_main' }]
-    ] 
+    ]
   };
-  
+
   await sendTelegramMessage(chatId, '✅ Панель сотрудника:', keyboard);
 }
 
@@ -1891,18 +2087,645 @@ async function handleAdminStep(userId: number, chatId: number, text: string, use
       await sendTelegramMessage(chatId, '❌ Неверный формат. Используйте формат: Имя;Телефон;Номер авто;Тип ТС');
     }
   }
-}// Функция для показа активных заказов водителя
+}
+
+// ===== Helper функции =====
+function getStatusText(status: string): string {
+  switch (status) {
+    case 'created': return 'Создан';
+    case 'assigned': return 'Назначен водителю';
+    case 'in_transit': return 'В пути';
+    case 'warehouse': return 'На складе';
+    case 'delivered': return 'Доставлен';
+    case 'delayed': return 'Задержка';
+    case 'cancelled': return 'Отменен';
+    default: return 'Неизвестно';
+  }
+}
+
+// ===== Функции уведомлений в реальном времени =====
+interface NotificationSubscriber {
+  id: string;
+  chatId: number;
+  lastNotification: Date;
+  filters: {
+    driverId?: number;
+    orderUpdates?: boolean;
+    newOrders?: boolean;
+    systemAlerts?: boolean;
+  };
+}
+
+let notificationSubscribers: NotificationSubscriber[] = [];
+let notificationHistory: Array<{
+  id: string;
+  type: string;
+  message: string;
+  timestamp: Date;
+  data?: any;
+}> = [];
+
+// Функция подписки на уведомления
+function subscribeToNotifications(chatId: number, driverId?: number): string {
+  const subscriberId = `sub_${chatId}_${Date.now()}`;
+
+  // Удаляем существующую подписку для этого чата
+  notificationSubscribers = notificationSubscribers.filter(sub => sub.chatId !== chatId);
+
+  const subscriber: NotificationSubscriber = {
+    id: subscriberId,
+    chatId,
+    lastNotification: new Date(),
+    filters: {
+      driverId,
+      orderUpdates: true,
+      newOrders: true,
+      systemAlerts: true
+    }
+  };
+
+  notificationSubscribers.push(subscriber);
+  return subscriberId;
+}
+
+// Функция отписки от уведомлений
+function unsubscribeFromNotifications(chatId: number): void {
+  notificationSubscribers = notificationSubscribers.filter(sub => sub.chatId !== chatId);
+}
+
+// Функция отправки уведомления всем подписчикам
+async function broadcastNotification(type: string, message: string, data?: any, targetDriverId?: number): Promise<void> {
+  const notificationId = `notif_${Date.now()}`;
+  const notification = {
+    id: notificationId,
+    type,
+    message,
+    timestamp: new Date(),
+    data
+  };
+
+  // Сохраняем в историю
+  notificationHistory.push(notification);
+
+  // Ограничим историю последними 100 уведомлениями
+  if (notificationHistory.length > 100) {
+    notificationHistory = notificationHistory.slice(-100);
+  }
+
+  // Отправляем уведомления подписчикам
+  for (const subscriber of notificationSubscribers) {
+    // Проверяем фильтры
+    if (targetDriverId && subscriber.filters.driverId && subscriber.filters.driverId !== targetDriverId) {
+      continue; // Пропускаем если это уведомление для конкретного водителя
+    }
+
+    if (type === 'new_order' && !subscriber.filters.newOrders) continue;
+    if (type === 'order_update' && !subscriber.filters.orderUpdates) continue;
+    if (type === 'system' && !subscriber.filters.systemAlerts) continue;
+
+    try {
+      let notificationText = '';
+
+      switch (type) {
+        case 'new_order':
+          notificationText = `🚨 <b>НОВЫЙ ЗАКАЗ!</b>\n\n${message}`;
+          break;
+        case 'order_update':
+          notificationText = `📍 <b>Обновление заказа</b>\n\n${message}`;
+          break;
+        case 'system':
+          notificationText = `ℹ️ <b>Системное уведомление</b>\n\n${message}`;
+          break;
+        default:
+          notificationText = message;
+      }
+
+      // Отправляем через Telegram
+      await sendTelegramMessage(subscriber.chatId, notificationText);
+
+      // Обновляем время последней отправки
+      subscriber.lastNotification = new Date();
+    } catch (error) {
+      console.error(`Ошибка отправки уведомления подписчику ${subscriber.id}:`, error);
+    }
+  }
+}
+
+// Функция для управления подписками
+async function showNotificationSettings(chatId: number, driverId?: number): Promise<void> {
+  const existingSubscriber = notificationSubscribers.find(sub => sub.chatId === chatId);
+
+  let message = `🔔 <b>Настройки уведомлений</b>\n\n`;
+
+  if (existingSubscriber) {
+    message += `✅ Уведомления <b>включены</b>\n\n`;
+    message += `<b>Фильтры:</b>\n`;
+    message += `📦 Новые заказы: ${existingSubscriber.filters.newOrders ? '✅' : '❌'}\n`;
+    message += `📍 Обновления заказов: ${existingSubscriber.filters.orderUpdates ? '✅' : '❌'}\n`;
+    message += `⚙️ Системные оповещения: ${existingSubscriber.filters.systemAlerts ? '✅' : '❌'}\n`;
+  } else {
+    message += `❌ Уведомления <b>отключены</b>\n\n`;
+    message += `Включите уведомления, чтобы получать:\n`;
+    message += `• Новые заказы в реальном времени\n`;
+    message += `• Обновления статуса заказов\n`;
+    message += `• Системные оповещения\n`;
+  }
+
+  const keyboard = {
+    inline_keyboard: [
+      existingSubscriber
+        ? [
+            { text: '🔕 Отключить уведомления', callback_data: 'disable_notifications' },
+            { text: '⚙️ Настроить фильтры', callback_data: 'configure_filters' }
+          ]
+        : [
+            { text: '🔔 Включить уведомления', callback_data: 'enable_notifications' }
+          ],
+      [{ text: '⬅️ Назад', callback_data: 'back_main' }]
+    ]
+  };
+
+  await sendTelegramMessage(chatId, message, keyboard);
+}
+
+// ===== Функции аналитики =====
+function getAnalyticsData() {
+  const orders = loadOrders();
+  const drivers = loadDrivers();
+
+  const allOrders = Object.values(orders);
+  const allDrivers = Object.values(drivers).filter(d => d.status === 'active');
+
+  // Статистика заказов
+  const totalOrders = allOrders.length;
+  const activeOrders = allOrders.filter(o => o.status === 'active').length;
+  const completedOrders = allOrders.filter(o => o.status === 'delivered').length;
+  const inTransitOrders = allOrders.filter(o => ['assigned', 'in_transit'].includes(o.status)).length;
+
+  // Статистика водителей
+  const totalDrivers = allDrivers.length;
+  const driversWithOrders = allDrivers.filter(d => d.totalOrders > 0).length;
+  const avgRating = allDrivers.length > 0
+    ? allDrivers.reduce((sum, d) => sum + d.clientRating, 0) / allDrivers.length
+    : 0;
+
+  // Популярные маршруты
+  const routes = allOrders.reduce((acc, order) => {
+    const route = `${order.from} → ${order.to}`;
+    acc[route] = (acc[route] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
+  const topRoutes = Object.entries(routes)
+    .sort(([,a], [,b]) => b - a)
+    .slice(0, 5);
+
+  // Статистика по типам ТС
+  const carTypes = allDrivers.reduce((acc, driver) => {
+    acc[driver.carType] = (acc[driver.carType] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
+  // Финансовая статистика
+  const totalRevenue = allOrders
+    .filter(o => o.status === 'delivered')
+    .reduce((sum, o) => sum + (o.finalPrice || 0), 0);
+
+  const avgOrderValue = completedOrders > 0 ? totalRevenue / completedOrders : 0;
+
+  return {
+    orders: {
+      total: totalOrders,
+      active: activeOrders,
+      completed: completedOrders,
+      inTransit: inTransitOrders,
+      completionRate: totalOrders > 0 ? (completedOrders / totalOrders * 100).toFixed(1) : 0
+    },
+    drivers: {
+      total: totalDrivers,
+      active: driversWithOrders,
+      avgRating: avgRating.toFixed(1),
+      utilizationRate: totalDrivers > 0 ? (driversWithOrders / totalDrivers * 100).toFixed(1) : 0
+    },
+    routes: topRoutes,
+    carTypes: Object.entries(carTypes).sort(([,a], [,b]) => b - a),
+    finance: {
+      totalRevenue: totalRevenue.toLocaleString(),
+      avgOrderValue: avgOrderValue.toFixed(0),
+      currency: 'тенге'
+    },
+    period: {
+      start: allOrders.length > 0 ? new Date(Math.min(...allOrders.map(o => new Date(o.createdAt).getTime()))).toLocaleDateString('ru-RU') : 'Нет данных',
+      end: new Date().toLocaleDateString('ru-RU')
+    }
+  };
+}
+
+async function showAnalytics(chatId: number) {
+  const analytics = getAnalyticsData();
+
+  let message = `📊 <b>Аналитика Velta Trans</b>\n\n`;
+
+  // Заказы
+  message += `<b>📦 Заказы:</b>\n`;
+  message += `Всего: ${analytics.orders.total}\n`;
+  message += `Активных: ${analytics.orders.active}\n`;
+  message += `Завершенных: ${analytics.orders.completed}\n`;
+  message += `В пути: ${analytics.orders.inTransit}\n`;
+  message += `Успешность: ${analytics.orders.completionRate}%\n\n`;
+
+  // Водители
+  message += `<b>🚛 Водители:</b>\n`;
+  message += `Всего: ${analytics.drivers.total}\n`;
+  message += `Активных: ${analytics.drivers.active}\n`;
+  message += `Средний рейтинг: ⭐ ${analytics.drivers.avgRating}\n`;
+  message += `Загруженность: ${analytics.drivers.utilizationRate}%\n\n`;
+
+  // Финансы
+  message += `<b>💰 Финансы:</b>\n`;
+  message += `Общая выручка: ${analytics.finance.totalRevenue} ${analytics.finance.currency}\n`;
+  message += `Средний чек: ${analytics.finance.avgOrderValue} ${analytics.finance.currency}\n\n`;
+
+  // Популярные маршруты
+  message += `<b>🗺️ Популярные маршруты:</b>\n`;
+  analytics.routes.slice(0, 3).forEach(([route, count], index) => {
+    message += `${index + 1}. ${route}: ${count} заказов\n`;
+  });
+  message += '\n';
+
+  // Типы ТС
+  message += `<b>🚛 Типы ТС:</b>\n`;
+  analytics.carTypes.slice(0, 3).forEach(([carType, count], index) => {
+    message += `${index + 1}. ${carType}: ${count} водителей\n`;
+  });
+
+  const keyboard = {
+    inline_keyboard: [
+      [{ text: '📈 Детальная статистика', callback_data: 'detailed_analytics' }],
+      [{ text: '📊 Статистика водителей', callback_data: 'drivers_analytics' }],
+      [{ text: '💰 Финансовая аналитика', callback_data: 'finance_analytics' }],
+      [{ text: '⬅️ Назад', callback_data: 'back_main' }]
+    ]
+  };
+
+  await sendTelegramMessage(chatId, message, keyboard);
+}
+
+async function showDetailedAnalytics(chatId: number) {
+  const analytics = getAnalyticsData();
+
+  let message = `📈 <b>Детальная аналитика</b>\n\n`;
+
+  message += `<b>📅 Период анализа:</b>\n`;
+  message += `с ${analytics.period.start} по ${analytics.period.end}\n\n`;
+
+  message += `<b>📦 Детализация заказов:</b>\n`;
+  message += `• Создано: ${analytics.orders.total}\n`;
+  message += `• В работе: ${analytics.orders.active + analytics.orders.inTransit}\n`;
+  message += `• Доставлено: ${analytics.orders.completed}\n`;
+  message += `• Конверсия: ${analytics.orders.completionRate}%\n\n`;
+
+  message += `<b>🚛 Детализация водителей:</b>\n`;
+  message += `• Всего зарегистрировано: ${analytics.drivers.total}\n`;
+  message += `• Выполняют заказы: ${analytics.drivers.active}\n`;
+  message += `• Коэффициент использования: ${analytics.drivers.utilizationRate}%\n`;
+  message += `• Средняя оценка: ⭐ ${analytics.drivers.avgRating}\n\n`;
+
+  message += `<b>🗺️ Все маршруты:</b>\n`;
+  analytics.routes.forEach(([route, count]) => {
+    message += `• ${route}: ${count}\n`;
+  });
+
+  const keyboard = {
+    inline_keyboard: [
+      [{ text: '⬅️ К общей аналитике', callback_data: 'show_analytics' }]
+    ]
+  };
+
+  await sendTelegramMessage(chatId, message, keyboard);
+}
+
+async function showDriversAnalytics(chatId: number) {
+  const drivers = loadDrivers();
+  const activeDrivers = Object.values(drivers).filter(d => d.status === 'active');
+
+  if (activeDrivers.length === 0) {
+    await sendTelegramMessage(chatId, '📊 <b>Статистика водителей</b>\n\nНет активных водителей для анализа.');
+    return NextResponse.json({ success: true });
+  }
+
+  // Сортируем по количеству выполненных заказов
+  activeDrivers.sort((a, b) => b.completedOrders - a.completedOrders);
+
+  let message = `📊 <b>Статистика водителей</b>\n\n`;
+  message += `Всего активных водителей: ${activeDrivers.length}\n\n`;
+
+  message += `<b>🏆 Топ по выполненным заказам:</b>\n`;
+  activeDrivers.slice(0, 5).forEach((driver, index) => {
+    const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '📍';
+    message += `${medal} ${driver.name}\n`;
+    message += `   ✅ ${driver.completedOrders} заказов\n`;
+    message += `   ⭐ ${driver.clientRating.toFixed(1)} (${driver.clientRatingCount} оценок)\n`;
+    message += `   🚛 ${driver.carType}\n\n`;
+  });
+
+  // Статистика по типам ТС
+  const carTypeStats = activeDrivers.reduce((acc, driver) => {
+    acc[driver.carType] = (acc[driver.carType] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
+  message += `<b>🚛 Распределение по типам ТС:</b>\n`;
+  Object.entries(carTypeStats).forEach(([carType, count]) => {
+    message += `• ${carType}: ${count} водителей\n`;
+  });
+
+  const keyboard = {
+    inline_keyboard: [
+      [{ text: '⬅️ К общей аналитике', callback_data: 'show_analytics' }]
+    ]
+  };
+
+  await sendTelegramMessage(chatId, message, keyboard);
+}
+
+async function showFinanceAnalytics(chatId: number) {
+  const analytics = getAnalyticsData();
+  const orders = loadOrders();
+  const completedOrders = Object.values(orders).filter(o => o.status === 'delivered');
+
+  let message = `💰 <b>Финансовая аналитика</b>\n\n`;
+
+  message += `<b>💵 Общие показатели:</b>\n`;
+  message += `Общая выручка: ${analytics.finance.totalRevenue} ${analytics.finance.currency}\n`;
+  message += `Средний чек: ${analytics.finance.avgOrderValue} ${analytics.finance.currency}\n`;
+  message += `Количество транзакций: ${completedOrders.length}\n\n`;
+
+  if (completedOrders.length > 0) {
+    // Анализ по диапазонам цен
+    const priceRanges = {
+      'до 50к': completedOrders.filter(o => o.finalPrice < 50000).length,
+      '50к-100к': completedOrders.filter(o => o.finalPrice >= 50000 && o.finalPrice < 100000).length,
+      '100к-200к': completedOrders.filter(o => o.finalPrice >= 100000 && o.finalPrice < 200000).length,
+      '200к-500к': completedOrders.filter(o => o.finalPrice >= 200000 && o.finalPrice < 500000).length,
+      '500к+': completedOrders.filter(o => o.finalPrice >= 500000).length
+    };
+
+    message += `<b>📊 Распределение по суммам:</b>\n`;
+    Object.entries(priceRanges).forEach(([range, count]) => {
+      if (count > 0) {
+        const percentage = ((count / completedOrders.length) * 100).toFixed(1);
+        message += `• ${range}: ${count} заказов (${percentage}%)\n`;
+      }
+    });
+  }
+
+  const keyboard = {
+    inline_keyboard: [
+      [{ text: '⬅️ К общей аналитике', callback_data: 'show_analytics' }]
+    ]
+  };
+
+  await sendTelegramMessage(chatId, message, keyboard);
+}
+
+function getStatusIcon(status: string): string {
+  switch (status) {
+    case 'created': return '📝';
+    case 'assigned': return '👤';
+    case 'in_transit': return '🚛';
+    case 'warehouse': return '🏭';
+    case 'delivered': return '✅';
+    case 'delayed': return '⚠️';
+    case 'cancelled': return '❌';
+    default: return '❓';
+  }
+}
+
+// ===== Функции для работы с рейтингами =====
+async function showDriverRating(chatId: number, driverId: number) {
+  const drivers = loadDrivers();
+  const driver = drivers[driverId];
+
+  if (!driver) {
+    await sendTelegramMessage(chatId, '❌ Водитель не найден.');
+    return NextResponse.json({ success: true });
+  }
+
+  let message = `⭐ <b>Рейтинг водителя</b>\n\n`;
+  message += `👤 <b>${driver.name}</b>\n`;
+  message += `📱 ${driver.phone}\n`;
+  message += `🚛 ${driver.carNumber} (${driver.carType})\n\n`;
+
+  message += `<b>📊 Статистика:</b>\n`;
+  message += `⭐ Средний рейтинг: ${driver.clientRating > 0 ? driver.clientRating.toFixed(1) : 'Нет оценок'}\n`;
+  message += `📈 Всего заказов: ${driver.totalOrders}\n`;
+  message += `✅ Завершенных: ${driver.completedOrders}\n`;
+  message += `📝 Оценок: ${driver.clientRatingCount}\n\n`;
+
+  const successRate = driver.totalOrders > 0 ? ((driver.completedOrders / driver.totalOrders) * 100).toFixed(1) : 0;
+  message += `🎯 Успешность: ${successRate}%\n\n`;
+
+  message += `<b>🏆 Уровень:</b>\n`;
+  if (driver.clientRating >= 4.5) message += '👑 Мастер';
+  else if (driver.clientRating >= 4.0) message += '🥇 Профессионал';
+  else if (driver.clientRating >= 3.5) message += '🥈 Опытный';
+  else if (driver.clientRating >= 3.0) message += '🥉 Надежный';
+  else if (driver.clientRating > 0) message += '🔰 Начинающий';
+  else message += '📈 Без рейтинга';
+
+  await sendTelegramMessage(chatId, message);
+}
+
+async function showTopDrivers(chatId: number, limit: number = 10) {
+  const drivers = loadDrivers();
+  const activeDrivers = Object.values(drivers).filter(d => d.status === 'active' && d.clientRating > 0);
+
+  if (activeDrivers.length === 0) {
+    await sendTelegramMessage(chatId, '📋 <b>Топ водителей</b>\n\nВодители еще не имеют оценок.');
+    return NextResponse.json({ success: true });
+  }
+
+  // Сортируем по рейтингу и количеству заказов
+  activeDrivers.sort((a, b) => {
+    if (a.clientRating !== b.clientRating) {
+      return b.clientRating - a.clientRating;
+    }
+    return b.completedOrders - a.completedOrders;
+  });
+
+  let message = `🏆 <b>Топ ${Math.min(limit, activeDrivers.length)} водителей</b>\n\n`;
+
+  activeDrivers.slice(0, limit).forEach((driver, index) => {
+    const medal = index === 0 ? '��' : index === 1 ? '🥈' : index === 2 ? '🥉' : '📍';
+    message += `${medal} <b>${driver.name}</b>\n`;
+    message += `   ⭐ ${driver.clientRating.toFixed(1)} (${driver.clientRatingCount} оценок)\n`;
+    message += `   ✅ ${driver.completedOrders} заказов\n`;
+    message += `   🚛 ${driver.carType}\n\n`;
+  });
+
+  const keyboard = {
+    inline_keyboard: [
+      [{ text: '📊 Подробная статистика', callback_data: 'driver_stats' }],
+      [{ text: '⬅️ Назад', callback_data: 'back_main' }]
+    ]
+  };
+
+  await sendTelegramMessage(chatId, message, keyboard);
+}
+
+async function requestOrderRating(chatId: number, orderId: string, isDriverRating: boolean = false) {
+  const orders = loadOrders();
+  const order = orders[orderId];
+
+  if (!order) {
+    await sendTelegramMessage(chatId, '❌ Заказ не найден.');
+    return NextResponse.json({ success: true });
+  }
+
+  const userStates = loadUserStates();
+  const userId = chatId.toString();
+
+  if (isDriverRating) {
+    // Водитель оценивает клиента
+    if (!userStates[userId] || !userStates[userId].driverAuthed) {
+      await sendTelegramMessage(chatId, '❌ Только водители могут оценивать клиентов.');
+      return NextResponse.json({ success: true });
+    }
+
+    userStates[userId] = {
+      ...userStates[userId],
+      ratingOrderId: orderId,
+      ratingType: 'client_rating'
+    };
+    saveUserStates(userStates);
+
+    const keyboard = {
+      inline_keyboard: [
+        [
+          { text: '⭐⭐⭐⭐⭐', callback_data: 'rate_5' },
+          { text: '⭐⭐⭐⭐', callback_data: 'rate_4' }
+        ],
+        [
+          { text: '⭐⭐⭐', callback_data: 'rate_3' },
+          { text: '⭐⭐', callback_data: 'rate_2' },
+          { text: '⭐', callback_data: 'rate_1' }
+        ],
+        [{ text: '❌ Пропустить', callback_data: 'skip_rating' }]
+      ]
+    };
+
+    await sendTelegramMessage(chatId,
+      `⭐ <b>Оцените клиента</b>\n\n` +
+      `Заказ: <code>${order.trackingNumber}</code>\n` +
+      `Маршрут: ${order.from} → ${order.to}\n\n` +
+      `Пожалуйста, оцените работу с клиентом:`,
+      keyboard
+    );
+  } else {
+    // Клиент оценивает водителя
+    userStates[userId] = {
+      ...userStates[userId],
+      ratingOrderId: orderId,
+      ratingType: 'driver_rating'
+    };
+    saveUserStates(userStates);
+
+    const keyboard = {
+      inline_keyboard: [
+        [
+          { text: '⭐⭐⭐⭐⭐', callback_data: 'rate_5' },
+          { text: '⭐⭐⭐⭐', callback_data: 'rate_4' }
+        ],
+        [
+          { text: '⭐⭐⭐', callback_data: 'rate_3' },
+          { text: '⭐⭐', callback_data: 'rate_2' },
+          { text: '⭐', callback_data: 'rate_1' }
+        ],
+        [{ text: '❌ Пропустить', callback_data: 'skip_rating' }]
+      ]
+    };
+
+    await sendTelegramMessage(chatId,
+      `⭐ <b>Оцените водителя</b>\n\n` +
+      `Заказ: <code>${order.trackingNumber}</code>\n` +
+      `Маршрут: ${order.from} → ${order.to}\n\n` +
+      `Пожалуйста, оцените работу водителя:`,
+      keyboard
+    );
+  }
+}
+
+async function processRating(chatId: number, rating: number, userStates: Record<string, UserState>) {
+  const userId = chatId.toString();
+  const userState = userStates[userId];
+
+  if (!userState || !userState.ratingOrderId) {
+    await sendTelegramMessage(chatId, '❌ Ошибка: заказ для оценки не найден.');
+    return NextResponse.json({ success: true });
+  }
+
+  const orderId = userState.ratingOrderId;
+  const ratingType = userState.ratingType;
+
+  const orders = loadOrders();
+  const order = orders[orderId];
+
+  if (!order) {
+    await sendTelegramMessage(chatId, '❌ Заказ не найден.');
+    return NextResponse.json({ success: true });
+  }
+
+  if (ratingType === 'driver_rating') {
+    // Обновляем рейтинг водителя
+    order.driverRating = rating;
+
+    const drivers = loadDrivers();
+    if (order.assignedDriver && drivers[order.assignedDriver]) {
+      const driver = drivers[order.assignedDriver];
+
+      // Обновляем статистику водителя
+      driver.totalOrders += 1;
+      if (order.status === 'delivered') {
+        driver.completedOrders += 1;
+      }
+
+      // Пересчитываем средний рейтинг
+      const oldRatingSum = driver.clientRating * driver.clientRatingCount;
+      driver.clientRatingCount += 1;
+      driver.clientRating = (oldRatingSum + rating) / driver.clientRatingCount;
+
+      saveDrivers(drivers);
+    }
+
+    await sendTelegramMessage(chatId, `✅ Спасибо за оценку!\n\nВы поставили водителю ${'⭐'.repeat(rating)} (${rating}/5)`);
+  } else if (ratingType === 'client_rating') {
+    // Обновляем рейтинг клиента (сохраняем в заказе)
+    order.clientRating = rating;
+    await sendTelegramMessage(chatId, `✅ Спасибо за оценку!\n\nВы оценили клиента на ${'⭐'.repeat(rating)} (${rating}/5)`);
+  }
+
+  saveOrders(orders);
+
+  // Очищаем состояние
+  delete userState.ratingOrderId;
+  delete userState.ratingType;
+  userStates[userId] = userState;
+  saveUserStates(userStates);
+}
+
+// Функция для показа активных заказов водителя
 async function showDriverActiveOrders(chatId: number, driverId: number) {
   try {
     const orders = loadOrders();
-    const driverOrders = Object.values(orders).filter(order => 
-      order.driverId === driverId && 
+    const driverOrders = Object.values(orders).filter(order =>
+      order.assignedDriver === driverId &&
       ['assigned', 'in_transit', 'warehouse', 'delayed'].includes(order.status)
     );
 
     if (driverOrders.length === 0) {
       await sendTelegramMessage(chatId, '📋 <b>Активные заказы</b>\n\nУ вас нет активных заказов в данный момент.');
-      return;
+      return NextResponse.json({ success: true });
     }
 
     let message = `📋 <b>Активные заказы</b>\n\nУ вас ${driverOrders.length} активных заказов:\n\n`;
@@ -1938,14 +2761,14 @@ async function showDriverActiveOrders(chatId: number, driverId: number) {
 async function showDriverClosedOrders(chatId: number, driverId: number) {
   try {
     const orders = loadOrders();
-    const driverOrders = Object.values(orders).filter(order => 
-      order.driverId === driverId && 
+    const driverOrders = Object.values(orders).filter(order =>
+      order.assignedDriver === driverId &&
       ['delivered', 'cancelled'].includes(order.status)
     );
 
     if (driverOrders.length === 0) {
       await sendTelegramMessage(chatId, '📚 <b>Закрытые заказы</b>\n\nУ вас нет завершенных заказов.');
-      return;
+      return NextResponse.json({ success: true });
     }
 
     let message = `📚 <b>Закрытые заказы</b>\n\nУ вас ${driverOrders.length} завершенных заказов:\n\n`;
@@ -1983,25 +2806,24 @@ async function showDriverClosedOrders(chatId: number, driverId: number) {
 async function showAvailableOrders(chatId: number) {
   try {
     const orders = loadOrders();
-    const availableOrders = Object.values(orders).filter(order => 
-      order.status === 'new' && !order.driverId
+    const availableOrders = Object.values(orders).filter(order =>
+      order.status === 'active' && !order.assignedDriver
     );
 
     if (availableOrders.length === 0) {
       await sendTelegramMessage(chatId, '📋 <b>Доступные заказы</b>\n\nВ данный момент нет доступных заказов.');
-      return;
+      return NextResponse.json({ success: true });
     }
 
     let message = `📋 <b>Доступные заказы</b>\n\nДоступно ${availableOrders.length} заказов:\n\n`;
-    
+
     availableOrders.forEach((order, index) => {
       message += `${index + 1}. <b>${order.trackingNumber}</b>\n`;
-      message += `   📍 ${order.route.from} → ${order.route.to}\n`;
+      message += `   📍 ${order.from} → ${order.to}\n`;
       message += `   📦 ${order.description}\n`;
       message += `   ⚖️ ${order.weight} кг, ${order.volume} м³\n`;
-      message += `   💰 ${order.price} ${order.currency}\n`;
-      message += `   📅 Срок: ${new Date(order.deadline).toLocaleDateString('ru-RU')}\n`;
-      message += `   🚛 <a href="bid_${order.id}">Подать заявку</a>\n\n`;
+      message += `   💰 ${order.finalPrice} тенге\n`;
+      message += `   📅 Создан: ${new Date(order.createdAt).toLocaleDateString('ru-RU')}\n\n`;
     });
 
     const keyboard = {

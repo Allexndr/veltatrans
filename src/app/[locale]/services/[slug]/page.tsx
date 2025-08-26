@@ -70,7 +70,6 @@ export default async function ServiceDetailPage({params}: {params: Promise<{loca
     <div className="min-h-screen bg-white">
       <Header />
       {/* Отступ для фиксированного header */}
-      <div className="h-16 lg:h-20"></div>
       <main>
         {/* Hero */}
         <section className="bg-gradient-to-br from-velta-900 via-velta-800 to-velta-700 text-white py-14 sm:py-16 md:py-20">

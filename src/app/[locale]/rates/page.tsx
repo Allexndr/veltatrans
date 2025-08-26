@@ -118,7 +118,6 @@ export default function RatesPage() {
     <div className="min-h-screen bg-white">
       <Header />
       {/* Отступ для фиксированного header */}
-      <div className="h-16 lg:h-20"></div>
       <main>
         {/* Hero Section */}
         <section className="bg-velta-navy text-white py-16">

@@ -27,6 +27,15 @@
     "subtitle": "B2B freight transportation across CIS, China and Europe",
     "description": "Reliable logistics for your business with full service and customs clearance",
     "cta": "Get quote",
+    "contact": {
+      "title": "Contact us"
+    },
+    "stats": {
+      "countries": "countries",
+      "experience": "15+ years of experience",
+      "geography": "Wide geography",
+      "support": "24/7 support"
+    },
     "features": {
       "experience": "15+ years of experience",
       "geography": "Wide geography",
@@ -40,6 +49,22 @@
   "services": {
     "title": "Our services",
     "description": "Full range of logistics services for your business",
+    "autoTransport": {
+      "title": "Road Transport",
+      "description": "We organize international road transport from China to Russia, Kazakhstan and Europe. We work with both full truckload (FTL) and less than truckload (LTL) shipments. We have our own network of verified carriers and a reliable tracking system."
+    },
+    "railwayTransport": {
+      "title": "Rail Transport",
+      "description": "Direct container trains from China to Russia and CIS countries. Possibility of sending both full container loads (FCL) and less than container loads (LCL). Fast delivery times and competitive rates."
+    },
+    "multimodalTransport": {
+      "title": "Multimodal Transport",
+      "description": "Combination of sea, road, and rail transport. Optimal solution for price and delivery times. We select a route tailored to the client's task."
+    },
+    "projectTransport": {
+      "title": "Project Cargo Transport",
+      "description": "Delivery of oversized and heavy cargo. Route development, organization of special equipment, and coordination. Experience in transporting equipment for construction and energy."
+    },
     "air": {
       "title": "Air Transportation",
       "description": "Fast delivery of cargo by air transport",
@@ -116,7 +141,25 @@
       "title": "Consultation",
       "description": "Professional logistics consultation"
     },
-    "more": "Learn more"
+    "more": "Learn more",
+    "cards": {
+      "auto": {
+        "title": "Road transportation",
+        "description": "International road shipments from China to Russia, Kazakhstan and Europe. Full truckload (FTL) and less-than-truckload (LTL). Own network of verified carriers and reliable tracking."
+      },
+      "rail": {
+        "title": "Rail transportation",
+        "description": "Direct container trains from China to Russia and CIS. Both full containers (FCL) and consolidated cargo (LCL). Fast transit and competitive rates."
+      },
+      "multimodal": {
+        "title": "Multimodal transportation",
+        "description": "Combination of sea, road and rail. Optimal solution for price and delivery time. Route tailored to the task."
+      },
+      "project": {
+        "title": "Project cargo",
+        "description": "Delivery of oversized and heavy cargo. Route engineering, special equipment and permits. Experience with construction and energy equipment."
+      }
+    }
   },
   "cases": {
     "title": "Cases",
@@ -375,6 +418,7 @@
   "cases": {
     "title": "Our Cases",
     "description": "Examples of successful projects and transportation",
+    "home": "Home",
     "categories": {
       "all": "All Cases",
       "general": "General Cargo",
@@ -407,7 +451,9 @@
     "case6": {
       "title": "Project Cargo",
       "description": "Complex logistics for large infrastructure projects"
-    }
+    },
+    "viewDetails": "View details",
+    "viewAll": "All cases"
   },
   "contact": {
     "title": "Contacts",
