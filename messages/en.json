@@ -40,7 +40,42 @@
       "experience": "15+ years of experience",
       "geography": "Wide geography",
       "support": "24/7 support"
-    }
+    },
+    "advantages": {
+      "title": "Why choose us",
+      "subtitle": "More than 1175 completed shipments annually with guaranteed deadlines and round-the-clock tracking",
+      "deadline_guarantee": {
+        "title": "Deadline guarantee",
+        "description": "Round-the-clock 24/7 tracking and deadline control at all stages"
+      },
+      "special_equipment": {
+        "title": "Special equipment",
+        "description": "Professional transportation of special equipment and oversized cargo (non-standard, long-length, wide and heavy cargo)"
+      },
+      "competitive_rates": {
+        "title": "Competitive rates",
+        "description": "Flexible terms and competitive rates for all types of transportation"
+      },
+      "full_support": {
+        "title": "Full support",
+        "description": "Professional support at all stages of transportation from pickup to delivery"
+      },
+      "key_routes": {
+        "title": "Key routes",
+        "description": "Southern China cities (Shenzhen / Guangzhou / Shanghai) → Khorgos / Alashankou → Almaty / Astana / Moscow / St. Petersburg / Rostov / Chelyabinsk / Istanbul"
+      },
+      "multimodal_solutions": {
+        "title": "Multimodal solutions",
+        "description": "Coverage of CIS countries and Europe through the Caspian Sea and key transport hubs"
+      }
+    },
+    "track_cargo": "Track cargo",
+    "key_directions": "Key directions",
+    "china_kazakhstan": "China - Kazakhstan: Khorgos, Altynkol, Almaty, Nur-Sultan",
+    "china_russia": "China - Russia: Moscow, Yekaterinburg, Novosibirsk",
+    "china_europe": "China - Europe: Warsaw, Hamburg",
+    "more_about_routes": "More about routes",
+    "round_the_clock_support": "Round-the-clock support and cargo escort"
   },
   "tools": {
     "title": "Useful Tools",
