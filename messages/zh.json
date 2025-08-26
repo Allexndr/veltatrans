@@ -94,6 +94,28 @@
     "title": "我们的服务",
     "description": "为您的业务发展提供全方位的物流服务",
     "subtitle": "为您的业务发展提供全方位的物流服务",
+    "common": {
+      "featuresTitle": "服务特点:",
+      "advantagesTitle": "优势",
+      "paragraph1": "我们为每位客户提供全流程物流服务，并采用个性化服务方式。我们保证流程透明、准时交付以及具有竞争力的价格。",
+      "paragraph2": "经验丰富的团队将帮助您选择最优解决方案，并在运输的各个阶段为您的货物提供支持。"
+    },
+    "air": {
+      "title": "空运",
+      "description": "沿关键航线的快速空运"
+    },
+    "sea": {
+      "title": "海运",
+      "description": "拥有广泛港口覆盖的高性价比海运"
+    },
+    "land": {
+      "title": "公路运输",
+      "description": "最佳公路路线与可靠承运商"
+    },
+    "multimodal": {
+      "title": "多式联运",
+      "description": "基于客户任务的组合解决方案"
+    },
     "autoTransport": {
       "title": "公路运输",
       "description": "组织从中国到俄罗斯、哈萨克斯坦和欧洲的国际公路运输。支持整车(FTL)和拼车(LTL)。自有可靠承运商网络与跟踪系统。"
@@ -586,8 +608,25 @@
       "email": "电子邮件",
       "phone": "电话",
       "message": "消息",
-      "send": "发送"
-    }
+      "subject": "主题",
+      "selectSubject": "选择主题",
+      "options": {
+        "problem": "问题",
+        "review": "反馈",
+        "suggestion": "建议",
+        "cooperation": "合作",
+        "other": "其他"
+      },
+      "messagePlaceholder": "请描述您的问题或建议",
+      "send": "发送",
+      "sending": "发送中..."
+    },
+    "success": {
+      "title": "消息已发送",
+      "message": "谢谢！我们会尽快与您联系。",
+      "sendAnother": "再发一条"
+    },
+    "note": "提交表单即表示您同意隐私政策"
   },
   "documents": {
     "title": "下载文件",

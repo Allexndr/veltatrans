@@ -27,7 +27,7 @@ export default function HeroGallery() {
     },
     // Склад
     {
-      src: '/assets/images/warehouse-case.jpg',
+      src: '/assets/images/warehouse-case.png',
       alt: t('images.warehouse.alt'),
       title: t('images.warehouse.title'),
       icon: '🏭'

@@ -15,6 +15,7 @@ interface CasePageProps {
 export default function CasePage({ params }: CasePageProps) {
   const { locale, category, id } = params;
   const t = useTranslations('cases');
+  const tc = useTranslations('cases.items');
   
   const caseItem = getCaseById(id);
   if (!caseItem || caseItem.category !== category) {
@@ -26,6 +27,13 @@ export default function CasePage({ params }: CasePageProps) {
     return t.has(key) ? t(key) : categoryId;
   };
 
+  const title = tc.has(`${id}.title`) ? tc(`${id}.title`) : caseItem.title;
+  const description = tc.has(`${id}.description`) ? tc(`${id}.description`) : caseItem.description;
+  const details = tc.has(`${id}.details`) ? tc(`${id}.details`) : caseItem.details;
+  const location = tc.has(`${id}.location`) ? tc(`${id}.location`) : caseItem.location;
+  const cargo = tc.has(`${id}.cargo`) ? tc(`${id}.cargo`) : caseItem.cargo;
+  const weight = caseItem.weight ? (tc.has(`${id}.weight`) ? tc(`${id}.weight`) : caseItem.weight) : undefined;
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Заголовок */}
@@ -34,11 +42,9 @@ export default function CasePage({ params }: CasePageProps) {
           <span className="inline-block px-4 py-2 bg-velta-500 text-white text-sm font-medium rounded-full mb-4">
             {getCategoryName(category)}
           </span>
-          <h1 className="text-5xl font-bold mb-6">
-            {caseItem.title}
-          </h1>
+          <h1 className="text-5xl font-bold mb-6">{title}</h1>
           <p className="text-xl text-velta-100 max-w-4xl mx-auto">
-            {caseItem.description}
+            {description}
           </p>
         </div>
       </section>
@@ -90,9 +96,7 @@ export default function CasePage({ params }: CasePageProps) {
                   <svg className="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
                   </svg>
-                  <span className="ml-1 text-sm font-medium text-gray-500 md:ml-2">
-                    {caseItem.title}
-                  </span>
+                  <span className="ml-1 text-sm font-medium text-gray-500 md:ml-2">{title}</span>
                 </div>
               </li>
             </ol>
@@ -108,12 +112,7 @@ export default function CasePage({ params }: CasePageProps) {
             <div className="lg:col-span-2">
               {/* Основное изображение */}
               <div className="relative h-96 mb-6 rounded-xl overflow-hidden">
-                <Image
-                  src={caseItem.images[0]}
-                  alt={caseItem.title}
-                  fill
-                  className="object-cover"
-                />
+                <Image src={caseItem.images[0]} alt={title} fill className="object-cover" />
               </div>
 
               {/* Галерея изображений */}
@@ -123,7 +122,7 @@ export default function CasePage({ params }: CasePageProps) {
                     <div key={index} className="relative h-24 rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition-opacity">
                       <Image
                         src={image}
-                        alt={`${caseItem.title} - ${t('image')} ${index + 1}`}
+                        alt={`${title} - ${t('image')} ${index + 1}`}
                         fill
                         className="object-cover"
                       />
@@ -148,7 +147,7 @@ export default function CasePage({ params }: CasePageProps) {
                           {t('videoNotSupported')}
                         </video>
                         <p className="text-sm text-gray-600 mt-2 text-center">
-                          {t('video')} {index + 1} - {caseItem.title}
+                          {t('video')} {index + 1} - {title}
                         </p>
                       </div>
                     ))}
@@ -160,9 +159,7 @@ export default function CasePage({ params }: CasePageProps) {
               <div className="bg-white rounded-xl p-8 shadow-lg">
                 <h3 className="text-2xl font-bold text-gray-900 mb-6">{t('projectDetails')}</h3>
                 <div className="prose prose-lg max-w-none">
-                  <p className="text-gray-700 leading-relaxed mb-6">
-                    {caseItem.details}
-                  </p>
+                  <p className="text-gray-700 leading-relaxed mb-6">{details}</p>
                   
                   {/* Дополнительная информация */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
@@ -173,7 +170,7 @@ export default function CasePage({ params }: CasePageProps) {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
-                        {caseItem.location}
+                        {location}
                       </div>
                     </div>
                     
@@ -183,7 +180,7 @@ export default function CasePage({ params }: CasePageProps) {
                         <svg className="w-5 h-5 mr-3 text-velta-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                         </svg>
-                        {caseItem.cargo}
+                        {cargo}
                       </div>
                     </div>
                   </div>
@@ -212,10 +209,10 @@ export default function CasePage({ params }: CasePageProps) {
                     </span>
                   </div>
                   
-                  {caseItem.weight && (
+                  {weight && (
                     <div className="flex items-center justify-between py-3 border-b border-gray-200">
                       <span className="text-gray-600">{t('projectCard.weight')}</span>
-                      <span className="font-medium text-gray-900">{caseItem.weight}</span>
+                      <span className="font-medium text-gray-900">{weight}</span>
                     </div>
                   )}
                   

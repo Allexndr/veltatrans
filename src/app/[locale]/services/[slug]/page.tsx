@@ -35,6 +35,7 @@ export async function generateMetadata({params}: {params: Promise<{locale: strin
 export default async function ServiceDetailPage({params}: {params: Promise<{locale: string; slug: ServiceSlug}>}) {
   const {locale, slug} = await params;
   const t = await getTranslations({locale});
+  const tcases = await getTranslations({ locale, namespace: 'cases.items' });
   const i18nKey = SLUG_TO_I18N_KEY[slug];
 
   const title = t(i18nKey.title);
@@ -51,20 +52,11 @@ export default async function ServiceDetailPage({params}: {params: Promise<{loca
   const features = t.has(`${serviceKey}.details.features`) ? t.raw(`${serviceKey}.details.features`) as string[] : [];
   const detailedDescription = t.has(`${serviceKey}.details.description`) ? t(`${serviceKey}.details.description`) : description;
 
-  const examples = [
-    {
-      title: t('cases.case1.title'),
-      description: t('cases.case1.description')
-    },
-    {
-      title: t('cases.case2.title'),
-      description: t('cases.case2.description')
-    },
-    {
-      title: t('cases.case3.title'),
-      description: t('cases.case3.description')
-    }
-  ];
+  const exampleIds = ['auto-1', 'rail-1', 'multimodal-1'] as const;
+  const examples = exampleIds.map((id) => ({
+    title: tcases.has(`${id}.title`) ? tcases(`${id}.title`) : '',
+    description: tcases.has(`${id}.description`) ? tcases(`${id}.description`) : ''
+  }));
 
   return (
     <div className="min-h-screen bg-white">
@@ -97,7 +89,7 @@ export default async function ServiceDetailPage({params}: {params: Promise<{loca
               
               {features.length > 0 && (
                 <div className="mb-8">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Особенности сервиса:</h3>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">{t('services.common.featuresTitle')}</h3>
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {features.map((feature, index) => (
                       <li key={index} className="flex items-start">
@@ -113,12 +105,10 @@ export default async function ServiceDetailPage({params}: {params: Promise<{loca
               
               <div className="space-y-4 text-gray-700">
                 <p>
-                  Наша компания обеспечивает полный цикл логистических услуг с индивидуальным подходом к каждому клиенту. 
-                  Мы гарантируем прозрачность процессов, своевременную доставку и конкурентные цены.
+                  {t('services.common.paragraph1')}
                 </p>
                 <p>
-                  Опытная команда специалистов поможет выбрать оптимальное решение для ваших потребностей 
-                  и обеспечит сопровождение груза на всех этапах транспортировки.
+                  {t('services.common.paragraph2')}
                 </p>
               </div>
             </article>
@@ -151,7 +141,7 @@ export default async function ServiceDetailPage({params}: {params: Promise<{loca
         {/* Advantages */}
         <section className="py-12 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">Преимущества</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">{t('services.common.advantagesTitle')}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {advantages.map((advantage, idx) => (
                 <div key={idx} className="bg-white rounded-2xl border border-gray-200 p-6 text-center">

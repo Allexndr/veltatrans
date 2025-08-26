@@ -95,6 +95,28 @@
     "title": "Our services",
     "description": "Full range of logistics services for your business development",
     "subtitle": "Full range of logistics services for your business development",
+    "common": {
+      "featuresTitle": "Service features:",
+      "advantagesTitle": "Advantages",
+      "paragraph1": "Our company provides a full cycle of logistics services with an individual approach to each client. We guarantee transparent processes, on-time delivery and competitive prices.",
+      "paragraph2": "An experienced team will help you choose the optimal solution for your needs and will support the cargo at all stages of transportation."
+    },
+    "air": {
+      "title": "Air freight",
+      "description": "Fast air delivery along key routes"
+    },
+    "sea": {
+      "title": "Sea freight",
+      "description": "Cost-effective sea delivery with a wide port geography"
+    },
+    "land": {
+      "title": "Road freight",
+      "description": "Optimal road routes and reliable carriers"
+    },
+    "multimodal": {
+      "title": "Multimodal transport",
+      "description": "Combined solutions tailored to the client's task"
+    },
     "autoTransport": {
       "title": "Road transport",
       "description": "We organize international road transportation from China to Russia, Kazakhstan and Europe. We work with both full truckload (FTL) and less than truckload (LTL) cargo. We have our own network of verified carriers and a reliable tracking system."
@@ -587,8 +609,25 @@
       "email": "Email",
       "phone": "Phone",
       "message": "Message",
-      "send": "Send"
-    }
+      "subject": "Subject",
+      "selectSubject": "Select subject",
+      "options": {
+        "problem": "Problem",
+        "review": "Review",
+        "suggestion": "Suggestion",
+        "cooperation": "Cooperation",
+        "other": "Other"
+      },
+      "messagePlaceholder": "Describe your question or suggestion",
+      "send": "Send",
+      "sending": "Sending..."
+    },
+    "success": {
+      "title": "Message sent",
+      "message": "Thank you! We will contact you shortly.",
+      "sendAnother": "Send another"
+    },
+    "note": "By submitting the form, you agree to the privacy policy"
   },
   "documents": {
     "title": "Documents for download",
