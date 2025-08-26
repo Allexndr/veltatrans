@@ -21,9 +21,12 @@ export const casesData: CaseItem[] = [
     description: 'Доставка промышленного оборудования из Китая в Казахстан',
     category: 'auto',
     images: [
-      '/assets/images/auto-case.jpg',
-      '/assets/images/truck-fleet.jpg',
-      '/assets/images/truck-velta-trans.jpg'
+      '/assets/images/auto-case.jpg'
+    ],
+    videos: [
+      '/assets/cases/auto/Перевозка автомобильным транспортом.mp4',
+      '/assets/cases/auto/Перевозки автотранспортом.mp4',
+      '/assets/cases/auto/Перевозки автотранспортом 2.mp4'
     ],
     details: 'Организовали полный цикл доставки промышленного оборудования из Шанхая в Алматы. Включал таможенное оформление, страхование и сопровождение груза.',
     date: '2024-06-15',
@@ -38,9 +41,10 @@ export const casesData: CaseItem[] = [
     description: 'Консолидация и доставка малых партий из разных отправителей',
     category: 'auto',
     images: [
-      '/assets/images/warehouse-case.jpg',
-      '/assets/images/warehouse-new.jpg',
-      '/assets/images/warehouse-outdoor.jpg'
+      '/assets/images/warehouse-case.jpg'
+    ],
+    videos: [
+      '/assets/cases/container/Контейнерные перевозки автотранспортом.mp4'
     ],
     details: 'Успешно консолидировали 8 малых партий от разных отправителей в один контейнер. Оптимизировали маршрут и снизили стоимость для клиентов.',
     date: '2024-07-20',
@@ -53,16 +57,20 @@ export const casesData: CaseItem[] = [
   // ЖД перевозки
   {
     id: 'rail-1',
-    title: 'Контейнерный поезд Китай-Россия',
+    title: 'Контейнерный поезд Казахстан-Россия',
     description: 'Регулярные контейнерные перевозки по Транссибу',
     category: 'rail',
     images: [
-      '/assets/images/railway-case.jpg',
-      '/assets/images/freight-train.jpg',
-      '/assets/images/railway-wagons.jpg',
-      '/assets/images/depositphotos_8643721-stock-photo-freight-train-with-cargo-containers.jpg'
+      '/assets/cases/rail/Перевозки жд транспортом.jpeg',
+      '/assets/cases/rail/Перевозки жд транспортом 2.jpeg',
+      '/assets/cases/rail/Перевозки жд транспортом 3.jpeg'
     ],
-    videos: ['/assets/videos/railway-transport.mp4'],
+    videos: [
+      '/assets/cases/rail/Перевозки жд транспортом.mp4',
+      '/assets/cases/rail/Перевозки жд транспортом 2.mp4',
+      '/assets/cases/rail/Перевозки жд транспортом 3.mp4',
+      '/assets/cases/rail/Перевозки жд транспортом 4.mp4'
+    ],
     details: 'Организовали регулярные контейнерные перевозки по маршруту Шанхай-Москва через Транссибирскую магистраль. Время в пути: 14 дней.',
     date: '2024-08-01',
     location: 'Шанхай → Москва',
@@ -74,7 +82,7 @@ export const casesData: CaseItem[] = [
     id: 'rail-2',
     title: 'Перевозка негабаритного оборудования',
     description: 'Доставка крупногабаритного оборудования для нефтегазовой отрасли',
-    category: 'rail',
+    category: 'oversize',
     images: [
       '/assets/images/project-cargo.jpg',
       '/assets/images/train-cargo.jpg',
@@ -95,10 +103,10 @@ export const casesData: CaseItem[] = [
     description: 'Морская + железнодорожная + автомобильная доставка',
     category: 'multimodal',
     images: [
-      '/assets/images/multimodal-transport.jpg',
-      '/assets/images/container-ship.jpg',
-      '/assets/images/railway-wagons.jpg',
-      '/assets/images/truck-fleet.jpg'
+      '/assets/images/multimodal-transport.jpg'
+    ],
+    videos: [
+      '/assets/cases/oversize/Перевозка Негабаритных грузов.mp4'
     ],
     details: 'Организовали сложную мультимодальную перевозку: морем из Шанхая во Владивосток, затем по железной дороге до Екатеринбурга, и автомобилем до места назначения.',
     date: '2024-06-30',
@@ -115,9 +123,10 @@ export const casesData: CaseItem[] = [
     description: 'Доставка крупногабаритной строительной техники',
     category: 'project',
     images: [
-      '/assets/images/project-cargo.jpg',
-      '/assets/images/truck-fleet.jpg',
-      '/assets/images/auto-case.jpg'
+      '/assets/images/project-cargo.jpg'
+    ],
+    videos: [
+      '/assets/cases/project/Проектная перевозка автомобильным транспортом.mp4'
     ],
     details: 'Специальная перевозка строительной техники для крупного инфраструктурного проекта. Включила разработку маршрута, получение разрешений и сопровождение.',
     date: '2024-08-15',
@@ -134,10 +143,10 @@ export const casesData: CaseItem[] = [
     description: 'Еженедельные контейнерные рейсы между портами',
     category: 'container',
     images: [
-      '/assets/images/container-ship.jpg',
-      '/assets/images/container-ship-new.jpg',
-      '/assets/images/sea.jpg',
-      '/assets/images/railway-case.jpg'
+      '/assets/cases/rail/Перевозки жд транспортом 4.jpeg'
+    ],
+    videos: [
+      '/assets/cases/container/Контейнерные перевозки автотранспортом.mp4'
     ],
     details: 'Организовали регулярные контейнерные перевозки между китайскими и российскими портами. Стабильное расписание и конкурентные цены.',
     date: '2024-08-10',
@@ -152,11 +161,12 @@ export const casesData: CaseItem[] = [
     id: 'dangerous-1',
     title: 'Перевозка химических веществ',
     description: 'Безопасная транспортировка опасных химических материалов',
-    category: 'dangerous',
+    category: 'customs',
     images: [
-      '/assets/images/customs.jpg',
-      '/assets/images/customs-new.jpg',
-      '/assets/images/warehouse-case.jpg'
+      '/assets/images/customs-new.jpg'
+    ],
+    videos: [
+      '/assets/cases/customs/Таможенная перевозка автомобильным транспортом.mp4'
     ],
     details: 'Специальная перевозка опасных химических веществ с соблюдением всех международных стандартов безопасности. Включила специальную упаковку и сопровождение.',
     date: '2024-07-25',
@@ -223,5 +233,6 @@ export const categories = [
   { id: 'multimodal', name: 'Мультимодальные', count: casesData.filter(c => c.category === 'multimodal').length },
   { id: 'project', name: 'Проектные', count: casesData.filter(c => c.category === 'project').length },
   { id: 'container', name: 'Контейнерные', count: casesData.filter(c => c.category === 'container').length },
-  { id: 'dangerous', name: 'Опасные грузы', count: casesData.filter(c => c.category === 'dangerous').length }
+  { id: 'oversize', name: 'Негабаритные', count: casesData.filter(c => c.category === 'oversize').length },
+  { id: 'customs', name: 'Таможенные', count: casesData.filter(c => c.category === 'customs').length }
 ];

@@ -4,7 +4,7 @@ import {useEffect} from 'react';
 import {useTranslations} from 'next-intl';
 
 export default function ContactForm() {
-  const t = useTranslations();
+  const t = useTranslations('contactForm');
 
   useEffect(() => {
     // Функция для загрузки скрипта Bitrix24
@@ -42,8 +42,8 @@ export default function ContactForm() {
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
               </div>
-              <p class="text-gray-600 mb-4">Форма временно недоступна</p>
-              <p class="text-sm text-gray-500">Пожалуйста, свяжитесь с нами по телефону или через другие контакты</p>
+              <p class="text-gray-600 mb-4">${t('formUnavailable.title')}</p>
+              <p class="text-sm text-gray-500">${t('formUnavailable.description')}</p>
             </div>
           `;
         }
@@ -60,17 +60,17 @@ export default function ContactForm() {
         script.parentNode.removeChild(script);
       }
     };
-  }, []);
+  }, [t]);
 
   return (
     <section className="py-16 bg-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            {t('contact.title')}
+            {t('title')}
           </h2>
           <p className="text-lg text-gray-600">
-            {t('contact.description')}
+            {t('description')}
           </p>
         </div>
 
@@ -85,11 +85,11 @@ export default function ContactForm() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Телефон</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('phone.title')}</h3>
                   <div className="space-y-1">
                     <p className="text-gray-600">+7 700 277 00 06</p>
                     <p className="text-gray-600">+7 701 070 40 11</p>
-                    <p className="text-gray-600">+7 701 070 40 22 (многоканальный)</p>
+                    <p className="text-gray-600">+7 701 070 40 22 ({t('phone.multichannel')})</p>
                   </div>
                 </div>
               </div>
@@ -114,8 +114,8 @@ export default function ContactForm() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Адрес</h3>
-                  <p className="text-gray-600">Адрес офиса</p>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('address.title')}</h3>
+                  <p className="text-gray-600">{t('address.value')}</p>
                 </div>
               </div>
             </div>
@@ -125,10 +125,10 @@ export default function ContactForm() {
           <div className="bg-gray-50 rounded-2xl p-8">
             <div className="text-center mb-6">
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                Напишите нам
+                {t('form.title')}
               </h3>
               <p className="text-gray-600">
-                Заполните форму и мы свяжемся с вами
+                {t('form.description')}
               </p>
             </div>
             
@@ -136,7 +136,7 @@ export default function ContactForm() {
             <div id="b24form_inline_2_36mjlr" className="min-h-[300px]">
               <div className="text-center py-8">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-velta-navy mx-auto mb-4"></div>
-                <p className="text-gray-600">Загрузка формы...</p>
+                <p className="text-gray-600">{t('form.loading')}</p>
               </div>
             </div>
           </div>

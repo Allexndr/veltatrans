@@ -4,32 +4,32 @@ import Footer from '@/components/Footer';
 import ContactForm from '@/components/ContactForm';
 
 export default function ContactsPage() {
-  const t = useTranslations();
+  const t = useTranslations('contact');
 
   const offices = [
     {
-      city: 'Алматы',
-      country: 'Казахстан',
-      address: 'ул. Примерная, 123',
-      phone: '+7 (727) 123-45-67',
-      email: 'almaty@veltatrans.com',
-      hours: 'Пн-Пт: 9:00-18:00',
+      city: t('regions.almaty.city'),
+      country: t('regions.almaty.country'),
+      address: t('regions.almaty.address'),
+      phone: t('regions.almaty.phone'),
+      email: t('regions.almaty.email'),
+      hours: t('regions.almaty.hours'),
     },
     {
-      city: 'Москва',
-      country: 'Россия',
-      address: 'ул. Примерная, 456',
-      phone: '+7 (495) 123-45-67',
-      email: 'moscow@veltatrans.com',
-      hours: 'Пн-Пт: 9:00-18:00',
+      city: t('regions.moscow.city'),
+      country: t('regions.moscow.country'),
+      address: t('regions.moscow.address'),
+      phone: t('regions.moscow.phone'),
+      email: t('regions.moscow.email'),
+      hours: t('regions.moscow.hours'),
     },
     {
-      city: 'Пекин',
-      country: 'Китай',
-      address: '北京市示例街789号',
-      phone: '+86 10 1234-5678',
-      email: 'beijing@veltatrans.com',
-      hours: 'Пн-Пт: 9:00-18:00',
+      city: t('regions.beijing.city'),
+      country: t('regions.beijing.country'),
+      address: t('regions.beijing.address'),
+      phone: t('regions.beijing.phone'),
+      email: t('regions.beijing.email'),
+      hours: t('regions.beijing.hours'),
     },
   ];
 
@@ -43,12 +43,12 @@ export default function ContactsPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
               <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                {t('contact.title')}
+                {t('title')}
               </h1>
               <p className="text-xl text-velta-100 max-w-3xl mx-auto">
-                {t('contact.description')}
+                {t('description')}
               </p>
-            </div>
+              </div>
           </div>
         </section>
 
@@ -57,10 +57,10 @@ export default function ContactsPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Наши офисы
+                {t('regions.title')}
               </h2>
               <p className="text-lg text-gray-600">
-                Мы работаем в ключевых логистических центрах
+                {t('regions.subtitle')}
               </p>
             </div>
 
@@ -116,18 +116,18 @@ export default function ContactsPage() {
         {/* Телефоны с пояснениями (06 — многоканальный, 11 — sales, 22 — логисты) */}
         <section className="py-8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Телефоны</h2>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6">{t('phones.title')}</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="border rounded-lg p-5">
-                <p className="text-gray-700 font-medium mb-1">Многоканальный (06)</p>
+                <p className="text-gray-700 font-medium mb-1">{t('phones.multichannel')}</p>
                 <a href="tel:+77002770006" className="text-velta-navy font-semibold">+7 700 277 00 06</a>
               </div>
               <div className="border rounded-lg p-5">
-                <p className="text-gray-700 font-medium mb-1">Sales (11)</p>
+                <p className="text-gray-700 font-medium mb-1">{t('phones.sales')}</p>
                 <a href="tel:+77010704011" className="text-velta-navy font-semibold">+7 701 070 40 11</a>
               </div>
               <div className="border rounded-lg p-5">
-                <p className="text-gray-700 font-medium mb-1">Логисты (22)</p>
+                <p className="text-gray-700 font-medium mb-1">{t('phones.logistics')}</p>
                 <a href="tel:+77002770022" className="text-velta-navy font-semibold">+7 700 277 00 22</a>
               </div>
             </div>
@@ -139,10 +139,10 @@ export default function ContactsPage() {
           <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Способы связи
+                {t('contactMethods.title')}
               </h2>
               <p className="text-lg text-gray-600">
-                Выберите удобный для вас способ связи
+                {t('contactMethods.subtitle')}
               </p>
             </div>
 
@@ -154,12 +154,12 @@ export default function ContactsPage() {
                   </svg>
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">WhatsApp</h3>
-                <p className="text-gray-600 mb-4">Быстрые ответы в мессенджере</p>
+                <p className="text-gray-600 mb-4">{t('contactMethods.whatsapp.description')}</p>
                 <a
                   href="https://wa.me/77010704011"
                   className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors"
                 >
-                  Написать
+                  {t('contactMethods.write')}
                 </a>
               </div>
 
@@ -170,12 +170,12 @@ export default function ContactsPage() {
                   </svg>
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Telegram</h3>
-                <p className="text-gray-600 mb-4">Удобное общение в чате</p>
+                <p className="text-gray-600 mb-4">{t('contactMethods.telegram.description')}</p>
                 <a
                   href="https://t.me/velta_logistics_bot"
                   className="bg-velta-navy text-white px-6 py-2 rounded-lg hover:bg-velta-700 transition-colors"
                 >
-                  Написать
+                  {t('contactMethods.write')}
                 </a>
               </div>
 
@@ -186,12 +186,12 @@ export default function ContactsPage() {
                   </svg>
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Email</h3>
-                <p className="text-gray-600 mb-4">Подробная переписка</p>
+                <p className="text-gray-600 mb-4">{t('contactMethods.email.description')}</p>
                 <a
                   href="mailto:info@veltatrans.com"
                   className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors"
                 >
-                  Написать
+                  {t('contactMethods.write')}
                 </a>
               </div>
             </div>

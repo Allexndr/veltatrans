@@ -148,7 +148,7 @@ export default function RecommendationsSection({}: RecommendationsSectionProps) 
         {/* Certificates Section */}
         <div className="mt-16">
           <h3 className="text-2xl font-bold text-gray-900 text-center mb-8">
-            Сертификаты и награды
+            {t('certificates.title')}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {[1, 2, 3, 4].map((i) => (
@@ -159,10 +159,10 @@ export default function RecommendationsSection({}: RecommendationsSectionProps) 
                   </svg>
                 </div>
                 <h4 className="font-semibold text-gray-900 mb-2">
-                  {i === 1 ? 'Почетная грамота' : i === 2 ? 'Сертификат качества' : i === 3 ? 'Диплом участника' : 'Благодарность'}
+                  {t(`certificates.items.${i}.title` as any)}
                 </h4>
                 <p className="text-sm text-gray-600">
-                  {i === 1 ? 'За высокое качество услуг' : i === 2 ? 'Сертификат соответствия стандартам' : i === 3 ? 'Участие в выставке' : 'За плодотворное сотрудничество'}
+                  {t(`certificates.items.${i}.desc` as any)}
                 </p>
               </div>
             ))}

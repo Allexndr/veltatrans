@@ -98,7 +98,7 @@ export default function Footer() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
                 <div>
-                  <p className="text-gray-300 text-sm sm:text-base font-medium">Многоканальный (06)</p>
+                  <p className="text-gray-300 text-sm sm:text-base font-medium">{t('phones.multichannel')}</p>
                   <a href="tel:+77002770006" className="text-white hover:text-velta-royal-blue transition-colors duration-200 text-sm sm:text-base">+7 700 277 00 06</a>
                 </div>
               </div>
@@ -107,7 +107,7 @@ export default function Footer() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
                 <div>
-                  <p className="text-gray-300 text-sm sm:text-base font-medium">Sales (11)</p>
+                  <p className="text-gray-300 text-sm sm:text-base font-medium">{t('phones.sales')}</p>
                   <a href="tel:+77010704011" className="text-white hover:text-velta-royal-blue transition-colors duration-200 text-sm sm:text-base">+7 701 070 40 11</a>
                 </div>
               </div>
@@ -116,7 +116,7 @@ export default function Footer() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
                 <div>
-                  <p className="text-gray-300 text-sm sm:text-base font-medium">Логисты (22)</p>
+                  <p className="text-gray-300 text-sm sm:text-base font-medium">{t('phones.logistics')}</p>
                   <a href="tel:+77002770022" className="text-white hover:text-velta-royal-blue transition-colors duration-200 text-sm sm:text-base">+7 700 277 00 22</a>
                 </div>
               </div>

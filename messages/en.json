@@ -7,7 +7,8 @@
     "rates": "Rates",
     "directions": "Directions",
     "documents": "Documents",
-    "contacts": "Contacts"
+    "contacts": "Contacts",
+    "openMenu": "Open menu"
   },
   "company": {
     "name": "Velta Trans",
@@ -31,7 +32,7 @@
       "title": "Contact us"
     },
     "stats": {
-      "countries": "countries",
+      "countries": "Countries",
       "experience": "15+ years of experience",
       "geography": "Wide geography",
       "support": "24/7 support"
@@ -43,39 +44,48 @@
     },
     "advantages": {
       "title": "Why choose us",
-      "subtitle": "More than 1175 completed shipments annually with guaranteed deadlines and round-the-clock tracking",
-      "deadline_guarantee": {
+      "subtitle": "Over 1175 completed shipments annually with guaranteed deadlines and 24/7 tracking",
+      "guarantee": {
         "title": "Deadline guarantee",
-        "description": "Round-the-clock 24/7 tracking and deadline control at all stages"
+        "description": "24/7 tracking and delivery time control at all stages"
       },
-      "special_equipment": {
+      "specialEquipment": {
         "title": "Special equipment",
-        "description": "Professional transportation of special equipment and oversized cargo (non-standard, long-length, wide and heavy cargo)"
+        "description": "Professional transportation of special equipment and oversized cargo (non-standard, long-length, wide and heavy)"
       },
-      "competitive_rates": {
+      "competitiveRates": {
         "title": "Competitive rates",
         "description": "Flexible terms and competitive rates for all types of transportation"
       },
-      "full_support": {
+      "fullSupport": {
         "title": "Full support",
         "description": "Professional support at all stages of transportation from pickup to delivery"
       },
-      "key_routes": {
+      "keyRoutes": {
         "title": "Key routes",
         "description": "Southern China cities (Shenzhen / Guangzhou / Shanghai) → Khorgos / Alashankou → Almaty / Astana / Moscow / St. Petersburg / Rostov / Chelyabinsk / Istanbul"
       },
-      "multimodal_solutions": {
+      "multimodal": {
         "title": "Multimodal solutions",
         "description": "Coverage of CIS countries and Europe through the Caspian Sea and key transport hubs"
       }
     },
-    "track_cargo": "Track cargo",
-    "key_directions": "Key directions",
-    "china_kazakhstan": "China - Kazakhstan: Khorgos, Altynkol, Almaty, Nur-Sultan",
-    "china_russia": "China - Russia: Moscow, Yekaterinburg, Novosibirsk",
-    "china_europe": "China - Europe: Warsaw, Hamburg",
-    "more_about_routes": "More about routes",
-    "round_the_clock_support": "Round-the-clock support and cargo escort"
+    "featuresSection": {
+      "experience": {
+        "title": "15+ years of experience",
+        "description": "Over 15 years of successful work in international logistics"
+      },
+      "keyDirections": {
+        "title": "Key directions",
+        "description": "China - Kazakhstan: Khorgos, Altynkol, Almaty, Nur-Sultan\nChina - Russia: Moscow, Yekaterinburg, Novosibirsk\nChina - Europe: Warsaw, Hamburg",
+        "moreAbout": "Learn more about routes"
+      },
+      "support": {
+        "title": "24/7 support",
+        "description": "Round-the-clock support and cargo escort"
+      }
+    },
+    "trackCargo": "Track cargo"
   },
   "tools": {
     "title": "Useful Tools",
@@ -83,241 +93,143 @@
   },
   "services": {
     "title": "Our services",
-    "description": "Full range of logistics services for your business",
+    "description": "Full range of logistics services for your business development",
+    "subtitle": "Full range of logistics services for your business development",
     "autoTransport": {
-      "title": "Road Transport",
-      "description": "We organize international road transport from China to Russia, Kazakhstan and Europe. We work with both full truckload (FTL) and less than truckload (LTL) shipments. We have our own network of verified carriers and a reliable tracking system."
+      "title": "Road transport",
+      "description": "We organize international road transportation from China to Russia, Kazakhstan and Europe. We work with both full truckload (FTL) and less than truckload (LTL) cargo. We have our own network of verified carriers and a reliable tracking system."
     },
     "railwayTransport": {
-      "title": "Rail Transport",
-      "description": "Direct container trains from China to Russia and CIS countries. Possibility of sending both full container loads (FCL) and less than container loads (LCL). Fast delivery times and competitive rates."
+      "title": "Railway transport",
+      "description": "Direct container trains from China to Russia and CIS countries. Ability to ship both full containers (FCL) and consolidated cargo (LCL). Operational terms and competitive rates."
     },
     "multimodalTransport": {
-      "title": "Multimodal Transport",
-      "description": "Combination of sea, road, and rail transport. Optimal solution for price and delivery times. We select a route tailored to the client's task."
+      "title": "Multimodal transport",
+      "description": "Combination of sea, road and rail transport. Optimal solution for price and delivery time. We select a route based on the client's task."
     },
     "projectTransport": {
-      "title": "Project Cargo Transport",
-      "description": "Delivery of oversized and heavy cargo. Route development, organization of special equipment, and coordination. Experience in transporting equipment for construction and energy."
-    },
-    "air": {
-      "title": "Air Transportation",
-      "description": "Fast delivery of cargo by air transport",
-      "features": {
-        "speed": "High delivery speed",
-        "reliability": "Reliable transportation",
-        "tracking": "Full tracking",
-        "documentation": "Full documentation support"
-      },
-      "benefits": {
-        "fast": "Fastest delivery method",
-        "safe": "Safe cargo handling",
-        "global": "Worldwide delivery",
-        "urgent": "Perfect for urgent cargo"
-      }
-    },
-    "sea": {
-      "title": "Sea Transportation", 
-      "description": "Cost-effective cargo delivery by sea transport",
-      "features": {
-        "economy": "Low transportation cost",
-        "volume": "Large cargo volumes",
-        "containers": "Container shipping",
-        "routes": "Optimal routes"
-      },
-      "benefits": {
-        "cost": "Most economical method",
-        "capacity": "Large cargo capacity",
-        "eco": "Environmentally friendly",
-        "reliable": "Proven reliability"
-      }
-    },
-    "land": {
-      "title": "Land Transportation",
-      "description": "Flexible cargo delivery by road and rail transport",
-      "features": {
-        "flexibility": "Flexible routes",
-        "speed": "Optimal delivery time",
-        "accessibility": "Door-to-door delivery", 
-        "control": "Full control"
-      },
-      "benefits": {
-        "direct": "Direct delivery",
-        "fast": "Fast transportation",
-        "accessible": "Wide accessibility",
-        "monitoring": "Real-time monitoring"
-      }
-    },
-    "multimodal": {
-      "title": "Multimodal Transportation",
-      "description": "Combined transportation using multiple transport modes",
-      "features": {
-        "optimization": "Route optimization",
-        "efficiency": "Maximum efficiency",
-        "integration": "Seamless integration",
-        "management": "Single management"
-      },
-      "benefits": {
-        "optimal": "Optimal cost and time",
-        "reliable": "High reliability",
-        "flexible": "Maximum flexibility",
-        "comprehensive": "Complete service"
-      }
-    },
-    "logistics": {
-      "title": "Logistics services",
-      "description": "Transportation organization of any complexity"
+      "title": "Project transport",
+      "description": "Transportation of oversized and heavy cargo. Route development, organization of special equipment and approvals. Experience in transporting equipment for construction and energy."
     },
     "customs": {
       "title": "Customs clearance",
-      "description": "Complete customs support for cargo"
+      "description": "Professional customs clearance of cargo with full procedure support"
     },
     "consultation": {
-      "title": "Consultation",
-      "description": "Professional logistics consultation"
+      "title": "Consultations",
+      "description": "Professional logistics consultations"
     },
     "more": "Learn more",
     "cards": {
       "auto": {
-        "title": "Road transportation",
-        "description": "International road shipments from China to Russia, Kazakhstan and Europe. Full truckload (FTL) and less-than-truckload (LTL). Own network of verified carriers and reliable tracking."
+        "title": "Road transport",
+        "description": "We organize international road transportation from China to Russia, Kazakhstan and Europe. We work with both full truckload (FTL) and less than truckload (LTL) cargo. We have our own network of verified carriers and a reliable tracking system."
       },
       "rail": {
-        "title": "Rail transportation",
-        "description": "Direct container trains from China to Russia and CIS. Both full containers (FCL) and consolidated cargo (LCL). Fast transit and competitive rates."
+        "title": "Railway transport",
+        "description": "Direct container trains from China to Russia and CIS countries. Ability to ship both full containers (FCL) and consolidated cargo (LCL). Operational terms and competitive rates."
       },
       "multimodal": {
-        "title": "Multimodal transportation",
-        "description": "Combination of sea, road and rail. Optimal solution for price and delivery time. Route tailored to the task."
+        "title": "Multimodal transport",
+        "description": "Combination of sea, road and rail transport. Optimal solution for price and delivery time. We select a route based on the client's task."
       },
       "project": {
-        "title": "Project cargo",
-        "description": "Delivery of oversized and heavy cargo. Route engineering, special equipment and permits. Experience with construction and energy equipment."
+        "title": "Project transport",
+        "description": "Transportation of oversized and heavy cargo. Route development, organization of special equipment and approvals. Experience in transporting equipment for construction and energy."
+      }
+    },
+    "whyChooseUs": {
+      "title": "Why choose us",
+      "subtitle": "Over 1175 completed shipments annually with guaranteed deadlines and 24/7 tracking",
+      "guarantee": {
+        "title": "Deadline guarantee",
+        "description": "24/7 tracking and delivery time control"
+      },
+      "specialEquipment": {
+        "title": "Special equipment",
+        "description": "Professional transportation of special equipment and oversized cargo"
+      },
+      "competitiveRates": {
+        "title": "Competitive rates",
+        "description": "Flexible terms and competitive rates for all types of transportation"
+      },
+      "fullSupport": {
+        "title": "Full support",
+        "description": "Professional support at all stages of transportation"
       }
     }
   },
-  "cases": {
-    "title": "Cases",
-    "description": "Examples of our successful projects",
-    "categories": {
-      "all": "All",
-      "general": "General cargo",
-      "container": "Container shipping",
-      "oversized": "Oversized",
-      "dangerous": "Dangerous goods",
-      "consolidated": "Consolidated cargo",
-      "project": "Project cargo"
+  "directions": {
+    "title": "Directions",
+    "description": "We work worldwide, ensuring reliable cargo delivery",
+    "mainDirections": {
+      "title": "Main Directions",
+      "subtitle": "Four key directions of our company's work"
     },
-    "case1": {
-      "title": "Multimodal equipment delivery",
-      "description": "Delivery of industrial equipment from China to Russia"
+    "china_cis": {
+      "title": "China - CIS",
+      "description": "Direct transportation from China to CIS countries",
+      "features": [
+        "Border crossings",
+        "Customs clearance",
+        "Container transportation",
+        "Groupage cargo"
+      ]
     },
-    "case2": {
-      "title": "Container shipping",
-      "description": "Regular container shipments"
+    "russia_kazakhstan": {
+      "title": "Russia - Kazakhstan",
+      "description": "International transportation between Russia and Kazakhstan",
+      "features": [
+        "Railway routes",
+        "Automotive transportation",
+        "Multimodal solutions",
+        "Full support"
+      ]
     },
-    "case3": {
-      "title": "Oversized transportation",
-      "description": "Transportation of large equipment"
+    "kazakhstan": {
+      "title": "Kazakhstan",
+      "description": "Domestic and international transportation across Kazakhstan",
+      "features": [
+        "Intercity transportation",
+        "International routes",
+        "Warehouse services",
+        "Logistics solutions"
+      ]
     },
-    "case4": {
-      "title": "Dangerous goods",
-      "description": "Safe transportation of dangerous materials"
+    "project_cargo": {
+      "title": "Project Cargo",
+      "description": "Specialized transportation of oversized cargo",
+      "features": [
+        "Individual approach",
+        "Special equipment",
+        "Route coordination",
+        "Full support"
+      ]
     },
-    "case5": {
-      "title": "Consolidated cargo",
-      "description": "Economical delivery of small batches"
+    "popularRoutes": {
+      "title": "Popular Routes",
+      "subtitle": "Most in-demand delivery directions",
+      "distance": "Distance:",
+      "deliveryTime": "Delivery time:",
+      "transportType": "Transport type:",
+      "cost": "Cost:",
+      "calculateDelivery": "Calculate delivery"
     },
-    "case6": {
-      "title": "Project cargo",
-      "description": "Complex logistics solutions"
+    "borderCrossings": {
+      "title": "Border Crossings",
+      "subtitle": "Key checkpoints for international cargo",
+      "features": "Features:"
     },
-    "viewDetails": "View details",
-    "viewAll": "All cases"
-  },
-  "writeToManagement": {
-    "title": "Write to Management",
-    "description": "Contact company management directly",
-    "form": {
-      "name": "Name",
-      "email": "Email",
-      "phone": "Phone",
-      "company": "Company",
-      "subject": "Subject",
-      "selectSubject": "Select subject",
-      "options": {
-        "problem": "Report a problem",
-        "review": "Leave a review",
-        "suggestion": "Send a suggestion",
-        "cooperation": "Cooperation proposal",
-        "other": "Other"
-      },
-      "message": "Message",
-      "messagePlaceholder": "Describe your situation...",
-      "send": "Send",
-      "sending": "Sending..."
-    },
-    "success": {
-      "title": "Message sent!",
-      "message": "We will contact you soon",
-      "sendAnother": "Send another"
-    },
-    "note": "We will respond within 24 hours"
-  },
-  "recommendations": {
-    "title": "Recommendations",
-    "description": "Leading companies trust us",
-    "banner": {
-      "title": "THEY TRUST US, AND WE MEET EXPECTATIONS",
-      "subtitle": "Over 500 satisfied clients"
-    },
-    "rec1": {
-      "company": "LLC \"Trading House \"Ideal Spets\"",
-      "position": "Director",
-      "name": "Moleva A.V.",
-      "text": "Long-term and fruitful cooperation, innovative approach, first-class professional skills"
-    },
-    "rec2": {
-      "company": "LLC \"Ellada\"",
-      "position": "Logistics Manager",
-      "name": "Petrov I.S.",
-      "text": "Individual approach and serious attitude to business. We recommend to all partners"
-    },
-    "rec3": {
-      "company": "LLC \"Unitex\"",
-      "position": "Manager",
-      "name": "Sidorova E.A.",
-      "text": "Excellent work, timely delivery, professional approach to each client"
-    },
-    "rec4": {
-      "company": "LLC \"Barrier-DV\"",
-      "position": "Director",
-      "name": "Kozlov D.M.",
-      "text": "Reliable partner in logistics. Always fulfill obligations on time"
-    },
-    "certificates": {
-      "title": "Certificates and Awards",
-      "cert1": {
-        "title": "Certificate of Honor",
-        "description": "For high quality services"
-      },
-      "cert2": {
-        "title": "Quality Certificate",
-        "description": "ISO 9001:2015"
-      },
-      "cert3": {
-        "title": "License",
-        "description": "Customs representative"
-      },
-      "cert4": {
-        "title": "Award",
-        "description": "Best logistics operator"
-      }
+    "geography": {
+      "title": "Work Geography",
+      "subtitle": "Our logistics network covers three continents",
+      "interactiveMap": "Interactive Map",
+      "mapDescription": "A map with routes will be placed here"
     }
   },
   "calculator": {
-    "title": "Cost Calculator",
-    "description": "Calculate the cost of your cargo delivery",
+    "title": "Cost calculator",
+    "description": "Calculate the cost of delivering your cargo",
     "fromCountry": "Sender country",
     "toCountry": "Recipient country",
     "from": "From",
@@ -327,7 +239,7 @@
     "calculate": "Calculate cost",
     "result": "Calculation result",
     "form": {
-      "senderName": "Shipper",
+      "senderName": "Cargo sender",
       "phone": "Phone",
       "fromCity": "Sender city",
       "toCity": "Recipient city",
@@ -344,7 +256,7 @@
         "multimodal": "Multimodal"
       },
       "cargoType": "Cargo type",
-      "cargoPlaceholder": "e.g. equipment, apparel",
+      "cargoPlaceholder": "For example: equipment, clothing",
       "weight": "Weight",
       "volume": "Volume",
       "length": "Length",
@@ -352,7 +264,7 @@
       "height": "Height",
       "isOversized": "Oversized cargo",
       "features": "Cargo features",
-      "featuresPlaceholder": "e.g. dangerous, temperature",
+      "featuresPlaceholder": "For example: dangerous, temperature regime",
       "calculate": "Calculate cost",
       "calculating": "Calculating..."
     },
@@ -363,157 +275,181 @@
       "service": "Service",
       "calculateAgain": "Calculate again"
     },
-    "note": "Calculation is preliminary. For exact cost contact manager"
-  },
-  "cargoTracking": {
-    "title": "Cargo Tracking",
-    "description": "Check your shipment status",
-    "form": {
-      "trackingNumber": "Tracking number",
-      "placeholder": "Enter tracking number",
-      "track": "Track",
-      "tracking": "Tracking..."
-    },
-    "errors": {
-      "emptyNumber": "Enter tracking number"
-    },
-    "result": {
-      "trackingNumber": "Tracking number",
-      "status": "Status",
-      "estimatedDelivery": "Estimated delivery",
-      "history": "Movement history"
-    },
-    "note": "For current information contact manager"
-  },
-  "documents": {
-    "title": "Documents for Download",
-    "description": "All necessary documents for working with us",
-    "categories": {
-      "all": "All documents",
-      "contracts": "Contract forms",
-      "powers": "Powers of attorney",
-      "requisites": "Requisites",
-      "changes": "Change letters",
-      "additional": "Additional"
-    },
-    "doc1": {
-      "title": "Transportation contract (standard)",
-      "description": "Standard contract for cargo transportation"
-    },
-    "doc2": {
-      "title": "Transportation contract (consolidated)",
-      "description": "Contract for consolidated cargo transportation"
-    },
-    "doc3": {
-      "title": "Power of attorney for cargo receipt (IE)",
-      "description": "For individual entrepreneurs"
-    },
-    "doc4": {
-      "title": "Power of attorney for cargo receipt (legal entities)",
-      "description": "For legal entities"
-    },
-    "doc5": {
-      "title": "Power of attorney for cargo receipt (individuals)",
-      "description": "For individuals"
-    },
-    "doc6": {
-      "title": "Company requisites",
-      "description": "Current requisites of LLC \"Velta Trans\""
-    },
-    "download": "Download",
-    "info1": {
-      "title": "List of goods not accepted for transportation",
-      "description": "There is a certain list of goods, transportation of which may be associated with special conditions"
-    },
-    "info2": {
-      "title": "Complete list of necessary documents",
-      "description": "For sending cargo, the sender must provide information about themselves, recipient and payer"
-    },
-    "info3": {
-      "title": "Accompanying documents for cargo",
-      "description": "These include commercial invoice, invoice, indicating country of origin"
-    },
-    "note": "All documents are current and comply with current legislation"
+    "note": "The calculation is preliminary. For accurate cost, contact a manager"
   },
   "rates": {
-    "title": "Rates and Terms",
-    "description": "Current rates for transportation"
-  },
-  "directions": {
-    "title": "Transportation Directions",
-    "description": "Geography of our transportation"
-  },
-  "about": {
-    "title": "About Company",
-    "description": "Reliable partner in international logistics",
-    "mission": "Our Mission",
-    "values": "Our Values",
-    "team": "Our Team"
-  },
-  "cases": {
-    "title": "Our Cases",
-    "description": "Examples of successful projects and transportation",
-    "home": "Home",
-    "categories": {
-      "all": "All Cases",
-      "general": "General Cargo",
-      "container": "Container Transportation",
-      "oversized": "Oversized Cargo",
-      "dangerous": "Dangerous Goods",
-      "consolidated": "Consolidated Cargo",
-      "project": "Project Cargo"
+    "title": "Rates",
+    "description": "Transparent prices for all types of logistics services",
+    "routes": {
+      "almaty_beijing": "Almaty → Beijing",
+      "moscow_shanghai": "Moscow → Shanghai",
+      "tashkent_guangzhou": "Tashkent → Guangzhou",
+      "bishkek_urumqi": "Bishkek → Urumqi"
     },
-    "case1": {
-      "title": "Equipment Transportation from China",
-      "description": "Multimodal delivery of industrial equipment from Shanghai to Moscow"
+    "weight": {
+      "range1": "1-100 kg",
+      "range2": "100-500 kg",
+      "range3": "500+ kg"
     },
-    "case2": {
-      "title": "Container Transportation",
-      "description": "Regular container transportation between Russian and Chinese ports"
+    "transit": {
+      "range1": "12-15 days",
+      "range2": "18-22 days",
+      "range3": "14-18 days",
+      "range4": "3-5 days"
     },
-    "case3": {
-      "title": "Oversized Cargo",
-      "description": "Transportation of large equipment for oil and gas industry"
+    "currentRates": {
+      "title": "Current Rates",
+      "subtitle": "Prices are per kilogram of cargo",
+      "note": "* Prices may vary depending on cargo type, packaging and additional services"
     },
-    "case4": {
-      "title": "Dangerous Goods",
-      "description": "Safe transportation of chemicals with compliance to all standards"
+    "table": {
+      "direction": "Direction",
+      "weight": "Weight",
+      "price": "Price",
+      "deliveryTime": "Delivery Time"
     },
-    "case5": {
-      "title": "Consolidated Cargo",
-      "description": "Consolidation and delivery of small cargo batches from different senders"
+    "servicePlans": {
+      "title": "Service Plans",
+      "subtitle": "Choose the appropriate service level",
+      "popular": "Popular",
+      "select": "Select Plan",
+      "basic": {
+        "name": "Basic Delivery",
+        "description": "Standard delivery with tracking",
+        "features": {
+          "insurance": "Cargo insurance",
+          "tracking": "Online tracking",
+          "sms": "SMS notifications",
+          "warehouse": "Delivery to warehouse"
+        }
+      },
+      "express": {
+        "name": "Express Delivery",
+        "description": "Accelerated delivery with priority",
+        "features": {
+          "faster": "30% reduced time",
+          "priority": "Priority processing",
+          "manager": "Personal manager",
+          "door": "Door-to-door delivery"
+        }
+      },
+      "full": {
+        "name": "Full Service",
+        "description": "Full door-to-door support",
+        "features": {
+          "pickup": "Pickup from sender",
+          "customs": "Customs clearance",
+          "delivery": "Delivery to recipient",
+          "support": "Consulting support"
+        }
+      }
     },
-    "case6": {
-      "title": "Project Cargo",
-      "description": "Complex logistics for large infrastructure projects"
+    "pricingFactors": {
+      "title": "Pricing Factors",
+      "weight": {
+        "title": "Weight and Volume",
+        "description": "Calculation is based on the highest indicator"
+      },
+      "distance": {
+        "title": "Distance",
+        "description": "Kilometers between departure and destination points"
+      },
+      "cargoType": {
+        "title": "Cargo Type",
+        "description": "Special transportation requirements"
+      },
+      "urgency": {
+        "title": "Urgency",
+        "description": "Standard or express delivery"
+      }
     },
-    "viewDetails": "View details",
-    "viewAll": "All cases"
+    "additionalServices": {
+      "title": "Additional Services",
+      "packaging": "Cargo packaging",
+      "insurance": "Insurance",
+      "pickup": "Cargo pickup",
+      "delivery": "Delivery to recipient",
+      "storage": "Temporary storage",
+      "customs": "Customs clearance",
+      "prices": {
+        "packaging": "from $5",
+        "insurance": "0.5% of value",
+        "pickup": "from $10",
+        "delivery": "from $15",
+        "storage": "$2/day per m³",
+        "customs": "from $50"
+      }
+    }
   },
   "contact": {
     "title": "Contacts",
-    "description": "Contact us for consultation",
-    "phone": "Phone",
-    "phones": {
-      "main": "+77002770006",
-      "office1": "+77010704011",
-      "office2": "+77010704022",
-      "multichannel": "multichannel"
+    "description": "Contact us in any convenient way",
+    "regions": {
+      "title": "Regions",
+      "subtitle": "We work in key logistics centers",
+      "almaty": {
+        "city": "Almaty",
+        "country": "Kazakhstan",
+        "address": "Example St., 123",
+        "phone": "+7 (727) 123-45-67",
+        "email": "almaty@veltatrans.com",
+        "hours": "Mon-Fri: 9:00-18:00"
+      },
+      "moscow": {
+        "city": "Moscow",
+        "country": "Russia",
+        "address": "Example St., 456",
+        "phone": "+7 (495) 123-45-67",
+        "email": "moscow@veltatrans.com",
+        "hours": "Mon-Fri: 9:00-18:00"
+      },
+      "beijing": {
+        "city": "Beijing",
+        "country": "China",
+        "address": "789 Example Street",
+        "phone": "+86 10 1234-5678",
+        "email": "beijing@veltatrans.com",
+        "hours": "Mon-Fri: 9:00-18:00"
+      }
     },
-    "email": "Email",
-    "address": "Address",
+    "phones": {
+      "title": "Phones",
+      "multichannel": "Multichannel",
+      "sales": "Sales",
+      "logistics": "Logistics"
+    },
+    "contactMethods": {
+      "title": "Contact Methods",
+      "subtitle": "Choose a convenient way to contact us",
+      "write": "Write",
+      "whatsapp": {
+        "description": "Quick responses in messenger"
+      },
+      "telegram": {
+        "description": "Convenient chat communication"
+      },
+      "email": {
+        "description": "Detailed correspondence"
+      }
+    },
     "form": {
-      "name": "Name",
-      "email": "Email",
+      "name": "Your name",
       "phone": "Phone",
+      "email": "Email",
       "message": "Message",
-      "send": "Send",
+      "submit": "Send",
       "success": "Message sent successfully!",
       "error": "Error sending message"
+    },
+    "phones": {
+      "main": "+7 701 070 40 11",
+      "office1": "+7 701 070 40 22",
+      "office2": "+7 701 070 40 33",
+      "multichannel": "+7 701 070 40 44"
     }
   },
   "contact_form": {
-    "title": "Contact Us",
+    "title": "Contact us",
     "description": "Leave a request and we will contact you",
     "form": {
       "name": "Name",
@@ -523,31 +459,420 @@
       "send": "Send"
     }
   },
+  "cases": {
+    "title": "Cases",
+    "description": "Completed projects by main directions and transport types",
+    "home": "Home",
+    "viewDetails": "View details",
+    "viewAll": "All",
+    "categories": {
+      "all": "All",
+      "auto": "Automotive",
+      "rail": "Railway",
+      "multimodal": "Multimodal",
+      "project": "Project",
+      "container": "Container",
+      "dangerous": "Dangerous goods",
+      "oversize": "Oversized",
+      "customs": "Customs"
+    },
+    "category": {
+      "subtitle": "Cases in category: {category}"
+    },
+    "empty": {
+      "title": "Nothing here yet",
+      "description": "There are no cases in this category yet. Check back later or select another category.",
+      "back": "Back to all cases"
+    },
+    "moreAbout": "More about the project",
+    "projectDescription": "Project description",
+    "videos": "Videos",
+    "video": "Video",
+    "image": "image",
+    "videoNotSupported": "Your browser does not support video.",
+    "projectDetails": "Project details",
+    "route": "Route",
+    "cargoType": "Cargo type",
+    "projectCard": {
+      "title": "Project details",
+      "date": "Date:",
+      "category": "Category:",
+      "weight": "Weight:",
+      "volume": "Volume:",
+      "status": "Status:",
+      "completed": "Completed"
+    },
+    "backToCategory": "Back to {category}",
+    "orderSimilar": "Order a similar project",
+    "items": {
+      "auto-1": {
+        "title": "International equipment transportation",
+        "description": "Delivery of industrial equipment from China to Kazakhstan",
+        "location": "Shanghai → Almaty",
+        "cargo": "Industrial equipment",
+        "weight": "15 tons"
+      },
+      "auto-2": {
+        "title": "Groupage cargo transportation",
+        "description": "Consolidation and delivery of small batches from different shippers",
+        "location": "Guangzhou → Moscow",
+        "cargo": "Electronics, textiles, toys",
+        "weight": "8 tons"
+      },
+      "rail-1": {
+        "title": "Kazakhstan–Russia container train",
+        "description": "Regular container shipments via Trans-Siberian railway",
+        "location": "Shanghai → Moscow",
+        "cargo": "40HC containers",
+        "weight": "120 tons"
+      },
+      "rail-2": {
+        "title": "Oversized equipment transportation",
+        "description": "Delivery of large-sized equipment for the oil and gas industry",
+        "location": "Dalian → Novosibirsk",
+        "cargo": "Oil and gas equipment",
+        "weight": "45 tons"
+      },
+      "multimodal-1": {
+        "title": "Combined delivery from China",
+        "description": "Sea + rail + road delivery",
+        "location": "Shanghai → Yekaterinburg",
+        "cargo": "Industrial equipment",
+        "weight": "25 tons"
+      },
+      "project-1": {
+        "title": "Construction machinery transportation",
+        "description": "Delivery of large-sized construction machinery",
+        "location": "Beijing → Astana",
+        "cargo": "Construction machinery",
+        "weight": "35 tons"
+      },
+      "container-1": {
+        "title": "Regular container shipments",
+        "description": "Weekly container services between ports",
+        "location": "Qingdao → Saint Petersburg",
+        "cargo": "20GP, 40HC containers",
+        "weight": "80 tons"
+      },
+      "dangerous-1": {
+        "title": "Transportation of chemicals",
+        "description": "Safe transportation of hazardous chemical materials",
+        "location": "Nanjing → Yekaterinburg",
+        "cargo": "Chemical substances",
+        "weight": "12 tons"
+      },
+      "rail-3": {
+        "title": "Rail transportation of cars",
+        "description": "Mass transportation of passenger cars from China",
+        "location": "Changchun → Moscow",
+        "cargo": "Passenger cars",
+        "weight": "75 tons"
+      },
+      "auto-3": {
+        "title": "Express delivery of urgent cargo",
+        "description": "Urgent delivery of critical equipment",
+        "location": "Urumqi → Omsk",
+        "cargo": "Critical equipment",
+        "weight": "5 tons"
+      }
+    }
+  },
+  "writeToManagement": {
+    "title": "Write to management",
+    "description": "Contact company management directly",
+    "form": {
+      "name": "Your name",
+      "company": "Company",
+      "position": "Position",
+      "email": "Email",
+      "phone": "Phone",
+      "message": "Message",
+      "send": "Send"
+    }
+  },
+  "documents": {
+    "title": "Documents for download",
+    "description": "All necessary documents for working with us",
+    "categories": {
+      "all": "All documents",
+      "contracts": "Contract forms",
+      "powers": "Cargo collection powers of attorney",
+      "requisites": "Requisites",
+      "changes": "Change letters",
+      "additional": "Additional"
+    },
+    "doc1": {
+      "title": "Transportation contract (standard)",
+      "description": "Standard contract for cargo transportation"
+    },
+    "doc2": {
+      "title": "Transportation contract (consolidated cargo)",
+      "description": "Contract for consolidated cargo transportation"
+    },
+    "doc3": {
+      "title": "Cargo collection power of attorney (IE)",
+      "description": "For individual entrepreneurs"
+    },
+    "doc4": {
+      "title": "Cargo collection power of attorney (legal entities)",
+      "description": "For legal entities"
+    },
+    "doc5": {
+      "title": "Cargo collection power of attorney (individuals)",
+      "description": "For individuals"
+    },
+    "doc6": {
+      "title": "Company requisites",
+      "description": "Current requisites of Velta Trans LLC"
+    },
+    "download": "Download",
+    "info1": {
+      "title": "List of cargo not accepted for transportation",
+      "description": "There is a certain list of cargo, transportation of which may be associated with special conditions"
+    },
+    "info2": {
+      "title": "Complete list of required documents",
+      "description": "To ship cargo, the sender must provide information about themselves, the recipient and the payer"
+    },
+    "info3": {
+      "title": "Cargo accompanying documents",
+      "description": "These include waybill, invoice, indicating country of origin"
+    },
+    "note": "All documents are current and comply with current legislation"
+  },
+  "about": {
+    "title": "About company",
+    "description": "Reliable partner in international logistics",
+    "mission": "Our mission",
+    "values": "Our values",
+    "team": "Our team",
+    "missionDescription1": "Our mission is to create reliable logistics bridges between countries and continents, providing enterprises with efficient and cost-effective solutions for international trade.",
+    "missionDescription2": "We strive to become the leading logistics company in the region, providing the highest quality services and contributing to the development of international business of our clients.",
+    "experience": "years of experience",
+    "satisfiedClients": "satisfied clients",
+    "deliveryCountries": "delivery countries",
+    "successfulDeliveries": "successful deliveries",
+    "valuesDescription": "Principles that guide us in our work",
+    "reliability": {
+      "title": "Reliability",
+      "description": "We guarantee cargo safety and compliance with delivery deadlines"
+    },
+    "professionalism": {
+      "title": "Professionalism",
+      "description": "Team of experts with years of experience in logistics"
+    },
+    "transparency": {
+      "title": "Transparency",
+      "description": "Open reporting and complete information about delivery status"
+    },
+    "innovation": {
+      "title": "Innovation",
+      "description": "We use modern technologies to optimize processes"
+    },
+    "history": {
+      "title": "Development history",
+      "subtitle": "Key stages of our journey",
+      "2014": {
+        "title": "Company foundation",
+        "description": "Velta Trans was founded by a group of professionals with experience in international logistics"
+      },
+      "2016": {
+        "title": "Expansion to China",
+        "description": "Opening of first office in Beijing and establishment of trade corridors"
+      },
+      "2018": {
+        "title": "Digitalization",
+        "description": "Implementation of online tracking system and process automation"
+      },
+      "2020": {
+        "title": "Pandemic stability",
+        "description": "Ensuring uninterrupted supplies during COVID-19"
+      },
+      "2022": {
+        "title": "New routes",
+        "description": "Development of additional directions to Europe and Asia"
+      },
+      "2024": {
+        "title": "Technological leadership",
+        "description": "Launch of new website and modern digital solutions"
+      }
+    },
+    "teamDescription": "Professionals who make your success possible",
+    "logistics": {
+      "title": "Logistics",
+      "description": "Our logistics team ensures optimal routes and timely delivery",
+      "specialists": "15+ specialists"
+    },
+    "customs": {
+      "title": "Customs",
+      "description": "Customs clearance experts solve any document flow issues",
+      "specialists": "8+ specialists"
+    },
+    "support": {
+      "title": "Support",
+      "description": "Customer service works 24/7 to solve any issues",
+      "specialists": "12+ specialists"
+    }
+  },
+  "certificates": {
+    "title": "Certificates and awards",
+    "cert1": {
+      "title": "Certificate of honor",
+      "description": "For high quality services"
+    },
+    "cert2": {
+      "title": "Quality certificate",
+      "description": "Compliance certificate to standards"
+    },
+    "cert3": {
+      "title": "Participant diploma",
+      "description": "Exhibition participation"
+    },
+    "cert4": {
+      "title": "Gratitude",
+      "description": "For fruitful cooperation"
+    }
+  },
   "analytics": {
-    "title": "Analytics and Metrics",
-    "description": "Comprehensive analysis of logistics system performance"
+    "title": "Analytics and metrics",
+    "description": "Comprehensive analysis of logistics system operation"
   },
   "footer": {
-    "title": "Velta Trans",
-    "description": "International logistics company",
-    "tagline": "International logistics solutions",
-    "phone": "Phone",
-    "email": "Email",
-    "social": "We are on social media",
+    "description": "Leading logistics company specializing in international cargo transportation between China, Kazakhstan, Russia and CIS countries",
     "quickLinks": "Quick Links",
     "services": "Services",
     "directions": "Directions",
     "cases": "Cases",
     "contacts": "Contacts",
-    "autoTransport": "Auto Transport",
-    "railwayTransport": "Railway Transport",
-    "multimodalTransport": "Multimodal Transport",
-    "projectTransport": "Project Transport",
-    "mainPhone": "Main Phone",
+    "autoTransport": "Automotive Transportation",
+    "railwayTransport": "Railway Transportation",
+    "multimodalTransport": "Multimodal Transportation",
+    "projectTransport": "Project Transportation",
+    "phones": {
+      "multichannel": "Multichannel",
+      "sales": "Sales",
+      "logistics": "Logistics"
+    },
+    "email": "Email",
     "address": "Address",
-    "addressText": "Kazakhstan, Almaty",
+    "addressText": "Office address",
     "allRightsReserved": "All rights reserved",
     "privacy": "Privacy Policy",
     "terms": "Terms of Use"
+  },
+  "contactForm": {
+    "title": "Contact Us",
+    "description": "We are ready to answer all your questions",
+    "phone": {
+      "title": "Phone",
+      "multichannel": "multichannel"
+    },
+    "address": {
+      "title": "Address",
+      "value": "Office address"
+    },
+    "form": {
+      "title": "Write to us",
+      "description": "Fill out the form and we will contact you",
+      "loading": "Loading form..."
+    },
+    "formUnavailable": {
+      "title": "Form temporarily unavailable",
+      "description": "Please contact us by phone or through other contacts"
+    }
+  },
+  "heroGallery": {
+    "images": {
+      "auto": {
+        "alt": "Automotive Transportation — VELTA TRANS",
+        "title": "Automotive Transportation"
+      },
+      "railway": {
+        "alt": "Railway Transportation — VELTA TRANS",
+        "title": "Railway Transportation"
+      },
+      "warehouse": {
+        "alt": "Warehouse Services — VELTA TRANS",
+        "title": "Warehouse Services"
+      },
+      "multimodal": {
+        "alt": "Multimodal Transportation",
+        "title": "Multimodal Transportation"
+      },
+      "project": {
+        "alt": "Project Transportation - Oversized Cargo",
+        "title": "Project Transportation"
+      },
+      "customs": {
+        "alt": "Customs Clearance and Documentation",
+        "title": "Customs Services"
+      }
+    },
+    "navigation": {
+      "previous": "Previous slide",
+      "next": "Next slide",
+      "goToSlide": "Go to slide {number}"
+    }
+  },
+  "cargoTracking": {
+    "title": "Cargo tracking",
+    "description": "Enter your shipment number to see current status and route.",
+    "form": {
+      "trackingNumber": "Tracking number",
+      "placeholder": "e.g. VT-2024-000123",
+      "tracking": "Searching...",
+      "track": "Track"
+    },
+    "errors": {
+      "emptyNumber": "Enter a tracking number"
+    },
+    "result": {
+      "trackingNumber": "Number",
+      "status": "Status",
+      "estimatedDelivery": "Estimated delivery",
+      "history": "Movement history"
+    },
+    "note": "Data updates automatically when the status changes"
+  },
+  "recommendations": {
+    "title": "Customer recommendations",
+    "description": "Feedback and appreciation from our partners",
+    "banner": {
+      "title": "We are recommended",
+      "subtitle": "High service level confirmed by dozens of companies"
+    },
+    "rec1": {
+      "company": "TechImport LLC",
+      "position": "Head of Logistics",
+      "name": "Alexey Ivanov",
+      "text": "With Velta Trans we optimized deliveries from China. Clear and transparent."
+    },
+    "rec2": {
+      "company": "AsiaTrade",
+      "position": "CEO",
+      "name": "Elena Kim",
+      "text": "Professional team always in touch and solving issues quickly."
+    },
+    "rec3": {
+      "company": "GlobalParts",
+      "position": "Supply Chain Manager",
+      "name": "Ivan Petrov",
+      "text": "Reliable partner for multimodal transport. Recommended."
+    },
+    "rec4": {
+      "company": "RetailGroup",
+      "position": "Business Development Director",
+      "name": "Maria Orlova",
+      "text": "Deadlines are met, pricing is clear, support is excellent."
+    },
+    "certificates": {
+      "title": "Certificates and awards",
+      "items": {
+        "1": {"title": "Honorary certificate", "desc": "For high quality of services"},
+        "2": {"title": "Quality certificate", "desc": "Compliance with standards"},
+        "3": {"title": "Participant diploma", "desc": "Participation in exhibition"},
+        "4": {"title": "Letter of appreciation", "desc": "For fruitful cooperation"}
+      }
+    }
   }
 }

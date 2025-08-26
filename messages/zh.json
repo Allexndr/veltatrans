@@ -4,11 +4,11 @@
     "about": "关于我们",
     "services": "服务",
     "cases": "案例",
-
     "rates": "价格",
     "directions": "路线",
     "documents": "文件",
-    "contacts": "联系我们"
+    "contacts": "联系我们",
+    "openMenu": "打开菜单"
   },
   "company": {
     "name": "Velta Trans",
@@ -40,7 +40,51 @@
       "experience": "15年以上经验",
       "geography": "广泛地理覆盖",
       "support": "24/7支持"
-    }
+    },
+    "advantages": {
+      "title": "为什么选择我们",
+      "subtitle": "每年完成超过1175次运输，保证期限和24/7跟踪",
+      "guarantee": {
+        "title": "期限保证",
+        "description": "24/7跟踪和所有阶段交付时间控制"
+      },
+      "specialEquipment": {
+        "title": "特种设备",
+        "description": "专业运输特种设备和超限货物（非标准、长型、宽型和重型）"
+      },
+      "competitiveRates": {
+        "title": "有竞争力的价格",
+        "description": "所有运输类型的灵活条件和有竞争力的价格"
+      },
+      "fullSupport": {
+        "title": "全程支持",
+        "description": "从提货到交付的运输所有阶段的专业支持"
+      },
+      "keyRoutes": {
+        "title": "关键路线",
+        "description": "华南城市（深圳/广州/上海）→霍尔果斯/阿拉山口→阿拉木图/努尔苏丹/莫斯科/圣彼得堡/顿河畔罗斯托夫/车里雅宾斯克/伊斯坦布尔"
+      },
+      "multimodal": {
+        "title": "多式联运解决方案",
+        "description": "通过里海和关键交通枢纽覆盖独联体国家和欧洲"
+      }
+    },
+    "featuresSection": {
+      "experience": {
+        "title": "15年以上经验",
+        "description": "在国际物流领域超过15年的成功经验"
+      },
+      "keyDirections": {
+        "title": "关键方向",
+        "description": "中国-哈萨克斯坦：霍尔果斯、阿勒腾科尔、阿拉木图、努尔苏丹\n中国-俄罗斯：莫斯科、叶卡捷琳堡、新西伯利亚\n中国-欧洲：华沙、汉堡",
+        "moreAbout": "了解更多路线"
+      },
+      "support": {
+        "title": "24/7支持",
+        "description": "全天候支持和货物护送"
+      }
+    },
+    "trackCargo": "跟踪货物"
   },
   "tools": {
     "title": "实用工具",
@@ -48,34 +92,27 @@
   },
   "services": {
     "title": "我们的服务",
-    "description": "为您的企业提供全方位的物流服务",
+    "description": "为您的业务发展提供全方位的物流服务",
+    "subtitle": "为您的业务发展提供全方位的物流服务",
     "autoTransport": {
       "title": "公路运输",
-      "description": "我们组织从中国到俄罗斯、哈萨克斯坦和欧洲的国际公路运输。我们处理整车运输(FTL)和零担运输(LTL)。我们拥有自己的验证承运人网络和可靠的跟踪系统。"
+      "description": "组织从中国到俄罗斯、哈萨克斯坦和欧洲的国际公路运输。支持整车(FTL)和拼车(LTL)。自有可靠承运商网络与跟踪系统。"
     },
     "railwayTransport": {
       "title": "铁路运输",
-      "description": "从中国到俄罗斯和独联体国家的直达集装箱列车。可以发送整箱(FCL)和拼箱(LCL)。快速交货时间和有竞争力的价格。"
+      "description": "中国至俄罗斯及独联体国家的直达集装箱班列。支持整箱(FCL)与拼箱(LCL)。时效稳定、价格具有竞争力。"
     },
     "multimodalTransport": {
       "title": "多式联运",
-      "description": "海、陆、铁运输的组合。价格和交货时间的最佳解决方案。我们为客户的任务选择合适的路线。"
+      "description": "海运、公路与铁路相结合。兼顾价格与时效的最佳解决方案。根据客户任务定制路线。"
     },
     "projectTransport": {
-      "title": "项目货物运输",
-      "description": "超限和重型货物的交付。路线开发、特种设备组织和协调。运输建筑和能源设备的经验。"
-    },
-    "air": {"title": "航空运输", "description": "使用航空运输的快速交付"},
-    "sea": {"title": "海运", "description": "经济型海运货物运输"},
-    "land": {"title": "陆运", "description": "铁路和公路运输"},
-    "multimodal": {"title": "多式联运", "description": "组合多种运输方式"},
-    "logistics": {
-      "title": "物流服务",
-      "description": "组织任何复杂度的运输"
+      "title": "项目运输",
+      "description": "超限与重型货物运输。路线设计、特种设备与许可办理。具备建筑与能源设备运输经验。"
     },
     "customs": {
-      "title": "清关服务",
-      "description": "货物的完整海关支持"
+      "title": "海关清关",
+      "description": "专业的货物海关清关，全程程序支持"
     },
     "consultation": {
       "title": "咨询服务",
@@ -99,154 +136,101 @@
         "title": "项目运输",
         "description": "超限与重型货物运输。路线设计、特种设备与许可办理。具备建筑与能源设备运输经验。"
       }
-    }
-  },
-  "contact": {
-    "title": "联系我们",
-    "description": "联系我们获取咨询",
-    "phone": "电话",
-    "phones": {
-      "main": "+77002770006",
-      "office1": "+77010704011",
-      "office2": "+77010704022",
-      "multichannel": "多通道"
     },
-    "email": "邮箱",
-    "address": "地址",
-    "form": {
-      "name": "姓名",
-      "email": "邮箱",
-      "phone": "电话",
-      "message": "消息",
-      "send": "发送",
-      "success": "消息发送成功！",
-      "error": "发送消息时出错"
-    }
-  },
-  "cases": {
-    "title": "案例",
-    "description": "我们成功项目的例子",
-    "categories": {
-      "all": "全部",
-      "general": "普通货物",
-      "container": "集装箱运输",
-      "oversized": "超限货物",
-      "dangerous": "危险货物",
-      "consolidated": "拼箱货物",
-      "project": "项目货物"
-    },
-    "case1": {
-      "title": "多式联运设备交付",
-      "description": "从中国到俄罗斯的工业设备交付"
-    },
-    "case2": {
-      "title": "集装箱运输",
-      "description": "定期集装箱货物运输"
-    },
-    "case3": {
-      "title": "超限运输",
-      "description": "大型设备运输"
-    },
-    "case4": {
-      "title": "危险货物",
-      "description": "危险材料的安全运输"
-    },
-    "case5": {
-      "title": "拼箱货物",
-      "description": "小批量货物的经济交付"
-    },
-    "case6": {
-      "title": "项目货物",
-      "description": "复杂的物流解决方案"
-    },
-    "viewDetails": "查看详情",
-    "viewAll": "所有案例"
-  },
-  "writeToManagement": {
-    "title": "致信管理层",
-    "description": "直接联系公司管理层",
-    "form": {
-      "name": "姓名",
-      "email": "邮箱",
-      "phone": "电话",
-      "company": "公司",
-      "subject": "主题",
-      "selectSubject": "选择主题",
-      "options": {
-        "problem": "报告问题",
-        "review": "留下评价",
-        "suggestion": "发送建议",
-        "cooperation": "合作建议",
-        "other": "其他"
+    "whyChooseUs": {
+      "title": "为什么选择我们",
+      "subtitle": "每年完成超过1175次运输，保证期限和24/7跟踪",
+      "guarantee": {
+        "title": "期限保证",
+        "description": "24/7跟踪和交付时间控制"
       },
-      "message": "消息",
-      "messagePlaceholder": "描述您的情况...",
-      "send": "发送",
-      "sending": "发送中..."
-    },
-    "success": {
-      "title": "消息已发送！",
-      "message": "我们会尽快联系您",
-      "sendAnother": "发送另一条"
-    },
-    "note": "我们将在24小时内回复"
-  },
-  "recommendations": {
-    "title": "推荐",
-    "description": "领先公司信任我们",
-    "banner": {
-      "title": "他们信任我们，我们不负期望",
-      "subtitle": "超过500个满意客户"
-    },
-    "rec1": {
-      "company": "有限责任公司\"贸易之家\"理想专业\"",
-      "position": "董事",
-      "name": "莫列娃 A.V.",
-      "text": "长期富有成效的合作，创新方法，一流的专业技能"
-    },
-    "rec2": {
-      "company": "有限责任公司\"埃拉达\"",
-      "position": "物流经理",
-      "name": "彼得罗夫 I.S.",
-      "text": "个性化方法和认真的商业态度。我们推荐给所有合作伙伴"
-    },
-    "rec3": {
-      "company": "有限责任公司\"尤尼特克斯\"",
-      "position": "经理",
-      "name": "西多罗娃 E.A.",
-      "text": "出色的工作，及时交付，对每个客户的专业方法"
-    },
-    "rec4": {
-      "company": "有限责任公司\"屏障-远东\"",
-      "position": "董事",
-      "name": "科兹洛夫 D.M.",
-      "text": "物流领域的可靠合作伙伴。始终按时履行义务"
-    },
-    "certificates": {
-      "title": "证书和奖项",
-      "cert1": {
-        "title": "荣誉证书",
-        "description": "高质量服务"
+      "specialEquipment": {
+        "title": "特种设备",
+        "description": "专业运输特种设备和超限货物"
       },
-      "cert2": {
-        "title": "质量证书",
-        "description": "ISO 9001:2015"
+      "competitiveRates": {
+        "title": "有竞争力的价格",
+        "description": "所有运输类型的灵活条件和有竞争力的价格"
       },
-      "cert3": {
-        "title": "许可证",
-        "description": "海关代表"
-      },
-      "cert4": {
-        "title": "奖项",
-        "description": "最佳物流运营商"
+      "fullSupport": {
+        "title": "全程支持",
+        "description": "运输所有阶段的专业支持"
       }
+    }
+  },
+  "directions": {
+    "title": "运输方向",
+    "description": "我们在全球范围内工作，确保可靠的货物交付",
+    "mainDirections": {
+      "title": "主要方向",
+      "subtitle": "我们公司工作的四个关键方向"
+    },
+    "china_cis": {
+      "title": "中国 - 独联体",
+      "description": "从中国到独联体国家的直接运输",
+      "features": [
+        "边境口岸",
+        "海关清关",
+        "集装箱运输",
+        "拼箱货物"
+      ]
+    },
+    "russia_kazakhstan": {
+      "title": "俄罗斯 - 哈萨克斯坦",
+      "description": "俄罗斯和哈萨克斯坦之间的国际运输",
+      "features": [
+        "铁路路线",
+        "汽车运输",
+        "多式联运解决方案",
+        "全程支持"
+      ]
+    },
+    "kazakhstan": {
+      "title": "哈萨克斯坦",
+      "description": "哈萨克斯坦境内的国内和国际运输",
+      "features": [
+        "城际运输",
+        "国际路线",
+        "仓储服务",
+        "物流解决方案"
+      ]
+    },
+    "project_cargo": {
+      "title": "项目货物",
+      "description": "超限货物的专业运输",
+      "features": [
+        "个性化方法",
+        "特殊设备",
+        "路线协调",
+        "全程支持"
+      ]
+    },
+    "popularRoutes": {
+      "title": "热门路线",
+      "subtitle": "最受欢迎的交付方向",
+      "distance": "距离:",
+      "deliveryTime": "交付时间:",
+      "transportType": "运输类型:",
+      "cost": "成本:",
+      "calculateDelivery": "计算交付"
+    },
+    "borderCrossings": {
+      "title": "边境口岸",
+      "subtitle": "国际货物的关键检查点",
+      "features": "特点:"
+    },
+    "geography": {
+      "title": "工作地理",
+      "subtitle": "我们的物流网络覆盖三大洲",
+      "interactiveMap": "交互式地图",
+      "mapDescription": "这里将放置带有路线的地图"
     }
   },
   "calculator": {
     "title": "成本计算器",
     "description": "计算您的货物交付成本",
-    "fromCountry": "发货国家",
-    "toCountry": "收货国家",
+    "fromCountry": "发件人国家",
+    "toCountry": "收件人国家",
     "from": "从",
     "to": "到",
     "weight": "重量",
@@ -254,15 +238,15 @@
     "calculate": "计算成本",
     "result": "计算结果",
     "form": {
-      "senderName": "发货人",
+      "senderName": "货物发件人",
       "phone": "电话",
-      "fromCity": "发货城市",
-      "toCity": "收货城市",
+      "fromCity": "发件人城市",
+      "toCity": "收件人城市",
       "cityPlaceholder": "输入城市名称",
-      "fromCountry": "发货国家",
-      "toCountry": "收货国家",
+      "fromCountry": "发件人国家",
+      "toCountry": "收件人国家",
       "countryPlaceholder": "输入国家",
-      "shipmentType": "发运方式",
+      "shipmentType": "运输类型",
       "types": {
         "auto": "公路",
         "rail": "铁路",
@@ -278,8 +262,8 @@
       "width": "宽度",
       "height": "高度",
       "isOversized": "超限货物",
-      "features": "货物特性",
-      "featuresPlaceholder": "例如：危险品、温控",
+      "features": "货物特点",
+      "featuresPlaceholder": "例如：危险品、温度要求",
       "calculate": "计算成本",
       "calculating": "计算中..."
     },
@@ -290,35 +274,328 @@
       "service": "服务",
       "calculateAgain": "重新计算"
     },
-    "note": "计算是初步的。如需准确成本请联系经理"
+    "note": "计算是初步的。如需准确成本，请联系经理"
   },
-  "cargoTracking": {
-    "title": "货物跟踪",
-    "description": "查看您的货物状态",
+  "rates": {
+    "title": "费率",
+    "description": "所有物流服务的透明价格",
+    "routes": {
+      "almaty_beijing": "阿拉木图 → 北京",
+      "moscow_shanghai": "莫斯科 → 上海",
+      "tashkent_guangzhou": "塔什干 → 广州",
+      "bishkek_urumqi": "比什凯克 → 乌鲁木齐"
+    },
+    "weight": {
+      "range1": "1-100公斤",
+      "range2": "100-500公斤",
+      "range3": "500+公斤"
+    },
+    "transit": {
+      "range1": "12-15天",
+      "range2": "18-22天",
+      "range3": "14-18天",
+      "range4": "3-5天"
+    },
+    "currentRates": {
+      "title": "当前费率",
+      "subtitle": "价格按每公斤货物计算",
+      "note": "* 价格可能因货物类型、包装和附加服务而异"
+    },
+    "table": {
+      "direction": "方向",
+      "weight": "重量",
+      "price": "价格",
+      "deliveryTime": "交付时间"
+    },
+    "servicePlans": {
+      "title": "服务计划",
+      "subtitle": "选择适合的服务级别",
+      "popular": "热门",
+      "select": "选择计划",
+      "basic": {
+        "name": "基础交付",
+        "description": "带跟踪的标准交付",
+        "features": {
+          "insurance": "货物保险",
+          "tracking": "在线跟踪",
+          "sms": "短信通知",
+          "warehouse": "交付到仓库"
+        }
+      },
+      "express": {
+        "name": "快速交付",
+        "description": "带优先级的加速交付",
+        "features": {
+          "faster": "时间减少30%",
+          "priority": "优先处理",
+          "manager": "个人经理",
+          "door": "门到门交付"
+        }
+      },
+      "full": {
+        "name": "全方位服务",
+        "description": "完整的门到门支持",
+        "features": {
+          "pickup": "从发件人取件",
+          "customs": "海关清关",
+          "delivery": "交付给收件人",
+          "support": "咨询支持"
+        }
+      }
+    },
+    "pricingFactors": {
+      "title": "定价因素",
+      "weight": {
+        "title": "重量和体积",
+        "description": "计算基于最高指标"
+      },
+      "distance": {
+        "title": "距离",
+        "description": "出发点和目的地之间的公里数"
+      },
+      "cargoType": {
+        "title": "货物类型",
+        "description": "特殊运输要求"
+      },
+      "urgency": {
+        "title": "紧急程度",
+        "description": "标准或快速交付"
+      }
+    },
+    "additionalServices": {
+      "title": "附加服务",
+      "packaging": "货物包装",
+      "insurance": "保险",
+      "pickup": "货物取件",
+      "delivery": "交付给收件人",
+      "storage": "临时存储",
+      "customs": "海关清关",
+      "prices": {
+        "packaging": "从 $5 起",
+        "insurance": "货值的 0.5%",
+        "pickup": "从 $10 起",
+        "delivery": "从 $15 起",
+        "storage": "$2/天 每立方米",
+        "customs": "从 $50 起"
+      }
+    }
+  },
+  "contact": {
+    "title": "联系我们",
+    "description": "以任何方便的方式联系我们",
+    "regions": {
+      "title": "地区",
+      "subtitle": "我们在主要物流中心工作",
+      "almaty": {
+        "city": "阿拉木图",
+        "country": "哈萨克斯坦",
+        "address": "示例街123号",
+        "phone": "+7 (727) 123-45-67",
+        "email": "almaty@veltatrans.com",
+        "hours": "周一至周五: 9:00-18:00"
+      },
+      "moscow": {
+        "city": "莫斯科",
+        "country": "俄罗斯",
+        "address": "示例街456号",
+        "phone": "+7 (495) 123-45-67",
+        "email": "moscow@veltatrans.com",
+        "hours": "周一至周五: 9:00-18:00"
+      },
+      "beijing": {
+        "city": "北京",
+        "country": "中国",
+        "address": "示例街789号",
+        "phone": "+86 10 1234-5678",
+        "email": "beijing@veltatrans.com",
+        "hours": "周一至周五: 9:00-18:00"
+      }
+    },
+    "phones": {
+      "title": "电话",
+      "multichannel": "多通道",
+      "sales": "销售",
+      "logistics": "物流"
+    },
+    "contactMethods": {
+      "title": "联系方式",
+      "subtitle": "选择方便的联系方式",
+      "write": "写信",
+      "whatsapp": {
+        "description": "在信使中快速回复"
+      },
+      "telegram": {
+        "description": "在聊天中方便交流"
+      },
+      "email": {
+        "description": "详细通信"
+      }
+    },
     "form": {
-      "trackingNumber": "跟踪号",
-      "placeholder": "输入跟踪号",
-      "track": "跟踪",
-      "tracking": "跟踪中..."
+      "name": "您的姓名",
+      "phone": "电话",
+      "email": "电子邮件",
+      "message": "消息",
+      "submit": "发送",
+      "success": "消息发送成功！",
+      "error": "发送消息时出错"
     },
-    "errors": {
-      "emptyNumber": "请输入跟踪号"
+    "phones": {
+      "main": "+7 701 070 40 11",
+      "office1": "+7 701 070 40 22",
+      "office2": "+7 701 070 40 33",
+      "multichannel": "+7 701 070 40 44"
+    }
+  },
+  "contact_form": {
+    "title": "联系我们",
+    "description": "留下请求，我们将联系您",
+    "form": {
+      "name": "姓名",
+      "email": "电子邮件",
+      "phone": "电话",
+      "message": "消息",
+      "send": "发送"
+    }
+  },
+  "cases": {
+    "title": "案例",
+    "description": "按主要方向和运输类型完成的项目",
+    "home": "首页",
+    "viewDetails": "详细信息",
+    "viewAll": "全部",
+    "categories": {
+      "all": "全部",
+      "auto": "汽车运输",
+      "rail": "铁路运输",
+      "multimodal": "多式联运",
+      "project": "项目运输",
+      "container": "集装箱运输",
+      "dangerous": "危险品",
+      "oversize": "超限运输",
+      "customs": "海关/监管"
     },
-    "result": {
-      "trackingNumber": "跟踪号",
-      "status": "状态",
-      "estimatedDelivery": "预计交付",
-      "history": "移动历史"
+    "category": {
+      "subtitle": "分类案例：{category}"
     },
-    "note": "如需最新信息请联系经理"
+    "empty": {
+      "title": "这里暂时为空",
+      "description": "该分类暂时没有案例。请稍后查看或选择其他分类。",
+      "back": "返回所有案例"
+    },
+    "moreAbout": "项目详情",
+    "projectDescription": "项目说明",
+    "videos": "视频资料",
+    "video": "视频",
+    "image": "图片",
+    "videoNotSupported": "您的浏览器不支持视频。",
+    "projectDetails": "项目详情",
+    "route": "路线",
+    "cargoType": "货物类型",
+    "projectCard": {
+      "title": "项目详情",
+      "date": "日期:",
+      "category": "分类:",
+      "weight": "重量:",
+      "volume": "体积:",
+      "status": "状态:",
+      "completed": "已完成"
+    },
+    "backToCategory": "返回 {category}",
+    "orderSimilar": "订购类似项目",
+    "items": {
+      "auto-1": {
+        "title": "国际设备运输",
+        "description": "将工业设备从中国运至哈萨克斯坦",
+        "location": "上海 → 阿拉木图",
+        "cargo": "工业设备",
+        "weight": "15 吨"
+      },
+      "auto-2": {
+        "title": "拼箱货运输",
+        "description": "整合来自不同发货人的小批量货物并运输",
+        "location": "广州 → 莫斯科",
+        "cargo": "电子产品、纺织品、玩具",
+        "weight": "8 吨"
+      },
+      "rail-1": {
+        "title": "哈萨克斯坦-俄罗斯集装箱列车",
+        "description": "经由西伯利亚大铁路的定期集装箱运输",
+        "location": "上海 → 莫斯科",
+        "cargo": "40HC 集装箱",
+        "weight": "120 吨"
+      },
+      "rail-2": {
+        "title": "超限设备运输",
+        "description": "为油气行业运输大型设备",
+        "location": "大连 → 新西伯利亚",
+        "cargo": "油气设备",
+        "weight": "45 吨"
+      },
+      "multimodal-1": {
+        "title": "来自中国的组合运输",
+        "description": "海运 + 铁路 + 公路",
+        "location": "上海 → 叶卡捷琳堡",
+        "cargo": "工业设备",
+        "weight": "25 吨"
+      },
+      "project-1": {
+        "title": "工程机械运输",
+        "description": "大型工程机械交付",
+        "location": "北京 → 阿斯塔纳",
+        "cargo": "工程机械",
+        "weight": "35 吨"
+      },
+      "container-1": {
+        "title": "常规集装箱运输",
+        "description": "港口之间每周集装箱航线",
+        "location": "青岛 → 圣彼得堡",
+        "cargo": "20GP, 40HC 集装箱",
+        "weight": "80 吨"
+      },
+      "dangerous-1": {
+        "title": "化学品运输",
+        "description": "危险化学材料的安全运输",
+        "location": "南京 → 叶卡捷琳堡",
+        "cargo": "化学物质",
+        "weight": "12 吨"
+      },
+      "rail-3": {
+        "title": "铁路汽车运输",
+        "description": "从中国批量运输乘用车",
+        "location": "长春 → 莫斯科",
+        "cargo": "乘用车",
+        "weight": "75 吨"
+      },
+      "auto-3": {
+        "title": "加急交付紧急货物",
+        "description": "关键设备的加急交付",
+        "location": "乌鲁木齐 → 鄂木斯克",
+        "cargo": "关键设备",
+        "weight": "5 吨"
+      }
+    }
+  },
+  "writeToManagement": {
+    "title": "致信管理层",
+    "description": "直接联系公司管理层",
+    "form": {
+      "name": "您的姓名",
+      "company": "公司",
+      "position": "职位",
+      "email": "电子邮件",
+      "phone": "电话",
+      "message": "消息",
+      "send": "发送"
+    }
   },
   "documents": {
-    "title": "文件下载",
+    "title": "下载文件",
     "description": "与我们合作所需的所有文件",
     "categories": {
       "all": "所有文件",
       "contracts": "合同表格",
-      "powers": "授权书",
+      "powers": "货物收集授权书",
       "requisites": "详细信息",
       "changes": "变更信函",
       "additional": "附加"
@@ -328,131 +605,273 @@
       "description": "货物运输标准合同"
     },
     "doc2": {
-      "title": "运输合同（拼箱）",
-      "description": "拼箱货物运输合同"
+      "title": "运输合同（拼装货物）",
+      "description": "拼装货物运输合同"
     },
     "doc3": {
-      "title": "货物接收授权书（个体户）",
-      "description": "适用于个体企业家"
+      "title": "货物收集授权书（个体户）",
+      "description": "适用于个体户"
     },
     "doc4": {
-      "title": "货物接收授权书（法人）",
+      "title": "货物收集授权书（法人实体）",
       "description": "适用于法人实体"
     },
     "doc5": {
-      "title": "货物接收授权书（个人）",
+      "title": "货物收集授权书（个人）",
       "description": "适用于个人"
     },
     "doc6": {
       "title": "公司详细信息",
-      "description": "有限责任公司\"Velta Trans\"的最新详细信息"
+      "description": "Velta Trans LLC的当前详细信息"
     },
     "download": "下载",
     "info1": {
       "title": "不接受运输的货物清单",
-      "description": "存在某些货物清单，其运输可能与特殊条件相关"
+      "description": "存在某些货物清单，运输这些货物可能与特殊条件相关"
     },
     "info2": {
-      "title": "必要文件的完整清单",
-      "description": "发送货物时，发货人必须提供有关自己、收货人和付款人的信息"
+      "title": "所需文件的完整清单",
+      "description": "要发货，发件人必须提供有关自己、收件人和付款人的信息"
     },
     "info3": {
       "title": "货物随附文件",
-      "description": "这些包括商业发票、发票，注明原产国"
+      "description": "这些包括运单、发票，注明原产国"
     },
-    "note": "所有文件都是最新的并符合现行法律"
-  },
-  "rates": {
-    "title": "价格和条款",
-    "description": "当前运输价格"
-  },
-  "directions": {
-    "title": "运输路线",
-    "description": "我们运输的地理范围"
+    "note": "所有文件都是最新的，符合现行立法"
   },
   "about": {
     "title": "关于公司",
     "description": "国际物流领域的可靠合作伙伴",
     "mission": "我们的使命",
     "values": "我们的价值观",
-    "team": "我们的团队"
+    "team": "我们的团队",
+    "missionDescription1": "我们的使命是在国家和大陆之间建立可靠的物流桥梁，为企业提供高效且经济实惠的国际贸易解决方案。",
+    "missionDescription2": "我们努力成为该地区领先的物流公司，提供最高质量的服务，并为客户国际业务的发展做出贡献。",
+    "experience": "年经验",
+    "satisfiedClients": "满意客户",
+    "deliveryCountries": "交付国家",
+    "successfulDeliveries": "成功交付",
+    "valuesDescription": "指导我们工作的原则",
+    "reliability": {
+      "title": "可靠性",
+      "description": "我们保证货物安全和遵守交付期限"
+    },
+    "professionalism": {
+      "title": "专业性",
+      "description": "在物流领域拥有多年经验的专家团队"
+    },
+    "transparency": {
+      "title": "透明度",
+      "description": "公开报告和关于交付状态的完整信息"
+    },
+    "innovation": {
+      "title": "创新",
+      "description": "我们使用现代技术来优化流程"
+    },
+    "history": {
+      "title": "发展历史",
+      "subtitle": "我们旅程的关键阶段",
+      "2014": {
+        "title": "公司成立",
+        "description": "Velta Trans由一群在国际物流方面有经验的专业人士创立"
+      },
+      "2016": {
+        "title": "扩展到中国",
+        "description": "在北京开设第一个办事处并建立贸易走廊"
+      },
+      "2018": {
+        "title": "数字化",
+        "description": "实施在线跟踪系统和流程自动化"
+      },
+      "2020": {
+        "title": "大流行稳定性",
+        "description": "在COVID-19期间确保不间断供应"
+      },
+      "2022": {
+        "title": "新路线",
+        "description": "开发到欧洲和亚洲的额外方向"
+      },
+      "2024": {
+        "title": "技术领导力",
+        "description": "启动新网站和现代数字解决方案"
+      }
+    },
+    "teamDescription": "使您的成功成为可能的专业人士",
+    "logistics": {
+      "title": "物流",
+      "description": "我们的物流团队确保最佳路线和及时交付",
+      "specialists": "15+专家"
+    },
+    "customs": {
+      "title": "海关",
+      "description": "海关清关专家解决任何文件流问题",
+      "specialists": "8+专家"
+    },
+    "support": {
+      "title": "支持",
+      "description": "客户服务24/7工作以解决任何问题",
+      "specialists": "12+专家"
+    }
   },
-  "cases": {
-    "title": "我们的案例",
-    "description": "成功项目和运输的示例",
-    "home": "首页",
-    "categories": {
-      "all": "所有案例",
-      "general": "普通货物",
-      "container": "集装箱运输",
-      "oversized": "超限货物",
-      "dangerous": "危险货物",
-      "consolidated": "拼箱货物",
-      "project": "项目货物"
+  "certificates": {
+    "title": "证书和奖项",
+    "cert1": {
+      "title": "荣誉证书",
+      "description": "为高质量服务"
     },
-    "case1": {
-      "title": "从中国运输设备",
-      "description": "从上海到莫斯科的工业设备多式联运"
+    "cert2": {
+      "title": "质量证书",
+      "description": "符合标准的证书"
     },
-    "case2": {
-      "title": "集装箱运输",
-      "description": "俄罗斯和中国港口之间的定期集装箱运输"
+    "cert3": {
+      "title": "参与者文凭",
+      "description": "展览参与"
     },
-    "case3": {
-      "title": "超限货物",
-      "description": "石油和天然气行业大型设备的运输"
-    },
-    "case4": {
-      "title": "危险货物",
-      "description": "符合所有标准的化学品安全运输"
-    },
-    "case5": {
-      "title": "拼箱货物",
-      "description": "来自不同发货人的小批量货物整合和交付"
-    },
-    "case6": {
-      "title": "项目货物",
-      "description": "大型基础设施项目的综合物流"
-    },
-    "viewDetails": "查看详情",
-    "viewAll": "所有案例"
-  },
-  "contact_form": {
-    "title": "联系我们",
-    "description": "留下请求，我们会联系您",
-    "form": {
-      "name": "姓名",
-      "email": "邮箱",
-      "phone": "电话",
-      "message": "消息",
-      "send": "发送"
+    "cert4": {
+      "title": "感谢",
+      "description": "为富有成效的合作"
     }
   },
   "analytics": {
     "title": "分析和指标",
-    "description": "物流系统性能的综合分析"
+    "description": "物流系统运行的综合分析"
   },
   "footer": {
-    "title": "Velta Trans",
-    "description": "国际物流公司",
-    "tagline": "国际物流解决方案",
-    "phone": "电话",
-    "email": "邮箱",
-    "social": "我们在社交媒体上",
+    "description": "领先的物流公司，专门从事中国、哈萨克斯坦、俄罗斯和独联体国家之间的国际货物运输",
     "quickLinks": "快速链接",
     "services": "服务",
-    "directions": "路线",
+    "directions": "方向",
     "cases": "案例",
-    "contacts": "联系方式",
+    "contacts": "联系",
     "autoTransport": "汽车运输",
     "railwayTransport": "铁路运输",
     "multimodalTransport": "多式联运",
     "projectTransport": "项目运输",
-    "mainPhone": "主要电话",
+    "phones": {
+      "multichannel": "多通道",
+      "sales": "销售",
+      "logistics": "物流"
+    },
+    "email": "电子邮件",
     "address": "地址",
-    "addressText": "哈萨克斯坦，阿拉木图",
-    "allRightsReserved": "保留所有权利",
+    "addressText": "办公室地址",
+    "allRightsReserved": "版权所有",
     "privacy": "隐私政策",
     "terms": "使用条款"
+  },
+  "contactForm": {
+    "title": "联系我们",
+    "description": "我们准备回答您的所有问题",
+    "phone": {
+      "title": "电话",
+      "multichannel": "多通道"
+    },
+    "address": {
+      "title": "地址",
+      "value": "办公室地址"
+    },
+    "form": {
+      "title": "给我们写信",
+      "description": "填写表格，我们会联系您",
+      "loading": "加载表格..."
+    },
+    "formUnavailable": {
+      "title": "表格暂时不可用",
+      "description": "请通过电话或其他联系方式联系我们"
+    }
+  },
+  "heroGallery": {
+    "images": {
+      "auto": {
+        "alt": "汽车运输 — VELTA TRANS",
+        "title": "汽车运输"
+      },
+      "railway": {
+        "alt": "铁路运输 — VELTA TRANS",
+        "title": "铁路运输"
+      },
+      "warehouse": {
+        "alt": "仓储服务 — VELTA TRANS",
+        "title": "仓储服务"
+      },
+      "multimodal": {
+        "alt": "多式联运",
+        "title": "多式联运"
+      },
+      "project": {
+        "alt": "项目运输 - 超限货物",
+        "title": "项目运输"
+      },
+      "customs": {
+        "alt": "海关清关和文件处理",
+        "title": "海关服务"
+      }
+    },
+    "navigation": {
+      "previous": "上一张幻灯片",
+      "next": "下一张幻灯片",
+      "goToSlide": "转到第{number}张幻灯片"
+    }
+  },
+  "cargoTracking": {
+    "title": "货物跟踪",
+    "description": "输入提单号以查看当前状态和运输路线。",
+    "form": {
+      "trackingNumber": "跟踪号码",
+      "placeholder": "例如：VT-2024-000123",
+      "tracking": "查询中...",
+      "track": "查询"
+    },
+    "errors": {
+      "emptyNumber": "请输入跟踪号码"
+    },
+    "result": {
+      "trackingNumber": "编号",
+      "status": "状态",
+      "estimatedDelivery": "预计送达",
+      "history": "运输历史"
+    },
+    "note": "状态变化时数据将自动更新"
+  },
+  "recommendations": {
+    "title": "客户推荐",
+    "description": "来自合作伙伴的反馈与感谢",
+    "banner": {
+      "title": "值得信赖的合作伙伴",
+      "subtitle": "我们的高水平服务得到众多公司的认可"
+    },
+    "rec1": {
+      "company": "TechImport LLC",
+      "position": "物流主管",
+      "name": "阿列克谢·伊万诺夫",
+      "text": "与 Velta Trans 合作后，我们优化了从中国的供应，流程清晰透明。"
+    },
+    "rec2": {
+      "company": "AsiaTrade",
+      "position": "首席执行官",
+      "name": "叶莲娜·金",
+      "text": "专业团队，随时在线，高效解决问题。"
+    },
+    "rec3": {
+      "company": "GlobalParts",
+      "position": "供应链经理",
+      "name": "伊万·彼得罗夫",
+      "text": "多式联运的可靠伙伴，推荐。"
+    },
+    "rec4": {
+      "company": "RetailGroup",
+      "position": "业务发展总监",
+      "name": "玛丽亚·奥尔洛娃",
+      "text": "按时交付，价格透明，支持到位。"
+    },
+    "certificates": {
+      "title": "证书与奖项",
+      "items": {
+        "1": {"title": "荣誉证书", "desc": "服务质量优异"},
+        "2": {"title": "质量证书", "desc": "符合标准"},
+        "3": {"title": "参展证书", "desc": "参加展会"},
+        "4": {"title": "感谢信", "desc": "富有成果的合作"}
+      }
+    }
   }
 }

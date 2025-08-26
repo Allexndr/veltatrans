@@ -3,113 +3,113 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function RatesPage() {
-  const t = useTranslations();
+  const t = useTranslations('rates');
 
   const rates = [
     {
-      direction: 'Алматы → Пекин',
-      weight: '1-100 кг',
+      direction: t('routes.almaty_beijing'),
+      weight: t('weight.range1'),
       price: '$3.50',
-      transit: '12-15 дней'
+      transit: t('transit.range1')
     },
     {
-      direction: 'Алматы → Пекин',
-      weight: '100-500 кг',
+      direction: t('routes.almaty_beijing'),
+      weight: t('weight.range2'),
       price: '$3.20',
-      transit: '12-15 дней'
+      transit: t('transit.range1')
     },
     {
-      direction: 'Алматы → Пекин',
-      weight: '500+ кг',
+      direction: t('routes.almaty_beijing'),
+      weight: t('weight.range3'),
       price: '$2.80',
-      transit: '12-15 дней'
+      transit: t('transit.range1')
     },
     {
-      direction: 'Москва → Шанхай',
-      weight: '1-100 кг',
+      direction: t('routes.moscow_shanghai'),
+      weight: t('weight.range1'),
       price: '$4.20',
-      transit: '18-22 дня'
+      transit: t('transit.range2')
     },
     {
-      direction: 'Москва → Шанхай',
-      weight: '100-500 кг',
+      direction: t('routes.moscow_shanghai'),
+      weight: t('weight.range2'),
       price: '$3.80',
-      transit: '18-22 дня'
+      transit: t('transit.range2')
     },
     {
-      direction: 'Москва → Шанхай',
-      weight: '500+ кг',
+      direction: t('routes.moscow_shanghai'),
+      weight: t('weight.range3'),
       price: '$3.40',
-      transit: '18-22 дня'
+      transit: t('transit.range2')
     },
     {
-      direction: 'Ташкент → Гуанчжоу',
-      weight: '1-100 кг',
+      direction: t('routes.tashkent_guangzhou'),
+      weight: t('weight.range1'),
       price: '$3.80',
-      transit: '14-18 дней'
+      transit: t('transit.range3')
     },
     {
-      direction: 'Ташкент → Гуанчжоу',
-      weight: '100-500 кг',
+      direction: t('routes.tashkent_guangzhou'),
+      weight: t('weight.range2'),
       price: '$3.50',
-      transit: '14-18 дней'
+      transit: t('transit.range3')
     },
     {
-      direction: 'Ташкент → Гуанчжоу',
-      weight: '500+ кг',
+      direction: t('routes.tashkent_guangzhou'),
+      weight: t('weight.range3'),
       price: '$3.10',
-      transit: '14-18 дней'
+      transit: t('transit.range3')
     },
     {
-      direction: 'Бишкек → Урумчи',
-      weight: '1-100 кг',
+      direction: t('routes.bishkek_urumqi'),
+      weight: t('weight.range1'),
       price: '$2.20',
-      transit: '3-5 дней'
+      transit: t('transit.range4')
     },
     {
-      direction: 'Бишкек → Урумчи',
-      weight: '100-500 кг',
+      direction: t('routes.bishkek_urumqi'),
+      weight: t('weight.range2'),
       price: '$1.90',
-      transit: '3-5 дней'
+      transit: t('transit.range4')
     },
     {
-      direction: 'Бишкек → Урумчи',
-      weight: '500+ кг',
+      direction: t('routes.bishkek_urumqi'),
+      weight: t('weight.range3'),
       price: '$1.60',
-      transit: '3-5 дней'
+      transit: t('transit.range4')
     },
   ];
 
   const services = [
     {
-      name: 'Базовая доставка',
-      description: 'Стандартная доставка с отслеживанием',
+      name: t('servicePlans.basic.name'),
+      description: t('servicePlans.basic.description'),
       features: [
-        'Страхование груза',
-        'Отслеживание онлайн',
-        'SMS уведомления',
-        'Доставка до склада'
+        t('servicePlans.basic.features.insurance'),
+        t('servicePlans.basic.features.tracking'),
+        t('servicePlans.basic.features.sms'),
+        t('servicePlans.basic.features.warehouse')
       ]
     },
     {
-      name: 'Экспресс доставка',
-      description: 'Ускоренная доставка с приоритетом',
+      name: t('servicePlans.express.name'),
+      description: t('servicePlans.express.description'),
       features: [
-        'Сокращенные сроки на 30%',
-        'Приоритетная обработка',
-        'Персональный менеджер',
-        'Доставка до двери'
+        t('servicePlans.express.features.faster'),
+        t('servicePlans.express.features.priority'),
+        t('servicePlans.express.features.manager'),
+        t('servicePlans.express.features.door')
       ],
       premium: true
     },
     {
-      name: 'Полный сервис',
-      description: 'Полное сопровождение от двери до двери',
+      name: t('servicePlans.full.name'),
+      description: t('servicePlans.full.description'),
       features: [
-        'Забор от отправителя',
-        'Таможенное оформление',
-        'Доставка получателю',
-        'Консультационная поддержка'
+        t('servicePlans.full.features.pickup'),
+        t('servicePlans.full.features.customs'),
+        t('servicePlans.full.features.delivery'),
+        t('servicePlans.full.features.support')
       ]
     }
   ];
@@ -124,12 +124,12 @@ export default function RatesPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
               <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                {t('rates.title')}
+                {t('title')}
               </h1>
               <p className="text-xl text-velta-100 max-w-3xl mx-auto">
-                {t('rates.description')}
+                {t('description')}
               </p>
-            </div>
+              </div>
           </div>
         </section>
 
@@ -138,8 +138,8 @@ export default function RatesPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
               <div className="px-6 py-4 bg-gray-50 border-b border-gray-200">
-                <h2 className="text-2xl font-bold text-gray-900">Актуальные тарифы</h2>
-                <p className="text-gray-600 mt-2">Цены указаны за килограмм груза</p>
+                <h2 className="text-2xl font-bold text-gray-900">{t('currentRates.title')}</h2>
+                <p className="text-gray-600 mt-2">{t('currentRates.subtitle')}</p>
               </div>
               
               <div className="overflow-x-auto">
@@ -147,16 +147,16 @@ export default function RatesPage() {
                   <thead className="bg-gray-50">
                     <tr>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        {t('rates.direction')}
+                        {t('table.direction')}
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        {t('rates.weight')}
+                        {t('table.weight')}
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        {t('rates.price')}
+                        {t('table.price')}
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Срок доставки
+                        {t('table.deliveryTime')}
                       </th>
                     </tr>
                   </thead>
@@ -183,7 +183,7 @@ export default function RatesPage() {
               
               <div className="px-6 py-4 bg-gray-50 border-t border-gray-200">
                 <p className="text-sm text-gray-600">
-                  * Цены могут изменяться в зависимости от типа груза, упаковки и дополнительных услуг
+                  {t('currentRates.note')}
                 </p>
               </div>
             </div>
@@ -195,10 +195,10 @@ export default function RatesPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Тарифные планы
+                {t('servicePlans.title')}
               </h2>
               <p className="text-lg text-gray-600">
-                Выберите подходящий уровень сервиса
+                {t('servicePlans.subtitle')}
               </p>
             </div>
 
@@ -213,7 +213,7 @@ export default function RatesPage() {
                   {service.premium && (
                     <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                       <span className="bg-velta-600 text-white px-4 py-1 rounded-full text-sm font-medium">
-                        Популярный
+                        {t('servicePlans.popular')}
                       </span>
                     </div>
                   )}
@@ -245,7 +245,7 @@ export default function RatesPage() {
                         : 'bg-white text-gray-900 border-2 border-gray-200 hover:border-velta-navy hover:bg-velta-50'
                     }`}
                   >
-                    Выбрать план
+                    {t('servicePlans.select')}
                   </button>
                 </div>
               ))}
@@ -259,7 +259,7 @@ export default function RatesPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               <div>
                 <h2 className="text-3xl font-bold text-gray-900 mb-6">
-                  Факторы ценообразования
+                  {t('pricingFactors.title')}
                 </h2>
                 <div className="space-y-4">
                   <div className="flex items-start space-x-3">
@@ -267,8 +267,8 @@ export default function RatesPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <div>
-                      <h3 className="font-semibold text-gray-900">Вес и объем</h3>
-                      <p className="text-gray-600">Расчет производится по наибольшему показателю</p>
+                      <h3 className="font-semibold text-gray-900">{t('pricingFactors.weight.title')}</h3>
+                      <p className="text-gray-600">{t('pricingFactors.weight.description')}</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
@@ -277,8 +277,8 @@ export default function RatesPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                     <div>
-                      <h3 className="font-semibold text-gray-900">Расстояние</h3>
-                      <p className="text-gray-600">Километраж между пунктами отправления и назначения</p>
+                      <h3 className="font-semibold text-gray-900">{t('pricingFactors.distance.title')}</h3>
+                      <p className="text-gray-600">{t('pricingFactors.distance.description')}</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
@@ -286,8 +286,8 @@ export default function RatesPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                     </svg>
                     <div>
-                      <h3 className="font-semibold text-gray-900">Тип груза</h3>
-                      <p className="text-gray-600">Специальные требования к транспортировке</p>
+                      <h3 className="font-semibold text-gray-900">{t('pricingFactors.cargoType.title')}</h3>
+                      <p className="text-gray-600">{t('pricingFactors.cargoType.description')}</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
@@ -295,8 +295,8 @@ export default function RatesPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <div>
-                      <h3 className="font-semibold text-gray-900">Срочность</h3>
-                      <p className="text-gray-600">Стандартная или экспресс доставка</p>
+                      <h3 className="font-semibold text-gray-900">{t('pricingFactors.urgency.title')}</h3>
+                      <p className="text-gray-600">{t('pricingFactors.urgency.description')}</p>
                     </div>
                   </div>
                 </div>
@@ -304,33 +304,33 @@ export default function RatesPage() {
 
               <div>
                 <h2 className="text-3xl font-bold text-gray-900 mb-6">
-                  Дополнительные услуги
+                  {t('additionalServices.title')}
                 </h2>
                 <div className="bg-gray-50 rounded-lg p-6">
                   <div className="space-y-4">
                     <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                      <span className="text-gray-700">Упаковка груза</span>
-                      <span className="font-semibold">от $5</span>
+                      <span className="text-gray-700">{t('additionalServices.packaging')}</span>
+                      <span className="font-semibold">{t('additionalServices.prices.packaging')}</span>
                     </div>
                     <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                      <span className="text-gray-700">Страхование</span>
-                      <span className="font-semibold">0.5% от стоимости</span>
+                      <span className="text-gray-700">{t('additionalServices.insurance')}</span>
+                      <span className="font-semibold">{t('additionalServices.prices.insurance')}</span>
                     </div>
                     <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                      <span className="text-gray-700">Забор груза</span>
-                      <span className="font-semibold">от $10</span>
+                      <span className="text-gray-700">{t('additionalServices.pickup')}</span>
+                      <span className="font-semibold">{t('additionalServices.prices.pickup')}</span>
                     </div>
                     <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                      <span className="text-gray-700">Доставка получателю</span>
-                      <span className="font-semibold">от $15</span>
+                      <span className="text-gray-700">{t('additionalServices.delivery')}</span>
+                      <span className="font-semibold">{t('additionalServices.prices.delivery')}</span>
                     </div>
                     <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                      <span className="text-gray-700">Временное хранение</span>
-                      <span className="font-semibold">$2/день за м³</span>
+                      <span className="text-gray-700">{t('additionalServices.storage')}</span>
+                      <span className="font-semibold">{t('additionalServices.prices.storage')}</span>
                     </div>
                     <div className="flex justify-between items-center py-2">
-                      <span className="text-gray-700">Таможенное оформление</span>
-                      <span className="font-semibold">от $50</span>
+                      <span className="text-gray-700">{t('additionalServices.customs')}</span>
+                      <span className="font-semibold">{t('additionalServices.prices.customs')}</span>
                     </div>
                   </div>
                 </div>

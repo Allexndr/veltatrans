@@ -1,121 +1,9 @@
 import {useTranslations} from 'next-intl';
-import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function DirectionsPage() {
-  const t = useTranslations();
-
-  const directions = [
-    {
-      name: 'Китай - Казахстан',
-      description: 'Прямые перевозки из Китая в Казахстан через ключевые пограничные переходы',
-      routes: ['Хоргос - Алматы', 'Алтынколь - Нур-Султан', 'Шэньчжэнь - Алматы', 'Гуанчжоу - Астана'],
-      features: ['Пограничные переходы', 'Таможенное оформление', 'Контейнерные перевозки', 'Сборные грузы'],
-      color: 'blue'
-    },
-    {
-      name: 'Китай - Россия',
-      description: 'Международные перевозки из Китая в ключевые города России',
-      routes: ['Москва - Шанхай', 'Екатеринбург - Гуанчжоу', 'Новосибирск - Шэньчжэнь', 'Ростов - Пекин'],
-      features: ['Железнодорожные маршруты', 'Автомобильные перевозки', 'Мультимодальные решения', 'Полное сопровождение'],
-      color: 'green'
-    },
-    {
-      name: 'Китай - Европа',
-      description: 'Трансконтинентальные перевозки из Китая в Европу',
-      routes: ['Варшава - Шанхай', 'Гамбург - Гуанчжоу', 'Стамбул - Шэньчжэнь', 'Будапешт - Пекин'],
-      features: ['Мультимодальные маршруты', 'Контейнерные поезда', 'Автомобильные перевозки', 'Европейская логистика'],
-      color: 'orange'
-    },
-    {
-      name: 'Проектные перевозки',
-      description: 'Специализированные перевозки негабаритных и тяжеловесных грузов',
-      routes: ['Негабаритные грузы', 'Тяжеловесные перевозки', 'Специальное оборудование', 'Проектные решения'],
-      features: ['Индивидуальный подход', 'Спецтехника', 'Согласования маршрутов', 'Полное сопровождение'],
-      color: 'purple'
-    }
-  ];
-
-  const routes = [
-    {
-      from: 'Хоргос',
-      to: 'Алматы',
-      distance: '380 км',
-      time: '1-2 дня',
-      type: 'Автомобильный',
-      price: 'от $2.50/кг'
-    },
-    {
-      from: 'Алтынколь',
-      to: 'Нур-Султан',
-      distance: '450 км',
-      time: '1-2 дня',
-      type: 'Автомобильный',
-      price: 'от $2.80/кг'
-    },
-    {
-      from: 'Шэньчжэнь',
-      to: 'Москва',
-      distance: '8,100 км',
-      time: '18-22 дня',
-      type: 'Ж/д + авто',
-      price: 'от $4.20/кг'
-    },
-    {
-      from: 'Гуанчжоу',
-      to: 'Екатеринбург',
-      distance: '7,800 км',
-      time: '16-20 дней',
-      type: 'Ж/д + авто',
-      price: 'от $4.00/кг'
-    },
-    {
-      from: 'Шанхай',
-      to: 'Новосибирск',
-      distance: '7,200 км',
-      time: '15-19 дней',
-      type: 'Ж/д + авто',
-      price: 'от $3.80/кг'
-    },
-    {
-      from: 'Шэньчжэнь',
-      to: 'Варшава',
-      distance: '9,500 км',
-      time: '20-25 дней',
-      type: 'Мультимодальный',
-      price: 'от $5.50/кг'
-    },
-    {
-      from: 'Гуанчжоу',
-      to: 'Гамбург',
-      distance: '9,800 км',
-      time: '22-28 дней',
-      type: 'Мультимодальный',
-      price: 'от $5.80/кг'
-    }
-  ];
-
-  const borderCrossings = [
-    {
-      name: 'Хоргос',
-      countries: 'Казахстан - Китай',
-      description: 'Крупнейший пограничный переход в регионе',
-      features: ['24/7 работа', 'Ускоренное оформление', 'Современная инфраструктура', 'Контейнерные операции']
-    },
-    {
-      name: 'Алтынколь',
-      countries: 'Казахстан - Китай',
-      description: 'Железнодорожный и автомобильный переход',
-      features: ['Ж/д терминал', 'Таможенный склад', 'Контейнерные операции', 'Сборные грузы']
-    },
-    {
-      name: 'Алашанькоу',
-      countries: 'Китай - Казахстан',
-      description: 'Железнодорожный и автомобильный переход',
-      features: ['Ж/д терминал', 'Таможенный склад', 'Контейнерные операции', 'FCL/LCL услуги']
-    }
-  ];
+  const t = useTranslations('directions');
 
   return (
     <div className="min-h-screen bg-white">
@@ -127,66 +15,108 @@ export default function DirectionsPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
               <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                {t('directions.title')}
+                {t('title')}
               </h1>
               <p className="text-xl text-velta-100 max-w-3xl mx-auto">
-                {t('directions.description')}
+                {t('description')}
               </p>
             </div>
           </div>
         </section>
 
-        {/* Regions */}
+        {/* Main Directions */}
         <section className="py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Основные направления
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">
+                {t('mainDirections.title')}
               </h2>
-              <p className="text-lg text-gray-600">
-                Четыре ключевых направления работы нашей компании
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                {t('mainDirections.subtitle')}
               </p>
             </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {directions.map((direction, index) => (
-                <div key={index} className="bg-white rounded-lg shadow-lg p-6 border-t-4 border-velta-600">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3">
-                    {direction.name}
-                  </h3>
-                  <p className="text-gray-600 mb-6">
-                    {direction.description}
-                  </p>
-
-                  <div className="mb-6">
-                    <h4 className="text-lg font-semibold text-gray-900 mb-3">Основные маршруты:</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {direction.routes.map((route, routeIndex) => (
-                        <span
-                          key={routeIndex}
-                          className="px-3 py-1 bg-velta-100 text-velta-800 rounded-full text-sm"
-                        >
-                          {route}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <h4 className="text-lg font-semibold text-gray-900 mb-3">Преимущества:</h4>
-                    <ul className="space-y-2">
-                      {direction.features.map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-center text-gray-700">
-                          <svg className="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                          </svg>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-shadow">
+                <div className="w-16 h-16 bg-velta-navy rounded-lg flex items-center justify-center mx-auto mb-6">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
                 </div>
-              ))}
+                <h3 className="text-xl font-bold text-gray-900 mb-4">{t('china_cis.title')}</h3>
+                <p className="text-gray-600 mb-6">{t('china_cis.description')}</p>
+                <ul className="space-y-2">
+                  {(t.raw('china_cis.features') as string[]).map((feature: string, index: number) => (
+                    <li key={index} className="flex items-center text-gray-700">
+                      <svg className="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              
+              <div className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-shadow">
+                <div className="w-16 h-16 bg-velta-navy rounded-lg flex items-center justify-center mx-auto mb-6">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">{t('russia_kazakhstan.title')}</h3>
+                <p className="text-gray-600 mb-6">{t('russia_kazakhstan.description')}</p>
+                <ul className="space-y-2">
+                  {(t.raw('russia_kazakhstan.features') as string[]).map((feature: string, index: number) => (
+                    <li key={index} className="flex items-center text-gray-700">
+                      <svg className="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              
+              <div className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-shadow">
+                <div className="w-16 h-16 bg-velta-navy rounded-lg flex items-center justify-center mx-auto mb-6">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">{t('kazakhstan.title')}</h3>
+                <p className="text-gray-600 mb-6">{t('kazakhstan.description')}</p>
+                <ul className="space-y-2">
+                  {(t.raw('kazakhstan.features') as string[]).map((feature: string, index: number) => (
+                    <li key={index} className="flex items-center text-gray-700">
+                      <svg className="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              
+              <div className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-shadow">
+                <div className="w-16 h-16 bg-velta-navy rounded-lg flex items-center justify-center mx-auto mb-6">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">{t('project_cargo.title')}</h3>
+                <p className="text-gray-600 mb-6">{t('project_cargo.description')}</p>
+                <ul className="space-y-2">
+                  {(t.raw('project_cargo.features') as string[]).map((feature: string, index: number) => (
+                    <li key={index} className="flex items-center text-gray-700">
+                      <svg className="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </section>
@@ -194,129 +124,158 @@ export default function DirectionsPage() {
         {/* Popular Routes */}
         <section className="py-16 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Популярные маршруты
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">
+                {t('popularRoutes.title')}
               </h2>
-              <p className="text-lg text-gray-600">
-                Наиболее востребованные направления доставки
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                {t('popularRoutes.subtitle')}
               </p>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {routes.map((route, index) => (
-                <div key={index} className="bg-white rounded-lg shadow-md p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-semibold text-gray-900">
-                      {route.from} → {route.to}
-                    </h3>
-                    <svg className="w-6 h-6 text-velta-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="bg-white rounded-lg shadow-lg p-6">
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Алматы → Пекин</h3>
+                <div className="space-y-3">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">{t('popularRoutes.distance')}</span>
+                    <span className="font-semibold">4,200 км</span>
                   </div>
-                  
-                  <div className="space-y-2 text-sm text-gray-600">
-                    <div className="flex justify-between">
-                      <span>Расстояние:</span>
-                      <span className="font-medium">{route.distance}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Время доставки:</span>
-                      <span className="font-medium">{route.time}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Тип перевозки:</span>
-                      <span className="font-medium">{route.type}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Стоимость:</span>
-                      <span className="font-medium text-velta-600">{route.price}</span>
-                    </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">{t('popularRoutes.deliveryTime')}</span>
+                    <span className="font-semibold">12-15 дней</span>
                   </div>
-
-                  <Link 
-                    href="/#calculator-section" 
-                    className="w-full mt-4 bg-velta-navy text-white py-2 px-4 rounded-lg hover:bg-velta-700 transition-colors text-center block"
-                  >
-                    Рассчитать доставку
-                  </Link>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">{t('popularRoutes.transportType')}</span>
+                    <span className="font-semibold">Авто + ЖД</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">{t('popularRoutes.cost')}</span>
+                    <span className="font-semibold">от $2.80/кг</span>
+                  </div>
                 </div>
-              ))}
+                <button className="w-full mt-6 bg-velta-navy text-white py-3 rounded-lg hover:bg-velta-700 transition-colors">
+                  {t('popularRoutes.calculateDelivery')}
+                </button>
+              </div>
+              
+              <div className="bg-white rounded-lg shadow-lg p-6">
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Москва → Шанхай</h3>
+                <div className="space-y-3">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">{t('popularRoutes.distance')}</span>
+                    <span className="font-semibold">7,800 км</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">{t('popularRoutes.deliveryTime')}</span>
+                    <span className="font-semibold">18-22 дня</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">{t('popularRoutes.transportType')}</span>
+                    <span className="font-semibold">ЖД + Море</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">{t('popularRoutes.cost')}</span>
+                    <span className="font-semibold">от $3.40/кг</span>
+                  </div>
+                </div>
+                <button className="w-full mt-6 bg-velta-navy text-white py-3 rounded-lg hover:bg-velta-700 transition-colors">
+                  {t('popularRoutes.calculateDelivery')}
+                </button>
+              </div>
+              
+              <div className="bg-white rounded-lg shadow-lg p-6">
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Ташкент → Гуанчжоу</h3>
+                <div className="space-y-3">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">{t('popularRoutes.distance')}</span>
+                    <span className="font-semibold">5,600 км</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">{t('popularRoutes.deliveryTime')}</span>
+                    <span className="font-semibold">14-18 дней</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">{t('popularRoutes.transportType')}</span>
+                    <span className="font-semibold">Авто + ЖД</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">{t('popularRoutes.cost')}</span>
+                    <span className="font-semibold">от $3.10/кг</span>
+                  </div>
+                </div>
+                <button className="w-full mt-6 bg-velta-navy text-white py-3 rounded-lg hover:bg-velta-700 transition-colors">
+                  {t('popularRoutes.calculateDelivery')}
+                </button>
+              </div>
             </div>
           </div>
         </section>
 
         {/* Border Crossings */}
         <section className="py-16">
-          <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Пограничные переходы
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">
+                {t('borderCrossings.title')}
               </h2>
-              <p className="text-lg text-gray-600">
-                Ключевые пункты пропуска для международных грузов
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                {t('borderCrossings.subtitle')}
               </p>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {borderCrossings.map((crossing, index) => (
-                <div key={index} className="bg-white rounded-lg shadow-lg p-6">
-                  <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 bg-velta-navy rounded-lg flex items-center justify-center mr-4">
-                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-gray-900">{crossing.name}</h3>
-                      <p className="text-sm text-gray-600">{crossing.countries}</p>
-                    </div>
-                  </div>
-
-                  <p className="text-gray-600 mb-4">
-                    {crossing.description}
-                  </p>
-
-                  <div>
-                    <h4 className="text-sm font-semibold text-gray-900 mb-2">Особенности:</h4>
-                    <ul className="space-y-1">
-                      {crossing.features.map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-center text-sm text-gray-700">
-                          <svg className="w-3 h-3 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                          </svg>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="bg-white rounded-lg shadow-lg p-6">
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Хоргос (Китай-Казахстан)</h3>
+                <p className="text-gray-600 mb-4">Основной сухопутный переход между Китаем и Казахстаном</p>
+                <div className="text-sm text-gray-500">
+                  <strong>{t('borderCrossings.features')}</strong> 24/7 работа, электронное декларирование
                 </div>
-              ))}
+              </div>
+              
+              <div className="bg-white rounded-lg shadow-lg p-6">
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Алашанькоу (Китай-Казахстан)</h3>
+                <p className="text-gray-600 mb-4">Альтернативный переход для грузовых перевозок</p>
+                <div className="text-sm text-gray-500">
+                  <strong>{t('borderCrossings.features')}</strong> Специализация на контейнерных перевозках
+                </div>
+              </div>
+              
+              <div className="bg-white rounded-lg shadow-lg p-6">
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Забайкальск (Россия-Китай)</h3>
+                <p className="text-gray-600 mb-4">Крупнейший железнодорожный переход</p>
+                <div className="text-sm text-gray-500">
+                  <strong>{t('borderCrossings.features')}</strong> Железнодорожные перевозки, контейнеры
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Map Section */}
+        {/* Geography */}
         <section className="py-16 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                География работы
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">
+                {t('geography.title')}
               </h2>
-              <p className="text-lg text-gray-600">
-                Наша логистическая сеть охватывает три континента
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                {t('geography.subtitle')}
               </p>
             </div>
-
+            
             <div className="bg-white rounded-lg shadow-lg p-8">
-              <div className="w-full h-96 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center">
-                <div className="text-center">
-                  <svg className="w-24 h-24 text-velta-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              <div className="text-center">
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                  {t('geography.interactiveMap')}
+                </h3>
+                <p className="text-gray-600">
+                  {t('geography.mapDescription')}
+                </p>
+                <div className="w-full h-64 bg-gray-200 rounded-lg mt-6 flex items-center justify-center">
+                  <svg className="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <h3 className="text-xl font-semibold text-gray-700">Интерактивная карта</h3>
-                  <p className="text-gray-600">Здесь будет размещена карта с маршрутами</p>
                 </div>
               </div>
             </div>

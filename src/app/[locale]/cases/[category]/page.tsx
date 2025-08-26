@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl';
 import { notFound } from 'next/navigation';
-import { getCasesByCategory, categories } from '@/data/cases';
+import { getCasesByCategory } from '@/data/cases';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -15,19 +15,17 @@ export default function CategoryPage({ params }: CategoryPageProps) {
   const { locale, category } = params;
   const t = useTranslations('cases');
   
-  // Проверяем существование категории
-  const categoryData = categories.find(c => c.id === category);
-  if (!categoryData) {
+  // Категория как ключ перевода
+  const getCategoryName = (categoryId: string) => {
+    const key = `categories.${categoryId}` as const;
+    return t.has(key) ? t(key) : categoryId;
+  };
+
+  const cases = getCasesByCategory(category);
+  if (!cases) {
     notFound();
   }
   
-  const cases = getCasesByCategory(category);
-  
-  const getCategoryName = (categoryId: string) => {
-    const category = categories.find(c => c.id === categoryId);
-    return category?.name || categoryId;
-  };
-
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Заголовок */}
@@ -179,7 +177,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
 
                     {/* Подробное описание */}
                     <div className="bg-gray-50 rounded-lg p-6 mb-6">
-                      <h4 className="font-semibold text-gray-900 mb-3">Описание проекта</h4>
+                      <h4 className="font-semibold text-gray-900 mb-3">{t('projectDescription')}</h4>
                       <p className="text-gray-700 leading-relaxed">
                         {caseItem.details}
                       </p>
@@ -188,7 +186,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                     {/* Видео (если есть) */}
                     {caseItem.videos && caseItem.videos.length > 0 && (
                       <div className="mb-6">
-                        <h4 className="font-semibold text-gray-900 mb-3">Видео материалы</h4>
+                        <h4 className="font-semibold text-gray-900 mb-3">{t('videos')}</h4>
                         <div className="space-y-4">
                           {caseItem.videos.map((video, videoIndex) => (
                             <video
@@ -198,7 +196,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                               poster={caseItem.images[0]}
                             >
                               <source src={video} type="video/mp4" />
-                              Ваш браузер не поддерживает видео.
+                              {t('videoNotSupported')}
                             </video>
                           ))}
                         </div>

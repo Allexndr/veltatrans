@@ -83,10 +83,8 @@ export default function Hero({}: {locale: string}) {
                   <span className="whitespace-nowrap">{tHome.has('cta') ? tHome('cta') : (tHero.has('cta') ? tHero('cta') : 'Get quote')}</span>
                 </button>
                 
-                {/* Правые кнопки */}
-                {/* Spacer to push right group to the edge on wide screens */}
-                <div className="hidden sm:block flex-1" />
-                <div className="flex flex-col sm:flex-row items-center gap-3 lg:gap-4">
+                {/* Две правые кнопки в одной группе, одинаковые отступы */}
+                <div className="flex flex-row items-center gap-4 lg:gap-6">
                   <SmoothLink
                     href="/contacts"
                     className="border-2 border-white text-white px-4 lg:px-6 py-3 lg:py-4 rounded-full font-semibold text-sm lg:text-base hover:bg-white hover:text-velta-navy transition-colors duration-300 flex items-center justify-center whitespace-nowrap"
@@ -113,7 +111,7 @@ export default function Hero({}: {locale: string}) {
             
             {/* Галерея справа */}
             <motion.div
-              className="h-64 sm:h-80 md:h-96 lg:h-[450px] xl:h-[500px] rounded-2xl overflow-hidden shadow-2xl relative z-10 flex-1 lg:max-w-[45%]"
+              className="h-64 sm:h-80 md:h-96 lg:h-[450px] xl:h-[500px] rounded-2xl overflow-hidden shadow-2xl relative z-10 flex-1 lg:max-w-[45%] lg:ml-[100px]"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}

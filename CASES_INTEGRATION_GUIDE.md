@@ -156,7 +156,7 @@ cp "path/to/image.jpg" public/assets/images/case-name.jpg
 ```typescript
 {
   id: 'rail-1',
-  title: 'Контейнерный поезд Китай-Россия',
+  title: 'Контейнерный поезд Казахстан-Россия',
   description: 'Регулярные контейнерные перевозки по Транссибу',
   category: 'rail',
   images: [

@@ -21,7 +21,7 @@ import {useParams} from 'next/navigation';
 export default function HomePage() {
   const t = useTranslations();
   const params = useParams();
-  const locale = params.locale as string;
+  const locale = params?.locale as string || 'ru';
 
   return (
     <div className="min-h-screen bg-white">
@@ -44,7 +44,7 @@ export default function HomePage() {
                 <svg className="w-3 h-3 sm:w-4 sm:h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                 </svg>
-                Полезные инструменты
+                {t('tools.title')}
               </div>
               
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 sm:mb-8 leading-tight">
@@ -78,11 +78,11 @@ export default function HomePage() {
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
                 <span className="bg-gradient-to-r from-velta-900 to-velta-700 bg-clip-text text-transparent">
-                  Почему выбирают нас
+                  {t('home.advantages.title')}
                 </span>
               </h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Более 1175 выполненных перевозок ежегодно с гарантией сроков и круглосуточным отслеживанием
+                {t('home.advantages.subtitle')}
               </p>
             </div>
             
@@ -93,9 +93,9 @@ export default function HomePage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Гарантия сроков</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">{t('home.advantages.guarantee.title')}</h3>
                 <p className="text-gray-600 leading-relaxed">
-                  Круглосуточное 24/7 отслеживание и контроль сроков доставки на всех этапах
+                  {t('home.advantages.guarantee.description')}
                 </p>
               </div>
               
@@ -105,9 +105,9 @@ export default function HomePage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
                   </svg>
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Спецтехника</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">{t('home.advantages.specialEquipment.title')}</h3>
                 <p className="text-gray-600 leading-relaxed">
-                  Профессиональные перевозки спецтехники и негабаритных грузов (нестандартные, длинномерные, широкие и тяжеловесные)
+                  {t('home.advantages.specialEquipment.description')}
                 </p>
               </div>
               
@@ -117,9 +117,9 @@ export default function HomePage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                   </svg>
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Конкурентные тарифы</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">{t('home.advantages.competitiveRates.title')}</h3>
                 <p className="text-gray-600 leading-relaxed">
-                  Гибкие условия и конкурентные тарифы для всех видов перевозок
+                  {t('home.advantages.competitiveRates.description')}
                 </p>
               </div>
               
@@ -129,9 +129,9 @@ export default function HomePage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                   </svg>
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Полное сопровождение</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">{t('home.advantages.fullSupport.title')}</h3>
                 <p className="text-gray-600 leading-relaxed">
-                  Профессиональная поддержка на всех этапах перевозки от забора до доставки
+                  {t('home.advantages.fullSupport.description')}
                 </p>
               </div>
               
@@ -141,9 +141,9 @@ export default function HomePage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Ключевые маршруты</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">{t('home.advantages.keyRoutes.title')}</h3>
                 <p className="text-gray-600 leading-relaxed">
-                  Города Южного Китая (Шэньчжэнь / Гуанчжоу / Шанхай) → Хоргос / Алашанькоу → Алматы / Астана / Москва / Санкт-Петербург / Ростов / Челябинск / Стамбул
+                  {t('home.advantages.keyRoutes.description')}
                 </p>
               </div>
               
@@ -153,9 +153,9 @@ export default function HomePage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Мультимодальные решения</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">{t('home.advantages.multimodal.title')}</h3>
                 <p className="text-gray-600 leading-relaxed">
-                  Покрытие стран СНГ и Европы через Каспий и ключевые транспортные узлы
+                  {t('home.advantages.multimodal.description')}
                 </p>
               </div>
             </div>
@@ -192,7 +192,7 @@ export default function HomePage() {
                   <svg className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-4 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
                   </svg>
-                  Отследить груз
+                  {t('home.trackCargo')}
                 </span>
               </button>
             </div>
@@ -218,10 +218,10 @@ export default function HomePage() {
                     </svg>
                   </div>
                   <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-velta-600 transition-colors duration-300">
-                    {t('home.features.experience')}
+                    {t('home.featuresSection.experience.title')}
                   </h3>
                   <p className="text-gray-600 leading-relaxed text-lg">
-                    Более 15 лет успешной работы в сфере международной логистики
+                    {t('home.featuresSection.experience.description')}
                   </p>
                 </div>
               </div>
@@ -239,18 +239,16 @@ export default function HomePage() {
                     </svg>
                   </div>
                   <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-velta-600 transition-colors duration-300">
-                    Ключевые направления
+                    {t('home.featuresSection.keyDirections.title')}
                   </h3>
                   <p className="text-gray-600 leading-relaxed text-lg mb-4">
-                    Китай - Казахстан: Хоргос, Алтынколь, Алматы, Нур-Султан<br/>
-                    Китай - Россия: Москва, Екатеринбург, Новосибирск<br/>
-                    Китай - Европа: Варшава, Гамбург
+                    {t('home.featuresSection.keyDirections.description')}
                   </p>
                   <Link
                     href="/directions"
                     className="inline-flex items-center text-velta-600 font-medium hover:text-velta-700 transition-colors"
                   >
-                    Подробнее о маршрутах
+                    {t('home.featuresSection.keyDirections.moreAbout')}
                     <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
@@ -271,10 +269,10 @@ export default function HomePage() {
                     </svg>
                   </div>
                   <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-velta-600 transition-colors duration-300">
-                    {t('home.features.support')}
+                    {t('home.featuresSection.support.title')}
                   </h3>
                   <p className="text-gray-600 leading-relaxed text-lg">
-                    Круглосуточная поддержка и сопровождение грузов
+                    {t('home.featuresSection.support.description')}
                   </p>
                 </div>
               </div>

@@ -1,1 +1,7 @@
-{}
+{
+  "5450018125": {
+    "staffStep": "login",
+    "staffAuthed": false,
+    "staffLogin": "test"
+  }
+}

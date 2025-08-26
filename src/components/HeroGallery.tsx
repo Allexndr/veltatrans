@@ -2,53 +2,55 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 
 export default function HeroGallery() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const t = useTranslations('heroGallery');
 
   // Массив изображений логистики с новыми фотографиями
   const images = [
     // Авто
     {
       src: '/assets/images/auto-case.jpg',
-      alt: 'Автомобильные перевозки — VELTA TRANS',
-      title: 'Автомобильные перевозки',
+      alt: t('images.auto.alt'),
+      title: t('images.auto.title'),
       icon: '🚛'
     },
     // ЖД
     {
       src: '/assets/images/railway-case.jpg', 
-      alt: 'Железнодорожные перевозки — VELTA TRANS',
-      title: 'Железнодорожные перевозки',
+      alt: t('images.railway.alt'),
+      title: t('images.railway.title'),
       icon: '🚂'
     },
     // Склад
     {
       src: '/assets/images/warehouse-case.jpg',
-      alt: 'Складские услуги — VELTA TRANS',
-      title: 'Складские услуги',
+      alt: t('images.warehouse.alt'),
+      title: t('images.warehouse.title'),
       icon: '🏭'
     },
     // Мультимодальные
     {
       src: '/assets/images/multimodal-transport.jpg',
-      alt: 'Мультимодальные перевозки',
-      title: 'Мультимодальные перевозки',
+      alt: t('images.multimodal.alt'),
+      title: t('images.multimodal.title'),
       icon: '🚢✈️'
     },
     // Проектные
     {
       src: '/assets/images/project-cargo.jpg',
-      alt: 'Проектные перевозки - крупногабаритные грузы',
-      title: 'Проектные перевозки',
+      alt: t('images.project.alt'),
+      title: t('images.project.title'),
       icon: '🏗️'
     },
     // Таможенные
     {
       src: '/assets/images/customs-new.jpg',
-      alt: 'Таможенное оформление и документооборот',
-      title: 'Таможенные услуги',
+      alt: t('images.customs.alt'),
+      title: t('images.customs.title'),
       icon: '🏛️'
     }
   ];
@@ -115,24 +117,10 @@ export default function HeroGallery() {
               style={{ display: 'none' }}
             />
             {/* Градиентный оверлей */}
-            <div className="absolute inset-0 bg-gradient-to-t from-velta-navy via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-velta-navy/10 via-transparent to-transparent" />
             
-            {/* Центральная иконка */}
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white/20">
-              <div className="text-8xl md:text-9xl animate-pulse">
-                {images[currentIndex].icon}
-              </div>
-            </div>
-            
-            {/* Заголовок изображения */}
-            <div className="absolute bottom-8 left-8 right-8 text-white">
-              <h3 className="text-2xl md:text-3xl font-bold mb-2">
-                {images[currentIndex].title}
-              </h3>
-              <p className="text-white/80 text-lg">
-                {images[currentIndex].alt}
-              </p>
-            </div>
+            {/* Убрали центральную иконку и подписи для чистого изображения */}
+
           </div>
         </motion.div>
       </AnimatePresence>
@@ -141,7 +129,7 @@ export default function HeroGallery() {
       <button
         onClick={prevSlide}
         className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full backdrop-blur-sm transition-all duration-300 hover:scale-110"
-        aria-label="Предыдущий слайд"
+        aria-label={t('navigation.previous')}
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -151,7 +139,7 @@ export default function HeroGallery() {
       <button
         onClick={nextSlide}
         className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full backdrop-blur-sm transition-all duration-300 hover:scale-110"
-        aria-label="Следующий слайд"
+        aria-label={t('navigation.next')}
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -169,7 +157,7 @@ export default function HeroGallery() {
                 ? 'bg-white scale-125' 
                 : 'bg-white/50 hover:bg-white/75'
             }`}
-            aria-label={`Перейти к слайду ${index + 1}`}
+            aria-label={t('navigation.goToSlide', { number: index + 1 })}
           />
         ))}
       </div>
