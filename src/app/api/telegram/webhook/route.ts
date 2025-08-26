@@ -620,7 +620,7 @@ Email: info@velta-logistics.com
           await showNotificationSettings(chatId);
         }
       }
-
+      
       // Админ панель
       else if (text === '/admin' && userId.toString() === ADMIN_ID) {
         const adminText = `👨‍💼 <b>Админ панель</b>
@@ -1367,7 +1367,7 @@ async function handleOrderCreationStep(userId: number, chatId: number, text: str
     // Отправляем уведомление всем подписчикам о новом заказе
     const orderMessage = `📦 <b>Новый заказ</b> ${order.from} → ${order.to}\nТип ТС: ${order.carType}\nВес: ${order.weight} кг\nЦена: ${order.finalPrice} тенге`;
     await broadcastNotification('new_order', orderMessage, { orderId, order: orders[orderId] });
-
+    
     await sendTelegramMessage(chatId, `✅ <b>Заказ создан!</b>
 
 <b>ID заказа:</b> ${orderId}
