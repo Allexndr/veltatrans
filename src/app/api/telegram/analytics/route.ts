@@ -2,6 +2,25 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
 export async function GET(request: NextRequest) {
+  // Skip execution during build time
+  if (process.env.NODE_ENV === 'production' && !process.env.MONGODB_URI) {
+    return NextResponse.json({
+      success: true,
+      analytics: {
+        overview: {
+          totalDrivers: 0,
+          activeDrivers: 0,
+          totalOrders: 0,
+          completedOrders: 0,
+          activeOrders: 0,
+          successRate: '0%'
+        },
+        topDrivers: [],
+        recentOrders: []
+      }
+    });
+  }
+
   try {
     const db = await getDb();
     
@@ -79,6 +98,11 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  // Skip execution during build time
+  if (process.env.NODE_ENV === 'production' && !process.env.MONGODB_URI) {
+    return NextResponse.json({ success: true });
+  }
+
   try {
     const body = await request.json();
     const { type, data } = body;

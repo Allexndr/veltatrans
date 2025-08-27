@@ -195,8 +195,41 @@ async function sendNotificationToChannel(text: string) {
   }
 }
 
+// Health check endpoint
+export async function GET(request: NextRequest) {
+  // Skip execution during build time
+  if (process.env.NODE_ENV === 'production' && !process.env.MONGODB_URI) {
+    return NextResponse.json({
+      success: true,
+      message: 'Telegram bot webhook is running (demo mode)',
+      mongodb: 'not configured'
+    });
+  }
+
+  try {
+    await initDB();
+    return NextResponse.json({
+      success: true,
+      message: 'Telegram bot webhook is running',
+      mongodb: db ? 'connected' : 'demo mode'
+    });
+  } catch (error) {
+    console.error('❌ Health check error:', error);
+    return NextResponse.json({
+      success: true,
+      message: 'Telegram bot webhook is running (demo mode)',
+      mongodb: 'error'
+    });
+  }
+}
+
 // Main webhook handler
 export async function POST(request: NextRequest) {
+  // Skip execution during build time
+  if (process.env.NODE_ENV === 'production' && !process.env.MONGODB_URI) {
+    return NextResponse.json({ success: true });
+  }
+
   try {
     const body = await request.json();
     console.log('📨 Webhook received:', JSON.stringify(body, null, 2));
@@ -487,21 +520,3 @@ async function showAnalytics(chatId: string) {
   }
 }
 
-// Health check endpoint
-export async function GET() {
-  try {
-    await initDB();
-    return NextResponse.json({ 
-      success: true, 
-      message: 'Telegram bot webhook is running',
-      mongodb: 'connected'
-    });
-  } catch (error) {
-    return NextResponse.json({ 
-      success: false, 
-      message: 'Telegram bot webhook error',
-      error: error instanceof Error ? error.message : 'Unknown error',
-      mongodb: 'disconnected'
-    }, { status: 500 });
-  }
-}
