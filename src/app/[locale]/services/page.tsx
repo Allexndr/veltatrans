@@ -1,9 +1,11 @@
 import {useTranslations} from 'next-intl';
+import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
-export default function ServicesPage() {
+export default function ServicesPage({ params }: { params: { locale: string } }) {
   const t = useTranslations('services');
+  const locale = params?.locale as string;
 
   return (
     <div className="min-h-screen bg-white">
@@ -36,9 +38,9 @@ export default function ServicesPage() {
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">{t('autoTransport.title')}</h3>
                 <p className="text-gray-600 mb-6">{t('autoTransport.description')}</p>
-                <button className="text-velta-navy font-semibold hover:text-velta-700 transition-colors">
+                <Link href={`/${locale}/services/land`} className="text-velta-navy font-semibold hover:text-velta-700 transition-colors">
                   {t('more')} →
-                </button>
+                </Link>
               </div>
 
               <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
@@ -49,9 +51,9 @@ export default function ServicesPage() {
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">{t('railwayTransport.title')}</h3>
                 <p className="text-gray-600 mb-6">{t('railwayTransport.description')}</p>
-                <button className="text-velta-navy font-semibold hover:text-velta-700 transition-colors">
+                <Link href={`/${locale}/services/rail`} className="text-velta-navy font-semibold hover:text-velta-700 transition-colors">
                   {t('more')} →
-                </button>
+                </Link>
               </div>
 
               <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
@@ -62,9 +64,9 @@ export default function ServicesPage() {
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">{t('multimodalTransport.title')}</h3>
                 <p className="text-gray-600 mb-6">{t('multimodalTransport.description')}</p>
-                <button className="text-velta-navy font-semibold hover:text-velta-700 transition-colors">
+                <Link href={`/${locale}/services/multimodal`} className="text-velta-navy font-semibold hover:text-velta-700 transition-colors">
                   {t('more')} →
-                </button>
+                </Link>
               </div>
 
               <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
@@ -75,9 +77,9 @@ export default function ServicesPage() {
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">{t('projectTransport.title')}</h3>
                 <p className="text-gray-600 mb-6">{t('projectTransport.description')}</p>
-                <button className="text-velta-navy font-semibold hover:text-velta-700 transition-colors">
+                <Link href={`/${locale}/services/project`} className="text-velta-navy font-semibold hover:text-velta-700 transition-colors">
                   {t('more')} →
-                </button>
+                </Link>
               </div>
             </div>
           </div>

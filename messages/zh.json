@@ -249,8 +249,8 @@
     }
   },
   "calculator": {
-    "title": "成本计算器",
-    "description": "计算您的货物交付成本",
+    "title": "计算交付成本",
+    "description": "填写表单以获取准确的交付成本",
     "fromCountry": "发件人国家",
     "toCountry": "收件人国家",
     "from": "从",
@@ -296,7 +296,7 @@
       "service": "服务",
       "calculateAgain": "重新计算"
     },
-    "note": "计算是初步的。如需准确成本，请联系经理"
+    "note": "提交申请后，我们的经理将在5小时内与您联系"
   },
   "rates": {
     "title": "费率",

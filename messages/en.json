@@ -250,8 +250,8 @@
     }
   },
   "calculator": {
-    "title": "Cost calculator",
-    "description": "Calculate the cost of delivering your cargo",
+    "title": "Calculate delivery cost",
+    "description": "Fill out the form to get an accurate delivery cost",
     "fromCountry": "Sender country",
     "toCountry": "Recipient country",
     "from": "From",
@@ -297,7 +297,7 @@
       "service": "Service",
       "calculateAgain": "Calculate again"
     },
-    "note": "The calculation is preliminary. For accurate cost, contact a manager"
+    "note": "After submitting the request, our manager will contact you within 5 hours"
   },
   "rates": {
     "title": "Rates",

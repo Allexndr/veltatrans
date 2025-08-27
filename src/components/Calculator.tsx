@@ -1,8 +1,10 @@
 'use client';
 
 import {useEffect} from 'react';
+import {useTranslations} from 'next-intl';
 
 export default function Calculator() {
+  const t = useTranslations('calculator');
   useEffect(() => {
     // Функция для загрузки скрипта Bitrix24
     const loadBitrixScript = () => {
@@ -67,26 +69,20 @@ export default function Calculator() {
   return (
     <div className="bg-white rounded-2xl shadow-xl p-8">
       <div className="text-center mb-8">
-        <h3 className="text-2xl font-bold text-gray-900 mb-4">
-          Рассчитать стоимость доставки
-              </h3>
-        <p className="text-gray-600">
-          Заполните форму и получите точный расчет стоимости перевозки
-        </p>
-        </div>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4">{t('title')}</h3>
+        <p className="text-gray-600">{t('description')}</p>
+      </div>
 
       {/* Bitrix24 форма будет загружена здесь */}
       <div id="b24form_calculator_main" className="min-h-[400px]">
         <div className="text-center py-8">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-velta-navy mx-auto mb-4"></div>
-          <p className="text-gray-600">Загрузка формы...</p>
+          <p className="text-gray-600">{t('form.calculating')}</p>
         </div>
       </div>
       
       {/* Информация о времени ответа */}
-      <div className="text-center text-sm text-gray-500">
-        После отправки заявки наш менеджер свяжется с вами в течение 5 часов
-      </div>
+      <div className="text-center text-sm text-gray-500">{t('note')}</div>
     </div>
   );
 } 
