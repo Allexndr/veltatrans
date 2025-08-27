@@ -75,9 +75,9 @@ export default function CargoTracking() {
       
       if (!response.ok) {
         if (response.status === 404) {
-          setError('Номер для отслеживания не найден');
+          setError(t('errors.notFound'));
         } else {
-          setError('Ошибка при получении данных');
+          setError(t('errors.fetchError'));
         }
         setIsTracking(false);
         return;
@@ -89,7 +89,7 @@ export default function CargoTracking() {
       const mockResult: TrackingResult = {
         trackingNumber: trackingData.trackingNumber,
         status: getStatusText(trackingData.status),
-        estimatedDelivery: trackingData.estimatedDelivery || 'В процессе доставки',
+        estimatedDelivery: trackingData.estimatedDelivery || t('result.inProgress'),
         history: trackingData.route.map((point: RoutePoint) => ({
           status: getStatusText(point.status),
           location: point.location,
@@ -117,7 +117,7 @@ export default function CargoTracking() {
       }
       
     } catch (err) {
-      setError('Ошибка соединения с сервером');
+      setError(t('errors.connectionError'));
       console.error('Tracking error:', err);
     }
     setIsTracking(false);
@@ -141,8 +141,8 @@ export default function CargoTracking() {
             {
               lat: data.position.lat,
               lng: data.position.lng,
-              title: 'Текущая позиция',
-              description: `Скорость: ${data.position.speed} км/ч`,
+              title: t('result.currentPosition'),
+              description: t('result.speed', { speed: data.position.speed }),
               status: 'in_transit'
             }
           ]);
@@ -167,58 +167,56 @@ export default function CargoTracking() {
 
   const getStatusText = (status: string) => {
     switch (status) {
-      case 'pending': return 'Принят';
-      case 'in_transit': return 'В пути';
-      case 'delivered': return 'Доставлен';
-      case 'warehouse': return 'На складе';
-      case 'delayed': return 'Задержка';
-      case 'assigned': return 'Назначен водителю';
-      case 'created': return 'Создан';
+      case 'pending': return t('status.pending');
+      case 'in_transit': return t('status.inTransit');
+      case 'delivered': return t('status.delivered');
+      case 'warehouse': return t('status.warehouse');
+      case 'delayed': return t('status.delayed');
+      case 'assigned': return t('status.assigned');
+      case 'created': return t('status.created');
       default: return status; // Возвращаем кастомный статус как есть
     }
   };
 
   const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'Доставлен':
-        return 'text-green-600 bg-green-100 border-green-300';
-      case 'В пути':
-        return 'text-blue-600 bg-blue-100 border-blue-300';
-      case 'На складе':
-        return 'text-yellow-600 bg-yellow-100 border-yellow-300';
-      case 'Принят':
-        return 'text-gray-600 bg-gray-100 border-gray-300';
-      case 'Задержка':
-        return 'text-red-600 bg-red-100 border-red-300';
-      case 'Назначен водителю':
-        return 'text-purple-600 bg-purple-100 border-purple-300';
-      case 'Создан':
-        return 'text-gray-600 bg-gray-100 border-gray-300';
-      default:
-        // Для кастомных статусов используем оранжевый цвет
-        return 'text-orange-600 bg-orange-100 border-orange-300';
+    if (status === t('status.delivered')) {
+      return 'text-green-600 bg-green-100 border-green-300';
+    } else if (status === t('status.inTransit')) {
+      return 'text-blue-600 bg-blue-100 border-blue-300';
+    } else if (status === t('status.warehouse')) {
+      return 'text-yellow-600 bg-yellow-100 border-yellow-300';
+    } else if (status === t('status.pending')) {
+      return 'text-gray-600 bg-gray-100 border-gray-300';
+    } else if (status === t('status.delayed')) {
+      return 'text-red-600 bg-red-100 border-red-300';
+    } else if (status === t('status.assigned')) {
+      return 'text-purple-600 bg-purple-100 border-purple-300';
+    } else if (status === t('status.created')) {
+      return 'text-gray-600 bg-gray-100 border-gray-300';
+    } else {
+      // Для кастомных статусов используем оранжевый цвет
+      return 'text-orange-600 bg-orange-100 border-orange-300';
     }
   };
 
   const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'Доставлен':
-        return '✅';
-      case 'В пути':
-        return '🚛';
-      case 'На складе':
-        return '📦';
-      case 'Принят':
-        return '📋';
-      case 'Задержка':
-        return '⚠️';
-      case 'Назначен водителю':
-        return '👤';
-      case 'Создан':
-        return '📝';
-      default:
-        // Для кастомных статусов используем универсальную иконку
-        return '📍';
+    if (status === t('status.delivered')) {
+      return '✅';
+    } else if (status === t('status.inTransit')) {
+      return '🚛';
+    } else if (status === t('status.warehouse')) {
+      return '📦';
+    } else if (status === t('status.pending')) {
+      return '📋';
+    } else if (status === t('status.delayed')) {
+      return '⚠️';
+    } else if (status === t('status.assigned')) {
+      return '👤';
+    } else if (status === t('status.created')) {
+      return '📝';
+    } else {
+      // Для кастомных статусов используем универсальную иконку
+      return '📍';
     }
   };
 
@@ -351,7 +349,7 @@ export default function CargoTracking() {
               <div className="mt-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
                   <span className="mr-2">🗺️</span>
-                  Маршрут груза
+                  {t('result.cargoRoute')}
                   {isLiveTracking && (
                     <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                       <span className="w-2 h-2 bg-green-400 rounded-full mr-1 animate-pulse"></span>
@@ -366,9 +364,9 @@ export default function CargoTracking() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
-                      <span className="font-medium">Текущая позиция:</span>
+                      <span className="font-medium">{t('result.currentPosition')}:</span>
                       <span className="ml-1">{livePosition.address}</span>
-                      <span className="ml-2 text-blue-600">({livePosition.speed} км/ч)</span>
+                      <span className="ml-2 text-blue-600">({t('result.speed', { speed: livePosition.speed })})</span>
                     </div>
                   </div>
                 )}

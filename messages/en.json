@@ -245,12 +245,48 @@
       "deliveryTime": "Delivery time:",
       "transportType": "Transport type:",
       "cost": "Cost:",
-      "calculateDelivery": "Calculate delivery"
+      "calculateDelivery": "Calculate delivery",
+      "almaty_beijing": {
+        "title": "Almaty → Beijing",
+        "distance": "4,200 km",
+        "deliveryTime": "12-15 days",
+        "transportType": "Auto + Rail",
+        "cost": "from $2.80/kg"
+      },
+      "moscow_shanghai": {
+        "title": "Moscow → Shanghai",
+        "distance": "7,800 km",
+        "deliveryTime": "18-22 days",
+        "transportType": "Rail + Sea",
+        "cost": "from $1.90/kg"
+      },
+      "tashkent_guangzhou": {
+        "title": "Tashkent → Guangzhou",
+        "distance": "5,600 km",
+        "deliveryTime": "14-18 days",
+        "transportType": "Auto + Rail",
+        "cost": "from $2.40/kg"
+      }
     },
     "borderCrossings": {
       "title": "Border Crossings",
       "subtitle": "Key checkpoints for international cargo",
-      "features": "Features:"
+      "features": "Features:",
+      "khorgos": {
+        "title": "Khorgos (China-Kazakhstan)",
+        "description": "Main land border crossing between China and Kazakhstan",
+        "features": "24/7 operation, electronic declaration"
+      },
+      "alashankou": {
+        "title": "Alashankou (China-Kazakhstan)",
+        "description": "Alternative crossing for freight transportation",
+        "features": "Specialization in container transportation"
+      },
+      "zabaikalsk": {
+        "title": "Zabaikalsk (Russia-China)",
+        "description": "Main rail crossing on Russia-China border",
+        "features": "High throughput, customs clearance"
+      }
     },
     "geography": {
       "title": "Work Geography",
@@ -413,34 +449,97 @@
       }
     }
   },
+  "trackingSystem": {
+    "title": "Cargo Tracking",
+    "description": "Enter TTN number or upload file with number list",
+    "singleTracking": {
+      "title": "Track one cargo",
+      "ttnFormat": "TTN number (format: WT123456)",
+      "placeholder": "WT123456",
+      "searching": "Searching...",
+      "trackButton": "Track"
+    },
+    "multipleTracking": {
+      "title": "Track multiple cargos",
+      "uploadFile": "Upload file with TTN numbers",
+      "formatInfo": "File format: each TTN number on a new line (maximum 50 numbers)"
+    },
+    "status": {
+      "pending": "Awaiting shipment",
+      "in_transit": "In transit",
+      "delivered": "Delivered",
+      "warehouse": "At warehouse",
+      "unknown": "Unknown"
+    },
+    "errors": {
+      "enterTtn": "Enter TTN number",
+      "invalidFormat": "TTN number must be in format WT123456",
+      "notFound": "Order not found or an error occurred",
+      "fetchError": "Error fetching data",
+      "emptyFile": "File is empty or contains no TTN numbers",
+      "tooManyNumbers": "Maximum number of entries: 50",
+      "fileProcessingError": "Error processing file"
+    },
+    "details": {
+      "ttnNumber": "TTN Number:",
+      "status": "Status:",
+      "location": "Location:",
+      "lastUpdate": "Updated:",
+      "movementHistory": "Movement History"
+    },
+    "navigation": {
+      "previous": "Previous",
+      "next": "Next",
+      "ofTotal": "{current} of {total}"
+    }
+  },
   "contact": {
     "title": "Contacts",
     "description": "Contact us in any convenient way",
+    "phones": {
+      "title": "Our Phones",
+      "multichannel": "Multichannel",
+      "sales": "Sales Department",
+      "logistics": "Logistics Department"
+    },
+    "contactMethods": {
+      "title": "Contact Methods",
+      "subtitle": "Choose a convenient way to contact us",
+      "write": "Write",
+      "whatsapp": {
+        "description": "Quick response on WhatsApp"
+      },
+      "telegram": {
+        "description": "Communication via Telegram bot"
+      },
+      "email": {
+        "description": "Send us an email"
+      }
+    },
     "regions": {
       "title": "Regions",
       "subtitle": "We work in key logistics centers",
       "almaty": {
         "city": "Almaty",
         "country": "Kazakhstan",
-        "address": "Example St., 123",
-        "phone": "+7 (727) 123-45-67",
-        "email": "almaty@veltatrans.com",
+        "address": "8th microdistrict 4a, Abay BC, office 217",
+        "phone": "+7 700 277 00 06 (multichannel, WhatsApp only)\n+7 701 070 40 11 (sales, WhatsApp only)\n+7 700 277 00 22 (logistics, WhatsApp only)",
+        "email": "sales@velta.com.kz, velta@velta.com.kz",
         "hours": "Mon-Fri: 9:00-18:00"
       },
-      "moscow": {
-        "city": "Moscow",
-        "country": "Russia",
-        "address": "Example St., 456",
-        "phone": "+7 (495) 123-45-67",
-        "email": "moscow@veltatrans.com",
-        "hours": "Mon-Fri: 9:00-18:00"
+      "russia": {
+        "city": "Russia",
+        "country": "",
+        "address": "-",
+        "phone": "logist@velta.com.kz\n06 multichannel (WhatsApp only)",
+        "hours": ""
       },
       "beijing": {
         "city": "Beijing",
         "country": "China",
-        "address": "789 Example Street",
-        "phone": "+86 10 1234-5678",
-        "email": "beijing@veltatrans.com",
+        "address": "-",
+        "phone": "china@velta.com\nvelta@velta.com.kz\n06 multichannel\n11 WeChat",
+        "email": "china@velta.com, velta@velta.com.kz",
         "hours": "Mon-Fri: 9:00-18:00"
       }
     },
@@ -540,72 +639,92 @@
       "auto-1": {
         "title": "International equipment transportation",
         "description": "Delivery of industrial equipment from China to Kazakhstan",
+        "details": "We organized a full cycle delivery of industrial equipment from Shanghai to Almaty. Included customs clearance, insurance and cargo escort.",
         "location": "Shanghai → Almaty",
         "cargo": "Industrial equipment",
-        "weight": "15 tons"
+        "weight": "15 tons",
+        "volume": "45 m³"
       },
       "auto-2": {
         "title": "Groupage cargo transportation",
         "description": "Consolidation and delivery of small batches from different shippers",
+        "details": "Successfully consolidated 8 small batches from different shippers into one container. Optimized the route and reduced costs for clients.",
         "location": "Guangzhou → Moscow",
         "cargo": "Electronics, textiles, toys",
-        "weight": "8 tons"
+        "weight": "8 tons",
+        "volume": "25 m³"
       },
       "rail-1": {
         "title": "Kazakhstan–Russia container train",
         "description": "Regular container shipments via Trans-Siberian railway",
+        "details": "Organized regular container shipments on the Shanghai-Moscow route via the Trans-Siberian Railway. Transit time: 14 days.",
         "location": "Shanghai → Moscow",
         "cargo": "40HC containers",
-        "weight": "120 tons"
+        "weight": "120 tons",
+        "volume": "200 m³"
       },
       "rail-2": {
         "title": "Oversized equipment transportation",
         "description": "Delivery of large-sized equipment for the oil and gas industry",
+        "details": "Special transportation of oversized equipment for the oil and gas industry. Developed a special route taking into account the dimensions.",
         "location": "Dalian → Novosibirsk",
         "cargo": "Oil and gas equipment",
-        "weight": "45 tons"
+        "weight": "45 tons",
+        "volume": "80 m³"
       },
       "multimodal-1": {
         "title": "Combined delivery from China",
         "description": "Sea + rail + road delivery",
+        "details": "Organized complex multimodal transportation: by sea from Shanghai to Vladivostok, then by rail to Yekaterinburg, and by road to the final destination.",
         "location": "Shanghai → Yekaterinburg",
         "cargo": "Industrial equipment",
-        "weight": "25 tons"
+        "weight": "25 tons",
+        "volume": "60 m³"
       },
       "project-1": {
         "title": "Construction machinery transportation",
         "description": "Delivery of large-sized construction machinery",
+        "details": "Special transportation of construction machinery for a major infrastructure project. Included route development, permits and escort.",
         "location": "Beijing → Astana",
         "cargo": "Construction machinery",
-        "weight": "35 tons"
+        "weight": "35 tons",
+        "volume": "90 m³"
       },
       "container-1": {
         "title": "Regular container shipments",
         "description": "Weekly container services between ports",
+        "details": "Organized regular container shipments between Chinese and Russian ports. Stable schedule and competitive prices.",
         "location": "Qingdao → Saint Petersburg",
         "cargo": "20GP, 40HC containers",
-        "weight": "80 tons"
+        "weight": "80 tons",
+        "volume": "150 m³"
       },
       "dangerous-1": {
         "title": "Transportation of chemicals",
         "description": "Safe transportation of hazardous chemical materials",
+        "details": "Special transportation of hazardous chemicals in compliance with all international safety standards. Included special packaging and escort.",
         "location": "Nanjing → Yekaterinburg",
         "cargo": "Chemical substances",
-        "weight": "12 tons"
+        "weight": "12 tons",
+        "volume": "30 m³"
       },
       "rail-3": {
         "title": "Rail transportation of cars",
         "description": "Mass transportation of passenger cars from China",
+        "details": "Organized transportation of a batch of 50 passenger cars from China to Russia. Special car carrier wagons ensured transportation safety.",
         "location": "Changchun → Moscow",
         "cargo": "Passenger cars",
-        "weight": "75 tons"
+        "weight": "75 tons",
+        "volume": "120 m³"
       },
       "auto-3": {
         "title": "Express delivery of urgent cargo",
         "description": "Urgent delivery of critical equipment",
+        "details": "Completed urgent delivery of critical equipment for an oil refinery. Transit time: 72 hours instead of the standard 7 days.",
         "location": "Urumqi → Omsk",
         "cargo": "Critical equipment",
-        "weight": "5 tons"
+        "weight": "5 tons",
+        "volume": "15 m³"
       }
     }
   },
@@ -802,12 +921,36 @@
       "sales": "Sales",
       "logistics": "Logistics"
     },
-    "email": "Email",
+    "email": "sales@velta.com.kz / velta@velta.com.kz",
     "address": "Address",
-    "addressText": "Office address",
+    "addressText": "8th microdistrict 4a, Abay BC, office 217",
     "allRightsReserved": "All rights reserved",
     "privacy": "Privacy Policy",
     "terms": "Terms of Use"
+  },
+  "orderForm": {
+    "title": "Order Logistics Services",
+    "description": "Submit a request and get an individual quote for your cargo",
+    "phone": {
+      "title": "Phone",
+      "multichannel": "multichannel"
+    },
+    "address": {
+      "title": "Address",
+      "value": "8th microdistrict 4a, Abay BC, office 217"
+    },
+    "email": {
+      "title": "Email"
+    },
+    "form": {
+      "title": "Submit Request",
+      "description": "Fill out the form and we will calculate delivery cost",
+      "loading": "Loading form..."
+    },
+    "formUnavailable": {
+      "title": "Form temporarily unavailable",
+      "description": "Please contact us by phone or through other contacts"
+    }
   },
   "contactForm": {
     "title": "Contact Us",
@@ -819,6 +962,9 @@
     "address": {
       "title": "Address",
       "value": "Office address"
+    },
+    "email": {
+      "title": "Email"
     },
     "form": {
       "title": "Write to us",
@@ -873,13 +1019,29 @@
       "track": "Track"
     },
     "errors": {
-      "emptyNumber": "Enter a tracking number"
+      "emptyNumber": "Enter a tracking number",
+      "notFound": "Tracking number not found",
+      "fetchError": "Error fetching data",
+      "connectionError": "Server connection error"
     },
     "result": {
       "trackingNumber": "Number",
       "status": "Status",
       "estimatedDelivery": "Estimated delivery",
-      "history": "Movement history"
+      "history": "Movement history",
+      "inProgress": "In delivery process",
+      "currentPosition": "Current position",
+      "speed": "{speed} km/h",
+      "cargoRoute": "Cargo route"
+    },
+    "status": {
+      "pending": "Accepted",
+      "inTransit": "In transit",
+      "delivered": "Delivered",
+      "warehouse": "At warehouse",
+      "delayed": "Delayed",
+      "assigned": "Assigned to driver",
+      "created": "Created"
     },
     "note": "Data updates automatically when the status changes"
   },

@@ -68,4 +68,4 @@ npm run start
 
 ---
 
-© 2024 Velta Trans. Все права защищены.
+© 2025 Velta Trans. Все права защищены.

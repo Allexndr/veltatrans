@@ -135,23 +135,23 @@ export default function DirectionsPage() {
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               <div className="bg-white rounded-lg shadow-lg p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Алматы → Пекин</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">{t('popularRoutes.almaty_beijing.title')}</h3>
                 <div className="space-y-3">
                   <div className="flex justify-between">
                     <span className="text-gray-600">{t('popularRoutes.distance')}</span>
-                    <span className="font-semibold">4,200 км</span>
+                    <span className="font-semibold">{t('popularRoutes.almaty_beijing.distance')}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">{t('popularRoutes.deliveryTime')}</span>
-                    <span className="font-semibold">12-15 дней</span>
+                    <span className="font-semibold">{t('popularRoutes.almaty_beijing.deliveryTime')}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">{t('popularRoutes.transportType')}</span>
-                    <span className="font-semibold">Авто + ЖД</span>
+                    <span className="font-semibold">{t('popularRoutes.almaty_beijing.transportType')}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">{t('popularRoutes.cost')}</span>
-                    <span className="font-semibold">от $2.80/кг</span>
+                    <span className="font-semibold">{t('popularRoutes.almaty_beijing.cost')}</span>
                   </div>
                 </div>
                 <button className="w-full mt-6 bg-velta-navy text-white py-3 rounded-lg hover:bg-velta-700 transition-colors">
@@ -160,23 +160,23 @@ export default function DirectionsPage() {
               </div>
               
               <div className="bg-white rounded-lg shadow-lg p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Москва → Шанхай</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">{t('popularRoutes.moscow_shanghai.title')}</h3>
                 <div className="space-y-3">
                   <div className="flex justify-between">
                     <span className="text-gray-600">{t('popularRoutes.distance')}</span>
-                    <span className="font-semibold">7,800 км</span>
+                    <span className="font-semibold">{t('popularRoutes.moscow_shanghai.distance')}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">{t('popularRoutes.deliveryTime')}</span>
-                    <span className="font-semibold">18-22 дня</span>
+                    <span className="font-semibold">{t('popularRoutes.moscow_shanghai.deliveryTime')}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">{t('popularRoutes.transportType')}</span>
-                    <span className="font-semibold">ЖД + Море</span>
+                    <span className="font-semibold">{t('popularRoutes.moscow_shanghai.transportType')}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">{t('popularRoutes.cost')}</span>
-                    <span className="font-semibold">от $3.40/кг</span>
+                    <span className="font-semibold">{t('popularRoutes.moscow_shanghai.cost')}</span>
                   </div>
                 </div>
                 <button className="w-full mt-6 bg-velta-navy text-white py-3 rounded-lg hover:bg-velta-700 transition-colors">
@@ -185,23 +185,23 @@ export default function DirectionsPage() {
               </div>
               
               <div className="bg-white rounded-lg shadow-lg p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Ташкент → Гуанчжоу</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">{t('popularRoutes.tashkent_guangzhou.title')}</h3>
                 <div className="space-y-3">
                   <div className="flex justify-between">
                     <span className="text-gray-600">{t('popularRoutes.distance')}</span>
-                    <span className="font-semibold">5,600 км</span>
+                    <span className="font-semibold">{t('popularRoutes.tashkent_guangzhou.distance')}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">{t('popularRoutes.deliveryTime')}</span>
-                    <span className="font-semibold">14-18 дней</span>
+                    <span className="font-semibold">{t('popularRoutes.tashkent_guangzhou.deliveryTime')}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">{t('popularRoutes.transportType')}</span>
-                    <span className="font-semibold">Авто + ЖД</span>
+                    <span className="font-semibold">{t('popularRoutes.tashkent_guangzhou.transportType')}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">{t('popularRoutes.cost')}</span>
-                    <span className="font-semibold">от $3.10/кг</span>
+                    <span className="font-semibold">{t('popularRoutes.tashkent_guangzhou.cost')}</span>
                   </div>
                 </div>
                 <button className="w-full mt-6 bg-velta-navy text-white py-3 rounded-lg hover:bg-velta-700 transition-colors">
@@ -226,26 +226,26 @@ export default function DirectionsPage() {
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               <div className="bg-white rounded-lg shadow-lg p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Хоргос (Китай-Казахстан)</h3>
-                <p className="text-gray-600 mb-4">Основной сухопутный переход между Китаем и Казахстаном</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">{t('borderCrossings.khorgos.title')}</h3>
+                <p className="text-gray-600 mb-4">{t('borderCrossings.khorgos.description')}</p>
                 <div className="text-sm text-gray-500">
-                  <strong>{t('borderCrossings.features')}</strong> 24/7 работа, электронное декларирование
+                  <strong>{t('borderCrossings.features')}</strong> {t('borderCrossings.khorgos.features')}
                 </div>
               </div>
               
               <div className="bg-white rounded-lg shadow-lg p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Алашанькоу (Китай-Казахстан)</h3>
-                <p className="text-gray-600 mb-4">Альтернативный переход для грузовых перевозок</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">{t('borderCrossings.alashankou.title')}</h3>
+                <p className="text-gray-600 mb-4">{t('borderCrossings.alashankou.description')}</p>
                 <div className="text-sm text-gray-500">
-                  <strong>{t('borderCrossings.features')}</strong> Специализация на контейнерных перевозках
+                  <strong>{t('borderCrossings.features')}</strong> {t('borderCrossings.alashankou.features')}
                 </div>
               </div>
               
               <div className="bg-white rounded-lg shadow-lg p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Забайкальск (Россия-Китай)</h3>
-                <p className="text-gray-600 mb-4">Крупнейший железнодорожный переход</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">{t('borderCrossings.zabaikalsk.title')}</h3>
+                <p className="text-gray-600 mb-4">{t('borderCrossings.zabaikalsk.description')}</p>
                 <div className="text-sm text-gray-500">
-                  <strong>{t('borderCrossings.features')}</strong> Железнодорожные перевозки, контейнеры
+                  <strong>{t('borderCrossings.features')}</strong> {t('borderCrossings.zabaikalsk.features')}
                 </div>
               </div>
             </div>

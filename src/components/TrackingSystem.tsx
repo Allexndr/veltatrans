@@ -1,6 +1,7 @@
 'use client';
 
 import {useState} from 'react';
+import {useTranslations} from 'next-intl';
 import {motion} from 'framer-motion';
 import LeafletMap from './LeafletMap';
 
@@ -24,6 +25,7 @@ interface TrackingResult {
 }
 
 export default function TrackingSystem({}: TrackingSystemProps) {
+  const t = useTranslations('trackingSystem');
   const [trackingNumber, setTrackingNumber] = useState('');
   const [trackingNumbers, setTrackingNumbers] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -34,11 +36,11 @@ export default function TrackingSystem({}: TrackingSystemProps) {
   // Получение текста статуса
   const getStatusText = (status: string): string => {
     switch (status) {
-      case 'pending': return 'Ожидает отправки';
-      case 'in_transit': return 'В пути';
-      case 'delivered': return 'Доставлено';
-      case 'warehouse': return 'На складе';
-      default: return 'Неизвестно';
+      case 'pending': return t('status.pending');
+      case 'in_transit': return t('status.in_transit');
+      case 'delivered': return t('status.delivered');
+      case 'warehouse': return t('status.warehouse');
+      default: return t('status.unknown');
     }
   };
 
@@ -47,7 +49,7 @@ export default function TrackingSystem({}: TrackingSystemProps) {
     try {
       const response = await fetch(`/api/tracking/${ttn}`);
       if (!response.ok) {
-        throw new Error('Заказ не найден');
+        throw new Error(t('errors.notFound'));
       }
       
       const orderData = await response.json();
@@ -92,12 +94,12 @@ export default function TrackingSystem({}: TrackingSystemProps) {
 
   const handleSingleTracking = async () => {
     if (!trackingNumber.trim()) {
-      setError('Введите номер ТТН');
+      setError(t('errors.enterTtn'));
       return;
     }
 
     if (!trackingNumber.startsWith('WT') || trackingNumber.length !== 8) {
-      setError('Номер ТТН должен быть в формате WT123456');
+      setError(t('errors.invalidFormat'));
       return;
     }
 
@@ -112,10 +114,10 @@ export default function TrackingSystem({}: TrackingSystemProps) {
         setTrackingNumbers([trackingNumber]);
         setCurrentIndex(0);
       } else {
-        setError('Заказ не найден или произошла ошибка');
+        setError(t('errors.notFound'));
       }
     } catch (error) {
-      setError('Ошибка при получении данных');
+      setError(t('errors.fetchError'));
     } finally {
       setLoading(false);
     }
@@ -131,12 +133,12 @@ export default function TrackingSystem({}: TrackingSystemProps) {
       const numbers = content.split('\n').map(line => line.trim()).filter(line => line.length > 0);
       
       if (numbers.length === 0) {
-        setError('Файл пуст или не содержит номеров ТТН');
+        setError(t('errors.emptyFile'));
         return;
       }
 
       if (numbers.length > 50) {
-        setError('Максимальное количество номеров: 50');
+        setError(t('errors.tooManyNumbers'));
         return;
       }
 
@@ -156,7 +158,7 @@ export default function TrackingSystem({}: TrackingSystemProps) {
         setTrackingNumbers(numbers);
         setCurrentIndex(0);
       } catch (error) {
-        setError('Ошибка при обработке файла');
+        setError(t('errors.fileProcessingError'));
       } finally {
         setLoading(false);
       }
@@ -180,10 +182,10 @@ export default function TrackingSystem({}: TrackingSystemProps) {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Отслеживание грузов
+            {t('title')}
           </h1>
           <p className="text-lg text-gray-600">
-            Введите номер ТТН или загрузите файл со списком номеров
+            {t('description')}
           </p>
 
         </div>
@@ -199,18 +201,18 @@ export default function TrackingSystem({}: TrackingSystemProps) {
             {/* Одиночный номер */}
             <div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                Отследить один груз
+                {t('singleTracking.title')}
               </h3>
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Номер ТТН (формат: WT123456)
+                    {t('singleTracking.ttnFormat')}
                   </label>
                   <input
                     type="text"
                     value={trackingNumber}
                     onChange={(e) => setTrackingNumber(e.target.value.toUpperCase())}
-                    placeholder="WT123456"
+                    placeholder={t('singleTracking.placeholder')}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-velta-500 focus:border-velta-500"
                     maxLength={8}
                   />
@@ -223,10 +225,10 @@ export default function TrackingSystem({}: TrackingSystemProps) {
                   {loading ? (
                     <div className="flex items-center justify-center">
                       <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
-                      Поиск...
+                      {t('singleTracking.searching')}
                     </div>
                   ) : (
-                    'Отследить'
+                    t('singleTracking.trackButton')
                   )}
                 </button>
               </div>
@@ -235,12 +237,12 @@ export default function TrackingSystem({}: TrackingSystemProps) {
             {/* Множественные номера */}
             <div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                Отследить несколько грузов
+                {t('multipleTracking.title')}
               </h3>
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Загрузить файл с номерами ТТН
+                    {t('multipleTracking.uploadFile')}
                   </label>
                   <input
                     type="file"
@@ -250,7 +252,7 @@ export default function TrackingSystem({}: TrackingSystemProps) {
                   />
                 </div>
                 <p className="text-sm text-gray-500">
-                  Формат файла: каждый номер ТТН на новой строке (максимум 50 номеров)
+                  {t('multipleTracking.formatInfo')}
                 </p>
               </div>
             </div>
@@ -282,11 +284,11 @@ export default function TrackingSystem({}: TrackingSystemProps) {
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                   </svg>
-                  Предыдущий
+                  {t('navigation.previous')}
                 </button>
                 
                 <span className="text-gray-600 font-medium">
-                  {currentIndex + 1} из {results.length}
+                  {t('navigation.ofTotal', { current: currentIndex + 1, total: results.length })}
                 </span>
                 
                 <button
@@ -294,7 +296,7 @@ export default function TrackingSystem({}: TrackingSystemProps) {
                   disabled={currentIndex === results.length - 1}
                   className="flex items-center px-4 py-2 text-velta-600 hover:text-velta-700 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Следующий
+                  {t('navigation.next')}
                   <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
@@ -306,21 +308,21 @@ export default function TrackingSystem({}: TrackingSystemProps) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
               <div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                  Номер ТТН: {currentResult.ttn}
+                  {t('details.ttnNumber')} {currentResult.ttn}
                 </h3>
                 <div className="space-y-3">
                   <div className="flex items-center">
-                    <span className="text-gray-600 w-32">Статус:</span>
+                    <span className="text-gray-600 w-32">{t('details.status')}</span>
                     <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(currentResult.status)}`}>
                       {getStatusText(currentResult.status)}
                     </span>
                   </div>
                   <div className="flex items-center">
-                    <span className="text-gray-600 w-32">Местоположение:</span>
+                    <span className="text-gray-600 w-32">{t('details.location')}</span>
                     <span className="font-medium">{currentResult.location}</span>
                   </div>
                   <div className="flex items-center">
-                    <span className="text-gray-600 w-32">Обновлено:</span>
+                    <span className="text-gray-600 w-32">{t('details.lastUpdate')}</span>
                     <span className="text-sm text-gray-500">{currentResult.lastUpdate}</span>
                   </div>
                 </div>
@@ -333,10 +335,10 @@ export default function TrackingSystem({}: TrackingSystemProps) {
                     lat: point.lat || 0,
                     lng: point.lng || 0,
                     title: point.location,
-                    status: point.status === 'Груз принят' ? 'pending' : 
-                           point.status === 'В пути' ? 'in_transit' : 
-                           point.status === 'Доставлено' ? 'delivered' : 
-                           point.status === 'На складе' ? 'warehouse' : 'pending',
+                    status: point.status === t('status.pending') ? 'pending' : 
+                           point.status === t('status.in_transit') ? 'in_transit' : 
+                           point.status === t('status.delivered') ? 'delivered' : 
+                           point.status === t('status.warehouse') ? 'warehouse' : 'pending',
                     timestamp: point.date
                   }))}
                   center={[51.1694, 71.4491]} // Алматы по умолчанию
@@ -349,7 +351,7 @@ export default function TrackingSystem({}: TrackingSystemProps) {
             {/* Маршрут */}
             <div>
               <h4 className="text-xl font-semibold text-gray-900 mb-4">
-                История перемещений
+                {t('details.movementHistory')}
               </h4>
               <div className="space-y-4">
                 {currentResult.route.map((point, index) => (

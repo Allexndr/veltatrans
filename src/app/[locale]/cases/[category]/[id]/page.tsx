@@ -241,7 +241,7 @@ export default function CasePage({ params }: CasePageProps) {
                   </Link>
                   
                   <Link
-                    href={`/${locale}/contacts`}
+                    href={`/${locale}#order-form`}
                     className="w-full inline-flex items-center justify-center px-4 py-3 bg-velta-navy text-white font-medium rounded-lg hover:bg-velta-700 transition-colors"
                   >
                     {t('orderSimilar')}

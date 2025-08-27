@@ -244,12 +244,48 @@
       "deliveryTime": "交付时间:",
       "transportType": "运输类型:",
       "cost": "成本:",
-      "calculateDelivery": "计算交付"
+      "calculateDelivery": "计算交付",
+      "almaty_beijing": {
+        "title": "阿拉木图 → 北京",
+        "distance": "4,200 公里",
+        "deliveryTime": "12-15 天",
+        "transportType": "汽运 + 铁路",
+        "cost": "起价 $2.80/公斤"
+      },
+      "moscow_shanghai": {
+        "title": "莫斯科 → 上海",
+        "distance": "7,800 公里",
+        "deliveryTime": "18-22 天",
+        "transportType": "铁路 + 海运",
+        "cost": "起价 $1.90/公斤"
+      },
+      "tashkent_guangzhou": {
+        "title": "塔什干 → 广州",
+        "distance": "5,600 公里",
+        "deliveryTime": "14-18 天",
+        "transportType": "汽运 + 铁路",
+        "cost": "起价 $2.40/公斤"
+      }
     },
     "borderCrossings": {
       "title": "边境口岸",
       "subtitle": "国际货物的关键检查点",
-      "features": "特点:"
+      "features": "特点:",
+      "khorgos": {
+        "title": "霍尔果斯 (中国-哈萨克斯坦)",
+        "description": "中哈之间主要陆路口岸",
+        "features": "24/7运营，电子申报"
+      },
+      "alashankou": {
+        "title": "阿拉山口 (中国-哈萨克斯坦)",
+        "description": "货运的替代口岸",
+        "features": "专门从事集装箱运输"
+      },
+      "zabaikalsk": {
+        "title": "后贝加尔斯克 (俄罗斯-中国)",
+        "description": "中俄边境主要铁路口岸",
+        "features": "高吞吐量，海关清关"
+      }
     },
     "geography": {
       "title": "工作地理",
@@ -412,34 +448,97 @@
       }
     }
   },
+  "trackingSystem": {
+    "title": "货物追踪",
+    "description": "输入TTN号码或上传号码列表文件",
+    "singleTracking": {
+      "title": "追踪一个货物",
+      "ttnFormat": "TTN号码（格式：WT123456）",
+      "placeholder": "WT123456",
+      "searching": "搜索中...",
+      "trackButton": "追踪"
+    },
+    "multipleTracking": {
+      "title": "追踪多个货物",
+      "uploadFile": "上传TTN号码文件",
+      "formatInfo": "文件格式：每个TTN号码在新行（最多50个号码）"
+    },
+    "status": {
+      "pending": "等待发货",
+      "in_transit": "运输中",
+      "delivered": "已交付",
+      "warehouse": "在仓库",
+      "unknown": "未知"
+    },
+    "errors": {
+      "enterTtn": "请输入TTN号码",
+      "invalidFormat": "TTN号码必须为WT123456格式",
+      "notFound": "订单未找到或发生错误",
+      "fetchError": "数据获取错误",
+      "emptyFile": "文件为空或不包含TTN号码",
+      "tooManyNumbers": "最大数量：50个",
+      "fileProcessingError": "文件处理错误"
+    },
+    "details": {
+      "ttnNumber": "TTN号码：",
+      "status": "状态：",
+      "location": "位置：",
+      "lastUpdate": "更新时间：",
+      "movementHistory": "运输历史"
+    },
+    "navigation": {
+      "previous": "上一个",
+      "next": "下一个",
+      "ofTotal": "{current} / {total}"
+    }
+  },
   "contact": {
     "title": "联系我们",
     "description": "以任何方便的方式联系我们",
+    "phones": {
+      "title": "我们的电话",
+      "multichannel": "多通道",
+      "sales": "销售部",
+      "logistics": "物流部"
+    },
+    "contactMethods": {
+      "title": "联系方式",
+      "subtitle": "选择方便的联系方式",
+      "write": "发送消息",
+      "whatsapp": {
+        "description": "WhatsApp快速回复"
+      },
+      "telegram": {
+        "description": "通过Telegram机器人通信"
+      },
+      "email": {
+        "description": "发送电子邮件给我们"
+      }
+    },
     "regions": {
       "title": "地区",
       "subtitle": "我们在主要物流中心工作",
       "almaty": {
         "city": "阿拉木图",
         "country": "哈萨克斯坦",
-        "address": "示例街123号",
-        "phone": "+7 (727) 123-45-67",
-        "email": "almaty@veltatrans.com",
+        "address": "8号微区4a，阿拜商务中心，217室",
+        "phone": "+7 700 277 00 06 (多通道，仅WhatsApp)\n+7 701 070 40 11 (销售，仅WhatsApp)\n+7 700 277 00 22 (物流，仅WhatsApp)",
+        "email": "sales@velta.com.kz, velta@velta.com.kz",
         "hours": "周一至周五: 9:00-18:00"
       },
-      "moscow": {
-        "city": "莫斯科",
-        "country": "俄罗斯",
-        "address": "示例街456号",
-        "phone": "+7 (495) 123-45-67",
-        "email": "moscow@veltatrans.com",
-        "hours": "周一至周五: 9:00-18:00"
+      "russia": {
+        "city": "俄罗斯",
+        "country": "",
+        "address": "-",
+        "phone": "logist@velta.com.kz\n06 多通道 (仅WhatsApp)",
+        "hours": ""
       },
       "beijing": {
         "city": "北京",
         "country": "中国",
-        "address": "示例街789号",
-        "phone": "+86 10 1234-5678",
-        "email": "beijing@veltatrans.com",
+        "address": "-",
+        "phone": "china@velta.com\nvelta@velta.com.kz\n06 多通道\n11 WeChat",
+        "email": "china@velta.com, velta@velta.com.kz",
         "hours": "周一至周五: 9:00-18:00"
       }
     },
@@ -539,72 +638,92 @@
       "auto-1": {
         "title": "国际设备运输",
         "description": "将工业设备从中国运至哈萨克斯坦",
+        "details": "我们组织了从上海到阿拉木图的工业设备全周期运输。包括清关、保险和货物护送。",
         "location": "上海 → 阿拉木图",
         "cargo": "工业设备",
-        "weight": "15 吨"
+        "weight": "15 吨",
+        "volume": "45 立方米"
       },
       "auto-2": {
         "title": "拼箱货运输",
         "description": "整合来自不同发货人的小批量货物并运输",
+        "details": "成功将来自8个不同发货人的小批量货物集中装入一个集装箱。优化了路线并为客户降低了成本。",
         "location": "广州 → 莫斯科",
         "cargo": "电子产品、纺织品、玩具",
-        "weight": "8 吨"
+        "weight": "8 吨",
+        "volume": "25 立方米"
       },
       "rail-1": {
         "title": "哈萨克斯坦-俄罗斯集装箱列车",
         "description": "经由西伯利亚大铁路的定期集装箱运输",
+        "details": "组织了上海-莫斯科路线通过西伯利亚大铁路的定期集装箱运输。运输时间：14天。",
         "location": "上海 → 莫斯科",
         "cargo": "40HC 集装箱",
-        "weight": "120 吨"
+        "weight": "120 吨",
+        "volume": "200 立方米"
       },
       "rail-2": {
         "title": "超限设备运输",
         "description": "为油气行业运输大型设备",
+        "details": "为油气行业特殊运输超限设备。制定了考虑尺寸的特殊路线。",
         "location": "大连 → 新西伯利亚",
         "cargo": "油气设备",
-        "weight": "45 吨"
+        "weight": "45 吨",
+        "volume": "80 立方米"
       },
       "multimodal-1": {
         "title": "来自中国的组合运输",
         "description": "海运 + 铁路 + 公路",
+        "details": "组织了复杂的多式联运：从上海海运到海参崴，然后铁路运输到叶卡捷琳堡，最后公路运输到最终目的地。",
         "location": "上海 → 叶卡捷琳堡",
         "cargo": "工业设备",
-        "weight": "25 吨"
+        "weight": "25 吨",
+        "volume": "60 立方米"
       },
       "project-1": {
         "title": "工程机械运输",
         "description": "大型工程机械交付",
+        "details": "为重大基础设施项目特殊运输工程机械。包括路线开发、许可证和护送。",
         "location": "北京 → 阿斯塔纳",
         "cargo": "工程机械",
-        "weight": "35 吨"
+        "weight": "35 吨",
+        "volume": "90 立方米"
       },
       "container-1": {
         "title": "常规集装箱运输",
         "description": "港口之间每周集装箱航线",
+        "details": "组织中俄港口之间的定期集装箱运输。稳定的时间表和具有竞争力的价格。",
         "location": "青岛 → 圣彼得堡",
         "cargo": "20GP, 40HC 集装箱",
-        "weight": "80 吨"
+        "weight": "80 吨",
+        "volume": "150 立方米"
       },
       "dangerous-1": {
         "title": "化学品运输",
         "description": "危险化学材料的安全运输",
+        "details": "按照所有国际安全标准特殊运输危险化学品。包括特殊包装和护送。",
         "location": "南京 → 叶卡捷琳堡",
         "cargo": "化学物质",
-        "weight": "12 吨"
+        "weight": "12 吨",
+        "volume": "30 立方米"
       },
       "rail-3": {
         "title": "铁路汽车运输",
         "description": "从中国批量运输乘用车",
+        "details": "组织了50辆乘用车从中国到俄罗斯的运输。专用汽车运输车箱确保运输安全。",
         "location": "长春 → 莫斯科",
         "cargo": "乘用车",
-        "weight": "75 吨"
+        "weight": "75 吨",
+        "volume": "120 立方米"
       },
       "auto-3": {
         "title": "加急交付紧急货物",
         "description": "关键设备的加急交付",
+        "details": "完成了炼油厂关键设备的紧急交付。运输时间：72小时，而不是标准的7天。",
         "location": "乌鲁木齐 → 鄂木斯克",
         "cargo": "关键设备",
-        "weight": "5 吨"
+        "weight": "5 吨",
+        "volume": "15 立方米"
       }
     }
   },
@@ -785,6 +904,80 @@
     "title": "分析和指标",
     "description": "物流系统运行的综合分析"
   },
+  "about": {
+    "title": "关于我们",
+    "description": "国际物流领域的可靠合作伙伴",
+    "mission": "我们的使命",
+    "values": "我们的价值观",
+    "team": "我们的团队",
+    "missionDescription1": "我们的使命是在国家和大陆之间建立可靠的物流桥梁，为企业提供高效且经济的国际贸易解决方案。",
+    "missionDescription2": "我们努力成为该地区领先的物流公司，提供最高质量的服务，促进客户国际业务的发展。",
+    "experience": "年经验",
+    "satisfiedClients": "满意的客户",
+    "deliveryCountries": "配送国家",
+    "successfulDeliveries": "成功配送",
+    "valuesDescription": "指导我们工作的原则",
+    "reliability": {
+      "title": "可靠性",
+      "description": "保证货物安全和按时交付"
+    },
+    "professionalism": {
+      "title": "专业性",
+      "description": "拥有多年物流经验的专家团队"
+    },
+    "transparency": {
+      "title": "透明度",
+      "description": "开放报告和配送状态的完整信息"
+    },
+    "innovation": {
+      "title": "创新",
+      "description": "使用现代技术优化流程"
+    },
+    "history": {
+      "title": "发展历史",
+      "subtitle": "我们旅程的关键阶段",
+      "2014": {
+        "title": "公司成立",
+        "description": "Velta Trans由一群在国际物流方面有经验的专业人士创立"
+      },
+      "2016": {
+        "title": "扩展到中国",
+        "description": "在北京开设第一个办事处并建立贸易走廊"
+      },
+      "2018": {
+        "title": "数字化",
+        "description": "实施在线跟踪系统和流程自动化"
+      },
+      "2020": {
+        "title": "疫情稳定",
+        "description": "在COVID-19期间确保不间断供应"
+      },
+      "2022": {
+        "title": "新路线",
+        "description": "开发到欧洲和亚洲的额外方向"
+      },
+      "2024": {
+        "title": "技术领导",
+        "description": "推出新网站和现代数字解决方案"
+      }
+    },
+    "teamDescription": "让您成功成为可能的专业人士",
+    "logistics": {
+      "title": "物流",
+      "description": "我们的物流团队确保最优路线和及时交付",
+      "specialists": "15+名专家"
+    },
+    "customs": {
+      "title": "海关",
+      "description": "海关清关专家解决任何文件流程问题",
+      "specialists": "8+名专家"
+    },
+    "support": {
+      "title": "支持",
+      "description": "客户服务24/7工作以解决任何问题",
+      "specialists": "12+名专家"
+    }
+  },
   "footer": {
     "description": "领先的物流公司，专门从事中国、哈萨克斯坦、俄罗斯和独联体国家之间的国际货物运输",
     "quickLinks": "快速链接",
@@ -801,12 +994,36 @@
       "sales": "销售",
       "logistics": "物流"
     },
-    "email": "电子邮件",
+    "email": "sales@velta.com.kz / velta@velta.com.kz",
     "address": "地址",
-    "addressText": "办公室地址",
+    "addressText": "8号微区4a，阿拜商务中心，217室",
     "allRightsReserved": "版权所有",
     "privacy": "隐私政策",
     "terms": "使用条款"
+  },
+  "orderForm": {
+    "title": "订购物流服务",
+    "description": "提交申请，获得您货物的个性化报价",
+    "phone": {
+      "title": "电话",
+      "multichannel": "多通道"
+    },
+    "address": {
+      "title": "地址",
+      "value": "8号微区4a，阿拜商务中心，217室"
+    },
+    "email": {
+      "title": "电子邮件"
+    },
+    "form": {
+      "title": "提交申请",
+      "description": "填写表格，我们将计算运输成本",
+      "loading": "加载表格..."
+    },
+    "formUnavailable": {
+      "title": "表格暂时不可用",
+      "description": "请通过电话或其他联系方式联系我们"
+    }
   },
   "contactForm": {
     "title": "联系我们",
@@ -818,6 +1035,9 @@
     "address": {
       "title": "地址",
       "value": "办公室地址"
+    },
+    "email": {
+      "title": "电子邮件"
     },
     "form": {
       "title": "给我们写信",
@@ -872,13 +1092,29 @@
       "track": "查询"
     },
     "errors": {
-      "emptyNumber": "请输入跟踪号码"
+      "emptyNumber": "请输入跟踪号码",
+      "notFound": "跟踪号码未找到",
+      "fetchError": "数据获取错误",
+      "connectionError": "服务器连接错误"
     },
     "result": {
       "trackingNumber": "编号",
       "status": "状态",
       "estimatedDelivery": "预计送达",
-      "history": "运输历史"
+      "history": "运输历史",
+      "inProgress": "配送中",
+      "currentPosition": "当前位置",
+      "speed": "{speed} 公里/小时",
+      "cargoRoute": "货物路线"
+    },
+    "status": {
+      "pending": "已接收",
+      "inTransit": "运输中",
+      "delivered": "已送达",
+      "warehouse": "在仓库",
+      "delayed": "延误",
+      "assigned": "分配给司机",
+      "created": "已创建"
     },
     "note": "状态变化时数据将自动更新"
   },

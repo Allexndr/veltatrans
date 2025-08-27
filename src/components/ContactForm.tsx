@@ -1,10 +1,12 @@
 'use client';
 
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {useTranslations} from 'next-intl';
 
 export default function ContactForm() {
   const t = useTranslations('contactForm');
+  const [isLoading, setIsLoading] = useState(true);
+  const [formLoaded, setFormLoaded] = useState(false);
 
   useEffect(() => {
     // Функция для загрузки скрипта Bitrix24
@@ -48,12 +50,24 @@ export default function ContactForm() {
           `;
         }
       }, 5000);
+        setIsLoading(false);
     };
 
-    // Загружаем скрипт
-    loadBitrixScript();
+    // Загружаем скрипт с небольшой задержкой
+    const timer = setTimeout(() => {
+      loadBitrixScript();
+      // Устанавливаем таймаут на загрузку
+      setTimeout(() => {
+        const formContainer = document.getElementById('b24form_inline_2_36mjlr');
+        if (formContainer && formContainer.children.length > 1) {
+          setFormLoaded(true);
+        }
+        setIsLoading(false);
+      }, 3000);
+    }, 500);
 
     return () => {
+      clearTimeout(timer);
       // Очищаем скрипт при размонтировании компонента
       const script = document.querySelector('script[data-b24-form="inline/2/36mjlr"]');
       if (script && script.parentNode) {
@@ -74,7 +88,7 @@ export default function ContactForm() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Contact Info */}
           <div>
             <div className="space-y-6">
@@ -101,8 +115,11 @@ export default function ContactForm() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Email</h3>
-                  <p className="text-gray-600">info@veltatrans.com</p>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('email.title')}</h3>
+                  <div className="space-y-1">
+                    <p className="text-gray-600">sales@velta.com.kz</p>
+                    <p className="text-gray-600">velta@velta.com.kz</p>
+                  </div>
                 </div>
               </div>
 
@@ -134,10 +151,35 @@ export default function ContactForm() {
             
             {/* Bitrix24 форма будет загружена здесь */}
             <div id="b24form_inline_2_36mjlr" className="min-h-[300px]">
-              <div className="text-center py-8">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-velta-navy mx-auto mb-4"></div>
-                <p className="text-gray-600">{t('form.loading')}</p>
-              </div>
+              {isLoading ? (
+                <div className="text-center py-8">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-velta-navy mx-auto mb-4"></div>
+                  <p className="text-gray-600">{t('form.loading')}</p>
+                </div>
+              ) : !formLoaded ? (
+                <div className="text-center py-8">
+                  <div className="text-gray-500 mb-4">
+                    <svg className="w-16 h-16 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <p className="text-gray-600 mb-4">{t('formUnavailable.title')}</p>
+                  <p className="text-sm text-gray-500 mb-6">{t('formUnavailable.description')}</p>
+                  <div className="text-left space-y-2">
+                    <div className="bg-white p-3 rounded-lg">
+                      <span className="font-semibold text-gray-900">📞 {t('phone.title')}</span>
+                      <p className="text-sm text-gray-600">+7 700 277 00 06</p>
+                    </div>
+                    <div className="bg-white p-3 rounded-lg">
+                      <span className="font-semibold text-gray-900">📧 {t('email.title')}</span>
+                      <div className="space-y-1">
+                        <p className="text-sm text-gray-600">sales@velta.com.kz</p>
+                        <p className="text-sm text-gray-600">velta@velta.com.kz</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
             </div>
           </div>
         </div>

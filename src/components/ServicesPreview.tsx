@@ -36,7 +36,7 @@ export default function ServicesPreview({}: {locale: string}) {
           className="w-12 h-12 brightness-0 invert"
         />
       ),
-      href: '/services/railway',
+      href: '/services/rail',
       gradient: 'from-gray-500 to-slate-500'
     },
     {
