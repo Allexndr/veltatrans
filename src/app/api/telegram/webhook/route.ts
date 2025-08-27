@@ -235,7 +235,19 @@ async function handleDriverRegistration(userId: number, text: string, field: str
       await saveDriver(driver);
       await setUserState(userId, null);
       await sendTelegramMessage(userId.toString(), '✅ Регистрация завершена! Теперь вы можете получать заказы.');
-      await sendNotificationToChannel(`🚗 Новый водитель зарегистрирован: ${driver.name} (${driver.carNumber})`);
+      
+      // Send notification using new API
+      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/telegram/notifications`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'driver_registered',
+          data: {
+            name: driver.name,
+            carNumber: driver.carNumber
+          }
+        })
+      });
       break;
   }
 }
@@ -273,7 +285,20 @@ async function handleOrderCreation(userId: number, text: string, field: string) 
       await saveOrder(order);
       await setUserState(userId, null);
       await sendTelegramMessage(userId.toString(), '✅ Заказ создан! Водители увидят ваш заказ и смогут предложить свои услуги.');
-      await sendNotificationToChannel(`📦 Новый заказ: ${order.from} → ${order.to}\n${order.description}`);
+      
+      // Send notification using new API
+      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/telegram/notifications`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'order_created',
+          data: {
+            from: order.from,
+            to: order.to,
+            description: order.description
+          }
+        })
+      });
       break;
   }
 }
@@ -286,15 +311,14 @@ async function handleCommand(userId: number, text: string, chatId: string) {
         '🚛 Добро пожаловать в Velta Trans!\n\n' +
         'Выберите действие:',
         {
-          keyboard: {
-            resize_keyboard: true,
-            keyboard: [
-              [{ text: '🚗 Зарегистрироваться как водитель' }],
-              [{ text: '📦 Создать заказ' }],
-              [{ text: '📊 Мои заказы' }],
-              [{ text: '⭐ Оценить водителя' }]
-            ]
-          }
+          resize_keyboard: true,
+          keyboard: [
+            [{ text: '🚗 Зарегистрироваться как водитель' }],
+            [{ text: '📦 Создать заказ' }],
+            [{ text: '📊 Мои заказы' }],
+            [{ text: '⭐ Оценить водителя' }],
+            [{ text: '📈 Аналитика' }]
+          ]
         }
       );
       break;
@@ -315,6 +339,10 @@ async function handleCommand(userId: number, text: string, chatId: string) {
       
     case '⭐ оценить водителя':
       await showRatingForm(userId, chatId);
+      break;
+      
+    case '📈 аналитика':
+      await showAnalytics(chatId);
       break;
       
     default:
@@ -377,6 +405,39 @@ async function handleCallbackQuery(callbackQuery: any) {
 async function handleDriverRating(userId: number, orderId: string) {
   // Implementation for rating drivers
   await sendTelegramMessage(userId.toString(), '⭐ Введите оценку от 1 до 5:');
+}
+
+// Show analytics
+async function showAnalytics(chatId: string) {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/telegram/analytics`);
+    const data = await response.json();
+    
+    if (data.success) {
+      const { overview, topDrivers } = data.analytics;
+      
+      let message = '📈 Статистика Velta Trans\n\n';
+      message += `👥 Всего водителей: ${overview.totalDrivers}\n`;
+      message += `✅ Активных водителей: ${overview.activeDrivers}\n`;
+      message += `📦 Всего заказов: ${overview.totalOrders}\n`;
+      message += `🎯 Завершенных заказов: ${overview.completedOrders}\n`;
+      message += `📊 Процент успеха: ${overview.successRate}\n\n`;
+      
+      if (topDrivers && topDrivers.length > 0) {
+        message += '🏆 Топ водители:\n';
+        topDrivers.forEach((driver: any, index: number) => {
+          message += `${index + 1}. ${driver.name} - ⭐${driver.rating}/5 (${driver.totalOrders} заказов)\n`;
+        });
+      }
+      
+      await sendTelegramMessage(chatId, message);
+    } else {
+      await sendTelegramMessage(chatId, '❌ Не удалось загрузить аналитику');
+    }
+  } catch (error) {
+    console.error('Analytics error:', error);
+    await sendTelegramMessage(chatId, '❌ Ошибка при загрузке аналитики');
+  }
 }
 
 // Health check endpoint
