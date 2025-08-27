@@ -123,10 +123,19 @@ async function getAvailableOrders() {
 }
 
 async function assignOrderToDriver(orderId: string, driverId: string, price: number) {
-  const order = await getOrders();
-  const targetOrder = order.find((o: any) => o.id === orderId);
+  const orders = await getOrders();
+  const targetOrder = orders.find((o: any) => o.id === orderId);
   
   if (targetOrder) {
+    // Get driver info
+    const drivers = await getDrivers();
+    const driver = drivers.find((d: any) => d.userId === parseInt(driverId));
+    
+    if (driver) {
+      // Send notification to staff channel
+      await sendDriverPriceOfferToChannel(targetOrder, driver, price);
+    }
+    
     targetOrder.driverId = driverId;
     targetOrder.price = price;
     targetOrder.status = 'assigned';
@@ -243,14 +252,10 @@ async function editTelegramMessage(chatId: string, messageId: number, text: stri
 function buildMainMenu() {
   return {
     inline_keyboard: [
-      [
-        { text: '🚛 Водителям', callback_data: 'section_drivers' },
-        { text: '📦 Клиентам', callback_data: 'section_clients' }
-      ],
-      [
-        { text: '👤 Сотрудникам', callback_data: 'section_staff' },
-        { text: '🌐 Смена языка', callback_data: 'change_language' }
-      ]
+      [{ text: '🚛 Водителям', callback_data: 'section_drivers' }],
+      [{ text: '📦 Клиентам', callback_data: 'section_clients' }],
+      [{ text: '👤 Сотрудникам', callback_data: 'section_staff' }],
+      [{ text: '🌐 Смена языка', callback_data: 'change_language' }]
     ]
   };
 }
@@ -276,13 +281,9 @@ function buildSectionsMenu() {
 function buildUnregisteredDriverMenu() {
   return {
     inline_keyboard: [
-      [
-        { text: '📝 Регистрация', callback_data: 'driver_register' },
-        { text: '🔐 Вход в систему', callback_data: 'driver_login' }
-      ],
-      [
-        { text: '← Назад', callback_data: 'back_main' }
-      ]
+      [{ text: '📝 Регистрация', callback_data: 'driver_register' }],
+      [{ text: '🔐 Вход в систему', callback_data: 'driver_login' }],
+      [{ text: '← Назад', callback_data: 'back_main' }]
     ]
   };
 }
@@ -290,22 +291,14 @@ function buildUnregisteredDriverMenu() {
 function buildRegisteredDriverMenu() {
   return {
     inline_keyboard: [
-      [
-        { text: '📊 Мои заказы', callback_data: 'driver_orders' },
-        { text: '🚚 Доступные заказы', callback_data: 'driver_available_orders' }
-      ],
-      [
-        { text: '📍 Обновить статус', callback_data: 'driver_update_status' },
-        { text: '⭐ Мой рейтинг', callback_data: 'driver_rating' }
-      ],
-      [
-        { text: '💰 Заработок', callback_data: 'driver_earnings' },
-        { text: '👤 Мой профиль', callback_data: 'driver_profile' }
-      ],
-      [
-        { text: '🚪 Выйти из системы', callback_data: 'driver_logout' },
-        { text: '← Назад', callback_data: 'back_main' }
-      ]
+      [{ text: '📊 Мои заказы', callback_data: 'driver_orders' }],
+      [{ text: '🚚 Доступные заказы', callback_data: 'driver_available_orders' }],
+      [{ text: '📍 Обновить статус', callback_data: 'driver_update_status' }],
+      [{ text: '⭐ Мой рейтинг', callback_data: 'driver_rating' }],
+      [{ text: '💰 Заработок', callback_data: 'driver_earnings' }],
+      [{ text: '👤 Мой профиль', callback_data: 'driver_profile' }],
+      [{ text: '🚪 Выйти из системы', callback_data: 'driver_logout' }],
+      [{ text: '← Назад', callback_data: 'back_main' }]
     ]
   };
 }
@@ -313,17 +306,11 @@ function buildRegisteredDriverMenu() {
 function buildClientMenu() {
   return {
     inline_keyboard: [
-      [
-        { text: '🚚 Создать заказ', callback_data: 'client_create_order' },
-        { text: '📋 Мои заказы', callback_data: 'client_orders' }
-      ],
-      [
-        { text: '📍 Отследить груз', callback_data: 'client_track' },
-        { text: '💳 Оплата', callback_data: 'client_payment' }
-      ],
-      [
-        { text: '← Назад', callback_data: 'back_sections' }
-      ]
+      [{ text: '🚚 Создать заказ', callback_data: 'client_create_order' }],
+      [{ text: '📋 Мои заказы', callback_data: 'client_orders' }],
+      [{ text: '📍 Отследить груз', callback_data: 'client_track' }],
+      [{ text: '💳 Оплата', callback_data: 'client_payment' }],
+      [{ text: '← Назад', callback_data: 'back_main' }]
     ]
   };
 }
@@ -331,17 +318,12 @@ function buildClientMenu() {
 function buildStaffMenu() {
   return {
     inline_keyboard: [
-      [
-        { text: '📊 Статистика', callback_data: 'staff_stats' },
-        { text: '👥 Управление', callback_data: 'staff_manage' }
-      ],
-      [
-        { text: '📢 Уведомления', callback_data: 'staff_notifications' },
-        { text: '⚙️ Настройки', callback_data: 'staff_settings' }
-      ],
-      [
-        { text: '← Назад', callback_data: 'back_sections' }
-      ]
+      [{ text: '📊 Статистика', callback_data: 'staff_stats' }],
+      [{ text: '👥 Управление заказами', callback_data: 'staff_manage_orders' }],
+      [{ text: '🚚 Управление водителями', callback_data: 'staff_manage_drivers' }],
+      [{ text: '📢 Уведомления', callback_data: 'staff_notifications' }],
+      [{ text: '⚙️ Настройки', callback_data: 'staff_settings' }],
+      [{ text: '← Назад', callback_data: 'back_main' }]
     ]
   };
 }
@@ -403,17 +385,11 @@ async function showLanguageMenu(chatId: string, messageId: number) {
   const text = '🌐 Выберите язык / Choose language / 选择语言 / Тілді таңдаңыз:';
   const keyboard = {
     inline_keyboard: [
-      [
-        { text: '🇷🇺 Русский', callback_data: 'lang_ru' },
-        { text: '🇰🇿 Қазақша', callback_data: 'lang_kz' }
-      ],
-      [
-        { text: '🇺🇸 English', callback_data: 'lang_en' },
-        { text: '🇨🇳 中文', callback_data: 'lang_zh' }
-      ],
-      [
-        { text: '← Назад', callback_data: 'back_main' }
-      ]
+      [{ text: '🇷🇺 Русский', callback_data: 'lang_ru' }],
+      [{ text: '🇰🇿 Қазақша', callback_data: 'lang_kz' }],
+      [{ text: '🇺🇸 English', callback_data: 'lang_en' }],
+      [{ text: '🇨🇳 中文', callback_data: 'lang_zh' }],
+      [{ text: '← Назад', callback_data: 'back_main' }]
     ]
   };
   await editTelegramMessage(chatId, messageId, text, keyboard);
@@ -606,17 +582,11 @@ async function handleCallbackQuery(callbackQuery: any) {
       await setUserState(userId, 'waiting_for_status');
       await editTelegramMessage(chatId, messageId, '📍 Выберите ваш текущий статус:', {
         inline_keyboard: [
-          [
-            { text: '🚗 В пути', callback_data: 'status_in_transit' },
-            { text: '⛽ На заправке', callback_data: 'status_refueling' }
-          ],
-          [
-            { text: '🛑 Остановка', callback_data: 'status_stopped' },
-            { text: '🏁 Прибыл', callback_data: 'status_arrived' }
-          ],
-          [
-            { text: '← Назад', callback_data: 'back_driver_menu' }
-          ]
+          [{ text: '🚗 В пути', callback_data: 'status_in_transit' }],
+          [{ text: '⛽ На заправке', callback_data: 'status_refueling' }],
+          [{ text: '🛑 Остановка', callback_data: 'status_stopped' }],
+          [{ text: '🏁 Прибыл', callback_data: 'status_arrived' }],
+          [{ text: '← Назад', callback_data: 'back_driver_menu' }]
         ]
       });
       break;
@@ -683,8 +653,12 @@ async function handleCallbackQuery(callbackQuery: any) {
       await showAnalytics(chatId, messageId);
       break;
       
-    case 'staff_manage':
-      await editTelegramMessage(chatId, messageId, '👥 Управление персоналом', buildBackButton('back_staff_menu'));
+    case 'staff_manage_orders':
+      await showStaffOrdersManagement(chatId, messageId);
+      break;
+      
+    case 'staff_manage_drivers':
+      await showStaffDriversManagement(chatId, messageId);
       break;
       
     case 'staff_notifications':
@@ -730,6 +704,14 @@ async function handleCallbackQuery(callbackQuery: any) {
       const orderIdForCustomPrice = data.replace('custom_price_', '');
       await setUserState(userId, 'waiting_for_custom_price');
       await editTelegramMessage(chatId, messageId, '💰 Введите вашу цену в тенге:', buildBackButton('back_available_orders'));
+      break;
+      
+    case 'staff_refresh_orders':
+      await showStaffOrdersManagement(chatId, messageId);
+      break;
+      
+    case 'staff_refresh_drivers':
+      await showStaffDriversManagement(chatId, messageId);
       break;
       
     default:
@@ -865,20 +847,12 @@ async function showOrderDetails(chatId: string, messageId: number, orderId: stri
   
   const keyboard = {
     inline_keyboard: [
-      [
-        { text: '💰 5000 тенге', callback_data: `offer_price_${orderId}_5000` },
-        { text: '💰 6000 тенге', callback_data: `offer_price_${orderId}_6000` }
-      ],
-      [
-        { text: '💰 7000 тенге', callback_data: `offer_price_${orderId}_7000` },
-        { text: '💰 8000 тенге', callback_data: `offer_price_${orderId}_8000` }
-      ],
-      [
-        { text: '💰 Другая цена', callback_data: `custom_price_${orderId}` }
-      ],
-      [
-        { text: '← Назад', callback_data: 'back_available_orders' }
-      ]
+      [{ text: '💰 5000 тенге', callback_data: `offer_price_${orderId}_5000` }],
+      [{ text: '💰 6000 тенге', callback_data: `offer_price_${orderId}_6000` }],
+      [{ text: '💰 7000 тенге', callback_data: `offer_price_${orderId}_7000` }],
+      [{ text: '💰 8000 тенге', callback_data: `offer_price_${orderId}_8000` }],
+      [{ text: '💰 Другая цена', callback_data: `custom_price_${orderId}` }],
+      [{ text: '← Назад', callback_data: 'back_available_orders' }]
     ]
   };
   
@@ -903,6 +877,69 @@ async function showClientOrders(chatId: string, messageId: number, userId: numbe
   });
   
   await editTelegramMessage(chatId, messageId, text, buildBackButton('back_client_menu'));
+}
+
+// Show staff orders management
+async function showStaffOrdersManagement(chatId: string, messageId: number) {
+  const orders = await getOrders();
+  const activeOrders = orders.filter((o: any) => o.status === 'active' || o.status === 'assigned');
+  
+  let text = '📋 <b>Управление заказами</b>\n\n';
+  
+  if (activeOrders.length === 0) {
+    text += '📭 Активных заказов нет';
+  } else {
+    activeOrders.forEach((order: any, index: number) => {
+      text += `${index + 1}. ${order.from} → ${order.to}\n`;
+      text += `   Статус: ${order.status}\n`;
+      text += `   Груз: ${order.cargo}\n`;
+      if (order.driverId) {
+        text += `   Водитель: ${order.driverId}\n`;
+        text += `   Цена: ${order.price} тенге\n`;
+      }
+      text += '\n';
+    });
+  }
+  
+  const keyboard = {
+    inline_keyboard: [
+      [{ text: '📊 Обновить статистику', callback_data: 'staff_refresh_orders' }],
+      [{ text: '← Назад', callback_data: 'back_staff_menu' }]
+    ]
+  };
+  
+  await editTelegramMessage(chatId, messageId, text, keyboard);
+}
+
+// Show staff drivers management
+async function showStaffDriversManagement(chatId: string, messageId: number) {
+  const drivers = await getDrivers();
+  
+  let text = '🚛 <b>Управление водителями</b>\n\n';
+  
+  if (drivers.length === 0) {
+    text += '📭 Водителей в базе нет';
+  } else {
+    drivers.forEach((driver: any, index: number) => {
+      text += `${index + 1}. ${driver.name}\n`;
+      text += `   🚗 ${driver.carNumber}\n`;
+      text += `   ⭐ Рейтинг: ${driver.rating || 'Н/Д'}/5\n`;
+      text += `   📱 ${driver.phone}\n`;
+      if (driver.currentStatus) {
+        text += `   📍 Статус: ${driver.currentStatus}\n`;
+      }
+      text += '\n';
+    });
+  }
+  
+  const keyboard = {
+    inline_keyboard: [
+      [{ text: '📊 Обновить статистику', callback_data: 'staff_refresh_drivers' }],
+      [{ text: '← Назад', callback_data: 'back_staff_menu' }]
+    ]
+  };
+  
+  await editTelegramMessage(chatId, messageId, text, keyboard);
 }
 
 // Utility functions
@@ -931,5 +968,44 @@ function findDriverByPhone(phone: string, drivers: any[]): any {
     const driverPhone = normalizePhoneNumber(driver.phone);
     return driverPhone === normalizedPhone;
   });
+}
+
+// Send notification to staff channel
+async function sendNotificationToChannel(message: string) {
+  try {
+    const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        chat_id: CHANNEL_ID,
+        text: message,
+        parse_mode: 'HTML'
+      })
+    });
+    
+    const result = await response.json();
+    if (!result.ok) {
+      console.error('❌ Failed to send notification to channel:', result);
+    } else {
+      console.log('✅ Notification sent to channel');
+    }
+  } catch (error) {
+    console.error('❌ Error sending notification to channel:', error);
+  }
+}
+
+// Send driver price offer to staff channel
+async function sendDriverPriceOfferToChannel(order: any, driver: any, price: number) {
+  const message = `💰 <b>Новое предложение цены!</b>\n\n` +
+    `📋 <b>Заказ:</b> ${order.from} → ${order.to}\n` +
+    `👤 <b>Водитель:</b> ${driver.name}\n` +
+    `📱 <b>Телефон:</b> ${driver.phone}\n` +
+    `🚗 <b>Автомобиль:</b> ${driver.carNumber}\n` +
+    `💵 <b>Цена:</b> ${price.toLocaleString()} тенге\n\n` +
+    `⏰ ${new Date().toLocaleString('ru-RU')}`;
+  
+  await sendNotificationToChannel(message);
 }
 
