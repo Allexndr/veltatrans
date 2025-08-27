@@ -135,11 +135,21 @@
     },
     "customs": {
       "title": "Customs clearance",
-      "description": "Professional customs clearance of cargo with full procedure support"
+      "description": "Professional customs clearance of cargo with full procedure support",
+      "items": {
+        "fullSupport": "Full customs support",
+        "docs": "Document preparation",
+        "consulting": "Foreign trade consulting"
+      }
     },
     "consultation": {
       "title": "Consultations",
-      "description": "Professional logistics consultations"
+      "description": "Professional logistics consultations",
+      "items": {
+        "analysis": "Logistics scheme analysis",
+        "optimization": "Route optimization",
+        "pricing": "Transportation cost estimation"
+      }
     },
     "more": "Learn more",
     "cards": {

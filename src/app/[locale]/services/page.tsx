@@ -153,19 +153,19 @@ export default function ServicesPage({ params }: { params: { locale: string } })
                     <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <span className="text-gray-700">Полное таможенное сопровождение</span>
+                    <span className="text-gray-700">{t('customs.items.fullSupport')}</span>
                   </li>
                   <li className="flex items-center">
                     <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <span className="text-gray-700">Подготовка документов</span>
+                    <span className="text-gray-700">{t('customs.items.docs')}</span>
                   </li>
                   <li className="flex items-center">
                     <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <span className="text-gray-700">Консультации по вопросам ВЭД</span>
+                    <span className="text-gray-700">{t('customs.items.consulting')}</span>
                   </li>
                 </ul>
               </div>
@@ -178,19 +178,19 @@ export default function ServicesPage({ params }: { params: { locale: string } })
                     <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <span className="text-gray-700">Анализ логистических схем</span>
+                    <span className="text-gray-700">{t('consultation.items.analysis')}</span>
                   </li>
                   <li className="flex items-center">
                     <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <span className="text-gray-700">Оптимизация маршрутов</span>
+                    <span className="text-gray-700">{t('consultation.items.optimization')}</span>
                   </li>
                   <li className="flex items-center">
                     <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <span className="text-gray-700">Расчет стоимости перевозок</span>
+                    <span className="text-gray-700">{t('consultation.items.pricing')}</span>
                   </li>
                 </ul>
               </div>

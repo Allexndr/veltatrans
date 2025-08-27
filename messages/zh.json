@@ -134,11 +134,21 @@
     },
     "customs": {
       "title": "海关清关",
-      "description": "专业的货物海关清关，全程程序支持"
+      "description": "专业的货物海关清关，全流程支持",
+      "items": {
+        "fullSupport": "全程海关陪同",
+        "docs": "单证准备",
+        "consulting": "外贸合规咨询"
+      }
     },
     "consultation": {
       "title": "咨询服务",
-      "description": "专业物流咨询"
+      "description": "专业物流咨询",
+      "items": {
+        "analysis": "物流方案分析",
+        "optimization": "线路优化",
+        "pricing": "运输成本测算"
+      }
     },
     "more": "了解更多",
     "cards": {
