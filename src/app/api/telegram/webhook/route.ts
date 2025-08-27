@@ -45,8 +45,8 @@ async function getDrivers() {
   if (!driversCollection) {
     console.warn('⚠️ MongoDB not available - returning demo data');
     return [
-      { id: 'demo_1', name: 'Демо Водитель 1', carNumber: 'DEMO 001', rating: 5.0 },
-      { id: 'demo_2', name: 'Демо Водитель 2', carNumber: 'DEMO 002', rating: 4.8 }
+      { id: 'demo_1', name: 'Хабдулманап', carNumber: 'ГАЗ 161AFH03', rating: 4.63, phone: '+87054060674', userId: null },
+      { id: 'demo_2', name: 'Демо Водитель 2', carNumber: 'DEMO 002', rating: 4.8, phone: '+77051234567', userId: null }
     ];
   }
   return await driversCollection.find({}).toArray();
@@ -76,7 +76,23 @@ async function getOrders() {
   await initDB();
   if (!ordersCollection) {
     console.warn('⚠️ MongoDB not available - returning demo data');
-    return [];
+    return [
+      {
+        id: 'order_1',
+        from: 'Алматы',
+        to: 'Ташкент',
+        cargo: 'Pepsi',
+        weight: '10 тонн',
+        volume: '25 м³',
+        status: 'active',
+        driverId: null,
+        clientId: 'client_1',
+        createdAt: new Date().toISOString(),
+        price: null,
+        driverLocation: null,
+        lastStatusUpdate: null
+      }
+    ];
   }
   return await ordersCollection.find({}).toArray();
 }
@@ -99,6 +115,42 @@ async function saveOrder(order: any) {
     order.createdAt = new Date().toISOString();
     return await ordersCollection.insertOne(order);
   }
+}
+
+async function getAvailableOrders() {
+  const orders = await getOrders();
+  return orders.filter((order: any) => order.status === 'active' && !order.driverId);
+}
+
+async function assignOrderToDriver(orderId: string, driverId: string, price: number) {
+  const order = await getOrders();
+  const targetOrder = order.find((o: any) => o.id === orderId);
+  
+  if (targetOrder) {
+    targetOrder.driverId = driverId;
+    targetOrder.price = price;
+    targetOrder.status = 'assigned';
+    targetOrder.assignedAt = new Date().toISOString();
+    await saveOrder(targetOrder);
+    return true;
+  }
+  return false;
+}
+
+async function updateDriverStatus(driverId: string, status: string, location?: string) {
+  const drivers = await getDrivers();
+  const driver = drivers.find((d: any) => d.userId === driverId);
+  
+  if (driver) {
+    driver.currentStatus = status;
+    driver.lastStatusUpdate = new Date().toISOString();
+    if (location) {
+      driver.currentLocation = location;
+    }
+    await saveDriver(driver);
+    return true;
+  }
+  return false;
 }
 
 async function getUserState(userId: number) {
@@ -192,8 +244,12 @@ function buildMainMenu() {
   return {
     inline_keyboard: [
       [
-        { text: '🔐 Вход в систему', callback_data: 'main_login' },
-        { text: '📱 Поделиться номером', callback_data: 'main_share_phone' }
+        { text: '🚛 Водителям', callback_data: 'section_drivers' },
+        { text: '📦 Клиентам', callback_data: 'section_clients' }
+      ],
+      [
+        { text: '👤 Сотрудникам', callback_data: 'section_staff' },
+        { text: '🌐 Смена языка', callback_data: 'change_language' }
       ]
     ]
   };
@@ -217,19 +273,38 @@ function buildSectionsMenu() {
   };
 }
 
-function buildDriverMenu() {
+function buildUnregisteredDriverMenu() {
   return {
     inline_keyboard: [
       [
         { text: '📝 Регистрация', callback_data: 'driver_register' },
-        { text: '📊 Мои заказы', callback_data: 'driver_orders' }
+        { text: '🔐 Вход в систему', callback_data: 'driver_login' }
       ],
       [
-        { text: '⭐ Мой рейтинг', callback_data: 'driver_rating' },
-        { text: '💰 Заработок', callback_data: 'driver_earnings' }
+        { text: '← Назад', callback_data: 'back_main' }
+      ]
+    ]
+  };
+}
+
+function buildRegisteredDriverMenu() {
+  return {
+    inline_keyboard: [
+      [
+        { text: '📊 Мои заказы', callback_data: 'driver_orders' },
+        { text: '🚚 Доступные заказы', callback_data: 'driver_available_orders' }
       ],
       [
-        { text: '← Назад', callback_data: 'back_sections' }
+        { text: '📍 Обновить статус', callback_data: 'driver_update_status' },
+        { text: '⭐ Мой рейтинг', callback_data: 'driver_rating' }
+      ],
+      [
+        { text: '💰 Заработок', callback_data: 'driver_earnings' },
+        { text: '👤 Мой профиль', callback_data: 'driver_profile' }
+      ],
+      [
+        { text: '🚪 Выйти из системы', callback_data: 'driver_logout' },
+        { text: '← Назад', callback_data: 'back_main' }
       ]
     ]
   };
@@ -281,7 +356,7 @@ function buildBackButton(callbackData: string) {
 
 // Menu handlers
 async function showMainMenu(chatId: string, messageId?: number) {
-  const text = '🚛 Добро пожаловать в Velta Trans!\n\nВыберите действие:';
+  const text = '🚛 Добро пожаловать в Velta Trans!\n\nВыберите раздел:';
   const keyboard = buildMainMenu();
   
   if (messageId) {
@@ -291,15 +366,24 @@ async function showMainMenu(chatId: string, messageId?: number) {
   }
 }
 
-async function showSectionsMenu(chatId: string, messageId: number) {
-  const text = 'Выберите раздел:';
-  const keyboard = buildSectionsMenu();
-  await editTelegramMessage(chatId, messageId, text, keyboard);
-}
-
-async function showDriverMenu(chatId: string, messageId: number) {
-  const text = '🚛 Раздел для водителей\n\nВыберите действие:';
-  const keyboard = buildDriverMenu();
+async function showDriverMenu(chatId: string, messageId: number, userId?: number) {
+  // Check if driver is registered
+  if (userId) {
+    const drivers = await getDrivers();
+    const driver = drivers.find((d: any) => d.userId === userId);
+    
+    if (driver) {
+      // Driver is registered - show full menu
+      const text = `🚛 Раздел для водителей\n\n👤 ${driver.name}\n🚗 ${driver.carNumber}\n⭐ Рейтинг: ${driver.rating || 'Н/Д'}/5`;
+      const keyboard = buildRegisteredDriverMenu();
+      await editTelegramMessage(chatId, messageId, text, keyboard);
+      return;
+    }
+  }
+  
+  // Driver is not registered - show registration/login menu
+  const text = '🚛 Раздел для водителей\n\nДля доступа к функциям необходимо войти в систему:';
+  const keyboard = buildUnregisteredDriverMenu();
   await editTelegramMessage(chatId, messageId, text, keyboard);
 }
 
@@ -312,6 +396,26 @@ async function showClientMenu(chatId: string, messageId: number) {
 async function showStaffMenu(chatId: string, messageId: number) {
   const text = '👤 Раздел для сотрудников\n\nВыберите действие:';
   const keyboard = buildStaffMenu();
+  await editTelegramMessage(chatId, messageId, text, keyboard);
+}
+
+async function showLanguageMenu(chatId: string, messageId: number) {
+  const text = '🌐 Выберите язык / Choose language / 选择语言 / Тілді таңдаңыз:';
+  const keyboard = {
+    inline_keyboard: [
+      [
+        { text: '🇷🇺 Русский', callback_data: 'lang_ru' },
+        { text: '🇰🇿 Қазақша', callback_data: 'lang_kz' }
+      ],
+      [
+        { text: '🇺🇸 English', callback_data: 'lang_en' },
+        { text: '🇨🇳 中文', callback_data: 'lang_zh' }
+      ],
+      [
+        { text: '← Назад', callback_data: 'back_main' }
+      ]
+    ]
+  };
   await editTelegramMessage(chatId, messageId, text, keyboard);
 }
 
@@ -403,6 +507,46 @@ async function handleUserState(userId: number, text: string, chatId: string, sta
       await setUserState(userId, null);
       await sendTelegramMessage(chatId, '✅ Регистрация завершена! Теперь вы можете получать заказы.');
       break;
+      
+    case 'waiting_for_phone_login':
+      // Handle driver login by phone number
+      const drivers = await getDrivers();
+      const driver = findDriverByPhone(text, drivers);
+      
+      if (driver) {
+        // Driver found - link user ID to driver and show success
+        await saveDriver({ ...driver, userId });
+        await setUserState(userId, null);
+        await sendTelegramMessage(chatId, `✅ Вход выполнен успешно!\n\n👤 ${driver.name}\n🚗 ${driver.carNumber}\n⭐ Рейтинг: ${driver.rating || 'Н/Д'}/5`);
+        
+        // Show driver menu with full access
+        setTimeout(async () => {
+          await showMainMenu(chatId);
+        }, 1000);
+      } else {
+        // Driver not found
+        await sendTelegramMessage(chatId, '❌ Водитель с таким номером телефона не найден в базе данных. Пожалуйста, зарегистрируйтесь или проверьте номер.');
+      }
+      break;
+      
+    case 'waiting_for_custom_price':
+      const price = parseInt(text);
+      if (isNaN(price) || price <= 0) {
+        await sendTelegramMessage(chatId, '❌ Пожалуйста, введите корректную цену в тенге (только цифры).');
+        return;
+      }
+      
+      // Get the order ID from user state or use a default
+      const userState = await getUserState(userId);
+      if (userState && userState.includes('custom_price_')) {
+        const orderId = userState.replace('custom_price_', '');
+        await assignOrderToDriver(orderId, userId.toString(), price);
+        await setUserState(userId, null);
+        await sendTelegramMessage(chatId, `✅ Вы успешно взяли заказ!\n💰 Ваша цена: ${price} тенге\n\nЗаявка отправлена, ожидайте подтверждения.`);
+      } else {
+        await sendTelegramMessage(chatId, '❌ Ошибка: не удалось определить заказ. Попробуйте еще раз.');
+      }
+      break;
   }
 }
 
@@ -416,30 +560,16 @@ async function handleCallbackQuery(callbackQuery: any) {
   console.log('🔘 Callback query received:', data);
   
   switch (data) {
-    case 'main_login':
-      await showSectionsMenu(chatId, messageId);
-      break;
-      
-    case 'main_share_phone':
-      await sendTelegramMessage(chatId, '📱 Пожалуйста, поделитесь своим номером телефона:', {
-        reply_markup: {
-          keyboard: [[{ text: '📱 Поделиться номером', request_contact: true }]],
-          resize_keyboard: true,
-          one_time_keyboard: true
-        }
-      });
+    case 'change_language':
+      await showLanguageMenu(chatId, messageId);
       break;
       
     case 'back_main':
       await showMainMenu(chatId, messageId);
       break;
       
-    case 'back_sections':
-      await showSectionsMenu(chatId, messageId);
-      break;
-      
     case 'section_drivers':
-      await showDriverMenu(chatId, messageId);
+      await showDriverMenu(chatId, messageId, userId);
       break;
       
     case 'section_clients':
@@ -459,8 +589,36 @@ async function handleCallbackQuery(callbackQuery: any) {
       await editTelegramMessage(chatId, messageId, '👤 Введите ваше имя:', buildBackButton('back_driver_menu'));
       break;
       
+    case 'driver_login':
+      await setUserState(userId, 'waiting_for_phone_login');
+      await editTelegramMessage(chatId, messageId, '📱 Введите ваш номер телефона для входа в систему:', buildBackButton('back_driver_menu'));
+      break;
+      
     case 'driver_orders':
       await showDriverOrders(chatId, messageId, userId);
+      break;
+      
+    case 'driver_available_orders':
+      await showAvailableOrders(chatId, messageId, userId);
+      break;
+      
+    case 'driver_update_status':
+      await setUserState(userId, 'waiting_for_status');
+      await editTelegramMessage(chatId, messageId, '📍 Выберите ваш текущий статус:', {
+        inline_keyboard: [
+          [
+            { text: '🚗 В пути', callback_data: 'status_in_transit' },
+            { text: '⛽ На заправке', callback_data: 'status_refueling' }
+          ],
+          [
+            { text: '🛑 Остановка', callback_data: 'status_stopped' },
+            { text: '🏁 Прибыл', callback_data: 'status_arrived' }
+          ],
+          [
+            { text: '← Назад', callback_data: 'back_driver_menu' }
+          ]
+        ]
+      });
       break;
       
     case 'driver_rating':
@@ -469,6 +627,39 @@ async function handleCallbackQuery(callbackQuery: any) {
       
     case 'driver_earnings':
       await editTelegramMessage(chatId, messageId, '💰 Ваш заработок за месяц: 150,000 тенге', buildBackButton('back_driver_menu'));
+      break;
+      
+    case 'driver_profile':
+      await editTelegramMessage(chatId, messageId, '👤 Ваш профиль водителя', buildBackButton('back_driver_menu'));
+      break;
+      
+    case 'driver_logout':
+      await setUserState(userId, null);
+      await editTelegramMessage(chatId, messageId, '🚪 Вы вышли из системы', buildBackButton('back_main'));
+      break;
+      
+    case 'back_driver_menu':
+      await showDriverMenu(chatId, messageId, userId);
+      break;
+      
+    case 'status_in_transit':
+      await updateDriverStatus(userId.toString(), 'В пути');
+      await editTelegramMessage(chatId, messageId, '✅ Статус обновлен: 🚗 В пути', buildBackButton('back_driver_menu'));
+      break;
+      
+    case 'status_refueling':
+      await updateDriverStatus(userId.toString(), 'На заправке');
+      await editTelegramMessage(chatId, messageId, '✅ Статус обновлен: ⛽ На заправке', buildBackButton('back_driver_menu'));
+      break;
+      
+    case 'status_stopped':
+      await updateDriverStatus(userId.toString(), 'Остановка');
+      await editTelegramMessage(chatId, messageId, '✅ Статус обновлен: 🛑 Остановка', buildBackButton('back_driver_menu'));
+      break;
+      
+    case 'status_arrived':
+      await updateDriverStatus(userId.toString(), 'Прибыл');
+      await editTelegramMessage(chatId, messageId, '✅ Статус обновлен: 🏁 Прибыл', buildBackButton('back_driver_menu'));
       break;
       
     case 'client_create_order':
@@ -518,6 +709,27 @@ async function handleCallbackQuery(callbackQuery: any) {
       
     case 'back_driver_register':
       await showDriverMenu(chatId, messageId);
+      break;
+      
+    case 'back_available_orders':
+      await showAvailableOrders(chatId, messageId, userId);
+      break;
+      
+    case 'take_order_':
+      const orderId = data.replace('take_order_', '');
+      await showOrderDetails(chatId, messageId, orderId);
+      break;
+      
+    case 'offer_price_':
+      const [_, orderIdForPrice, price] = data.split('_');
+      await assignOrderToDriver(orderIdForPrice, userId.toString(), parseInt(price));
+      await editTelegramMessage(chatId, messageId, `✅ Вы успешно взяли заказ!\n💰 Ваша цена: ${price} тенге\n\nЗаявка отправлена, ожидайте подтверждения.`, buildBackButton('back_driver_menu'));
+      break;
+      
+    case 'custom_price_':
+      const orderIdForCustomPrice = data.replace('custom_price_', '');
+      await setUserState(userId, 'waiting_for_custom_price');
+      await editTelegramMessage(chatId, messageId, '💰 Введите вашу цену в тенге:', buildBackButton('back_available_orders'));
       break;
       
     default:
@@ -596,11 +808,81 @@ async function showDriverOrders(chatId: string, messageId: number, userId: numbe
   let text = '📋 Ваши заказы:\n\n';
   userOrders.forEach((order: any, index: number) => {
     text += `${index + 1}. ${order.from} → ${order.to}\n`;
+    text += `   Груз: ${order.cargo}\n`;
     text += `   Статус: ${order.status}\n`;
     text += `   Создан: ${new Date(order.createdAt).toLocaleDateString()}\n\n`;
   });
   
   await editTelegramMessage(chatId, messageId, text, buildBackButton('back_driver_menu'));
+}
+
+// Show available orders for drivers
+async function showAvailableOrders(chatId: string, messageId: number, userId: number) {
+  const availableOrders = await getAvailableOrders();
+  
+  if (availableOrders.length === 0) {
+    await editTelegramMessage(chatId, messageId, '📭 Сейчас нет доступных заказов.', buildBackButton('back_driver_menu'));
+    return;
+  }
+  
+  let text = '🚚 Доступные заказы:\n\n';
+  const keyboard = {
+    inline_keyboard: []
+  };
+  
+  availableOrders.forEach((order: any, index: number) => {
+    text += `${index + 1}. ${order.from} → ${order.to}\n`;
+    text += `   Груз: ${order.cargo}\n`;
+    text += `   Вес: ${order.weight}, Объем: ${order.volume}\n\n`;
+    
+    keyboard.inline_keyboard.push([
+      { text: `📝 Взять заказ ${index + 1}`, callback_data: `take_order_${order.id}` }
+    ]);
+  });
+  
+  keyboard.inline_keyboard.push([{ text: '← Назад', callback_data: 'back_driver_menu' }]);
+  
+  await editTelegramMessage(chatId, messageId, text, keyboard);
+}
+
+// Show order details for driver to take
+async function showOrderDetails(chatId: string, messageId: number, orderId: string) {
+  const orders = await getOrders();
+  const order = orders.find((o: any) => o.id === orderId);
+  
+  if (!order) {
+    await editTelegramMessage(chatId, messageId, '❌ Заказ не найден.', buildBackButton('back_available_orders'));
+    return;
+  }
+  
+  const text = `📋 Детали заказа:\n\n` +
+    `📍 Маршрут: ${order.from} → ${order.to}\n` +
+    `📦 Груз: ${order.cargo}\n` +
+    `⚖️ Вес: ${order.weight}\n` +
+    `📏 Объем: ${order.volume}\n` +
+    `📅 Создан: ${new Date(order.createdAt).toLocaleDateString()}\n\n` +
+    `💬 Предложите вашу цену:`;
+  
+  const keyboard = {
+    inline_keyboard: [
+      [
+        { text: '💰 5000 тенге', callback_data: `offer_price_${orderId}_5000` },
+        { text: '💰 6000 тенге', callback_data: `offer_price_${orderId}_6000` }
+      ],
+      [
+        { text: '💰 7000 тенге', callback_data: `offer_price_${orderId}_7000` },
+        { text: '💰 8000 тенге', callback_data: `offer_price_${orderId}_8000` }
+      ],
+      [
+        { text: '💰 Другая цена', callback_data: `custom_price_${orderId}` }
+      ],
+      [
+        { text: '← Назад', callback_data: 'back_available_orders' }
+      ]
+    ]
+  };
+  
+  await editTelegramMessage(chatId, messageId, text, keyboard);
 }
 
 // Show client orders
@@ -621,5 +903,33 @@ async function showClientOrders(chatId: string, messageId: number, userId: numbe
   });
   
   await editTelegramMessage(chatId, messageId, text, buildBackButton('back_client_menu'));
+}
+
+// Utility functions
+function normalizePhoneNumber(phone: string): string {
+  // Remove all non-digit characters
+  const digits = phone.replace(/\D/g, '');
+  
+  // Handle different formats
+  if (digits.startsWith('8') && digits.length === 11) {
+    // Convert 8 to 7 for Russian numbers
+    return '7' + digits.substring(1);
+  } else if (digits.startsWith('7') && digits.length === 11) {
+    return digits;
+  } else if (digits.length === 10) {
+    // Add 7 prefix for 10-digit numbers
+    return '7' + digits;
+  }
+  
+  return digits;
+}
+
+function findDriverByPhone(phone: string, drivers: any[]): any {
+  const normalizedPhone = normalizePhoneNumber(phone);
+  
+  return drivers.find(driver => {
+    const driverPhone = normalizePhoneNumber(driver.phone);
+    return driverPhone === normalizedPhone;
+  });
 }
 
