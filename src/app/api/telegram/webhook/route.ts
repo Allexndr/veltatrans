@@ -17,6 +17,11 @@ async function initDB() {
   if (!db) {
     try {
       db = await getDb();
+      if (!db) {
+        console.warn('⚠️ MongoDB not available - running in demo mode');
+        return;
+      }
+      
       driversCollection = db.collection('drivers');
       ordersCollection = db.collection('orders');
       userStatesCollection = db.collection('user_states');
@@ -30,7 +35,7 @@ async function initDB() {
       console.log('✅ MongoDB connected successfully');
     } catch (error) {
       console.error('❌ MongoDB connection error:', error);
-      throw error;
+      console.warn('⚠️ Running in demo mode without database');
     }
   }
 }
@@ -38,11 +43,23 @@ async function initDB() {
 // Data access functions for MongoDB
 async function getDrivers() {
   await initDB();
+  if (!driversCollection) {
+    console.warn('⚠️ MongoDB not available - returning demo data');
+    return [
+      { id: 'demo_1', name: 'Демо Водитель 1', carNumber: 'DEMO 001', rating: 5.0 },
+      { id: 'demo_2', name: 'Демо Водитель 2', carNumber: 'DEMO 002', rating: 4.8 }
+    ];
+  }
   return await driversCollection.find({}).toArray();
 }
 
 async function saveDriver(driver: any) {
   await initDB();
+  if (!driversCollection) {
+    console.warn('⚠️ MongoDB not available - demo mode');
+    return { acknowledged: true, insertedId: 'demo_' + Date.now() };
+  }
+  
   if (driver.id) {
     return await driversCollection.updateOne(
       { id: driver.id },
@@ -58,11 +75,20 @@ async function saveDriver(driver: any) {
 
 async function getOrders() {
   await initDB();
+  if (!ordersCollection) {
+    console.warn('⚠️ MongoDB not available - returning demo data');
+    return [];
+  }
   return await ordersCollection.find({}).toArray();
 }
 
 async function saveOrder(order: any) {
   await initDB();
+  if (!ordersCollection) {
+    console.warn('⚠️ MongoDB not available - demo mode');
+    return { acknowledged: true, insertedId: 'demo_order_' + Date.now() };
+  }
+  
   if (order.id) {
     return await ordersCollection.updateOne(
       { id: order.id },
@@ -78,12 +104,21 @@ async function saveOrder(order: any) {
 
 async function getUserState(userId: number) {
   await initDB();
+  if (!userStatesCollection) {
+    console.warn('⚠️ MongoDB not available - demo mode');
+    return null;
+  }
   const state = await userStatesCollection.findOne({ userId });
   return state ? state.state : null;
 }
 
 async function setUserState(userId: number, state: any) {
   await initDB();
+  if (!userStatesCollection) {
+    console.warn('⚠️ MongoDB not available - demo mode');
+    return { acknowledged: true, modifiedCount: 1 };
+  }
+  
   return await userStatesCollection.updateOne(
     { userId },
     { $set: { userId, state, lastActivity: new Date().toISOString() } },
@@ -93,11 +128,23 @@ async function setUserState(userId: number, state: any) {
 
 async function getStaffUsers() {
   await initDB();
+  if (!staffUsersCollection) {
+    console.warn('⚠️ MongoDB not available - returning demo data');
+    return [
+      { id: 'demo_staff_1', name: 'Демо Сотрудник 1', role: 'admin' },
+      { id: 'demo_staff_2', name: 'Демо Сотрудник 2', role: 'manager' }
+    ];
+  }
   return await staffUsersCollection.find({}).toArray();
 }
 
 async function saveStaffUser(staff: any) {
   await initDB();
+  if (!staffUsersCollection) {
+    console.warn('⚠️ MongoDB not available - demo mode');
+    return { acknowledged: true, insertedId: 'demo_staff_' + Date.now() };
+  }
+  
   if (staff.id) {
     return await staffUsersCollection.updateOne(
       { id: staff.id },

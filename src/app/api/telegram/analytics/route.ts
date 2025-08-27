@@ -4,6 +4,26 @@ import { getDb } from '@/lib/mongodb';
 export async function GET(request: NextRequest) {
   try {
     const db = await getDb();
+    
+    if (!db) {
+      // Return demo data when MongoDB is not available
+      return NextResponse.json({
+        success: true,
+        analytics: {
+          overview: {
+            totalDrivers: 0,
+            activeDrivers: 0,
+            totalOrders: 0,
+            completedOrders: 0,
+            activeOrders: 0,
+            successRate: '0%'
+          },
+          topDrivers: [],
+          recentOrders: []
+        }
+      });
+    }
+    
     const driversCollection = db.collection('drivers');
     const ordersCollection = db.collection('orders');
     
@@ -64,6 +84,13 @@ export async function POST(request: NextRequest) {
     const { type, data } = body;
     
     const db = await getDb();
+    
+    if (!db) {
+      // Skip analytics storage when MongoDB is not available
+      console.warn('⚠️ MongoDB not available - skipping analytics storage');
+      return NextResponse.json({ success: true });
+    }
+    
     const analyticsCollection = db.collection('analytics');
     
     // Store analytics event
