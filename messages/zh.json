@@ -840,35 +840,7 @@
       "title": "创新",
       "description": "我们使用现代技术来优化流程"
     },
-    "history": {
-      "title": "发展历史",
-      "subtitle": "我们旅程的关键阶段",
-      "2014": {
-        "title": "公司成立",
-        "description": "Velta Trans由一群在国际物流方面有经验的专业人士创立"
-      },
-      "2016": {
-        "title": "扩展到中国",
-        "description": "在北京开设第一个办事处并建立贸易走廊"
-      },
-      "2018": {
-        "title": "数字化",
-        "description": "实施在线跟踪系统和流程自动化"
-      },
-      "2020": {
-        "title": "大流行稳定性",
-        "description": "在COVID-19期间确保不间断供应"
-      },
-      "2022": {
-        "title": "新路线",
-        "description": "开发到欧洲和亚洲的额外方向"
-      },
-      "2024": {
-        "title": "技术领导力",
-        "description": "启动新网站和现代数字解决方案"
-      }
-    },
-    "teamDescription": "使您的成功成为可能的专业人士",
+    "teamDescription": "让您的成功成为可能的专业人士",
     "logistics": {
       "title": "物流",
       "description": "我们的物流团队确保最佳路线和及时交付",
@@ -937,49 +909,21 @@
       "title": "创新",
       "description": "使用现代技术优化流程"
     },
-    "history": {
-      "title": "发展历史",
-      "subtitle": "我们旅程的关键阶段",
-      "2014": {
-        "title": "公司成立",
-        "description": "Velta Trans由一群在国际物流方面有经验的专业人士创立"
-      },
-      "2016": {
-        "title": "扩展到中国",
-        "description": "在北京开设第一个办事处并建立贸易走廊"
-      },
-      "2018": {
-        "title": "数字化",
-        "description": "实施在线跟踪系统和流程自动化"
-      },
-      "2020": {
-        "title": "疫情稳定",
-        "description": "在COVID-19期间确保不间断供应"
-      },
-      "2022": {
-        "title": "新路线",
-        "description": "开发到欧洲和亚洲的额外方向"
-      },
-      "2024": {
-        "title": "技术领导",
-        "description": "推出新网站和现代数字解决方案"
-      }
-    },
     "teamDescription": "让您成功成为可能的专业人士",
     "logistics": {
       "title": "物流",
       "description": "我们的物流团队确保最优路线和及时交付",
-      "specialists": "15+名专家"
+      "specialists": "6+ 名专家"
     },
     "customs": {
       "title": "海关",
-      "description": "海关清关专家解决任何文件流程问题",
-      "specialists": "8+名专家"
+      "description": "海关清关专家解决所有文件流程问题",
+      "specialists": "10+ 名专家"
     },
     "support": {
       "title": "支持",
       "description": "客户服务24/7工作以解决任何问题",
-      "specialists": "12+名专家"
+      "specialists": "10+ 名专家"
     }
   },
   "footer": {

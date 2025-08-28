@@ -842,49 +842,21 @@
       "title": "Innovation",
       "description": "We use modern technologies to optimize processes"
     },
-    "history": {
-      "title": "Development history",
-      "subtitle": "Key stages of our journey",
-      "2014": {
-        "title": "Company foundation",
-        "description": "Velta Trans was founded by group of professionals with experience in international logistics"
-      },
-      "2016": {
-        "title": "Expansion to China",
-        "description": "Opening of first office in Beijing and establishment of trade corridors"
-      },
-      "2018": {
-        "title": "Digitalization",
-        "description": "Implementation of online tracking system and process automation"
-      },
-      "2020": {
-        "title": "Pandemic stability",
-        "description": "Ensuring uninterrupted supplies during COVID-19"
-      },
-      "2022": {
-        "title": "New routes",
-        "description": "Development of additional directions to Europe and Asia"
-      },
-      "2024": {
-        "title": "Technological leadership",
-        "description": "Launch of new website and modern digital solutions"
-      }
-    },
     "teamDescription": "Professionals who make your success possible",
     "logistics": {
       "title": "Logistics",
-      "description": "Our logistics team ensures optimal routes and timely delivery",
-      "specialists": "15+ specialists"
+      "description": "Our team of logisticians ensures optimal routes and timely delivery",
+      "specialists": "6+ specialists"
     },
     "customs": {
       "title": "Customs",
-      "description": "Customs clearance experts solve any document flow issues",
-      "specialists": "8+ specialists"
+      "description": "Experts in customs clearance solve all issues of document flow",
+      "specialists": "10+ specialists"
     },
     "support": {
       "title": "Support",
-      "description": "Customer service works 24/7 to solve any issues",
-      "specialists": "12+ specialists"
+      "description": "Customer service works 24/7 to solve any questions",
+      "specialists": "10+ specialists"
     }
   },
   "certificates": {
