@@ -46,6 +46,20 @@ export default function HeroGallery() {
       alt: 'Контейнерные перевозки',
       title: 'Контейнерные перевозки',
       icon: '📦'
+    },
+    // ChatGPT Image 1
+    {
+      src: '/assets/images/ChatGPT Image Aug 28, 2025, 08_20_18 PM.png',
+      alt: 'Логистические решения',
+      title: 'Логистические решения',
+      icon: '🚀'
+    },
+    // ChatGPT Image 2
+    {
+      src: '/assets/images/ChatGPT Image Aug 28, 2025, 08_14_02 PM.png',
+      alt: 'Цифровая логистика',
+      title: 'Цифровая логистика',
+      icon: '💻'
     }
   ];
 
