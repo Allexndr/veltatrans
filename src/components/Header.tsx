@@ -5,12 +5,13 @@ import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
 import Logo from './Logo';
 import LanguageSwitcher from './LanguageSwitcher';
-import HeroGallery from './HeroGallery';
+import MobileGallery from './MobileGallery';
 
 export default function Header() {
   const locale = useLocale();
   const t = useTranslations('navigation');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [galleryError, setGalleryError] = useState(false);
 
   const navigation = [
     { name: t('home'), href: `/${locale}` },
@@ -67,7 +68,10 @@ export default function Header() {
             {/* Mobile menu button - видимый до LG */}
             <div className="lg:hidden">
               <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                onClick={() => {
+                  console.log('Menu button clicked, current state:', isMobileMenuOpen);
+                  setIsMobileMenuOpen(!isMobileMenuOpen);
+                }}
                 className="p-1.5 sm:p-2 rounded-lg text-gray-600 hover:text-velta-navy hover:bg-gray-50 transition-all duration-200 touch-manipulation"
                 aria-label={t('openMenu')}
               >
@@ -91,7 +95,7 @@ export default function Header() {
 
       {/* Mobile Navigation - улучшенное мобильное меню */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden border-t border-gray-100 bg-white/95 backdrop-blur-sm shadow-lg">
+        <div className="lg:hidden border-t border-gray-100 bg-white/95 backdrop-blur-sm shadow-lg" style={{ display: 'block' }}>
           <div className="px-3 sm:px-4 py-3 space-y-4">
             {/* Navigation Grid - адаптивная сетка */}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
@@ -110,7 +114,18 @@ export default function Header() {
             {/* Mobile Gallery Section */}
             <div className="border-t border-gray-200 pt-4">
               <div className="w-full h-48 sm:h-56 rounded-lg overflow-hidden shadow-md">
-                <HeroGallery />
+                {!galleryError ? (
+                  <MobileGallery />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-velta-navy to-velta-700 flex items-center justify-center text-white">
+                    <div className="text-center">
+                      <svg className="w-12 h-12 mx-auto mb-2 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      <p className="text-sm opacity-80">Velta Trans</p>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
