@@ -137,15 +137,15 @@ export default function ContactsPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="border rounded-lg p-5">
                 <p className="text-gray-700 font-medium mb-1">{t('phones.multichannel')}</p>
-                <a href="tel:+77002770006" className="text-velta-navy font-semibold">+7 700 277 00 06 (только ватсапп)</a>
+                <a href="tel:+77002770006" className="text-velta-navy font-semibold">+7 700 277 00 06</a>
               </div>
               <div className="border rounded-lg p-5">
                 <p className="text-gray-700 font-medium mb-1">{t('phones.sales')}</p>
-                <a href="tel:+77010704011" className="text-velta-navy font-semibold">+7 701 070 40 11 (только ватсапп)</a>
+                <a href="tel:+77010704011" className="text-velta-navy font-semibold">+7 701 070 40 11</a>
               </div>
               <div className="border rounded-lg p-5">
                 <p className="text-gray-700 font-medium mb-1">{t('phones.logistics')}</p>
-                <a href="tel:+77002770022" className="text-velta-navy font-semibold">+7 700 277 00 22 (только ватсапп)</a>
+                <a href="tel:+77002770022" className="text-velta-navy font-semibold">+7 700 277 00 22</a>
               </div>
             </div>
           </div>
