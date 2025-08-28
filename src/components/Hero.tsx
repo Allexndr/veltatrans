@@ -136,7 +136,7 @@ export default function Hero({}: {locale: string}) {
               <div className="text-white/80 text-sm sm:text-base">{tHome.has('stats.countries') ? tHome('stats.countries') : 'стран доставки'}</div>
             </div>
             <div className="text-white">
-              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2">Качество = Цена</div>
+              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2">Качество для B2B и B2G</div>
               <div className="text-white/80 text-sm sm:text-base">{tHome.has('features.geography') ? tHome('features.geography') : 'Бизнес-фокус'}</div>
             </div>
             <div className="text-white">

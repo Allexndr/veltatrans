@@ -16,6 +16,24 @@ export default function ContactsPage() {
       hours: 'Пн-Пт: 9:00-18:00',
       telegram: '@velta_logistics_bot',
     },
+    {
+      city: 'Москва',
+      country: 'Россия',
+      address: '-',
+      phone: '+7 700 277 00 06 (Многоканальный)',
+      email: 'logist@velta.com.kz',
+      hours: 'Пн-Пт: 9:00-18:00',
+      telegram: '@velta_logistics_bot',
+    },
+    {
+      city: 'Пекин',
+      country: 'Китай',
+      address: '-',
+      phone: '+7 700 277 00 06 (Многоканальный)\n+7 701 070 40 11 (Wechat)',
+      email: 'china@velta.com\nvelta@velta.com.kz',
+      hours: 'Пн-Пт: 9:00-18:00',
+      telegram: '@velta_logistics_bot',
+    },
   ];
 
   return (
@@ -42,14 +60,14 @@ export default function ContactsPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Наш офис
+                Наши офисы
               </h2>
               <p className="text-lg text-gray-600">
-                Главный офис в Казахстане
+                Мы работаем в 3 странах: Казахстан, Россия, Китай
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-8 mb-16 max-w-2xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 max-w-7xl mx-auto">
               {offices.map((office, index) => (
                 <div key={index} className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
                   <div className="flex items-start space-x-4">
@@ -76,11 +94,25 @@ export default function ContactsPage() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                           </svg>
                           <div className="whitespace-pre-line">
-                            <a href="tel:+77002770006" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 700 277 00 06 (Многоканальный)</a>
-                            {'\n'}
-                            <a href="https://wa.me/77010704011" target="_blank" rel="noopener noreferrer" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 701 070 40 11 (Sales)</a>
-                            {'\n'}
-                            <a href="tel:+77010704022" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 701 070 40 22 (Логисты)</a>
+                            {office.city === 'Алматы' ? (
+                              <>
+                                <a href="tel:+77002770006" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 700 277 00 06 (Многоканальный)</a>
+                                {'\n'}
+                                <a href="https://wa.me/77010704011" target="_blank" rel="noopener noreferrer" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 701 070 40 11 (Sales)</a>
+                                {'\n'}
+                                <a href="tel:+77010704022" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 701 070 40 22 (Логисты)</a>
+                              </>
+                            ) : office.city === 'Москва' ? (
+                              <>
+                                <a href="tel:+77002770006" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 700 277 00 06 (Многоканальный)</a>
+                              </>
+                            ) : (
+                              <>
+                                <a href="tel:+77002770006" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 700 277 00 06 (Многоканальный)</a>
+                                {'\n'}
+                                <a href="https://wa.me/77010704011" target="_blank" rel="noopener noreferrer" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 701 070 40 11 (Wechat)</a>
+                              </>
+                            )}
                           </div>
                         </div>
                         <div className="flex items-start">
@@ -152,6 +184,58 @@ export default function ContactsPage() {
           </div>
         </section>
 
+        {/* Автомобильные перевозки */}
+        <section className="py-16 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">
+                Автомобильные перевозки
+              </h2>
+              <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
+                Мы организуем автомобильные перевозки по Казахстану, а также международные перевозки из Китая в Казахстан, Россию, Среднюю Азию и Европу. Работаем с различными видами груза.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+              <div className="bg-gray-50 rounded-lg shadow-lg p-6 border border-gray-200">
+                <div className="w-16 h-16 bg-velta-navy rounded-lg flex items-center justify-center mb-4">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 4m0 13V4m-6 3l6-3" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Внутренние перевозки</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Автомобильные перевозки по Казахстану с собственной сетью проверенных перевозчиков и транспортом под управлением.
+                </p>
+              </div>
+              
+              <div className="bg-gray-50 rounded-lg shadow-lg p-6 border border-gray-200">
+                <div className="w-16 h-16 bg-velta-royal-blue rounded-lg flex items-center justify-center mb-4">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Международные перевозки</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Международные перевозки из Китая в Казахстан, Россию, Среднюю Азию и Европу. Надежная автоматизированная система отслеживания.
+                </p>
+              </div>
+            </div>
+            
+            <div className="text-center">
+              <a
+                href="/services/land"
+                className="inline-flex items-center px-6 py-3 bg-velta-navy text-white font-semibold rounded-lg hover:bg-velta-royal-blue transition-colors duration-200"
+              >
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 4m0 13V4m-6 3l6-3" />
+                </svg>
+                Автоперевозки
+              </a>
+            </div>
+          </div>
+        </section>
+
         {/* Железнодорожные перевозки */}
         <section className="py-16 bg-gradient-to-br from-velta-50 via-white to-velta-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -160,32 +244,44 @@ export default function ContactsPage() {
                 Железнодорожные перевозки под ключ
               </h2>
               <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
-                Большой опыт работы с ведущими промышленными компаниями. Перевозим уголь, металл, зерно, продукты питания, оборудование и тяжёлые машины, негабаритные грузы по Казахстану, а так же в экспортном и импортном направлении в/из Китая по странам СНГ.
+                Имеем большой опыт работы железнодорожных перевозок по Казахстану и в международном направлении Китай и страны СНГ. Отправляем промышленные грузы (уголь, металл, зерно). Работаем также для ритейла - отправляем напитки, продукты питания и так далее.
               </p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
               <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
                 <div className="w-16 h-16 bg-velta-navy rounded-lg flex items-center justify-center mb-4">
                   <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Полный цикл сопровождения</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Промышленные грузы</h3>
                 <p className="text-gray-600 leading-relaxed">
-                  Берём на себя весь цикл: подача вагонов, план ГУ-12, станционные вопросы, таможенные процедуры. Строим оптимальные маршруты и гарантируем полное сопровождение груза.
+                  Отправляем уголь, металл, зерно и другие промышленные материалы по Казахстану и в международном направлении.
                 </p>
               </div>
               
               <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
                 <div className="w-16 h-16 bg-velta-royal-blue rounded-lg flex items-center justify-center mb-4">
                   <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Ритейл и продукты</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Работаем для ритейла - отправляем напитки, продукты питания и другие товары народного потребления.
+                </p>
+              </div>
+              
+              <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
+                <div className="w-16 h-16 bg-green-600 rounded-lg flex items-center justify-center mb-4">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Безопасность и надежность</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Транзитные перевозки</h3>
                 <p className="text-gray-600 leading-relaxed">
-                  С нами ваши перевозки проходят чётко, безопасно и без лишних забот. Гарантируем сохранность груза и соблюдение всех сроков доставки.
+                  Транзитные перевозки машин, оборудования из Китая в страны СНГ. Решаем различные вопросы на железной дороге.
                 </p>
               </div>
             </div>
