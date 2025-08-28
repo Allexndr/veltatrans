@@ -84,6 +84,27 @@ export default async function ServiceDetailPage({params}: {params: Promise<{loca
               <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
                 {title}
               </h2>
+              
+              {/* Специальный текст для железнодорожных перевозок */}
+              {slug === 'rail' && (
+                <div className="mb-6">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                    Железнодорожные перевозки под ключ
+                  </h3>
+                  <div className="space-y-4 text-gray-700 leading-relaxed">
+                    <p>
+                      Большой опыт работы с ведущими промышленными компаниями. Перевозим уголь, металл, зерно, продукты питания, оборудование и тяжёлые машины, негабаритные грузы по Казахстану, а так же в экспортном и импортном направлении в/из Китая по странам СНГ.
+                    </p>
+                    <p>
+                      Берём на себя весь цикл: подача вагонов, план ГУ-12, станционные вопросы, таможенные процедуры. Строим оптимальные маршруты и гарантируем полное сопровождение груза.
+                    </p>
+                    <p>
+                      С нами ваши перевозки проходят чётко, безопасно и без лишних забот.
+                    </p>
+                  </div>
+                </div>
+              )}
+              
               <p className="text-gray-700 text-lg leading-relaxed mb-6">
                 {detailedDescription}
               </p>
