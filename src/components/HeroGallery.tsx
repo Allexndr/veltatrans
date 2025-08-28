@@ -16,14 +16,7 @@ export default function HeroGallery() {
       src: '/assets/images/auto-case.jpg',
       alt: t('images.auto.alt'),
       title: t('images.auto.title'),
-      icon: '🚛'
-    },
-    // ЖД
-    {
-      src: '/assets/images/railway-case.jpg', 
-      alt: t('images.railway.alt'),
-      title: t('images.railway.title'),
-      icon: '🚂'
+      icon: '🚚'
     },
     // Склад
     {
