@@ -242,7 +242,27 @@ export default function AboutPage() {
                   </svg>
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">{t('services.fullSupport.title')}</h3>
-                <p className="text-gray-600">{t('services.fullSupport.description')}</p>
+                <p className="text-gray-600 mb-4">{t('services.fullSupport.description')}</p>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  <li className="flex items-center justify-center">
+                    <svg className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    Сопровождение транзитных перевозок
+                  </li>
+                  <li className="flex items-center justify-center">
+                    <svg className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    Сопровождение экспортных перевозок
+                  </li>
+                  <li className="flex items-center justify-center">
+                    <svg className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    Сопровождение и оформление импортных перевозок
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
