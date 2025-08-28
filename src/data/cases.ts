@@ -21,8 +21,7 @@ export const casesData: CaseItem[] = [
     description: 'Доставка промышленного оборудования из Китая в Казахстан',
     category: 'auto',
     images: [
-      '/assets/images/auto-case.jpg',
-      '/assets/images/авто.PNG'
+      '/assets/images/auto-case.jpg'
     ],
     videos: [
       '/assets/cases/auto/Перевозка автомобильным транспортом.mp4',
@@ -42,8 +41,7 @@ export const casesData: CaseItem[] = [
     description: 'Консолидация и доставка малых партий из разных отправителей',
     category: 'auto',
     images: [
-      '/assets/images/container-ship-new.jpg',
-      '/assets/images/склад.PNG'
+      '/assets/images/container-ship-new.jpg'
     ],
     videos: [
       '/assets/cases/container/Контейнерные перевозки автотранспортом.mp4'
@@ -65,8 +63,7 @@ export const casesData: CaseItem[] = [
     images: [
       '/assets/cases/rail/Перевозки жд транспортом.jpeg',
       '/assets/cases/rail/Перевозки жд транспортом 2.jpeg',
-      '/assets/cases/rail/Перевозки жд транспортом 3.jpeg',
-      '/assets/images/жд.PNG'
+      '/assets/cases/rail/Перевозки жд транспортом 3.jpeg'
     ],
     videos: [
       '/assets/cases/rail/Перевозки жд транспортом.mp4',
@@ -106,8 +103,7 @@ export const casesData: CaseItem[] = [
     description: 'Морская + железнодорожная + автомобильная доставка',
     category: 'multimodal',
     images: [
-      '/assets/images/multimodal-transport.jpg',
-      '/assets/images/ChatGPT Image Aug 28, 2025, 08_14_02 PM.png'
+      '/assets/images/multimodal-transport.jpg'
     ],
     videos: [
       '/assets/cases/oversize/Перевозка Негабаритных грузов.mp4'

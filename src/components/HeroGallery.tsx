@@ -11,7 +11,21 @@ export default function HeroGallery() {
 
   // Массив изображений логистики с новыми фотографиями
   const images = [
-    // Авто
+    // ЖД перевозки
+    {
+      src: '/assets/images/жд.PNG',
+      alt: 'Железнодорожные перевозки',
+      title: 'ЖД перевозки',
+      icon: '🚂'
+    },
+    // Склад
+    {
+      src: '/assets/images/склад.PNG',
+      alt: 'Складские услуги',
+      title: 'Складские услуги',
+      icon: '🏭'
+    },
+    // Авто перевозки
     {
       src: '/assets/images/auto-case.jpg',
       alt: t('images.auto.alt'),
@@ -31,6 +45,13 @@ export default function HeroGallery() {
       alt: t('images.customs.alt'),
       title: t('images.customs.title'),
       icon: '🏛️'
+    },
+    // ChatGPT Image
+    {
+      src: '/assets/images/ChatGPT Image Aug 28, 2025, 08_14_02 PM.png',
+      alt: 'Логистические решения',
+      title: 'Логистические решения',
+      icon: '📦'
     }
   ];
 
