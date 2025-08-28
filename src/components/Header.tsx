@@ -12,18 +12,7 @@ export default function Header() {
   const t = useTranslations('navigation');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
-  // Отладка размера экрана
-  React.useEffect(() => {
-    const checkScreenSize = () => {
-      console.log('Screen width:', window.innerWidth);
-      console.log('Is mobile (< 1024px):', window.innerWidth < 1024);
-    };
-    
-    checkScreenSize();
-    window.addEventListener('resize', checkScreenSize);
-    
-    return () => window.removeEventListener('resize', checkScreenSize);
-  }, []);
+
 
   const navigation = [
     { name: t('home'), href: `/${locale}` },
@@ -78,8 +67,7 @@ export default function Header() {
             </div>
 
             {/* Mobile menu button - видимый на мобильных и планшетах */}
-            <div className="block lg:hidden" style={{ outline: '2px solid red' }}>
-              <div className="text-xs text-red-500 absolute -top-4 right-0">MOBILE BUTTON</div>
+            <div className="block lg:hidden">
               <button
                 onClick={() => {
                   console.log('Menu button clicked, current state:', isMobileMenuOpen);
@@ -124,15 +112,10 @@ export default function Header() {
               ))}
             </div>
             
-            {/* Mobile Gallery Section - временно отключена */}
+            {/* Mobile Gallery Section - простая заглушка */}
             <div className="border-t border-gray-200 pt-4">
-              <div className="w-full h-32 rounded-lg overflow-hidden shadow-md bg-gradient-to-br from-velta-navy to-velta-700 flex items-center justify-center text-white">
-                <div className="text-center">
-                  <svg className="w-8 h-8 mx-auto mb-2 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  <p className="text-sm opacity-80">Velta Trans Gallery</p>
-                </div>
+              <div className="text-center p-4 bg-gray-50 rounded-lg">
+                <p className="text-sm text-gray-600">Мобильная галерея</p>
               </div>
             </div>
           </div>
