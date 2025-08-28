@@ -36,11 +36,23 @@
   "overrides": {
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "@floating-ui/react": { "react": "18.3.1", "react-dom": "18.3.1" },
-    "next-intl": { "react": "18.3.1" },
-    "use-intl": { "react": "18.3.1" },
-    "framer-motion": { "react": "18.3.1", "react-dom": "18.3.1" },
-    "lucide-react": { "react": "18.3.1" }
+    "@floating-ui/react": {
+      "react": "18.3.1",
+      "react-dom": "18.3.1"
+    },
+    "next-intl": {
+      "react": "18.3.1"
+    },
+    "use-intl": {
+      "react": "18.3.1"
+    },
+    "framer-motion": {
+      "react": "18.3.1",
+      "react-dom": "18.3.1"
+    },
+    "lucide-react": {
+      "react": "18.3.1"
+    }
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

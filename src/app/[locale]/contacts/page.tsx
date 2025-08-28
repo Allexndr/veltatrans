@@ -17,9 +17,18 @@ export default function ContactsPage() {
       telegram: '@velta_logistics_bot',
     },
     {
+      city: 'Москва',
+      country: 'Россия',
+      address: 'ул. Тверская, 1, БЦ "Тверская Плаза"',
+      phone: '+7 700 277 00 06 (Многоканальный)\n+7 701 070 40 11 (Sales)\n+7 701 070 40 22 (Логисты)',
+      email: 'russia@velta.com\nvelta@velta.com.kz',
+      hours: 'Пн-Пт: 9:00-18:00',
+      telegram: '@velta_logistics_bot',
+    },
+    {
       city: 'Пекин',
       country: 'Китай',
-      address: '-',
+      address: 'Chaoyang District, CBD, Velta Logistics Center',
       phone: '+7 700 277 00 06 (Многоканальный)\n+7 701 070 40 11 (Wechat)',
       email: 'china@velta.com\nvelta@velta.com.kz',
       hours: 'Пн-Пт: 9:00-18:00',
@@ -58,7 +67,7 @@ export default function ContactsPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 max-w-7xl mx-auto">
               {offices.map((office, index) => (
                 <div key={index} className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
                   <div className="flex items-start space-x-4">
@@ -93,11 +102,19 @@ export default function ContactsPage() {
                                 {'\n'}
                                 <a href="tel:+77010704022" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 701 070 40 22 (Логисты)</a>
                               </>
+                            ) : office.city === 'Москва' ? (
+                              <>
+                                <a href="tel:+77002770006" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 700 277 00 06 (Многоканальный)</a>
+                                {'\n'}
+                                <a href="https://wa.me/77010704011" target="_blank" rel="noopener noreferrer" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 701 070 40 11 (Sales)</a>
+                                {'\n'}
+                                <a href="tel:+77010704022" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 701 070 40 22 (Логисты)</a>
+                              </>
                             ) : (
                               <>
                                 <a href="tel:+77002770006" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 700 277 00 06 (Многоканальный)</a>
                                 {'\n'}
-                                <a href="https://wa.me/77010704011" target="_blank" rel="noopener noreferrer" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 701 070 40 11 (Wechat)</a>
+                                <a href="https://wa.me/77010704011" target="_blank" rel="noopener noreferrer" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 701 070 40 11 (Sales)</a>
                               </>
                             )}
                           </div>
@@ -167,6 +184,58 @@ export default function ContactsPage() {
                   </a>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Железнодорожные перевозки */}
+        <section className="py-16 bg-gradient-to-br from-velta-50 via-white to-velta-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">
+                Железнодорожные перевозки под ключ
+              </h2>
+              <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
+                Большой опыт работы с ведущими промышленными компаниями. Перевозим уголь, металл, зерно, продукты питания, оборудование и тяжёлые машины, негабаритные грузы по Казахстану, а так же в экспортном и импортном направлении в/из Китая по странам СНГ.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+              <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
+                <div className="w-16 h-16 bg-velta-navy rounded-lg flex items-center justify-center mb-4">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Полный цикл сопровождения</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Берём на себя весь цикл: подача вагонов, план ГУ-12, станционные вопросы, таможенные процедуры. Строим оптимальные маршруты и гарантируем полное сопровождение груза.
+                </p>
+              </div>
+              
+              <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
+                <div className="w-16 h-16 bg-velta-royal-blue rounded-lg flex items-center justify-center mb-4">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Безопасность и надежность</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  С нами ваши перевозки проходят чётко, безопасно и без лишних забот. Гарантируем сохранность груза и соблюдение всех сроков доставки.
+                </p>
+              </div>
+            </div>
+            
+            <div className="text-center">
+              <a
+                href="/services/rail"
+                className="inline-flex items-center px-6 py-3 bg-velta-navy text-white font-semibold rounded-lg hover:bg-velta-royal-blue transition-colors duration-200"
+              >
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 4m0 13V4m-6 3l6-3" />
+                </svg>
+                Наши услуги
+              </a>
             </div>
           </div>
         </section>
