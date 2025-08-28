@@ -106,7 +106,7 @@ export default function Footer() {
           
           {/* Контакты - адаптивная компоновка */}
           <div className="col-span-1 sm:col-span-2 lg:col-span-1">
-            <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6 text-center sm:text-left">{t('contacts')}</h3>
+            <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6 text-center sm:text-left">Контакты</h3>
             <div className="space-y-3 sm:space-y-4">
               {/* Телефоны - компактная версия для мобильных */}
               <div className="space-y-2 sm:space-y-3">
@@ -115,9 +115,9 @@ export default function Footer() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
                   <div className="min-w-0 flex-1">
-                    <p className="text-gray-300 text-xs sm:text-sm font-medium">{t('phones.multichannel')}</p>
+                    <p className="text-gray-300 text-xs sm:text-sm font-medium">Многоканальный</p>
                     <a href="tel:+77002770006" className="text-white hover:text-velta-royal-blue transition-colors duration-200 text-sm sm:text-base break-all">
-                      +7 700 277 00 06 <span className="text-xs text-gray-400">(Многоканальный)</span>
+                      +7 700 277 00 06
                     </a>
                   </div>
                 </div>
@@ -127,9 +127,9 @@ export default function Footer() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
                   <div className="min-w-0 flex-1">
-                    <p className="text-gray-300 text-xs sm:text-sm font-medium">{t('phones.sales')}</p>
+                    <p className="text-gray-300 text-xs sm:text-sm font-medium">Отдел продаж</p>
                     <a href="tel:+77010704011" className="text-white hover:text-velta-royal-blue transition-colors duration-200 text-sm sm:text-base break-all">
-                      +7 701 070 40 11 <span className="text-xs text-gray-400">(Sales)</span>
+                      +7 701 070 40 11
                     </a>
                   </div>
                 </div>
@@ -139,9 +139,9 @@ export default function Footer() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
                   <div className="min-w-0 flex-1">
-                    <p className="text-gray-300 text-xs sm:text-sm font-medium">{t('phones.logistics')}</p>
+                    <p className="text-gray-300 text-xs sm:text-sm font-medium">Отдел логистики</p>
                     <a href="tel:+77010704022" className="text-white hover:text-velta-royal-blue transition-colors duration-200 text-sm sm:text-base break-all">
-                      +7 701 070 40 22 <span className="text-xs text-gray-400">(Логисты)</span>
+                      +7 701 070 40 22
                     </a>
                   </div>
                 </div>
@@ -153,7 +153,7 @@ export default function Footer() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
                 <div className="min-w-0 flex-1">
-                  <p className="text-gray-300 text-xs sm:text-sm font-medium">{t('email')}</p>
+                  <p className="text-gray-300 text-xs sm:text-sm font-medium">Email</p>
                   <div className="space-y-1">
                     <a href="mailto:sales@velta.com.kz" className="text-white hover:text-velta-royal-blue transition-colors duration-200 text-sm break-all block">
                       sales@velta.com.kz
@@ -185,7 +185,7 @@ export default function Footer() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
                 <div className="min-w-0 flex-1">
-                  <p className="text-gray-300 text-xs sm:text-sm font-medium">{t('address')}</p>
+                  <p className="text-gray-300 text-xs sm:text-sm font-medium">Адрес</p>
                   <p className="text-white text-sm leading-relaxed">
                     8-й микрорайон 4а, БЦ Абай, 217 офис
                   </p>
