@@ -107,11 +107,23 @@ export default function Hero({}: {locale: string}) {
                   </button>
                 </div>
               </div>
+
+              {/* Мобильная галерея - под кнопками на мобильных устройствах */}
+              <motion.div
+                className="block lg:hidden w-full mt-8"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+              >
+                <div className="h-64 sm:h-80 rounded-2xl overflow-hidden shadow-2xl">
+                  <HeroGallery isMobile={true} />
+                </div>
+              </motion.div>
             </motion.div>
             
-            {/* Галерея справа */}
+            {/* Десктопная галерея справа - скрыта на мобильных */}
             <motion.div
-              className="h-64 sm:h-80 md:h-96 lg:h-[450px] xl:h-[500px] rounded-2xl overflow-hidden shadow-2xl relative z-10 flex-1 lg:max-w-[45%] lg:ml-[100px]"
+              className="hidden lg:block h-64 sm:h-80 md:h-96 lg:h-[450px] xl:h-[500px] rounded-2xl overflow-hidden shadow-2xl relative z-10 flex-1 lg:max-w-[45%] lg:ml-[100px]"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}

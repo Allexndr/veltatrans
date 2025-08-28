@@ -44,6 +44,83 @@
     grid-template-columns: 1fr;
     gap: 2rem;
   }
+
+  /* Мобильная навигация */
+  .mobile-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 40;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+  }
+
+  .mobile-nav-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: 0 0 1rem 1rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    animation: slideDown 0.3s ease-out;
+  }
+
+  @keyframes slideDown {
+    from {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  /* Мобильный header */
+  .mobile-header {
+    height: 3.5rem;
+    padding: 0 1rem;
+  }
+
+  .mobile-logo {
+    height: 2rem;
+  }
+
+  .mobile-menu-button {
+    width: 2.75rem;
+    height: 2.75rem;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+  }
+
+  /* Мобильная галерея */
+  .mobile-gallery {
+    height: 8rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+
+  .mobile-gallery-title {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+
+  /* Мобильные кнопки */
+  .mobile-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    border-radius: 0.5rem;
+    min-height: 2.5rem;
+  }
+
+  .mobile-button-small {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.75rem;
+    min-height: 2.25rem;
+  }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
@@ -75,6 +152,25 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
   }
+
+  /* Планшетная навигация */
+  .tablet-nav {
+    display: flex;
+  }
+
+  .tablet-header {
+    height: 4rem;
+    padding: 0 1.5rem;
+  }
+
+  .tablet-logo {
+    height: 2.25rem;
+  }
+
+  .tablet-menu-button {
+    width: 3rem;
+    height: 3rem;
+  }
 }
 
 @media (min-width: 1025px) {
@@ -97,14 +193,130 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 3rem;
   }
-  
-  .calculator-section {
-    padding: 4rem 4rem;
+
+  /* Десктопная навигация */
+  .desktop-nav {
+    display: flex;
   }
-  
-  .footer-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 3rem;
+
+  .desktop-header {
+    height: 5rem;
+    padding: 0 2rem;
+  }
+
+  .desktop-logo {
+    height: 3rem;
+  }
+}
+
+/* Дополнительные мобильные стили */
+@media (max-width: 640px) {
+  /* Очень маленькие экраны */
+  .xs-container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .xs-text {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .xs-button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    min-height: 2.25rem;
+  }
+
+  .xs-gallery {
+    height: 6rem;
+  }
+
+  /* Мобильная галерея в Hero */
+  .mobile-hero-gallery {
+    height: 12rem;
+    margin-top: 2rem;
+  }
+
+  .mobile-hero-gallery .gallery-controls {
+    transform: scale(0.8);
+  }
+
+  .mobile-hero-gallery .gallery-indicators {
+    bottom: 0.5rem;
+  }
+
+  .mobile-hero-gallery .gallery-indicators button {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+  /* Средние мобильные экраны */
+  .mobile-hero-gallery {
+    height: 16rem;
+    margin-top: 2.5rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* Планшеты */
+  .tablet-hero-gallery {
+    height: 20rem;
+    margin-top: 3rem;
+  }
+}
+
+/* Стили для ландшафтной ориентации на мобильных */
+@media (max-width: 768px) and (orientation: landscape) {
+  .mobile-nav-content {
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  .mobile-gallery {
+    height: 6rem;
+  }
+}
+
+/* Стили для устройств с высоким DPI */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .mobile-logo,
+  .tablet-logo,
+  .desktop-logo {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Стили для устройств с поддержкой hover */
+@media (hover: hover) {
+  .mobile-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* Стили для устройств без поддержки hover */
+@media (hover: none) {
+  .mobile-button:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Стили для устройств с поддержкой backdrop-filter */
+@supports (backdrop-filter: blur(10px)) {
+  .mobile-nav {
+    backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Стили для устройств без поддержки backdrop-filter */
+@supports not (backdrop-filter: blur(10px)) {
+  .mobile-nav {
+    background: rgba(0, 0, 0, 0.7);
   }
 }
 

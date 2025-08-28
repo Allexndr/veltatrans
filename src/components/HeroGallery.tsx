@@ -4,7 +4,11 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 
-export default function HeroGallery() {
+interface HeroGalleryProps {
+  isMobile?: boolean;
+}
+
+export default function HeroGallery({ isMobile = false }: HeroGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const t = useTranslations('heroGallery');
@@ -83,7 +87,7 @@ export default function HeroGallery() {
 
   return (
     <div 
-      className="relative w-full h-full overflow-hidden"
+      className={`relative w-full h-full overflow-hidden ${isMobile ? 'rounded-xl' : ''}`}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
@@ -125,37 +129,49 @@ export default function HeroGallery() {
         </motion.div>
       </AnimatePresence>
 
-      {/* Навигационные стрелки */}
+      {/* Навигационные стрелки - адаптивные размеры для мобильных */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full backdrop-blur-sm transition-all duration-300 hover:scale-110"
+        className={`absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 text-white rounded-full backdrop-blur-sm transition-all duration-300 hover:scale-110 ${
+          isMobile 
+            ? 'p-2 sm:p-3' 
+            : 'p-3'
+        }`}
         aria-label={t('navigation.previous')}
       >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className={`${isMobile ? 'w-4 h-4 sm:w-5 sm:h-5' : 'w-6 h-6'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
       </button>
 
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full backdrop-blur-sm transition-all duration-300 hover:scale-110"
+        className={`absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 text-white rounded-full backdrop-blur-sm transition-all duration-300 hover:scale-110 ${
+          isMobile 
+            ? 'p-2 sm:p-3' 
+            : 'p-3'
+        }`}
         aria-label={t('navigation.next')}
       >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className={`${isMobile ? 'w-4 h-4 sm:w-5 sm:h-5' : 'w-6 h-6'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
       </button>
 
-      {/* Индикаторы слайдов */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2">
+      {/* Индикаторы слайдов - адаптивные размеры */}
+      <div className={`absolute bottom-2 sm:bottom-4 left-1/2 transform -translate-x-1/2 z-20 flex space-x-1 sm:space-x-2`}>
         {images.map((_, index) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+            className={`rounded-full transition-all duration-300 ${
               index === currentIndex 
                 ? 'bg-white scale-125' 
                 : 'bg-white/50 hover:bg-white/75'
+            } ${
+              isMobile 
+                ? 'w-2 h-2 sm:w-3 sm:h-3' 
+                : 'w-3 h-3'
             }`}
             aria-label={t('navigation.goToSlide', { number: index + 1 })}
           />
