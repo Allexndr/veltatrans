@@ -17,7 +17,7 @@ export default function ContactsPage() {
       telegram: '@velta_logistics_bot',
     },
     {
-      city: 'Москва',
+      city: '',
       country: 'Россия',
       address: '-',
       phone: '+7 700 277 00 06 (Многоканальный)',
@@ -26,7 +26,7 @@ export default function ContactsPage() {
       telegram: '@velta_logistics_bot',
     },
     {
-      city: 'Пекин',
+      city: '',
       country: 'Китай',
       address: '-',
       phone: '+7 700 277 00 06 (Многоканальный)\n+7 701 070 40 11 (Wechat)',
@@ -79,7 +79,7 @@ export default function ContactsPage() {
                     </div>
                     <div className="flex-1">
                       <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                        {office.city}, {office.country}
+                        {office.city ? `${office.city}, ${office.country}` : office.country}
                       </h3>
                       <div className="space-y-2 text-gray-600">
                         <p className="flex items-center">
@@ -94,7 +94,7 @@ export default function ContactsPage() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                           </svg>
                           <div className="whitespace-pre-line">
-                            {office.city === 'Алматы' ? (
+                            {office.country === 'Казахстан' ? (
                               <>
                                 <a href="tel:+77002770006" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 700 277 00 06 (Многоканальный)</a>
                                 {'\n'}
@@ -102,7 +102,7 @@ export default function ContactsPage() {
                                 {'\n'}
                                 <a href="tel:+77010704022" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 701 070 40 22 (Логисты)</a>
                               </>
-                            ) : office.city === 'Москва' ? (
+                            ) : office.country === 'Россия' ? (
                               <>
                                 <a href="tel:+77002770006" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 700 277 00 06 (Многоканальный)</a>
                               </>
