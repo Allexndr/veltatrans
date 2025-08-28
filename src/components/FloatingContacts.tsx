@@ -86,7 +86,7 @@ export default function FloatingContacts() {
         <img 
           src="/assets/images/telegram-bot-icon.png" 
           alt="Telegram Bot" 
-          className="w-5 h-5 object-contain"
+          className="w-8 h-8 object-contain"
         />
       ),
       title: "Telegram Bot @velta_logistics_bot",
