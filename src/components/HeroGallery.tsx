@@ -13,14 +13,14 @@ export default function HeroGallery() {
   const images = [
     // ЖД перевозки
     {
-      src: '/assets/images/жд.PNG',
+      src: '/assets/images/railway-case.jpg',
       alt: 'Железнодорожные перевозки',
       title: 'ЖД перевозки',
       icon: '🚂'
     },
     // Склад
     {
-      src: '/assets/images/склад.PNG',
+      src: '/assets/images/warehouse-case.jpg',
       alt: 'Складские услуги',
       title: 'Складские услуги',
       icon: '🏭'
@@ -46,11 +46,11 @@ export default function HeroGallery() {
       title: t('images.customs.title'),
       icon: '🏛️'
     },
-    // ChatGPT Image
+    // Контейнерные перевозки
     {
-      src: '/assets/images/ChatGPT Image Aug 28, 2025, 08_14_02 PM.png',
-      alt: 'Логистические решения',
-      title: 'Логистические решения',
+      src: '/assets/images/container-ship-new.jpg',
+      alt: 'Контейнерные перевозки',
+      title: 'Контейнерные перевозки',
       icon: '📦'
     }
   ];
