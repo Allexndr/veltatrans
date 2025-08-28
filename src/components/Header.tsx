@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
 import Logo from './Logo';
 import LanguageSwitcher from './LanguageSwitcher';
+import HeroGallery from './HeroGallery';
 
 export default function Header() {
   const locale = useLocale();
@@ -91,7 +92,7 @@ export default function Header() {
       {/* Mobile Navigation - улучшенное мобильное меню */}
       {isMobileMenuOpen && (
         <div className="lg:hidden border-t border-gray-100 bg-white/95 backdrop-blur-sm shadow-lg">
-          <div className="px-3 sm:px-4 py-3">
+          <div className="px-3 sm:px-4 py-3 space-y-4">
             {/* Navigation Grid - адаптивная сетка */}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
               {navigation.map((item) => (
@@ -104,6 +105,13 @@ export default function Header() {
                   {item.name}
                 </Link>
               ))}
+            </div>
+            
+            {/* Mobile Gallery Section */}
+            <div className="border-t border-gray-200 pt-4">
+              <div className="w-full h-48 sm:h-56 rounded-lg overflow-hidden shadow-md">
+                <HeroGallery />
+              </div>
             </div>
           </div>
         </div>
