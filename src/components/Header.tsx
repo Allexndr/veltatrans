@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
 import Logo from './Logo';
@@ -11,6 +11,19 @@ export default function Header() {
   const locale = useLocale();
   const t = useTranslations('navigation');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
+  // Отладка размера экрана
+  React.useEffect(() => {
+    const checkScreenSize = () => {
+      console.log('Screen width:', window.innerWidth);
+      console.log('Is mobile (< 1024px):', window.innerWidth < 1024);
+    };
+    
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
 
   const navigation = [
     { name: t('home'), href: `/${locale}` },
@@ -64,14 +77,15 @@ export default function Header() {
               <LanguageSwitcher />
             </div>
 
-            {/* Mobile menu button - видимый до LG */}
-            <div className="lg:hidden">
+            {/* Mobile menu button - видимый на мобильных и планшетах */}
+            <div className="block lg:hidden" style={{ outline: '2px solid red' }}>
+              <div className="text-xs text-red-500 absolute -top-4 right-0">MOBILE BUTTON</div>
               <button
                 onClick={() => {
                   console.log('Menu button clicked, current state:', isMobileMenuOpen);
                   setIsMobileMenuOpen(!isMobileMenuOpen);
                 }}
-                className="relative z-50 p-2 rounded-lg bg-velta-navy text-white hover:bg-velta-700 transition-all duration-200 touch-manipulation shadow-lg"
+                className="relative z-50 p-2 sm:p-3 rounded-lg bg-velta-navy text-white hover:bg-velta-700 active:bg-velta-800 transition-all duration-200 touch-manipulation shadow-lg min-w-[44px] min-h-[44px] flex items-center justify-center border-2 border-white/20"
                 aria-label="Menu"
               >
                 <svg
@@ -94,7 +108,7 @@ export default function Header() {
 
       {/* Mobile Navigation - улучшенное мобильное меню */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden border-t border-gray-100 bg-white/95 backdrop-blur-sm shadow-lg relative z-40">
+        <div className="block lg:hidden border-t border-gray-100 bg-white/95 backdrop-blur-sm shadow-lg relative z-40">
           <div className="px-3 sm:px-4 py-3 space-y-4">
             {/* Navigation Grid - адаптивная сетка */}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
