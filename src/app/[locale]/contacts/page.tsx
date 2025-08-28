@@ -171,7 +171,7 @@ export default function ContactsPage() {
                 <a href="tel:+77002770006" className="text-velta-navy font-semibold hover:text-velta-royal-blue transition-colors duration-200">+7 700 277 00 06</a>
                 <div className="mt-2">
                   <a href="https://wa.me/77002770006" target="_blank" rel="noopener noreferrer" className="text-sm text-green-600 hover:text-green-700">
-                    WhatsApp на этом номере
+                    WhatsApp
                   </a>
                 </div>
               </div>
@@ -180,17 +180,20 @@ export default function ContactsPage() {
                 <a href="tel:+77010704011" className="text-velta-navy font-semibold hover:text-velta-royal-blue transition-colors duration-200">+7 701 070 40 11</a>
                 <div className="mt-2">
                   <a href="https://wa.me/77010704011" target="_blank" rel="noopener noreferrer" className="text-sm text-green-600 hover:text-green-700">
-                    WhatsApp на этом номере
+                    WhatsApp
+                  </a>
+                  <br />
+                  <a href="https://wa.me/77010704011" target="_blank" rel="noopener noreferrer" className="text-sm text-green-600 hover:text-green-700">
+                    WeChat
                   </a>
                 </div>
               </div>
               <div className="border rounded-lg p-5">
                 <p className="text-gray-700 font-medium mb-1">Отдел логистики</p>
-                <a href="https://t.me/+77010704022" target="_blank" rel="noopener noreferrer" className="text-velta-navy font-semibold hover:text-velta-royal-blue transition-colors duration-200">+7 701 070 40 22</a>
+                <a href="https://wa.me/77010704022" target="_blank" rel="noopener noreferrer" className="text-velta-navy font-semibold hover:text-velta-royal-blue transition-colors duration-200">+7 701 070 40 22</a>
                 <div className="mt-2">
-                  <a href="https://t.me/velta_logistics_bot" target="_blank" rel="noopener noreferrer" className="inline-flex items-center">
-                    <img src="/assets/images/telegram-bot-icon.png" alt="Telegram Bot" className="w-6 h-6 mr-2" />
-                    <span className="text-sm text-blue-600 hover:text-blue-700">Telegram Bot</span>
+                  <a href="https://wa.me/77010704022" target="_blank" rel="noopener noreferrer" className="text-sm text-green-600 hover:text-green-700">
+                    WhatsApp
                   </a>
                 </div>
               </div>
