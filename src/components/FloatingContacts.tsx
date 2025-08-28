@@ -3,58 +3,19 @@
 import {motion} from "framer-motion";
 import {useEffect, useState} from "react";
 
-type FloatingContactsProps = {
-  phone: string;
-  email: string;
-  whatsapp?: string; // phone without symbols, e.g. 77001234567
-  telegram?: string; // username without @
-  chatHref?: string; // optional on-site chat link
-};
-
-const isMobileUserAgent = (): boolean => {
-  if (typeof navigator === "undefined") return false;
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent
-  );
-};
-
-export default function FloatingContacts({
-  phone,
-  email,
-  whatsapp,
-  telegram,
-  chatHref,
-}: FloatingContactsProps) {
+export default function FloatingContacts() {
   const [isMobile, setIsMobile] = useState(false);
+  const [showPhoneNumbers, setShowPhoneNumbers] = useState(false);
 
   useEffect(() => {
-    setIsMobile(isMobileUserAgent());
+    setIsMobile(typeof navigator !== "undefined" && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
   }, []);
 
   const items = [
-    chatHref && {
-      key: "chat",
-      href: chatHref,
-      label: "Чат",
-      bg: "bg-indigo-600",
-      icon: (
-        <svg viewBox="0 0 24 24" className="w-5 h-5 text-white">
-          <path
-            d="M8 10h8M8 14h5M21 12c0 4.418-4.03 8-9 8-1.11 0-2.17-.18-3.15-.5L3 21l1.5-4.5C3.54 15.18 3 13.65 3 12 3 7.582 7.03 4 12 4s9 3.582 9 8z"
-            stroke="currentColor"
-            strokeWidth="2"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      ),
-      title: "Онлайн-чат",
-    },
-    whatsapp && {
+    // WhatsApp - переход на +7 700 277 00 06
+    {
       key: "whatsapp",
-      href: `https://wa.me/${whatsapp}`,
-      label: "WhatsApp",
+      href: "https://wa.me/77002770006",
       bg: "bg-emerald-600",
       icon: (
         <svg viewBox="0 0 24 24" className="w-5 h-5 text-white">
@@ -64,27 +25,12 @@ export default function FloatingContacts({
           />
         </svg>
       ),
-      title: "Написать в WhatsApp",
+      title: "WhatsApp +7 700 277 00 06",
     },
-    telegram && {
-      key: "telegram",
-      href: `https://t.me/${telegram}`,
-      label: "Telegram",
-      bg: "bg-sky-600",
-      icon: (
-        <svg viewBox="0 0 24 24" className="w-5 h-5 text-white">
-          <path
-            d="M9.03 14.67l-.38 5.36c.54 0 .77-.23 1.05-.5l2.52-2.42 5.22 3.82c.96.53 1.65.25 1.91-.89l3.46-16.21h.01c.31-1.47-.53-2.05-1.46-1.69L1.3 9.63C-.12 10.2-.1 11.03 1.05 11.39l5.08 1.58 11.79-7.43c.55-.34 1.06-.15.64.19"
-            fill="currentColor"
-          />
-        </svg>
-      ),
-      title: "Открыть Telegram",
-    },
-    phone && {
+    // Телефон - показывает все 3 номера
+    {
       key: "phone",
-      href: isMobile ? `tel:${phone}` : `tel:${phone}`,
-      label: phone,
+      href: "#",
       bg: "bg-velta-navy",
       icon: (
         <svg viewBox="0 0 24 24" className="w-5 h-5 text-white">
@@ -94,12 +40,13 @@ export default function FloatingContacts({
           />
         </svg>
       ),
-      title: "Позвонить",
+      title: "Показать все номера",
+      onClick: () => setShowPhoneNumbers(!showPhoneNumbers),
     },
-    email && {
+    // Email - переход на velta@velta.com.kz
+    {
       key: "email",
-      href: `mailto:${email}`,
-      label: email,
+      href: "mailto:velta@velta.com.kz",
       bg: "bg-rose-600",
       icon: (
         <svg viewBox="0 0 24 24" className="w-5 h-5 text-white">
@@ -113,36 +60,119 @@ export default function FloatingContacts({
           />
         </svg>
       ),
-      title: "Написать на email",
+      title: "Email: velta@velta.com.kz",
     },
-  ].filter(Boolean) as Array<{
-    key: string;
-    href: string;
-    label: string;
-    bg: string;
-    icon: React.ReactNode;
-    title: string;
-  }>;
+    // Telegram - переход на +7 701 070 40 22
+    {
+      key: "telegram-phone",
+      href: "tel:+77010704022",
+      bg: "bg-sky-600",
+      icon: (
+        <svg viewBox="0 0 24 24" className="w-5 h-5 text-white">
+          <path
+            d="M9.03 14.67l-.38 5.36c.54 0 .77-.23 1.05-.5l2.52-2.42 5.22 3.82c.96.53 1.65.25 1.91-.89l3.46-16.21h.01c.31-1.47-.53-2.05-1.46-1.69L1.3 9.63C-.12 10.2-.1 11.03 1.05 11.39l5.08 1.58 11.79-7.43c.55-.34 1.06-.15.64.19"
+            fill="currentColor"
+          />
+        </svg>
+      ),
+      title: "Telegram +7 701 070 40 22",
+    },
+    // Telegram Bot - переход на @velta_logistics_bot
+    {
+      key: "telegram-bot",
+      href: "https://t.me/velta_logistics_bot",
+      bg: "bg-blue-600",
+      icon: (
+        <svg viewBox="0 0 24 24" className="w-5 h-5 text-white">
+          <path
+            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+            fill="currentColor"
+          />
+        </svg>
+      ),
+      title: "Telegram Bot @velta_logistics_bot",
+    },
+  ];
 
   return (
-    <div className="fixed right-3 sm:right-4 md:right-6 bottom-20 sm:bottom-24 md:bottom-28 z-50 flex flex-col gap-2 sm:gap-3">
-      {items.map((item, index) => (
-        <motion.a
-          key={item.key}
-          href={item.href}
-          target={item.key === "email" || item.key === "phone" ? undefined : "_blank"}
-          rel="noopener noreferrer"
-          className={`${item.bg} text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center w-12 h-12 sm:w-12 sm:h-12 focus:outline-none focus:ring-2 focus:ring-white/60`}
-          title={item.title}
-          aria-label={item.title}
-          initial={{opacity: 0, y: 10}}
-          animate={{opacity: 1, y: 0}}
-          transition={{delay: index * 0.05, duration: 0.2}}
+    <>
+      {/* Основные значки */}
+      <div className="fixed right-3 sm:right-4 md:right-6 bottom-20 sm:bottom-24 md:bottom-28 z-50 flex flex-col gap-2 sm:gap-3">
+        {items.map((item, index) => (
+          <motion.a
+            key={item.key}
+            href={item.onClick ? undefined : item.href}
+            onClick={item.onClick}
+            target={item.key === "email" || item.key === "phone" ? undefined : "_blank"}
+            rel="noopener noreferrer"
+            className={`${item.bg} text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center w-12 h-12 sm:w-12 sm:h-12 focus:outline-none focus:ring-2 focus:ring-white/60 cursor-pointer`}
+            title={item.title}
+            aria-label={item.title}
+            initial={{opacity: 0, y: 10}}
+            animate={{opacity: 1, y: 0}}
+            transition={{delay: index * 0.05, duration: 0.2}}
+          >
+            {item.icon}
+          </motion.a>
+        ))}
+      </div>
+
+      {/* Всплывающее окно с номерами телефонов */}
+      {showPhoneNumbers && (
+        <motion.div
+          className="fixed right-20 sm:right-24 md:right-28 bottom-20 sm:bottom-24 md:bottom-28 z-50 bg-white rounded-lg shadow-2xl p-4 min-w-[280px]"
+          initial={{opacity: 0, scale: 0.8}}
+          animate={{opacity: 1, scale: 1}}
+          exit={{opacity: 0, scale: 0.8}}
         >
-          {item.icon}
-        </motion.a>
-      ))}
-    </div>
+          <div className="text-sm font-medium text-gray-900 mb-3">Выберите номер:</div>
+          <div className="space-y-2">
+            <a
+              href="tel:+77002770006"
+              className="flex items-center p-2 hover:bg-gray-50 rounded transition-colors"
+            >
+              <span className="text-velta-navy font-medium">+7 700 277 00 06</span>
+              <span className="text-xs text-gray-500 ml-2">(Многоканальный)</span>
+            </a>
+            <a
+              href="https://wa.me/77010704011"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center p-2 hover:bg-gray-50 rounded transition-colors"
+            >
+              <span className="text-velta-navy font-medium">+7 701 070 40 11</span>
+              <span className="text-xs text-gray-500 ml-2">(Sales)</span>
+            </a>
+            <a
+              href="tel:+77010704022"
+              className="flex items-center p-2 hover:bg-gray-50 rounded transition-colors"
+            >
+              <span className="text-velta-navy font-medium">+7 701 070 40 22</span>
+              <span className="text-xs text-gray-500 ml-2">(Логисты)</span>
+            </a>
+          </div>
+          <button
+            onClick={() => setShowPhoneNumbers(false)}
+            className="absolute top-2 right-2 text-gray-400 hover:text-gray-600"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </motion.div>
+      )}
+
+      {/* Затемнение фона при открытом окне */}
+      {showPhoneNumbers && (
+        <motion.div
+          className="fixed inset-0 bg-black bg-opacity-25 z-40"
+          initial={{opacity: 0}}
+          animate={{opacity: 1}}
+          exit={{opacity: 0}}
+          onClick={() => setShowPhoneNumbers(false)}
+        />
+      )}
+    </>
   );
 }
 

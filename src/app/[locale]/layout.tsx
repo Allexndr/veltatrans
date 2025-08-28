@@ -39,12 +39,7 @@ export default async function LocaleLayout({
         
         {children}
         {/* Floating contacts: updated with real contacts */}
-        <FloatingContacts
-          phone={'+77002770006'}
-          email={'info@velta-logistics.com'}
-          whatsapp={'77010704011'}
-          telegram={'velta_logistics_bot'}
-        />
+        <FloatingContacts />
       </div>
       
       {/* Service Worker Registration - Only in production */}

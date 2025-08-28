@@ -17,15 +17,6 @@ export default function ContactsPage() {
       telegram: '@velta_logistics_bot',
     },
     {
-      city: 'Россия',
-      country: '',
-      address: '-',
-      phone: '+7 700 277 00 06 (Многоканальный)',
-      email: 'logist@velta.com.kz',
-      hours: '',
-      telegram: '@velta_logistics_bot',
-    },
-    {
       city: 'Пекин',
       country: 'Китай',
       address: '-',
@@ -60,14 +51,14 @@ export default function ContactsPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                {t('regions.title')}
+                Наши офисы
               </h2>
               <p className="text-lg text-gray-600">
-                {t('regions.subtitle')}
+                Мы работаем в ключевых логистических центрах
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-8 mb-16 max-w-2xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 max-w-4xl mx-auto">
               {offices.map((office, index) => (
                 <div key={index} className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
                   <div className="flex items-start space-x-4">
@@ -94,7 +85,21 @@ export default function ContactsPage() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                           </svg>
                           <div className="whitespace-pre-line">
-                            {office.phone}
+                            {office.city === 'Алматы' ? (
+                              <>
+                                <a href="tel:+77002770006" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 700 277 00 06 (Многоканальный)</a>
+                                {'\n'}
+                                <a href="https://wa.me/77010704011" target="_blank" rel="noopener noreferrer" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 701 070 40 11 (Sales)</a>
+                                {'\n'}
+                                <a href="tel:+77010704022" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 701 070 40 22 (Логисты)</a>
+                              </>
+                            ) : (
+                              <>
+                                <a href="tel:+77002770006" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 700 277 00 06 (Многоканальный)</a>
+                                {'\n'}
+                                <a href="https://wa.me/77010704011" target="_blank" rel="noopener noreferrer" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 701 070 40 11 (Wechat)</a>
+                              </>
+                            )}
                           </div>
                         </div>
                         <div className="flex items-start">
@@ -133,19 +138,34 @@ export default function ContactsPage() {
         {/* Phone numbers with explanations */}
         <section className="py-8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-6">{t('phones.title')}</h2>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Наши номера телефонов</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="border rounded-lg p-5">
-                <p className="text-gray-700 font-medium mb-1">{t('phones.multichannel')}</p>
-                <a href="tel:+77002770006" className="text-velta-navy font-semibold">+7 700 277 00 06</a>
+                <p className="text-gray-700 font-medium mb-1">Многоканальный номер</p>
+                <a href="tel:+77002770006" className="text-velta-navy font-semibold hover:text-velta-royal-blue transition-colors duration-200">+7 700 277 00 06</a>
+                <div className="mt-2">
+                  <a href="https://wa.me/77002770006" target="_blank" rel="noopener noreferrer" className="text-sm text-green-600 hover:text-green-700">
+                    WhatsApp на этом номере
+                  </a>
+                </div>
               </div>
               <div className="border rounded-lg p-5">
-                <p className="text-gray-700 font-medium mb-1">{t('phones.sales')}</p>
-                <a href="tel:+77010704011" className="text-velta-navy font-semibold">+7 701 070 40 11</a>
+                <p className="text-gray-700 font-medium mb-1">Отдел продаж</p>
+                <a href="tel:+77010704011" className="text-velta-navy font-semibold hover:text-velta-royal-blue transition-colors duration-200">+7 701 070 40 11</a>
+                <div className="mt-2">
+                  <a href="https://wa.me/77010704011" target="_blank" rel="noopener noreferrer" className="text-sm text-green-600 hover:text-green-700">
+                    WhatsApp на этом номере
+                  </a>
+                </div>
               </div>
               <div className="border rounded-lg p-5">
-                <p className="text-gray-700 font-medium mb-1">{t('phones.logistics')}</p>
-                <a href="tel:+77002770022" className="text-velta-navy font-semibold">+7 700 277 00 22</a>
+                <p className="text-gray-700 font-medium mb-1">Отдел логистики</p>
+                <a href="tel:+77010704022" className="text-velta-navy font-semibold hover:text-velta-royal-blue transition-colors duration-200">+7 701 070 40 22</a>
+                <div className="mt-2">
+                  <a href="https://wa.me/77010704022" target="_blank" rel="noopener noreferrer" className="text-sm text-green-600 hover:text-green-700">
+                    WhatsApp на этом номере
+                  </a>
+                </div>
               </div>
             </div>
           </div>

@@ -132,16 +132,16 @@ export default function Hero({}: {locale: string}) {
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 text-center">
             <div className="text-white">
-              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2">50+</div>
-              <div className="text-white/80 text-sm sm:text-base">{tHome.has('stats.countries') ? tHome('stats.countries') : 'countries'}</div>
+              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2">15+</div>
+              <div className="text-white/80 text-sm sm:text-base">{tHome.has('stats.countries') ? tHome('stats.countries') : 'стран доставки'}</div>
             </div>
             <div className="text-white">
-              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2">{tHome.has('features.experience') ? tHome('features.experience') : 'Experience'}</div>
-              <div className="text-white/80 text-sm sm:text-base">{tHome.has('features.geography') ? tHome('features.geography') : ''}</div>
+              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2">Качество = Цена</div>
+              <div className="text-white/80 text-sm sm:text-base">{tHome.has('features.geography') ? tHome('features.geography') : 'Бизнес-фокус'}</div>
             </div>
             <div className="text-white">
-              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2">{tHome.has('features.support') ? tHome('features.support') : ''}</div>
-              <div className="text-white/80 text-sm sm:text-base">{tCompany.has('tagline') ? tCompany('tagline') : ''}</div>
+              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2">Поддержка 24/7</div>
+              <div className="text-white/80 text-sm sm:text-base">{tCompany.has('tagline') ? tCompany('tagline') : 'Международные логистические решения'}</div>
             </div>
           </div>
         </div>

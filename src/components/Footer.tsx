@@ -140,8 +140,8 @@ export default function Footer() {
                   </svg>
                   <div className="min-w-0 flex-1">
                     <p className="text-gray-300 text-xs sm:text-sm font-medium">{t('phones.logistics')}</p>
-                    <a href="tel:+77002770022" className="text-white hover:text-velta-royal-blue transition-colors duration-200 text-sm sm:text-base break-all">
-                      +7 700 277 00 22 <span className="text-xs text-gray-400">(Логисты)</span>
+                    <a href="tel:+77010704022" className="text-white hover:text-velta-royal-blue transition-colors duration-200 text-sm sm:text-base break-all">
+                      +7 701 070 40 22 <span className="text-xs text-gray-400">(Логисты)</span>
                     </a>
                   </div>
                 </div>

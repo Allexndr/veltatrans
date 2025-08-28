@@ -230,6 +230,22 @@ export default function CargoTracking() {
           <p className="text-lg text-gray-700 max-w-2xl mx-auto animate-fade-in-up" style={{animationDelay: '0.4s'}}>
             {t('description')}
           </p>
+          <div className="mt-4 animate-fade-in-up" style={{animationDelay: '0.5s'}}>
+            <p className="text-base text-gray-600 mb-3">
+              Для удобства и автоматизации отслеживания вы можете перейти в Telegram Bot
+            </p>
+            <a
+              href="https://t.me/velta_logistics_bot"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+            >
+              <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M9.03 14.67l-.38 5.36c.54 0 .77-.23 1.05-.5l2.52-2.42 5.22 3.82c.96.53 1.65.25 1.91-.89l3.46-16.21h.01c.31-1.47-.53-2.05-1.46-1.69L1.3 9.63C-.12 10.2-.1 11.03 1.05 11.39l5.08 1.58 11.79-7.43c.55-.34 1.06-.15.64.19" />
+              </svg>
+              Telegram Bot
+            </a>
+          </div>
         </div>
 
         <div className={`bg-white rounded-lg shadow-lg p-8 transform transition-all duration-700 ${
