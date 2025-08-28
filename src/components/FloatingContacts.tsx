@@ -84,7 +84,7 @@ export default function FloatingContacts() {
       bg: "bg-blue-600",
       icon: (
         <img 
-          src="/assets/images/telegram-bot-api-chatbot-internet-bot-application-programming-interface-others-2b9f2dba845d9a8e66fa5fc937da9666.png" 
+          src="/assets/images/telegram-bot-icon.png" 
           alt="Telegram Bot" 
           className="w-5 h-5 object-contain"
         />
