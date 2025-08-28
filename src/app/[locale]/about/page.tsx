@@ -53,7 +53,7 @@ export default function AboutPage() {
                 <div className="text-gray-600">{t('satisfiedClients')}</div>
               </div>
               <div className="text-center">
-                <div className="text-4xl font-bold text-velta-navy mb-2">25+</div>
+                <div className="text-4xl font-bold text-velta-navy mb-2">1</div>
                 <div className="text-gray-600">{t('deliveryCountries')}</div>
               </div>
               <div className="text-center">

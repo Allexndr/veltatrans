@@ -232,7 +232,7 @@ export default function CargoTracking() {
           </p>
           <div className="mt-4 animate-fade-in-up" style={{animationDelay: '0.5s'}}>
             <p className="text-base text-gray-600 mb-3">
-              Для удобства и автоматизации отслеживания вы можете перейти в Telegram Bot
+            Для удобства и автоматизации отслеживания вы можете перейти в Telegram Bot, либо введите номер накладной чтобы узнать текущий статус доставки.
             </p>
             <a
               href="https://t.me/velta_logistics_bot"
