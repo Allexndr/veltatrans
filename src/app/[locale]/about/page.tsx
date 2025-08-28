@@ -34,6 +34,7 @@ export default function AboutPage() {
               <div className="max-w-4xl mx-auto space-y-6 text-lg text-gray-600">
                 <p>{t('missionDescription1')}</p>
                 <p>{t('missionDescription2')}</p>
+                <p>{t('missionDescription3')}</p>
               </div>
             </div>
           </div>
