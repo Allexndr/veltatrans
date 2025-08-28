@@ -268,36 +268,6 @@
         "features": "Железнодорожные перевозки, контейнеры"
       }
     },
-    "popularRoutes": {
-      "title": "Популярные маршруты",
-      "subtitle": "Наиболее востребованные направления доставки",
-      "distance": "Расстояние",
-      "deliveryTime": "Время доставки",
-      "transportType": "Тип транспорта",
-      "cost": "Стоимость",
-      "calculateDelivery": "Рассчитать доставку",
-      "almaty_beijing": {
-        "title": "Алматы → Пекин",
-        "distance": "4,200 км",
-        "deliveryTime": "12-15 дней",
-        "transportType": "Авто + ЖД",
-        "cost": "от $2.80/кг"
-      },
-      "moscow_shanghai": {
-        "title": "Москва → Шанхай",
-        "distance": "7,800 км",
-        "deliveryTime": "18-22 дня",
-        "transportType": "ЖД + Море",
-        "cost": "от $3.40/кг"
-      },
-      "tashkent_guangzhou": {
-        "title": "Ташкент → Гуанчжоу",
-        "distance": "5,600 км",
-        "deliveryTime": "14-18 дней",
-        "transportType": "Авто + ЖД",
-        "cost": "от $3.10/кг"
-      }
-    },
     "geography": {
       "title": "География работы",
       "subtitle": "Наша логистическая сеть охватывает три континента",
@@ -532,16 +502,17 @@
       "almaty": {
         "city": "Алматы",
         "country": "Казахстан",
-        "address": "8-й микрорайон 4а, БЦ Абай, офис 217",
-        "phone": "+7 700 277 00 06 (многоканальный)\n+7 701 070 40 11 (sales)\n+7 700 277 00 22 (логист)",
-        "email": "almaty@veltatrans.com",
+        "address": "8-й микрорайон 4а, БЦ Абай, 217 офис",
+        "phone": "+7 700 277 00 06 (Многоканальный)\n+7 701 070 40 11 (Sales)\n+7 701 070 40 22 (Логисты)",
+        "email": "sales@velta.com.kz\nvelta@velta.com.kz",
         "hours": "Пн-Пт: 9:00-18:00"
       },
       "russia": {
         "city": "Россия",
         "country": "",
         "address": "-",
-        "phone": "многоканальный 06",
+        "phone": "+7 700 277 00 06 (Многоканальный)",
+        "email": "logist@velta.com.kz",
         "hours": ""
       },
       "moscow": {
@@ -555,9 +526,9 @@
       "beijing": {
         "city": "Пекин",
         "country": "Китай",
-        "address": "北京市示例街789号",
-        "phone": "06 многоканальный\n11 WeChat",
-        "email": "beijing@veltatrans.com",
+        "address": "-",
+        "phone": "+7 700 277 00 06 (Многоканальный)\n+7 701 070 40 11 (Wechat)",
+        "email": "china@velta.com\nvelta@velta.com.kz",
         "hours": "Пн-Пт: 9:00-18:00"
       }
     },

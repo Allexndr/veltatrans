@@ -117,7 +117,7 @@ export default function Footer() {
                   <div className="min-w-0 flex-1">
                     <p className="text-gray-300 text-xs sm:text-sm font-medium">{t('phones.multichannel')}</p>
                     <a href="tel:+77002770006" className="text-white hover:text-velta-royal-blue transition-colors duration-200 text-sm sm:text-base break-all">
-                      +7 700 277 00 06 <span className="text-xs text-gray-400">(WhatsApp)</span>
+                      +7 700 277 00 06 <span className="text-xs text-gray-400">(Многоканальный)</span>
                     </a>
                   </div>
                 </div>
@@ -129,7 +129,7 @@ export default function Footer() {
                   <div className="min-w-0 flex-1">
                     <p className="text-gray-300 text-xs sm:text-sm font-medium">{t('phones.sales')}</p>
                     <a href="tel:+77010704011" className="text-white hover:text-velta-royal-blue transition-colors duration-200 text-sm sm:text-base break-all">
-                      +7 701 070 40 11 <span className="text-xs text-gray-400">(WhatsApp)</span>
+                      +7 701 070 40 11 <span className="text-xs text-gray-400">(Sales)</span>
                     </a>
                   </div>
                 </div>
@@ -141,7 +141,7 @@ export default function Footer() {
                   <div className="min-w-0 flex-1">
                     <p className="text-gray-300 text-xs sm:text-sm font-medium">{t('phones.logistics')}</p>
                     <a href="tel:+77002770022" className="text-white hover:text-velta-royal-blue transition-colors duration-200 text-sm sm:text-base break-all">
-                      +7 700 277 00 22 <span className="text-xs text-gray-400">(WhatsApp)</span>
+                      +7 700 277 00 22 <span className="text-xs text-gray-400">(Логисты)</span>
                     </a>
                   </div>
                 </div>
@@ -162,6 +162,19 @@ export default function Footer() {
                       velta@velta.com.kz
                     </a>
                   </div>
+                </div>
+              </div>
+              
+              {/* Telegram Bot */}
+              <div className="flex items-start space-x-2 sm:space-x-3 pt-2 border-t border-gray-700">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-velta-royal-blue mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z"/>
+                </svg>
+                <div className="min-w-0 flex-1">
+                  <p className="text-gray-300 text-xs sm:text-sm font-medium">Telegram Bot</p>
+                  <a href="https://t.me/velta_logistics_bot" target="_blank" rel="noopener noreferrer" className="text-white hover:text-velta-royal-blue transition-colors duration-200 text-sm break-all block">
+                    @velta_logistics_bot
+                  </a>
                 </div>
               </div>
               

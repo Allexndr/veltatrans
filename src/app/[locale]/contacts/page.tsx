@@ -8,28 +8,31 @@ export default function ContactsPage() {
 
   const offices = [
     {
-      city: t('regions.almaty.city'),
-      country: t('regions.almaty.country'),
-      address: t('regions.almaty.address'),
-      phone: t('regions.almaty.phone'),
-      email: 'sales@velta.com.kz, velta@velta.com.kz',
-      hours: t('regions.almaty.hours'),
+      city: 'Алматы',
+      country: 'Казахстан',
+      address: '8-й микрорайон 4а, БЦ Абай, 217 офис',
+      phone: '+7 700 277 00 06 (Многоканальный)\n+7 701 070 40 11 (Sales)\n+7 701 070 40 22 (Логисты)',
+      email: 'sales@velta.com.kz\nvelta@velta.com.kz',
+      hours: 'Пн-Пт: 9:00-18:00',
+      telegram: '@velta_logistics_bot',
     },
     {
-      city: t('regions.russia.city'),
-      country: t('regions.russia.country'),
-      address: t('regions.russia.address'),
-      phone: t('regions.russia.phone'),
+      city: 'Россия',
+      country: '',
+      address: '-',
+      phone: '+7 700 277 00 06 (Многоканальный)',
       email: 'logist@velta.com.kz',
-      hours: t('regions.russia.hours'),
+      hours: '',
+      telegram: '@velta_logistics_bot',
     },
     {
-      city: t('regions.beijing.city'),
-      country: t('regions.beijing.country'),
-      address: t('regions.beijing.address'),
-      phone: t('regions.beijing.phone'),
-      email: 'china@velta.com, velta@velta.com.kz',
-      hours: t('regions.beijing.hours'),
+      city: 'Пекин',
+      country: 'Китай',
+      address: '-',
+      phone: '+7 700 277 00 06 (Многоканальный)\n+7 701 070 40 11 (Wechat)',
+      email: 'china@velta.com\nvelta@velta.com.kz',
+      hours: 'Пн-Пт: 9:00-18:00',
+      telegram: '@velta_logistics_bot',
     },
   ];
 
@@ -64,7 +67,7 @@ export default function ContactsPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            <div className="grid grid-cols-1 gap-8 mb-16 max-w-2xl mx-auto">
               {offices.map((office, index) => (
                 <div key={index} className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
                   <div className="flex items-start space-x-4">
@@ -86,24 +89,38 @@ export default function ContactsPage() {
                           </svg>
                           {office.address}
                         </p>
-                        <p className="flex items-center">
-                          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="flex items-start">
+                          <svg className="w-4 h-4 mr-2 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                           </svg>
-                          {office.phone}
-                        </p>
-                        <p className="flex items-center">
-                          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <div className="whitespace-pre-line">
+                            {office.phone}
+                          </div>
+                        </div>
+                        <div className="flex items-start">
+                          <svg className="w-4 h-4 mr-2 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                           </svg>
-                          {office.email}
-                        </p>
-                        <p className="flex items-center">
+                          <div className="whitespace-pre-line">
+                            {office.email}
+                          </div>
+                        </div>
+                        {office.hours && (
+                          <div className="flex items-center">
+                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            {office.hours}
+                          </div>
+                        )}
+                        <div className="flex items-center">
                           <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z"/>
                           </svg>
-                          {office.hours}
-                        </p>
+                          <a href="https://t.me/velta_logistics_bot" target="_blank" rel="noopener noreferrer" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">
+                            {office.telegram}
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </div>
