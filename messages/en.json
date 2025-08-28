@@ -260,12 +260,12 @@
       "alashankou": {
         "title": "Alashankou (China-Kazakhstan)",
         "description": "Alternative crossing for cargo transportation",
-        "features": "Specialization in container transportation"
+        "features": "Specialization in railway transportation (equipment, special equipment, grain)"
       },
-      "zabaikalsk": {
-        "title": "Zabaikalsk (Russia-China)",
-        "description": "Largest railway crossing",
-        "features": "Railway transportation, containers"
+      "bakhty": {
+        "title": "Bakhty (Russia-China)",
+        "description": "Alternative crossing for cargo transportation",
+        "features": "We use the crossing during high demand season"
       }
     },
     "geography": {

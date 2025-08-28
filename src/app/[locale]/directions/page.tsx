@@ -242,10 +242,10 @@ export default function DirectionsPage() {
               </div>
               
               <div className="bg-white rounded-lg shadow-lg p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-4">{t('borderCrossings.zabaikalsk.title')}</h3>
-                <p className="text-gray-600 mb-4">{t('borderCrossings.zabaikalsk.description')}</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">{t('borderCrossings.bakhty.title')}</h3>
+                <p className="text-gray-600 mb-4">{t('borderCrossings.bakhty.description')}</p>
                 <div className="text-sm text-gray-500">
-                  <strong>{t('borderCrossings.features')}</strong> {t('borderCrossings.zabaikalsk.features')}
+                  <strong>{t('borderCrossings.features')}</strong> {t('borderCrossings.bakhty.features')}
                 </div>
               </div>
             </div>

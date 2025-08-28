@@ -281,12 +281,12 @@
       "alashankou": {
         "title": "阿拉山口 (中国-哈萨克斯坦)",
         "description": "货运的替代口岸",
-        "features": "专门从事集装箱运输"
+        "features": "专门从事铁路运输（设备、特种设备、粮食）"
       },
-      "zabaikalsk": {
-        "title": "后贝加尔斯克 (俄罗斯-中国)",
-        "description": "中俄边境主要铁路口岸",
-        "features": "高吞吐量，海关清关"
+      "bakhty": {
+        "title": "巴克图 (俄罗斯-中国)",
+        "description": "货运的替代口岸",
+        "features": "我们在高需求季节使用该口岸"
       }
     },
     "geography": {
