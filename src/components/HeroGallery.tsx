@@ -9,54 +9,46 @@ export default function HeroGallery() {
   const [isPaused, setIsPaused] = useState(false);
   const t = useTranslations('heroGallery');
 
-  // Массив изображений логистики с новыми фотографиями
+  // Массив изображений логистики - ТОЛЬКО указанные фотографии
   const images = [
-    // ЖД перевозки
-    {
-      src: '/assets/images/railway-case.jpg',
-      alt: 'Железнодорожные перевозки',
-      title: 'ЖД перевозки',
-      icon: '🚂'
-    },
-
     // Авто перевозки
     {
-      src: '/assets/images/auto-case.jpg',
-      alt: t('images.auto.alt'),
-      title: t('images.auto.title'),
+      src: '/assets/images/авто.PNG',
+      alt: 'Автомобильные перевозки',
+      title: 'Автомобильные перевозки',
       icon: '🚚'
     },
-    // Проектные
+    // ЖД перевозки
     {
-      src: '/assets/images/project-cargo.jpg',
-      alt: t('images.project.alt'),
-      title: t('images.project.title'),
-      icon: '🏗️'
+      src: '/assets/images/жд.PNG',
+      alt: 'Железнодорожные перевозки',
+      title: 'Железнодорожные перевозки',
+      icon: '🚂'
     },
-    // Таможенные
+    // Склад
     {
-      src: '/assets/images/customs-new.jpg',
-      alt: t('images.customs.alt'),
-      title: t('images.customs.title'),
-      icon: '🏛️'
+      src: '/assets/images/склад.PNG',
+      alt: 'Складские услуги',
+      title: 'Складские услуги',
+      icon: '🏭'
     },
-    // Контейнерные перевозки
+    // Авто кейс
     {
-      src: '/assets/images/container-ship-new.jpg',
-      alt: 'Контейнерные перевозки',
-      title: 'Контейнерные перевозки',
-      icon: '📦'
+      src: '/assets/images/auto-case.jpg',
+      alt: 'Авто перевозки',
+      title: 'Авто перевозки',
+      icon: '🚛'
     },
     // ChatGPT Image 1
     {
-      src: '/assets/images/ChatGPT Image Aug 28, 2025, 08_20_18 PM.png',
+      src: '/assets/images/ChatGPT Image Aug 28, 2025, 08_14_02 PM.png',
       alt: 'Логистические решения',
       title: 'Логистические решения',
       icon: '🚀'
     },
     // ChatGPT Image 2
     {
-      src: '/assets/images/ChatGPT Image Aug 28, 2025, 08_14_02 PM.png',
+      src: '/assets/images/ChatGPT Image Aug 28, 2025, 08_20_18 PM.png',
       alt: 'Цифровая логистика',
       title: 'Цифровая логистика',
       icon: '💻'
