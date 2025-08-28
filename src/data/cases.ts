@@ -21,7 +21,7 @@ export const casesData: CaseItem[] = [
     description: 'Доставка промышленного оборудования из Китая в Казахстан',
     category: 'auto',
     images: [
-      '/assets/images/auto-case.jpg'
+      '/assets/images/auto-transport-1.png'
     ],
     videos: [
       '/assets/cases/auto/Перевозка автомобильным транспортом.mp4',
@@ -41,7 +41,7 @@ export const casesData: CaseItem[] = [
     description: 'Консолидация и доставка малых партий из разных отправителей',
     category: 'auto',
     images: [
-      '/assets/images/container-ship-new.jpg'
+      '/assets/images/auto-transport-2.png'
     ],
     videos: [
       '/assets/cases/container/Контейнерные перевозки автотранспортом.mp4'
@@ -61,9 +61,9 @@ export const casesData: CaseItem[] = [
     description: 'Регулярные контейнерные перевозки по ТМТМ',
     category: 'rail',
     images: [
-      '/assets/cases/rail/Перевозки жд транспортом.jpeg',
-      '/assets/cases/rail/Перевозки жд транспортом 2.jpeg',
-      '/assets/cases/rail/Перевозки жд транспортом 3.jpeg'
+      '/assets/images/railway-transport-1.png',
+      '/assets/images/railway-transport-2.png',
+      '/assets/images/railway-transport-3.png'
     ],
     videos: [
       '/assets/cases/rail/Перевозки жд транспортом.mp4',
@@ -84,9 +84,9 @@ export const casesData: CaseItem[] = [
     description: 'Доставка крупногабаритного оборудования для нефтегазовой отрасли',
     category: 'oversize',
     images: [
-      '/assets/images/project-cargo.jpg',
-      '/assets/images/train-cargo.jpg',
-      '/assets/images/railway-case.jpg'
+      '/assets/images/oversized-transport-1.png',
+      '/assets/images/oversized-transport-2.png',
+      '/assets/images/oversized-transport-3.png'
     ],
     details: 'Специальная перевозка негабаритного оборудования для нефтегазовой отрасли. Разработали специальный маршрут с учетом габаритов.',
     date: '2024-07-10',
@@ -103,7 +103,7 @@ export const casesData: CaseItem[] = [
     description: 'Морская + железнодорожная + автомобильная доставка',
     category: 'multimodal',
     images: [
-      '/assets/images/multimodal-transport.jpg'
+      '/assets/images/railway-transport-4.png'
     ],
     videos: [
       '/assets/cases/oversize/Перевозка Негабаритных грузов.mp4'
@@ -123,7 +123,7 @@ export const casesData: CaseItem[] = [
     description: 'Доставка крупногабаритной строительной техники',
     category: 'project',
     images: [
-      '/assets/images/project-cargo.jpg'
+      '/assets/images/project-transport-1.png'
     ],
     videos: [
       '/assets/cases/project/Проектная перевозка автомобильным транспортом.mp4'
@@ -143,7 +143,7 @@ export const casesData: CaseItem[] = [
     description: 'Еженедельные контейнерные рейсы между портами',
     category: 'container',
     images: [
-      '/assets/cases/rail/Перевозки жд транспортом 4.jpeg'
+      '/assets/images/container-transport.png'
     ],
     videos: [
       '/assets/cases/container/Контейнерные перевозки автотранспортом.mp4'
@@ -163,7 +163,7 @@ export const casesData: CaseItem[] = [
     description: 'Безопасная транспортировка опасных химических материалов',
     category: 'customs',
     images: [
-      '/assets/images/customs-new.jpg'
+      '/assets/images/customs-transport-1.png'
     ],
     videos: [
       '/assets/cases/customs/Таможенная перевозка автомобильным транспортом.mp4'
@@ -183,9 +183,7 @@ export const casesData: CaseItem[] = [
     description: 'Массовая перевозка легковых автомобилей из Китая',
     category: 'rail',
     images: [
-      '/assets/images/railway-case.jpg',
-      '/assets/images/train-cargo.jpg',
-      '/assets/images/auto-case.jpg'
+      '/assets/images/customs-transport-2.png'
     ],
     details: 'Организовали перевозку партии из 50 легковых автомобилей из Китая в Россию. Специальные вагоны-автомобилевозы обеспечили безопасность транспортировки.',
     date: '2024-07-05',
@@ -202,9 +200,7 @@ export const casesData: CaseItem[] = [
     description: 'Срочная доставка важного оборудования',
     category: 'auto',
     images: [
-      '/assets/images/auto-case.jpg',
-      '/assets/images/truck-velta-trans.jpg',
-      '/assets/images/container-ship-new.jpg'
+      '/assets/images/project-transport-2.png'
     ],
     details: 'Выполнили срочную доставку критически важного оборудования для нефтеперерабатывающего завода. Время в пути: 72 часа вместо стандартных 7 дней.',
     date: '2024-08-20',
