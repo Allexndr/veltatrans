@@ -215,7 +215,7 @@
       "features": [
         "Railway routes",
         "Road transportation",
-        "Multimodal solutions",
+        "Banking issue resolution",
         "Full support"
       ]
     },
@@ -910,18 +910,6 @@
       "auto": {
         "alt": "Road transportation — VELTA TRANS",
         "title": "Road transportation"
-      },
-      "railway": {
-        "alt": "Railway transportation — VELTA TRANS",
-        "title": "Railway transportation"
-      },
-      "warehouse": {
-        "alt": "Warehouse services — VELTA TRANS",
-        "title": "Warehouse services"
-      },
-      "multimodal": {
-        "alt": "Multimodal transportation",
-        "title": "Multimodal transportation"
       },
       "project": {
         "alt": "Project transportation - oversized cargo",

@@ -18,20 +18,6 @@ export default function HeroGallery() {
       title: t('images.auto.title'),
       icon: '🚚'
     },
-    // Склад
-    {
-      src: '/assets/images/warehouse-case.png',
-      alt: t('images.warehouse.alt'),
-      title: t('images.warehouse.title'),
-      icon: '🏭'
-    },
-    // Мультимодальные
-    {
-      src: '/assets/images/multimodal-transport.jpg',
-      alt: t('images.multimodal.alt'),
-      title: t('images.multimodal.title'),
-      icon: '🚢✈️'
-    },
     // Проектные
     {
       src: '/assets/images/project-cargo.jpg',
