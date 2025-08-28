@@ -244,7 +244,13 @@ export default function ContactsPage() {
                 Железнодорожные перевозки под ключ
               </h2>
               <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
-                Имеем большой опыт работы железнодорожных перевозок по Казахстану и в международном направлении Китай и страны СНГ. Отправляем промышленные грузы (уголь, металл, зерно). Работаем также для ритейла - отправляем напитки, продукты питания и так далее.
+                Большой опыт работы с ведущими промышленными компаниями. Перевозим уголь, металл, зерно, продукты питания, оборудование и тяжёлые машины, негабаритные грузы по Казахстану, а так же в экспортном и импортном направлении в/из Китая по странам СНГ.
+              </p>
+              <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed mt-4">
+                Берём на себя весь цикл: подача вагонов, план ГУ-12, станционные вопросы, таможенные процедуры. Строим оптимальные маршруты и гарантируем полное сопровождение груза.
+              </p>
+              <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed mt-4">
+                С нами ваши перевозки проходят чётко, безопасно и без лишних забот.
               </p>
             </div>
             
@@ -255,9 +261,9 @@ export default function ContactsPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Промышленные грузы</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Полный цикл сопровождения</h3>
                 <p className="text-gray-600 leading-relaxed">
-                  Отправляем уголь, металл, зерно и другие промышленные материалы по Казахстану и в международном направлении.
+                  Подача вагонов, план ГУ-12, станционные вопросы, таможенные процедуры. Строим оптимальные маршруты.
                 </p>
               </div>
               
@@ -267,9 +273,9 @@ export default function ContactsPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Ритейл и продукты</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Промышленные грузы</h3>
                 <p className="text-gray-600 leading-relaxed">
-                  Работаем для ритейла - отправляем напитки, продукты питания и другие товары народного потребления.
+                  Уголь, металл, зерно, продукты питания, оборудование и тяжёлые машины, негабаритные грузы.
                 </p>
               </div>
               
@@ -279,9 +285,9 @@ export default function ContactsPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Транзитные перевозки</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Международные направления</h3>
                 <p className="text-gray-600 leading-relaxed">
-                  Транзитные перевозки машин, оборудования из Китая в страны СНГ. Решаем различные вопросы на железной дороге.
+                  Экспорт и импорт в/из Китая по странам СНГ. Работаем с ведущими промышленными компаниями.
                 </p>
               </div>
             </div>

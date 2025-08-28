@@ -4,11 +4,10 @@ import {routing, Link} from '@/i18n/routing';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
-type ServiceSlug = 'air' | 'sea' | 'land' | 'multimodal' | 'rail' | 'project';
+type ServiceSlug = 'air' | 'land' | 'multimodal' | 'rail' | 'project';
 
 const SLUG_TO_I18N_KEY: Record<ServiceSlug, {title: string; description: string}> = {
   air: {title: 'services.air.title', description: 'services.air.description'},
-  sea: {title: 'services.sea.title', description: 'services.sea.description'},
   land: {title: 'services.autoTransport.title', description: 'services.autoTransport.description'},
   multimodal: {title: 'services.multimodalTransport.title', description: 'services.multimodalTransport.description'},
   rail: {title: 'services.railwayTransport.title', description: 'services.railwayTransport.description'},
@@ -16,7 +15,7 @@ const SLUG_TO_I18N_KEY: Record<ServiceSlug, {title: string; description: string}
 };
 
 export function generateStaticParams() {
-  const slugs: ServiceSlug[] = ['air', 'sea', 'land', 'multimodal', 'rail', 'project'];
+  const slugs: ServiceSlug[] = ['air', 'land', 'multimodal', 'rail', 'project'];
   return routing.locales.flatMap((locale) => slugs.map((slug) => ({locale, slug})));
 }
 
@@ -120,7 +119,7 @@ export default async function ServiceDetailPage({params}: {params: Promise<{loca
               <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">{t('services.title')}</h3>
                 <ul className="space-y-2">
-                  {([['air','✈️'], ['sea','🚢'], ['land','🚚'], ['rail','🚆'], ['multimodal','🔀'], ['project','🏗️']] as [ServiceSlug,string][]) .map(([s, icon]) => (
+                  {([['air','✈️'], ['land','🚚'], ['rail','🚆'], ['multimodal','🔀'], ['project','🏗️']] as [ServiceSlug,string][]) .map(([s, icon]) => (
                     <li key={s} className={`flex items-center justify-between py-2 px-3 rounded-lg ${slug===s? 'bg-velta-50 text-velta-900' : 'text-gray-700 hover:bg-gray-50'}`}>
                       <span className="flex items-center gap-2">
                         <span aria-hidden>{icon}</span>
