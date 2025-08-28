@@ -18,13 +18,7 @@ export default function HeroGallery() {
       title: 'ЖД перевозки',
       icon: '🚂'
     },
-    // Склад
-    {
-      src: '/assets/images/warehouse-case.jpg',
-      alt: 'Складские услуги',
-      title: 'Складские услуги',
-      icon: '🏭'
-    },
+
     // Авто перевозки
     {
       src: '/assets/images/auto-case.jpg',
