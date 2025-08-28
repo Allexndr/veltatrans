@@ -5,80 +5,7 @@ import Footer from '@/components/Footer';
 export default function RatesPage() {
   const t = useTranslations('rates');
 
-  const rates = [
-    {
-      direction: t('routes.almaty_beijing'),
-      weight: t('weight.range1'),
-      price: '$3.50',
-      transit: t('transit.range1')
-    },
-    {
-      direction: t('routes.almaty_beijing'),
-      weight: t('weight.range2'),
-      price: '$3.20',
-      transit: t('transit.range1')
-    },
-    {
-      direction: t('routes.almaty_beijing'),
-      weight: t('weight.range3'),
-      price: '$2.80',
-      transit: t('transit.range1')
-    },
-    {
-      direction: t('routes.moscow_shanghai'),
-      weight: t('weight.range1'),
-      price: '$4.20',
-      transit: t('transit.range2')
-    },
-    {
-      direction: t('routes.moscow_shanghai'),
-      weight: t('weight.range2'),
-      price: '$3.80',
-      transit: t('transit.range2')
-    },
-    {
-      direction: t('routes.moscow_shanghai'),
-      weight: t('weight.range3'),
-      price: '$3.40',
-      transit: t('transit.range2')
-    },
-    {
-      direction: t('routes.tashkent_guangzhou'),
-      weight: t('weight.range1'),
-      price: '$3.80',
-      transit: t('transit.range3')
-    },
-    {
-      direction: t('routes.tashkent_guangzhou'),
-      weight: t('weight.range2'),
-      price: '$3.50',
-      transit: t('transit.range3')
-    },
-    {
-      direction: t('routes.tashkent_guangzhou'),
-      weight: t('weight.range3'),
-      price: '$3.10',
-      transit: t('transit.range3')
-    },
-    {
-      direction: t('routes.bishkek_urumqi'),
-      weight: t('weight.range1'),
-      price: '$2.20',
-      transit: t('transit.range4')
-    },
-    {
-      direction: t('routes.bishkek_urumqi'),
-      weight: t('weight.range2'),
-      price: '$1.90',
-      transit: t('transit.range4')
-    },
-    {
-      direction: t('routes.bishkek_urumqi'),
-      weight: t('weight.range3'),
-      price: '$1.60',
-      transit: t('transit.range4')
-    },
-  ];
+
 
   const services = [
     {
@@ -133,65 +60,10 @@ export default function RatesPage() {
           </div>
         </section>
 
-        {/* Rates Table */}
-        <section className="py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="px-6 py-4 bg-gray-50 border-b border-gray-200">
-                <h2 className="text-2xl font-bold text-gray-900">{t('currentRates.title')}</h2>
-                <p className="text-gray-600 mt-2">{t('currentRates.subtitle')}</p>
-              </div>
-              
-              <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        {t('table.direction')}
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        {t('table.weight')}
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        {t('table.price')}
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        {t('table.deliveryTime')}
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {rates.map((rate, index) => (
-                      <tr key={index} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                          {rate.direction}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {rate.weight}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-velta-600">
-                          {rate.price}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {rate.transit}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              
-              <div className="px-6 py-4 bg-gray-50 border-t border-gray-200">
-                <p className="text-sm text-gray-600">
-                  {t('currentRates.note')}
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+
 
         {/* Service Types */}
-        <section className="py-16 bg-gray-50">
+        <section className="py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
