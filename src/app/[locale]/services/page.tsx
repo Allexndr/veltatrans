@@ -144,7 +144,7 @@ export default function ServicesPage({ params }: { params: { locale: string } })
         {/* Additional Services */}
         <section className="py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               <div>
                 <h2 className="text-3xl font-bold text-gray-900 mb-8">{t('customs.title')}</h2>
                 <p className="text-lg text-gray-600 mb-6">{t('customs.description')}</p>
@@ -166,6 +166,24 @@ export default function ServicesPage({ params }: { params: { locale: string } })
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     <span className="text-gray-700">{t('customs.items.consulting')}</span>
+                  </li>
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-700">{t('customs.items.transitSupport')}</span>
+                  </li>
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-700">{t('customs.items.exportSupport')}</span>
+                  </li>
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-700">{t('customs.items.importSupport')}</span>
                   </li>
                 </ul>
               </div>
@@ -191,6 +209,31 @@ export default function ServicesPage({ params }: { params: { locale: string } })
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     <span className="text-gray-700">{t('consultation.items.pricing')}</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div>
+                <h2 className="text-3xl font-bold text-gray-900 mb-8">{t('warehouses.title')}</h2>
+                <p className="text-lg text-gray-600 mb-6">{t('warehouses.description')}</p>
+                <ul className="space-y-4">
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-700">{t('warehouses.items.sesStorage')}</span>
+                  </li>
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-700">{t('warehouses.items.deferred')}</span>
+                  </li>
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-700">{t('warehouses.items.flexible')}</span>
                   </li>
                 </ul>
               </div>

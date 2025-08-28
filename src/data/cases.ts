@@ -57,8 +57,8 @@ export const casesData: CaseItem[] = [
   // ЖД перевозки
   {
     id: 'rail-1',
-    title: 'Контейнерный поезд Казахстан-Россия',
-    description: 'Регулярные контейнерные перевозки по Транссибу',
+    title: 'Перевозка глины Казахстан-Россия',
+    description: 'Регулярные контейнерные перевозки по ТМТМ',
     category: 'rail',
     images: [
       '/assets/cases/rail/Перевозки жд транспортом.jpeg',
