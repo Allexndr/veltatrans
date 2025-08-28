@@ -41,7 +41,7 @@ export const casesData: CaseItem[] = [
     description: 'Консолидация и доставка малых партий из разных отправителей',
     category: 'auto',
     images: [
-      '/assets/images/auto-transport-2.png'
+      '/assets/images/container-transport.png'
     ],
     videos: [
       '/assets/cases/container/Контейнерные перевозки автотранспортом.mp4'
@@ -103,7 +103,7 @@ export const casesData: CaseItem[] = [
     description: 'Морская + железнодорожная + автомобильная доставка',
     category: 'multimodal',
     images: [
-      '/assets/images/railway-transport-4.png'
+      '/assets/images/auto-transport-2.png'
     ],
     videos: [
       '/assets/cases/oversize/Перевозка Негабаритных грузов.mp4'
@@ -123,7 +123,7 @@ export const casesData: CaseItem[] = [
     description: 'Доставка крупногабаритной строительной техники',
     category: 'project',
     images: [
-      '/assets/images/project-transport-1.png'
+      '/assets/images/project-transport-2.png'
     ],
     videos: [
       '/assets/cases/project/Проектная перевозка автомобильным транспортом.mp4'
@@ -143,7 +143,7 @@ export const casesData: CaseItem[] = [
     description: 'Еженедельные контейнерные рейсы между портами',
     category: 'container',
     images: [
-      '/assets/images/container-transport.png'
+      '/assets/images/railway-transport-4.png'
     ],
     videos: [
       '/assets/cases/container/Контейнерные перевозки автотранспортом.mp4'
@@ -183,7 +183,7 @@ export const casesData: CaseItem[] = [
     description: 'Массовая перевозка легковых автомобилей из Китая',
     category: 'rail',
     images: [
-      '/assets/images/customs-transport-2.png'
+      '/assets/images/auto-transport-3.png'
     ],
     details: 'Организовали перевозку партии из 50 легковых автомобилей из Китая в Россию. Специальные вагоны-автомобилевозы обеспечили безопасность транспортировки.',
     date: '2024-07-05',
@@ -200,7 +200,7 @@ export const casesData: CaseItem[] = [
     description: 'Срочная доставка важного оборудования',
     category: 'auto',
     images: [
-      '/assets/images/project-transport-2.png'
+      '/assets/images/customs-transport-2.png'
     ],
     details: 'Выполнили срочную доставку критически важного оборудования для нефтеперерабатывающего завода. Время в пути: 72 часа вместо стандартных 7 дней.',
     date: '2024-08-20',
