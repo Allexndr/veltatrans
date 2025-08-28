@@ -79,7 +79,7 @@ export default function ContactsPage() {
                     </div>
                     <div className="flex-1">
                       <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                        {office.city === 'Алматы' ? `${office.city}, ${office.country}` : office.country}
+                        {office.city}, {office.country}
                       </h3>
                       <div className="space-y-2 text-gray-600">
                         <p className="flex items-center">

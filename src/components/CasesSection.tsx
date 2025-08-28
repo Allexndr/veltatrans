@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { LoadingScreen } from './LoadingScreen';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function CasesSection() {
   const [activeCategory, setActiveCategory] = useState('all');
@@ -10,56 +11,37 @@ export default function CasesSection() {
   const cases = [
     {
       id: 1,
-      title: 'Генеральные грузы',
-      description: 'Перевозка оборудования и техники',
-      image: '/images/case1.jpg',
-      category: 'general'
+      title: 'Железнодорожные перевозки',
+      description: 'Перевозка оборудования и техники по железной дороге',
+      image: '/images/cases/railway-case1.png',
+      category: 'railway'
     },
     {
       id: 2,
-      title: 'Контейнерные перевозки',
-      description: 'Доставка контейнеров из Китая',
-      image: '/images/case2.jpg',
-      category: 'container'
+      title: 'Железнодорожные перевозки',
+      description: 'Контейнерные перевозки по железной дороге',
+      image: '/images/cases/railway-case2.png',
+      category: 'railway'
     },
     {
       id: 3,
-      title: 'Негабаритные грузы',
-      description: 'Специальные перевозки крупных объектов',
-      image: '/images/case3.jpg',
-      category: 'oversized'
+      title: 'Железнодорожные перевозки',
+      description: 'Перевозка негабаритных грузов по железной дороге',
+      image: '/images/cases/railway-case3.png',
+      category: 'railway'
     },
     {
       id: 4,
-      title: 'Опасные грузы',
-      description: 'Безопасная перевозка опасных материалов',
-      image: '/images/case4.jpg',
-      category: 'dangerous'
-    },
-    {
-      id: 5,
-      title: 'Сборные грузы',
-      description: 'Экономичная доставка малых партий',
-      image: '/images/case5.jpg',
-      category: 'consolidated'
-    },
-    {
-      id: 6,
-      title: 'Проектные грузы',
-      description: 'Сложные логистические решения',
-      image: '/images/case6.jpg',
-      category: 'project'
+      title: 'Железнодорожные перевозки',
+      description: 'Специальные железнодорожные перевозки',
+      image: '/images/cases/railway-case4.png',
+      category: 'railway'
     }
   ];
 
   const categories = [
     { id: 'all', name: 'Все кейсы', count: cases.length },
-    { id: 'general', name: 'Генеральные грузы', count: cases.filter(c => c.category === 'general').length },
-    { id: 'container', name: 'Контейнерные перевозки', count: cases.filter(c => c.category === 'container').length },
-    { id: 'oversized', name: 'Негабаритные грузы', count: cases.filter(c => c.category === 'oversized').length },
-    { id: 'dangerous', name: 'Опасные грузы', count: cases.filter(c => c.category === 'dangerous').length },
-    { id: 'consolidated', name: 'Сборные грузы', count: cases.filter(c => c.category === 'consolidated').length },
-    { id: 'project', name: 'Проектные грузы', count: cases.filter(c => c.category === 'project').length }
+    { id: 'railway', name: 'Железнодорожные перевозки', count: cases.filter(c => c.category === 'railway').length }
   ];
 
   const filteredCases = activeCategory === 'all' 
@@ -102,10 +84,13 @@ export default function CasesSection() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredCases.map((caseItem) => (
               <div key={caseItem.id} className="bg-white rounded-xl shadow-lg p-6 group hover:shadow-xl transition-all duration-300 border border-gray-100">
-                <div className="aspect-video bg-gray-200 rounded-lg mb-4 overflow-hidden">
-                  <div className="w-full h-full bg-gradient-to-br from-velta-navy to-velta-700 flex items-center justify-center text-white text-4xl">
-                    🚚
-                  </div>
+                <div className="aspect-video bg-gray-200 rounded-lg mb-4 overflow-hidden relative">
+                  <Image
+                    src={caseItem.image}
+                    alt={caseItem.title}
+                    fill
+                    className="object-cover"
+                  />
                 </div>
                 <h3 className="text-lg font-semibold text-velta-navy mb-2">
                   {caseItem.title}

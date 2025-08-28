@@ -57,14 +57,13 @@ export const casesData: CaseItem[] = [
   // ЖД перевозки
   {
     id: 'rail-1',
-    title: 'Перевозка глины Казахстан-Россия',
-    description: 'Регулярные перевозки по ТМТМ',
+    title: 'Контейнерный поезд Казахстан-Россия',
+    description: 'Регулярные контейнерные перевозки по Транссибу',
     category: 'rail',
     images: [
-      '/assets/cases/rail/rail-case-1.png',
-      '/assets/cases/rail/rail-case-2.png',
-      '/assets/cases/rail/rail-case-3.png',
-      '/assets/cases/rail/rail-case-4.png'
+      '/assets/cases/rail/Перевозки жд транспортом.jpeg',
+      '/assets/cases/rail/Перевозки жд транспортом 2.jpeg',
+      '/assets/cases/rail/Перевозки жд транспортом 3.jpeg'
     ],
     videos: [
       '/assets/cases/rail/Перевозки жд транспортом.mp4',
@@ -72,10 +71,10 @@ export const casesData: CaseItem[] = [
       '/assets/cases/rail/Перевозки жд транспортом 3.mp4',
       '/assets/cases/rail/Перевозки жд транспортом 4.mp4'
     ],
-    details: 'Организовали регулярные перевозки глины по маршруту Казахстан-Россия через ТМТМ. Время в пути: 14 дней.',
+    details: 'Организовали регулярные контейнерные перевозки по маршруту Шанхай-Москва через Транссибирскую магистраль. Время в пути: 14 дней.',
     date: '2024-08-01',
-    location: 'Казахстан → Россия',
-    cargo: 'Глина',
+    location: 'Шанхай → Москва',
+    cargo: 'Контейнеры 40HC',
     weight: '120 тонн',
     volume: '200 м³'
   },
@@ -85,9 +84,9 @@ export const casesData: CaseItem[] = [
     description: 'Доставка крупногабаритного оборудования для нефтегазовой отрасли',
     category: 'oversize',
     images: [
-      '/assets/cases/rail/rail-case-2.png',
-      '/assets/cases/rail/rail-case-3.png',
-      '/assets/cases/rail/rail-case-4.png'
+      '/assets/images/project-cargo.jpg',
+      '/assets/images/train-cargo.jpg',
+      '/assets/images/railway-case.jpg'
     ],
     details: 'Специальная перевозка негабаритного оборудования для нефтегазовой отрасли. Разработали специальный маршрут с учетом габаритов.',
     date: '2024-07-10',
