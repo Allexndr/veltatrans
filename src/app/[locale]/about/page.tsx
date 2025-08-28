@@ -28,10 +28,10 @@ export default function AboutPage() {
         <section className="py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">
+              <h2 className="text-4xl font-bold text-gray-900 mb-6 leading-tight">
                 {t('mission')}
               </h2>
-              <div className="max-w-4xl mx-auto space-y-6 text-lg text-gray-600">
+              <div className="max-w-4xl mx-auto space-y-6 text-lg text-gray-600 leading-relaxed">
                 <p>{t('missionDescription1')}</p>
                 <p>{t('missionDescription2')}</p>
                 <p>{t('missionDescription3')}</p>
@@ -44,21 +44,21 @@ export default function AboutPage() {
         <section className="py-16 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-              <div className="text-center">
-                <div className="text-4xl font-bold text-velta-navy mb-2">15+</div>
-                <div className="text-gray-600">{t('experience')}</div>
+              <div className="text-center flex flex-col items-center justify-center min-h-[120px]">
+                <div className="text-4xl font-bold text-velta-navy mb-2 leading-tight">Высокое качество</div>
+                <div className="text-gray-600 text-sm">{t('experience')}</div>
               </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-velta-navy mb-2">1000+</div>
-                <div className="text-gray-600">{t('satisfiedClients')}</div>
+              <div className="text-center flex flex-col items-center justify-center min-h-[120px]">
+                <div className="text-4xl font-bold text-velta-navy mb-2 leading-tight">Высокая оценка</div>
+                <div className="text-gray-600 text-sm">{t('satisfiedClients')}</div>
               </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-velta-navy mb-2">1</div>
-                <div className="text-gray-600">{t('deliveryCountries')}</div>
+              <div className="text-center flex flex-col items-center justify-center min-h-[120px]">
+                <div className="text-4xl font-bold text-velta-navy mb-2 leading-tight">15+</div>
+                <div className="text-gray-600 text-sm">{t('deliveryCountries')}</div>
               </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-velta-navy mb-2">5000+</div>
-                <div className="text-gray-600">{t('successfulDeliveries')}</div>
+              <div className="text-center flex flex-col items-center justify-center min-h-[120px]">
+                <div className="text-4xl font-bold text-velta-navy mb-2 leading-tight">5000+</div>
+                <div className="text-gray-600 text-sm">{t('successfulDeliveries')}</div>
               </div>
             </div>
           </div>
@@ -68,10 +68,10 @@ export default function AboutPage() {
         <section className="py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">
+              <h2 className="text-4xl font-bold text-gray-900 mb-6 leading-tight">
                 {t('values')}
               </h2>
-              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
                 {t('valuesDescription')}
               </p>
             </div>
@@ -124,10 +124,10 @@ export default function AboutPage() {
         <section className="py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">
+              <h2 className="text-4xl font-bold text-gray-900 mb-6 leading-tight">
                 {t('team')}
               </h2>
-              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
                 {t('teamDescription')}
               </p>
             </div>
