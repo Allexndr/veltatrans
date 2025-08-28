@@ -60,11 +60,8 @@ export default function ContactsPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Наши офисы
+              Регионы
               </h2>
-              <p className="text-lg text-gray-600">
-                Мы работаем в 3 странах: Казахстан, Россия, Китай
-              </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 max-w-7xl mx-auto">
@@ -120,7 +117,23 @@ export default function ContactsPage() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                           </svg>
                           <div className="whitespace-pre-line">
-                            {office.email}
+                            {office.country === 'Казахстан' ? (
+                              <>
+                                <a href="mailto:sales@velta.com.kz" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">sales@velta.com.kz</a>
+                                {'\n'}
+                                <a href="mailto:velta@velta.com.kz" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">velta@velta.com.kz</a>
+                              </>
+                            ) : office.country === 'Россия' ? (
+                              <>
+                                <a href="mailto:logist@velta.com.kz" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">logist@velta.com.kz</a>
+                              </>
+                            ) : (
+                              <>
+                                <a href="mailto:china@velta.com" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">china@velta.com</a>
+                                {'\n'}
+                                <a href="mailto:velta@velta.com.kz" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">velta@velta.com.kz</a>
+                              </>
+                            )}
                           </div>
                         </div>
                         {office.hours && (
@@ -173,10 +186,11 @@ export default function ContactsPage() {
               </div>
               <div className="border rounded-lg p-5">
                 <p className="text-gray-700 font-medium mb-1">Отдел логистики</p>
-                <a href="tel:+77010704022" className="text-velta-navy font-semibold hover:text-velta-royal-blue transition-colors duration-200">+7 701 070 40 22</a>
+                <a href="https://t.me/+77010704022" target="_blank" rel="noopener noreferrer" className="text-velta-navy font-semibold hover:text-velta-royal-blue transition-colors duration-200">+7 701 070 40 22</a>
                 <div className="mt-2">
-                  <a href="https://wa.me/77010704022" target="_blank" rel="noopener noreferrer" className="text-sm text-green-600 hover:text-green-700">
-                    WhatsApp на этом номере
+                  <a href="https://t.me/velta_logistics_bot" target="_blank" rel="noopener noreferrer" className="inline-flex items-center">
+                    <img src="/assets/images/telegram-bot-icon.png" alt="Telegram Bot" className="w-6 h-6 mr-2" />
+                    <span className="text-sm text-blue-600 hover:text-blue-700">Telegram Bot</span>
                   </a>
                 </div>
               </div>
