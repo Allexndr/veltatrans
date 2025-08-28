@@ -16,24 +16,6 @@ export default function ContactsPage() {
       hours: 'Пн-Пт: 9:00-18:00',
       telegram: '@velta_logistics_bot',
     },
-    {
-      city: 'Москва',
-      country: 'Россия',
-      address: 'ул. Тверская, 1, БЦ "Тверская Плаза"',
-      phone: '+7 700 277 00 06 (Многоканальный)\n+7 701 070 40 11 (Sales)\n+7 701 070 40 22 (Логисты)',
-      email: 'russia@velta.com\nvelta@velta.com.kz',
-      hours: 'Пн-Пт: 9:00-18:00',
-      telegram: '@velta_logistics_bot',
-    },
-    {
-      city: 'Пекин',
-      country: 'Китай',
-      address: 'Chaoyang District, CBD, Velta Logistics Center',
-      phone: '+7 700 277 00 06 (Многоканальный)\n+7 701 070 40 11 (Wechat)',
-      email: 'china@velta.com\nvelta@velta.com.kz',
-      hours: 'Пн-Пт: 9:00-18:00',
-      telegram: '@velta_logistics_bot',
-    },
   ];
 
   return (
@@ -60,14 +42,14 @@ export default function ContactsPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Наши офисы
+                Наш офис
               </h2>
               <p className="text-lg text-gray-600">
-                Мы работаем в ключевых логистических центрах
+                Главный офис в Казахстане
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 gap-8 mb-16 max-w-2xl mx-auto">
               {offices.map((office, index) => (
                 <div key={index} className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
                   <div className="flex items-start space-x-4">
@@ -94,29 +76,11 @@ export default function ContactsPage() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                           </svg>
                           <div className="whitespace-pre-line">
-                            {office.city === 'Алматы' ? (
-                              <>
-                                <a href="tel:+77002770006" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 700 277 00 06 (Многоканальный)</a>
-                                {'\n'}
-                                <a href="https://wa.me/77010704011" target="_blank" rel="noopener noreferrer" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 701 070 40 11 (Sales)</a>
-                                {'\n'}
-                                <a href="tel:+77010704022" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 701 070 40 22 (Логисты)</a>
-                              </>
-                            ) : office.city === 'Москва' ? (
-                              <>
-                                <a href="tel:+77002770006" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 700 277 00 06 (Многоканальный)</a>
-                                {'\n'}
-                                <a href="https://wa.me/77010704011" target="_blank" rel="noopener noreferrer" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 701 070 40 11 (Sales)</a>
-                                {'\n'}
-                                <a href="tel:+77010704022" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 701 070 40 22 (Логисты)</a>
-                              </>
-                            ) : (
-                              <>
-                                <a href="tel:+77002770006" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 700 277 00 06 (Многоканальный)</a>
-                                {'\n'}
-                                <a href="https://wa.me/77010704011" target="_blank" rel="noopener noreferrer" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 701 070 40 11 (Sales)</a>
-                              </>
-                            )}
+                            <a href="tel:+77002770006" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 700 277 00 06 (Многоканальный)</a>
+                            {'\n'}
+                            <a href="https://wa.me/77010704011" target="_blank" rel="noopener noreferrer" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 701 070 40 11 (Sales)</a>
+                            {'\n'}
+                            <a href="tel:+77010704022" className="text-velta-navy hover:text-velta-royal-blue transition-colors duration-200">+7 701 070 40 22 (Логисты)</a>
                           </div>
                         </div>
                         <div className="flex items-start">
