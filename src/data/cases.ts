@@ -41,7 +41,7 @@ export const casesData: CaseItem[] = [
     description: 'Консолидация и доставка малых партий из разных отправителей',
     category: 'auto',
     images: [
-      '/assets/images/warehouse-case.jpg'
+      '/assets/images/container-ship-new.jpg'
     ],
     videos: [
       '/assets/cases/container/Контейнерные перевозки автотранспортом.mp4'
@@ -204,7 +204,7 @@ export const casesData: CaseItem[] = [
     images: [
       '/assets/images/auto-case.jpg',
       '/assets/images/truck-velta-trans.jpg',
-      '/assets/images/warehouse-case.jpg'
+      '/assets/images/container-ship-new.jpg'
     ],
     details: 'Выполнили срочную доставку критически важного оборудования для нефтеперерабатывающего завода. Время в пути: 72 часа вместо стандартных 7 дней.',
     date: '2024-08-20',
