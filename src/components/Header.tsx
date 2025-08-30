@@ -83,7 +83,9 @@ export default function Header() {
                 <button
                   onClick={() => {
                     console.log('Menu button clicked, current state:', isMobileMenuOpen);
-                    setIsMobileMenuOpen(!isMobileMenuOpen);
+                    const newState = !isMobileMenuOpen;
+                    console.log('Setting new state to:', newState);
+                    setIsMobileMenuOpen(newState);
                   }}
                   className="relative z-50 p-2 sm:p-3 rounded-lg bg-velta-navy text-white hover:bg-velta-700 active:bg-velta-800 transition-all duration-200 touch-manipulation shadow-lg min-w-[44px] min-h-[44px] flex items-center justify-center border-2 border-white/20"
                   aria-label="Menu"

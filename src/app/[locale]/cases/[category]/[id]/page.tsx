@@ -1,8 +1,12 @@
+'use client';
+
 import { useTranslations } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { getCaseById } from '@/data/cases';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useState } from 'react';
+import ImageModal from '@/components/ImageModal';
 
 interface CasePageProps {
   params: {
@@ -16,6 +20,8 @@ export default function CasePage({ params }: CasePageProps) {
   const { locale, category, id } = params;
   const t = useTranslations('cases');
   const tc = useTranslations('cases.items');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
   const caseItem = getCaseById(id);
   if (!caseItem || caseItem.category !== category) {
@@ -33,6 +39,16 @@ export default function CasePage({ params }: CasePageProps) {
   const location = tc.has(`${id}.location`) ? tc(`${id}.location`) : caseItem.location;
   const cargo = tc.has(`${id}.cargo`) ? tc(`${id}.cargo`) : caseItem.cargo;
   const weight = caseItem.weight ? (tc.has(`${id}.weight`) ? tc(`${id}.weight`) : caseItem.weight) : undefined;
+
+  const openImageModal = (index: number) => {
+    setCurrentImageIndex(index);
+    setIsModalOpen(true);
+  };
+
+  const closeImageModal = () => {
+    setIsModalOpen(false);
+    setCurrentImageIndex(0);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -111,21 +127,40 @@ export default function CasePage({ params }: CasePageProps) {
             {/* Левая колонка - Галерея */}
             <div className="lg:col-span-2">
               {/* Основное изображение */}
-              <div className="relative h-96 mb-6 rounded-xl overflow-hidden">
+              <div 
+                className="relative h-96 mb-6 rounded-xl overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
+                onClick={() => openImageModal(0)}
+              >
                 <Image src={caseItem.images[0]} alt={title} fill className="object-cover" />
+                {/* Индикатор кликабельности */}
+                <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm rounded-full p-2 opacity-0 hover:opacity-100 transition-opacity duration-300">
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                  </svg>
+                </div>
               </div>
 
               {/* Галерея изображений */}
               {caseItem.images.length > 1 && (
                 <div className="grid grid-cols-4 gap-4 mb-8">
                   {caseItem.images.map((image, index) => (
-                    <div key={index} className="relative h-24 rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition-opacity">
+                    <div 
+                      key={index} 
+                      className="relative h-24 rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition-opacity hover:scale-105 transition-transform duration-300"
+                      onClick={() => openImageModal(index)}
+                    >
                       <Image
                         src={image}
                         alt={`${title} - ${t('image')} ${index + 1}`}
                         fill
                         className="object-cover"
                       />
+                      {/* Индикатор кликабельности */}
+                      <div className="absolute inset-0 bg-black/20 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                        </svg>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -143,7 +178,9 @@ export default function CasePage({ params }: CasePageProps) {
                           className="w-full rounded-lg"
                           poster={caseItem.images[0]}
                         >
-                          <source src={video} type="video/mp4" />
+                         Видео 1 - Международная перевозка оборудования
+
+<source src={video} type="video/mp4" />
                           {t('videoNotSupported')}
                         </video>
                         <p className="text-sm text-gray-600 mt-2 text-center">
@@ -252,6 +289,16 @@ export default function CasePage({ params }: CasePageProps) {
           </div>
         </div>
       </section>
+
+      {/* Модальное окно для просмотра изображений */}
+      <ImageModal
+        isOpen={isModalOpen}
+        onClose={closeImageModal}
+        images={caseItem.images}
+        currentIndex={currentImageIndex}
+        onImageChange={setCurrentImageIndex}
+        title={title}
+      />
     </div>
   );
 }

@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { casesData, categories } from '@/data/cases';
+import ImageModal from './ImageModal';
 
 interface CasesGridProps {
   locale: string;
@@ -14,6 +15,10 @@ export default function CasesGrid({ locale }: CasesGridProps) {
   const t = useTranslations('cases');
   const tx = useTranslations('cases.items');
   const [activeCategory, setActiveCategory] = useState('all');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedImages, setSelectedImages] = useState<string[]>([]);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [selectedCaseTitle, setSelectedCaseTitle] = useState('');
   
   const filteredCases = activeCategory === 'all' 
     ? casesData 
@@ -29,29 +34,23 @@ export default function CasesGrid({ locale }: CasesGridProps) {
     return tx.has(key) ? (tx(key) as string) : (fallback ?? '');
   };
 
+  const openImageModal = (images: string[], title: string) => {
+    setSelectedImages(images);
+    setSelectedCaseTitle(title);
+    setCurrentImageIndex(0);
+    setIsModalOpen(true);
+  };
+
+  const closeImageModal = () => {
+    setIsModalOpen(false);
+    setSelectedImages([]);
+    setCurrentImageIndex(0);
+    setSelectedCaseTitle('');
+  };
+
   return (
     <section className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Заголовок */}
-        <div className="text-center mb-12">
-          <motion.h2 
-            className="text-4xl font-bold text-gray-900 mb-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            {t('title')}
-          </motion.h2>
-          <motion.p 
-            className="text-xl text-gray-600 max-w-3xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            {t('description')}
-          </motion.p>
-        </div>
-
         {/* Фильтры */}
         <div className="flex flex-wrap justify-center gap-3 mb-12">
           <motion.button
@@ -102,7 +101,7 @@ export default function CasesGrid({ locale }: CasesGridProps) {
               whileHover={{ y: -5 }}
             >
               {/* Изображение */}
-              <div className="relative h-48 overflow-hidden">
+              <div className="relative h-48 overflow-hidden cursor-pointer" onClick={() => openImageModal(caseItem.images, tt(caseItem.id, 'title', caseItem.title))}>
                 <img
                   src={caseItem.images[0]}
                   alt={tt(caseItem.id, 'title', caseItem.title)}
@@ -113,6 +112,12 @@ export default function CasesGrid({ locale }: CasesGridProps) {
                   <span className="inline-block px-3 py-1 bg-velta-navy text-white text-sm font-medium rounded-full">
                     {getCategoryName(caseItem.category)}
                   </span>
+                </div>
+                {/* Индикатор кликабельности */}
+                <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                  </svg>
                 </div>
               </div>
 
@@ -150,13 +155,17 @@ export default function CasesGrid({ locale }: CasesGridProps) {
                   )}
                 </div>
 
-                {/* Кнопка подробнее */}
-                <Link
-                  href={`/${locale}/cases/${caseItem.category}/${caseItem.id}`}
-                  className="inline-flex items-center text-velta-navy font-medium hover:text-velta-700 transition-colors group-hover:translate-x-1"
-                >
-                  {t('viewDetails')} →
-                </Link>
+                {/* Кнопки действий */}
+                <div className="flex items-center justify-between">
+                  <Link
+                    href={`/${locale}/cases/${caseItem.category}/${caseItem.id}`}
+                    className="inline-flex items-center text-velta-navy font-medium hover:text-velta-700 transition-colors group-hover:translate-x-1"
+                  >
+                    {t('viewDetails')} →
+                  </Link>
+                  
+
+                </div>
               </div>
             </motion.div>
           ))}
@@ -182,6 +191,16 @@ export default function CasesGrid({ locale }: CasesGridProps) {
           </motion.div>
         )}
       </div>
+
+      {/* Модальное окно для просмотра изображений */}
+      <ImageModal
+        isOpen={isModalOpen}
+        onClose={closeImageModal}
+        images={selectedImages}
+        currentIndex={currentImageIndex}
+        onImageChange={setCurrentImageIndex}
+        title={selectedCaseTitle}
+      />
     </section>
   );
 }

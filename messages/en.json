@@ -119,8 +119,8 @@
       "description": "Combined solutions tailored to client needs"
     },
     "autoTransport": {
-      "title": "Road transportation",
-      "description": "We organize international road transportation from China to Russia, Kazakhstan and Europe. We work with both full truck loads (FTL) and less than truck loads (LTL). We have our own network of verified carriers and a reliable tracking system."
+      "title": "Auto Transport",
+      "description": "Optimal auto routes and reliable carriers for international transportation"
     },
     "railwayTransport": {
       "title": "Railway transportation",
@@ -156,7 +156,7 @@
     "cards": {
       "auto": {
         "title": "Road transportation",
-        "description": "We organize international road transportation from China to Russia, Kazakhstan and Europe. We work with both full truck loads (FTL) and less than truck loads (LTL). We have our own network of verified carriers and a reliable tracking system."
+        "description": "Optimal auto routes and reliable carriers for international transportation"
       },
       "rail": {
         "title": "Railway transportation",
@@ -596,7 +596,7 @@
   },
   "cases": {
     "title": "Cases",
-    "description": "Implemented projects in main directions and types of transportation",
+    "description": "International transportation of equipment, consolidated cargo, oversized and dangerous materials. Automotive, railway and multimodal solutions from China to CIS and Europe with full support and customs clearance.",
     "home": "Home",
     "viewDetails": "Learn more",
     "viewAll": "All",

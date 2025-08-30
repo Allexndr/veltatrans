@@ -21,11 +21,10 @@ export const casesData: CaseItem[] = [
     description: 'Доставка промышленного оборудования из Китая в Казахстан',
     category: 'auto',
     images: [
-      '/assets/images/auto-transport-1.png'
+      '/assets/images/auto-transport-1.png',
+      '/assets/images/project-transport-1.png'
     ],
     videos: [
-      '/assets/cases/auto/Перевозка автомобильным транспортом.mp4',
-      '/assets/cases/auto/Перевозки автотранспортом.mp4',
       '/assets/cases/auto/Перевозки автотранспортом 2.mp4'
     ],
     details: 'Организовали полный цикл доставки промышленного оборудования из Шанхая в Алматы. Включал таможенное оформление, страхование и сопровождение груза.',
@@ -88,6 +87,9 @@ export const casesData: CaseItem[] = [
       '/assets/images/oversized-transport-2.png',
       '/assets/images/oversized-transport-3.png'
     ],
+    videos: [
+      '/assets/cases/oversize/Перевозка негабаритных грузов 4.mp4'
+    ],
     details: 'Специальная перевозка негабаритного оборудования для нефтегазовой отрасли. Разработали специальный маршрут с учетом габаритов.',
     date: '2024-07-10',
     location: 'Далянь → Новосибирск',
@@ -105,9 +107,7 @@ export const casesData: CaseItem[] = [
     images: [
       '/assets/images/auto-transport-2.png'
     ],
-    videos: [
-      '/assets/cases/oversize/Перевозка Негабаритных грузов.mp4'
-    ],
+
     details: 'Организовали сложную мультимодальную перевозку: морем из Шанхая во Владивосток, затем по железной дороге до Екатеринбурга, и автомобилем до места назначения.',
     date: '2024-06-30',
     location: 'Шанхай → Екатеринбург',
@@ -143,7 +143,8 @@ export const casesData: CaseItem[] = [
     description: 'Еженедельные контейнерные рейсы между портами',
     category: 'container',
     images: [
-      '/assets/images/railway-transport-4.png'
+      '/assets/images/railway-transport-4.png',
+      '/assets/images/container-transport.png'
     ],
     videos: [
       '/assets/cases/container/Контейнерные перевозки автотранспортом.mp4'
@@ -183,7 +184,8 @@ export const casesData: CaseItem[] = [
     description: 'Массовая перевозка легковых автомобилей из Китая',
     category: 'rail',
     images: [
-      '/assets/images/auto-transport-3.png'
+      '/assets/images/auto-transport-3.png',
+      '/assets/images/railway-transport-4.png'
     ],
     details: 'Организовали перевозку партии из 50 легковых автомобилей из Китая в Россию. Специальные вагоны-автомобилевозы обеспечили безопасность транспортировки.',
     date: '2024-07-05',

@@ -10,6 +10,7 @@ import RecommendationsSection from '@/components/RecommendationsSection';
 import Calculator from '@/components/Calculator';
 import CargoTracking from '@/components/CargoTracking';
 import ContactForm from '@/components/ContactForm';
+import MainContacts from '@/components/MainContacts';
 import Footer from '@/components/Footer';
 import {useTranslations} from 'next-intl';
 import {useParams} from 'next/navigation';
@@ -268,6 +269,7 @@ export default function HomePage() {
           </div>
         </section>
 
+        <MainContacts />
         <ContactForm />
       </main>
       <Footer />

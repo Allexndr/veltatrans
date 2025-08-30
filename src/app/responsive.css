@@ -542,3 +542,96 @@
   .text-lg { font-size: 1.25rem; }
   .text-sm { font-size: 1rem; }
 }
+
+/* Специальные стили для мобильной навигации */
+@media (max-width: 768px) {
+  /* Улучшенные стили для мобильных кнопок */
+  .mobile-nav button,
+  .mobile-nav a {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    touch-action: manipulation;
+    cursor: pointer;
+  }
+
+  /* Анимации для мобильных кнопок */
+  .mobile-nav button:active,
+  .mobile-nav a:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease-out;
+  }
+
+  /* Улучшенные стили для навигационной сетки */
+  .mobile-nav .grid {
+    gap: 0.75rem;
+  }
+
+  .mobile-nav .grid > * {
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .mobile-nav .grid > *:hover {
+    background-color: #f0f9ff;
+    border-color: #0ea5e9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .mobile-nav .grid > *:active {
+    transform: scale(0.98) translateY(0);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Стили для быстрых действий */
+  .mobile-nav .quick-actions a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    min-height: 48px;
+  }
+
+  .mobile-nav .quick-actions a:active {
+    transform: scale(0.95);
+  }
+
+  /* Улучшенные стили для заголовков */
+  .mobile-nav h2,
+  .mobile-nav h3 {
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 1rem;
+  }
+
+  /* Стили для иконок */
+  .mobile-nav .text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Стили для текста кнопок */
+  .mobile-nav .text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+  }
+}

@@ -4,6 +4,56 @@ import { getDb } from '@/lib/mongodb';
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8414818778:AAG2QXqDu0WKwsClyMt5CpbpLQBL3QLVWUE';
 const CHANNEL_ID = process.env.TELEGRAM_CHANNEL_ID || '-1002999769930';
 
+// Language support
+function getText(userId: number, key: string, defaultText: string): string {
+  const lang = userLanguage[userId] || 'ru';
+  
+  const translations: Record<string, Record<string, string>> = {
+    ru: {
+      'welcome': '🚛 Добро пожаловать в Velta Trans!',
+      'select_section': 'Выберите раздел:',
+      'drivers': '🚛 Водителям',
+      'clients': '📦 Клиентам',
+      'staff': '👤 Сотрудникам',
+      'change_language': '🌐 Смена языка',
+      'language_changed': '✅ Язык изменен',
+      'back': '← Назад'
+    },
+    kz: {
+      'welcome': '🚛 Velta Trans-қа қош келдіңіз!',
+      'select_section': 'Бөлімді таңдаңыз:',
+      'drivers': '🚛 Жүргізушілерге',
+      'clients': '📦 Клиенттерге',
+      'staff': '👤 Қызметкерлерге',
+      'change_language': '🌐 Тілді өзгерту',
+      'language_changed': '✅ Тіл өзгертілді',
+      'back': '← Артқа'
+    },
+    en: {
+      'welcome': '🚛 Welcome to Velta Trans!',
+      'select_section': 'Select section:',
+      'drivers': '🚛 For Drivers',
+      'clients': '📦 For Clients',
+      'staff': '👤 For Staff',
+      'change_language': '🌐 Change Language',
+      'language_changed': '✅ Language changed',
+      'back': '← Back'
+    },
+    zh: {
+      'welcome': '🚛 欢迎来到 Velta Trans！',
+      'select_section': '选择部分：',
+      'drivers': '🚛 司机',
+      'clients': '📦 客户',
+      'staff': '👤 员工',
+      'change_language': '🌐 更改语言',
+      'language_changed': '✅ 语言已更改',
+      'back': '← 返回'
+    }
+  };
+  
+  return translations[lang]?.[key] || defaultText;
+}
+
 // MongoDB collections
 let db: any;
 let driversCollection: any;
@@ -61,10 +111,24 @@ async function getDrivers() {
     console.warn('⚠️ MongoDB not available - returning demo data');
     return [
       { id: 'demo_1', name: 'Хабдулманап', carNumber: 'ГАЗ 161AFH03', rating: null, phone: '+87054060674', userId: null },
-      { id: 'demo_2', name: 'Демо Водитель 2', carNumber: 'DEMO 002', rating: null, phone: '+77051234567', userId: null }
+      { id: 'demo_2', name: 'Демо Водитель 2', carNumber: 'DEMO 002', rating: null, phone: '+77051234567', userId: null },
+      { id: 'demo_3', name: 'Александр', carNumber: 'VELTA 001', rating: 4.8, phone: '+8 (771)-231-08-52', userId: null }
     ];
   }
-  return await driversCollection.find({}).toArray();
+  
+  try {
+    const drivers = await driversCollection.find({}).toArray();
+    console.log(`✅ Found ${drivers.length} drivers in MongoDB`);
+    return drivers;
+  } catch (error) {
+    console.error('❌ Error getting drivers from MongoDB:', error);
+    console.warn('⚠️ Falling back to demo data');
+    return [
+      { id: 'demo_1', name: 'Хабдулманап', carNumber: 'ГАЗ 161AFH03', rating: null, phone: '+87054060674', userId: null },
+      { id: 'demo_2', name: 'Демо Водитель 2', carNumber: 'DEMO 002', rating: null, phone: '+77051234567', userId: null },
+      { id: 'demo_3', name: 'Александр', carNumber: 'VELTA 001', rating: 4.8, phone: '+8 (771)-231-08-52', userId: null }
+    ];
+  }
 }
 
 async function saveDriver(driver: any) {
@@ -74,16 +138,35 @@ async function saveDriver(driver: any) {
     return { acknowledged: true, insertedId: 'demo_' + Date.now() };
   }
   
-  if (driver.id) {
-    return await driversCollection.updateOne(
-      { id: driver.id },
-      { $set: driver },
-      { upsert: true }
-    );
-  } else {
-    driver.id = Date.now();
-    driver.createdAt = new Date().toISOString();
-    return await driversCollection.insertOne(driver);
+  try {
+    if (driver._id) {
+      // Update existing driver
+      const result = await driversCollection.updateOne(
+        { _id: driver._id },
+        { $set: driver }
+      );
+      console.log(`✅ Driver updated in MongoDB: ${driver.name}`);
+      return result;
+    } else if (driver.id) {
+      // Update by custom id
+      const result = await driversCollection.updateOne(
+        { id: driver.id },
+        { $set: driver },
+        { upsert: true }
+      );
+      console.log(`✅ Driver updated/inserted in MongoDB: ${driver.name}`);
+      return result;
+    } else {
+      // Insert new driver
+      driver.id = Date.now();
+      driver.createdAt = new Date().toISOString();
+      const result = await driversCollection.insertOne(driver);
+      console.log(`✅ New driver inserted in MongoDB: ${driver.name}`);
+      return result;
+    }
+  } catch (error) {
+    console.error('❌ Error saving driver to MongoDB:', error);
+    return { acknowledged: false, error: error instanceof Error ? error.message : String(error) };
   }
 }
 
@@ -572,11 +655,15 @@ async function handleUserState(userId: number, text: string, chatId: string, sta
       
     case 'waiting_for_phone_login':
       // Handle driver login by phone number
+      console.log(`📱 Driver login attempt for user ${userId} with phone: "${text}"`);
       const drivers = await getDrivers();
+      console.log(`📋 Available drivers:`, drivers.map((d: any) => ({ name: d.name, phone: d.phone })));
+      
       const driver = findDriverByPhone(text, drivers);
       
       if (driver) {
         // Driver found - link user ID to driver and show success
+        console.log(`✅ Driver found: ${driver.name}, linking to user ${userId}`);
         await saveDriver({ ...driver, userId });
         await setUserState(userId, null);
         const ratingText = driver.rating ? `⭐ Рейтинг: ${driver.rating.toFixed(2)}/5` : '⭐ Рейтинг: Н/Д';
@@ -588,6 +675,7 @@ async function handleUserState(userId: number, text: string, chatId: string, sta
         }, 1000);
       } else {
         // Driver not found
+        console.log(`❌ No driver found for phone: "${text}"`);
         await sendTelegramMessage(chatId, '❌ Водитель с таким номером телефона не найден в базе данных. Пожалуйста, зарегистрируйтесь или проверьте номер.');
       }
       break;
@@ -757,6 +845,26 @@ async function handleCallbackQuery(callbackQuery: any) {
     case 'driver_logout':
       await setUserState(userId, null);
       await showMainMenu(chatId);
+      break;
+      
+    case 'lang_ru':
+      userLanguage[userId] = 'ru';
+      await editTelegramMessage(chatId, messageId, '✅ Язык изменен на Русский', buildBackButton('back_main'));
+      break;
+      
+    case 'lang_kz':
+      userLanguage[userId] = 'kz';
+      await editTelegramMessage(chatId, messageId, '✅ Тіл қазақшаға өзгертілді', buildBackButton('back_main'));
+      break;
+      
+    case 'lang_en':
+      userLanguage[userId] = 'en';
+      await editTelegramMessage(chatId, messageId, '✅ Language changed to English', buildBackButton('back_main'));
+      break;
+      
+    case 'lang_zh':
+      userLanguage[userId] = 'zh';
+      await editTelegramMessage(chatId, messageId, '✅ 语言已更改为中文', buildBackButton('back_main'));
       break;
       
     case 'back_driver_menu':
@@ -1421,16 +1529,44 @@ async function updateOrdersStatusForDriver(driverUserId: number, status: string,
 
 // Helper to normalize and find driver by phone number
 function normalizePhoneNumber(phone: string): string {
-  const digits = (phone || '').replace(/\D/g, '');
-  if (digits.startsWith('8') && digits.length === 11) return '7' + digits.slice(1);
-  if (digits.startsWith('7') && digits.length === 11) return digits;
-  if (digits.length === 10) return '7' + digits;
+  if (!phone) return '';
+  
+  // Remove all non-digit characters
+  const digits = phone.replace(/\D/g, '');
+  
+  // Handle different formats
+  if (digits.startsWith('8') && digits.length === 11) {
+    return '7' + digits.slice(1);
+  }
+  if (digits.startsWith('7') && digits.length === 11) {
+    return digits;
+  }
+  if (digits.startsWith('7') && digits.length === 10) {
+    return '7' + digits;
+  }
+  if (digits.length === 10) {
+    return '7' + digits;
+  }
+  
   return digits;
 }
 
 function findDriverByPhone(phone: string, drivers: any[]) {
   const normalized = normalizePhoneNumber(phone);
-  return drivers.find(d => normalizePhoneNumber(d.phone) === normalized);
+  console.log(`🔍 Searching for phone: "${phone}" -> normalized: "${normalized}"`);
+  
+  for (const driver of drivers) {
+    const driverNormalized = normalizePhoneNumber(driver.phone);
+    console.log(`  Driver: ${driver.name}, phone: "${driver.phone}" -> normalized: "${driverNormalized}"`);
+    
+    if (driverNormalized === normalized) {
+      console.log(`✅ Found driver: ${driver.name}`);
+      return driver;
+    }
+  }
+  
+  console.log(`❌ No driver found for phone: "${phone}"`);
+  return null;
 }
 
 async function showOrderOffersPager(chatId: string, messageId: number, orderId: string, page: number = 1) {
